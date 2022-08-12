@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.collections.FXCollections ?>
+
+<AnchorPane fx:id="pane" prefHeight="473.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VCampusServer.ClassAdminServer">
+   <children>
+      <ComboBox fx:id="Combobox" layoutX="414.0" layoutY="93.0" onAction="#ComboboxEvent" prefHeight="30.0" prefWidth="83.0" promptText="班级">
+      	<items>
+      		<FXCollections fx:factory="observableArrayList">
+      		<String fx:value="班级" />
+      		<String fx:value="学号" />
+      		<String fx:value="老师" />
+      		</FXCollections>
+      	</items>
+      </ComboBox>
+      <Text fx:id="message1" disable="true" layoutX="305.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学籍管理">
+         <font>
+            <Font name="Doppio One Regular" size="32.0" />
+         </font>
+      </Text>
+      <TextField fx:id="SearchTextFile" alignment="CENTER_RIGHT" layoutX="509.0" layoutY="93.0" onAction="#SerarchText" prefHeight="30.0" prefWidth="147.0" promptText="班级" />
+      <Button fx:id="button_search" layoutX="656.0" layoutY="93.0" mnemonicParsing="false" onAction="#SearchButton" text="🔍" />
+      <Line fx:id="message2" disable="true" endX="455.0" layoutX="192.0" layoutY="151.0" startX="-100.0" />
+      <Line fx:id="message3" disable="true" endX="455.0" layoutX="192.0" layoutY="400.0" startX="-100.0" />
+      <TableView fx:id="messagtable" layoutX="90.0" layoutY="151.0" onSort="#MessageTable" prefHeight="249.0" prefWidth="560.0">
+        <columns>
+          <TableColumn fx:id="classid" prefWidth="75.0" text="班级" />
+          <TableColumn fx:id="teacherid" prefWidth="75.0" text="老师" />
+            <TableColumn fx:id="studentid" prefWidth="75.0" sortable="false" text="学号" />
+            <TableColumn fx:id="studentname" prefWidth="75.0" sortable="false" text="姓名" />
+            <TableColumn fx:id="majorname" prefWidth="75.0" text="专业" />
+            <TableColumn fx:id="studentphone" prefWidth="184.0" text="联系电话" />
+        </columns>
+      </TableView>
+      <Button fx:id="button_modify" layoutX="139.0" layoutY="418.0" mnemonicParsing="false" onAction="#ModifyButton" prefHeight="30.0" prefWidth="69.0" text="修改" />
+      <Button fx:id="button_exit" layoutX="548.0" layoutY="418.0" mnemonicParsing="false" onAction="#ExitButton" prefHeight="30.0" prefWidth="69.0" text="退出" />
+   </children>
+</AnchorPane>
