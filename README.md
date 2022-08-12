@@ -13,3 +13,14 @@ Java版本:
     Java(TM) SE Runtime Environment (build 1.8.0_201-b09))
 
 Java插件：Javafx，Scene Builder(可选)
+
+git流程：
+	•  Git clone -b dev git@github.com:Briareu/VCampus.git
+	•  修改至下载下来的文件夹
+	•  cd Vcampus
+	•  git init
+	•  git add .
+	•  git commit -m "your name, date, message you want show"
+	•  git pull  git@github.com:Briareu/VCampus.git dev
+	•  git push -u  git@github.com:Briareu/VCampus.git dev
+（出现error: src refspec dev does not match any, 切换一下本地分支：git checkout -b dev）
