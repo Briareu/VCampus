@@ -13,8 +13,7 @@ Java版本:
     Java(TM) SE Runtime Environment (build 1.8.0_201-b09))
 	JDK version 1.8.0_341
 
-Java插件：Javafx，Scene Builder(可选)
-安装JavaFX后，请在项目中添加JavaFX SDK
+Swing,Access
 
 git流程：
 	•  Git clone -b dev git@github.com:Briareu/VCampus.git
