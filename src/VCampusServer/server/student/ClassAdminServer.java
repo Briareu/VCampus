@@ -9,7 +9,7 @@
  * 
  * method returnPane is for return to the main stage, you can edit the url to your stage
  */
-package VCampusServer;
+package server.student;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -113,7 +113,7 @@ public class ClassAdminServer {
     	}
     	else {
     		//leave the modified text
-    		button_exit.setText("退出");
+    		button_exit.setText("�?�?");
         	button_modify.setText("修改");
         	modify = false;
     	}
@@ -128,7 +128,7 @@ public class ClassAdminServer {
     	}
     	else {
     		//leave the modified text
-    		button_exit.setText("退出");
+    		button_exit.setText("�?�?");
         	button_modify.setText("修改");
         	modify = false;
     	}

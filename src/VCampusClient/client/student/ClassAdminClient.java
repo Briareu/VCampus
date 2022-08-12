@@ -1,4 +1,4 @@
-package VCampusClient;
+package client.student;
 
 public class ClassAdminClient {
 
