@@ -17,17 +17,17 @@ package VCampusDomain;
 
 import java.io.Serializable;
 
-public class Class implements Serializable{
+public class ClassManage implements Serializable{
 	private String ClassID;
 	private String Major;
 	private String TeacherID;
 	private int ClassSize;//exist students' number
 	
-	public Class() {
+	public ClassManage() {
 		super();
 	}
 	
-	public Class(String classid, String major, String teacherID, int classsize)
+	public ClassManage(String classid, String major, String teacherID, int classsize)
 	{
 		ClassID = classid;
 		Major = major;
