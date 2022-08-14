@@ -1,0 +1,4 @@
+主界面以及客户端服务器交互
+
+主界面合并到VCampusClient
+客户端与服务器交互分别合并到VCampusClient和VCampusServer

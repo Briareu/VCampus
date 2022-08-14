@@ -26,6 +26,9 @@ import java.awt.event.ActionEvent;
 
 import VCampusServer.*;
 import VCampusDomain.*;
+import Dao.*;
+import socket.*;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -262,7 +265,16 @@ public class ClassAdminClient extends JFrame {
 					int rownum = table.getSelectedRow();
 					if(rownum == -1)
 						JOptionPane.showMessageDialog(null,"请选择一行再进行删除","提示",JOptionPane.WARNING_MESSAGE);
-					int res = server.delete((String) table.getValueAt(rownum, 3));
+					//int res = server.delete((String) table.getValueAt(rownum, 3));
+					
+					Message mes = new Message();
+					mes.setData((String)table.getValueAt(rownum, 2));//set your data
+					mes.setMessageType(MessageType.ClassAdminDelete);
+					Message serverResponse = new Message();
+					Client client = new Client();
+					serverResponse = client.sendRequestToServer(mes);
+					int res = (int)serverResponse.getData();
+					
 					if(res > 0)
 						JOptionPane.showMessageDialog(null,"完成删除","提示",JOptionPane.WARNING_MESSAGE);
 					model.removeRow(rownum);
@@ -273,9 +285,15 @@ public class ClassAdminClient extends JFrame {
 			}
 		});
 	}
+	@SuppressWarnings("unchecked")
 	void addRows() {
-		Vector<StudentManage> stu=new Vector<StudentManage>();
-		stu = server.search();
+		Message mes = new Message();
+		mes.setMessageType(MessageType.ClassAdminGetAll);//operation type
+		Message serverresponse = new Message();
+		Vector<StudentManage> stu=new Vector<StudentManage>();//your data
+		Client client = new Client();
+		serverresponse = client.sendRequestToServer(mes);
+		stu = (Vector<StudentManage>)serverresponse.getData();
 		String[] arr = new String[6];
 		for(int i = 0; i < stu.size(); i++) {
 			arr[0] = stu.get(i).getClassid();
