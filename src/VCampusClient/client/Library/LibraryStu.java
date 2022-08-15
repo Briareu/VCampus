@@ -1,29 +1,17 @@
 package client.Library;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.table.DefaultTableModel;
 
+import server.Library.Book;
 import server.Library.LibraryUserServer;
 
 public class LibraryStu extends JFrame {
@@ -36,8 +24,6 @@ public class LibraryStu extends JFrame {
 	private JButton returnBookButton,exitButton,lendBookButton;  //contentPane
 	private JButton qrLendButton,qrReturnButton,qxLendButton,qxReturnButton; //lendPane&returnPane
 	private JLayeredPane layerPane;
-	
-	CardLayout cardLayout=new CardLayout();
 	
 	private LibraryUserServer stu;
 
@@ -62,6 +48,16 @@ public class LibraryStu extends JFrame {
 	 */
 	public LibraryStu() {
 		stu=new LibraryUserServer();
+		
+		manager=new LibraryUserServer();
+		Message mes =new Message();
+		mes.setExtraMessage(stu);
+		mes.setMessageType(MessageType.LibraryBookGetAll);
+		Message serverResponse=new Message();
+		ArrayList<Book> resbook=new ArrayList<Book>();
+		Client client=new Client();
+		serverResponse=client.sendRequestToServer(mes);
+		stu.setBookList((ArrayList<Book>)serverResponse.getData());
 		
 		setTitle("图书馆-学生");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -349,7 +345,17 @@ public class LibraryStu extends JFrame {
 		lendPane.setVisible(false);
 		returnPane.setVisible(true);
 		
-//		stu.ReturnBook(returnIDText.getText());
+		Message mes =new Message();
+		mes.setExtraMessage(returnIDText.getText());
+		mes.setMessageType(MessageType.LibraryBookLend);
+		Message serverResponse=new Message();
+		Client client=new Client();
+		serverResponse=client.sendRequestToServer(mes);
+		
+		int res = (int)serverResponse.getData();
+		if(res > 0)
+			JOptionPane.showMessageDialog(null,"还书完成","提示",JOptionPane.WARNING_MESSAGE);
+	
 	}
 
 	//借书
@@ -359,12 +365,29 @@ public class LibraryStu extends JFrame {
 		returnPane.setVisible(false);
 		lendPane.setVisible(true);
 		
-//		stu.LendBook(lendIDText.getText());
+		Message mes =new Message();
+		mes.setExtraMessage(lendIDText.getText());
+		mes.setMessageType(MessageType.LibraryBookReturn);
+		Message serverResponse=new Message();
+		Client client=new Client();
+		serverResponse=client.sendRequestToServer(mes);
+		
+		int res = (int)serverResponse.getData();
+		if(res > 0)
+			JOptionPane.showMessageDialog(null,"借书完成","提示",JOptionPane.WARNING_MESSAGE);
+		
 	}
 
 	//查询
 	protected void FindAvt(ActionEvent e) {
-		stu.FindBook(findText.getText());
+		Message mes =new Message();
+		mes.setExtraMessage(findText.getText());
+		mes.setMessageType(MessageType.LibraryBookFind);
+		Message serverResponse=new Message();
+		Client client=new Client();
+		serverResponse=client.sendRequestToServer(mes);
+		ArrayList<Book> resbook=new ArrayList<Book>();
+		resbook=(ArrayList<Book>)serverResponse.getData();
 	}
 
 	//退出

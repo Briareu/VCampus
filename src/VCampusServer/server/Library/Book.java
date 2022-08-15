@@ -8,13 +8,20 @@ public class Book {
 	private String press;  //出版社：
 	private Boolean state;  //状态 0-不可借阅；1-可借阅
 	
-	public Book(String jid,String jname,String jauthor,Integer jstock,String press,Boolean jstate) {
+	public Book(String jid,String jname,String jauthor,Integer jstock,String press) {
 		this.setId(jid);
 		this.setName(jname);
 		this.setAuthor(jauthor);
 		this.setStock(jstock);
 		this.setPress(press);
-		this.setState(jstate);
+		
+		if(jstock<0)
+			throw new RuntimeException();
+		
+		if(jstock==0)
+			this.setState(false);
+		else
+			this.setState(true);
 	}
 	
 	public Book() {}

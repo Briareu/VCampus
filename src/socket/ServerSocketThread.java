@@ -30,7 +30,10 @@ public class ServerSocketThread implements Runnable {
 	private Socket clientSocket;
 	private ClassAdminServer classAdminServer = new ClassAdminServer();
 	private ClassAccess classAccess = new ClassAccess();
+	//Library 
+	private LibraryUserServer libraryUserServer=new LibraryUserServer();
 	// your access-class and server-class
+
 
 	ServerSocketThread(Socket socket) {
 		this.clientSocket = socket;
@@ -97,8 +100,158 @@ public class ServerSocketThread implements Runnable {
 			
 			
 //图书馆---------------------------------------------
+			//1.获取所有的书籍信息
+			case MessageType.LibraryUserGetAll:
+			{
+				try {
+					serverResponse.setMessageType(MessageType.operFeedback);
+					int res = libraryUserServer.createList();
+					serverResponse.setData(res);
+					serverResponse.setMessageType(MessageType.operFeedback);
+					serverResponse.setLastOperState(true);
+					
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;
 			
+			//2.删除某一行书籍信息（管理员）
+			case MessageType.LibraryBookDelete:
+			{
+				try {
+					String bookid = null;
+					serverResponse.setMessageType(MessageType.operFeedback);
+					bookid = object.getExtraMessage();//get id
+					int res = libraryUserServer.DeleteBook(bookid);
+					serverResponse.setData(res);
+					serverResponse.setLastOperState(true);
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;
 			
+			//3.增加某一行书籍信息
+			case MessageType.LibraryBookAdd:
+			{
+				try {
+					String bookid = null;
+					serverResponse.setMessageType(MessageType.operFeedback);
+					bookid = object.getExtraMessage();//get id
+					int res = libraryUserServer.AddBook(bookid);
+					serverResponse.setData(res);
+					serverResponse.setLastOperState(true);
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;		
+			
+			//4.修改某一行书籍信息
+			case MessageType.ClassAdminUpdate:
+			{
+				try {
+					ArrayList<String> para = new ArrayList<String>();
+					serverResponse.setMessageType(MessageType.operFeedback);
+					para = object.getExtraMessage();
+					int res = libraryUserServer.Lendbook(para.get(0),para.get(1),para.get(2));
+					serverResponse.setData(res);
+					serverResponse.setLastOperState(true);
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;
+			
+			//5.借书
+			case MessageType.LibraryBookLend:
+			{
+				try {
+					String bookid = null;
+					serverResponse.setMessageType(MessageType.operFeedback);
+					bookid = object.getExtraMessage();//get id
+					int res = libraryUserServer.Lendbook(bookid);
+					serverResponse.setData(res);
+					serverResponse.setLastOperState(true);
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;	
+			
+			//6.还书
+			case MessageType.LibraryBookReturn:
+			{
+				try {
+					String bookid = null;
+					serverResponse.setMessageType(MessageType.operFeedback);
+					bookid = object.getExtraMessage();//get id
+					int res = libraryUserServer.Returnbook(bookid);
+					serverResponse.setData(res);
+					serverResponse.setLastOperState(true);
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;	
+			
+			//7.增加书籍
+			case MessageType.LibraryBookAdd:
+			{
+				try {
+					String bookid = null;
+					serverResponse.setMessageType(MessageType.operFeedback);
+					bookid = object.getExtraMessage();//get Book
+					int res = libraryUserServer.AddBook(bookid);
+					serverResponse.setData(res);
+					serverResponse.setLastOperState(true);
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;
+			
+			//8.删除书籍
+			case MessageType.LibraryBookDelete：
+			{
+				try {
+					String bookid = null;
+					serverResponse.setMessageType(MessageType.operFeedback);
+					bookid = object.getExtraMessage();//get Book
+					int res = libraryUserServer.AddBook(bookid);
+					serverResponse.setData(res);
+					serverResponse.setLastOperState(true);
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;
+			
+			//9.寻找书籍
+			case MessageType.LibraryBookFind：
+			{
+				try {
+					String bookid = null;
+					serverResponse.setMessageType(MessageType.operFeedback);
+					bookid = object.getExtraMessage();//get Bookid
+					int res = libraryUserServer.FindBook(bookid);
+					serverResponse.setData(res);
+					serverResponse.setLastOperState(true);
+				}finally {
+					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+					response.writeObject(serverResponse);
+				}
+			}
+			break;
 //商店----------------------------------------------
 			
 			

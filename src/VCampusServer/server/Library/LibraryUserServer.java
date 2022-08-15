@@ -1,11 +1,14 @@
-package VCampusServer;
+package server.Library;
 
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 
-public class LibraryUserServer extends Library_DbAccess {
+import com.sun.net.httpserver.Authenticator.Result;
+
+
+public class LibraryUserServer /*extends Library_DbAccess*/ {
 	Connection con = null;
 	Statement s = null;
 	ResultSet rs=null;
@@ -19,36 +22,38 @@ public class LibraryUserServer extends Library_DbAccess {
 		this.passwd=jpasswd;
 		bookList=new ArrayList<Book>();
 		
-		createList();
 	}
 	
 	public LibraryUserServer() {
 		bookList=new ArrayList<Book>();
-		createList();
+	}
+	
+	public void setBookList(ArrayList<Book> tbooklist) {
+		bookList=tbooklist;
 	}
 	
 	public void createList() {
 		try {
-			con=getConnection();
+//			con=getConnection();
 			s = con.createStatement();// 创建SQL语句对象
 			rs=s.executeQuery("select * from BookList");	// 查询书籍信息
 						
 			//把数据库中的数据读入bookList
 			while(rs.next()) {
 				Book tempBook=new Book();
-				tempBook.setName(rs.getString("书名"));
-				tempBook.setId(rs.getString("书号"));
-				tempBook.setAuthor(rs.getString("作者"));
-				tempBook.setPress(rs.getString("出版社"));
-				tempBook.setStock(rs.getInt("库存"));
-				tempBook.setState((rs.getInt("状态")==0)?false:true);
+				tempBook.setName(rs.getString("Name"));
+				tempBook.setId(rs.getString("ID"));
+				tempBook.setAuthor(rs.getString("Author"));
+				tempBook.setPress(rs.getString("Press"));
+				tempBook.setStock(rs.getInt("Stock"));
+				tempBook.setState((rs.getInt("State")==0)?false:true);
 				
 				bookList.add(tempBook);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection(con, rs, s);
+//			closeConnection(con, rs, s);
 		}
 	}
 
@@ -59,21 +64,20 @@ public class LibraryUserServer extends Library_DbAccess {
 
 	//书名或书号查找
 	public ArrayList<Book> FindBook(String fbookid) {
+			ArrayList<Book> resbook=new ArrayList<Book>();		
 		try {
-			ArrayList<Book> resbook=new ArrayList<Book>();
 			for(int i=0;i<bookList.size();i++) {
 				Book tbook=bookList.get(i);
 				if(tbook.getName().equals(fbookid)||tbook.getId().equals(fbookid))
 					resbook.add(tbook);				
 			}
-			return resbook;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection(con, rs, s);
+//			closeConnection(con, rs, s);
 		}
-		
-		return null;
+		return resbook;
 	}
 	
 	//书号查找（唯一）
@@ -87,60 +91,128 @@ public class LibraryUserServer extends Library_DbAccess {
 					break;
 				}
 			}
-			return resbook;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection(con, rs, s);
+//			closeConnection(con, rs, s);
 		}
-		
-		return null;
+		return resbook;
 	}	
 	
 	//学生
 	public void LendBook(String bookid) { //用书号查找（唯一）
-		Book targetbook=FindBookID(bookid);
-		if(targetbook.getStock()-1>=0)
-			targetbook.setStock(targetbook.getStock()-1);
-		else {
-			
-		}
-		if(targetbook.getStock()-1==0)
-			targetbook.setState(false);
+		try {
+			Book targetbook=FindBookID(bookid);
+		    int result=0;			
+		    if(targetbook.getStock()-1>=0) {
+		    	targetbook.setStock(targetbook.getStock()-1);
+		    	result = s.executeUpdate("update test set Stock='"+targetbook.getStock()+"' where ID='"+targetbook.getId()+"'");	
+		    }
+		    else {
+	    	//不可借抛出异常
+		    }
+		    if(targetbook.getStock()-1==0) {
+		    	result = s.executeUpdate("update test set State=0 where ID='"+targetbook.getId()+"'");
+		    	targetbook.setState(false);	
+		    }
+		    
+		}catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+//				closeConnection(con, rs, s);
+			}
 	}
+	
 	//学生
 	public void ReturnBook(String bookid) {
-		Book targetbook=FindBookID(bookid); //用书号查找（唯一）
-		if(targetbook.getState()==false)
-			targetbook.setState(true);
-		targetbook.setStock(targetbook.getStock()+1);
+		try {
+			Book targetbook=FindBookID(bookid); //用书号查找（唯一）
+		    int result=0;
+		    targetbook.setStock(targetbook.getStock()+1);		
+		
+		    targetbook.setStock(targetbook.getStock()-1);
+    	    result = s.executeUpdate("update test set Stock='"+targetbook.getStock()+"' where ID='"+targetbook.getId()+"'");	
+		    if(targetbook.getState()==false) {
+		    	targetbook.setState(true);
+			    result = s.executeUpdate("update test set State=1 where ID='"+targetbook.getId()+"'");
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+//			closeConnection(con, rs, s);
+		}
+
 	}
 	
 	//管理员
 	public void AddBook(Book tbook) { 
-		bookList.add(tbook);
+		try {
+			int result=0;
+			bookList.add(tbook);		
+			result=s.executeUpdate("insert into text values('"+tbook.getName()+"','"+tbook.getId()+"','"+tbook.getAuthor()+
+					"','"+tbook.getPress()+"','"+tbook.getStock()+"','"+tbook.getState()+"')");
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+//			closeConnection(con, rs, s);
+		}
+
 	}
 	
 	//管理员
 	public void DeleteBook(String bookid) { //用书号查找（唯一）
-		Book tbook=FindBookID(bookid);
-		bookList.remove(tbook);
+		try {
+			int result=0;
+			Book tbook=FindBookID(bookid);
+			bookList.remove(tbook);
+			result=s.executeUpdate("delete from text where ID='"+bookid+"'");
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+//			closeConnection(con, rs, s);
+		}
 	}
 	
 	//管理员
-	public void ModifyBook(String bookid) { //用书号查找（唯一）
-		Book tbook=FindBookID(bookid);
+	public void ModifyBook(String bookid,String attr,String modattr) { //用书号查找（唯一）
+		try {
+			int result=0;
+			Book tbook=FindBookID(bookid);
+			result=s.executeUpdate("update test set "+attr+"='"+modattr+"' where ID='"+bookid+"'");
+			int ind=bookList.indexOf(tbook);
+			switch (modattr) {
+			case "Name":
+				bookList.get(ind).setName(modattr);
+				break;
+			case "ID":
+				bookList.get(ind).setId(modattr);
+				break;
+			case "Author":
+				bookList.get(ind).setAuthor(modattr);
+				break;
+			case "Press":
+				bookList.get(ind).setPress(modattr);
+				break;
+			case "Stock":
+				bookList.get(ind).setStock(Integer.parseInt(modattr));
+				break;
+			}
+			if(bookList.get(ind).getStock()==0)
+				bookList.get(ind).setState(false);
+			else
+				bookList.get(ind).setState(true);
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+//			closeConnection(con, rs, s);
+		}
+		
 	}
 	
-	//把数据保存到数据库
-	public void SaveBookList() {
-		String sql="insert into test('书名','书号','作者','出版社'+'库存'+'状态') " +
-				"values('"+stuName+"','"+stuCode+"','"+stuSex+"','"+stuAge+"')"; 
-	}
 	
 	public static void main(String[] args) {
 		LibraryUserServer u=new LibraryUserServer();
-		ArrayList<Book> res=u.FindBook("PLM");
+		u.LendBook("PLM");
 		Integer a=1;
 	}
 }
