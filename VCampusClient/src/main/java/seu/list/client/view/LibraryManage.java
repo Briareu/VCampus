@@ -4,13 +4,12 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Vector;
-
-import javax.swing.table.DefaultTableModel;
 
 import seu.list.common.Client;
 import seu.list.common.Message;
@@ -20,40 +19,22 @@ import seu.list.common.Book;
 public class LibraryManage extends JFrame {
 
 	private JPanel contentPane,modifyPane,panel,addPane,deletePane;
-	private JTextField findText;
-	private JTable table;
+	private JTextField findText,oldIDText,modifiedText;
 	private JLayeredPane layerPane;
-	private JTextField oldIDText;
-	private JTextField modifiedText;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JRadioButton nameRadioButton,idRadioButton,authorRadioButton,pressRadioButton,stockRadioButton;
 	
-	private JButton deleteButton;
-	private JButton addButton;
-	private JLabel addNameLabel;
-	private JLabel addIDLabel;
-	private JLabel addAuthorLabel;
-	private JLabel addPressLabel;
-	private JLabel addStockLabel;
-	private JTextField addNameText;
-	private JTextField addIDText;
-	private JTextField addAuthorText;
-	private JTextField addPressText;
-	private JTextField addStockText;
-	private JButton addqrButton;
-	private JButton addqxButton;
-	private JLabel delNameLabel;
-	private JLabel delIDLabel;
-	private JLabel delAuthorLabel;
-	private JLabel delPressLabel;
-	private JLabel delStockLabel;
-	private JTextField delStockText;
-	private JTextField delPressText;
-	private JTextField delAuthorText;
-	private JTextField delIDText;
-	private JTextField delNameText;
-	private JButton delqrButton;
-	private JButton delqxButton;
+	private JButton deleteButton,addButton;
+	private JLabel addNameLabel,addIDLabel,addAuthorLabel,addPressLabel,addStockLabel;
+	private JTextField addNameText,addIDText,addAuthorText,addPressText,addStockText;
+	private JButton addqrButton,addqxButton;
+	private JLabel delNameLabel,delIDLabel,delAuthorLabel,delPressLabel,delStockLabel;
+	private JTextField delStockText,delPressText,delAuthorText,delIDText,delNameText;
+	private JButton delqrButton,delqxButton;
+	
+	private JTable table;
+	
+
 
 	/**
 	 * Launch the application.
@@ -74,14 +55,14 @@ public class LibraryManage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LibraryManage() {
-		ArrayList<Book> resbook=new ArrayList<Book>();		
+	public LibraryManage() {		
+	    ArrayList<Book> booklist=new ArrayList<Book>();		
 		Message mes =new Message();
 		mes.setMessageType(MessageType.LibraryBookGetAll);
 		Message serverResponse=new Message();
 		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
-		resbook=(ArrayList<Book>)serverResponse.getData();
+		booklist=(ArrayList<Book>)serverResponse.getData();
 
 		
 		setTitle("图书馆-管理员");
@@ -575,34 +556,42 @@ public class LibraryManage extends JFrame {
 					.addGap(36))
 		);
 		
-		table = new JTable();
+		DefaultTableModel tablemodel;
+		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
+				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
+
+				private static final long serialVersionUID = 1L;
+				/*
+				 * overload the method to change the table's factor
+				 */
+				@Override
+				public boolean isCellEditable(int row, int column) {
+
+				return false;
+				}
+		};
+		
+		for(int i=0;i<booklist.size();i++) {
+			String[] arr=new String[6];
+			arr[0]=booklist.get(i).getName();
+			arr[1]=booklist.get(i).getId();
+			arr[2]=booklist.get(i).getAuthor();
+			arr[3]=booklist.get(i).getPress();
+			arr[4]=String.valueOf(booklist.get(i).getStock());
+			if(booklist.get(i).getState()==true)
+				arr[5]="可借";
+			else
+				arr[5]="不可借";
+			
+			tablemodel.addRow(arr);
+		}
+		
+		table = new JTable(tablemodel);
 		table.setBackground(SystemColor.info);
 		table.setFillsViewportHeight(true);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"\u4E66\u540D", "\u4E66\u53F7", "\u4F5C\u8005", "\u51FA\u7248\u793E", "\u5E93\u5B58", "\u72B6\u6001"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		
+		table.setModel(tablemodel);
+		
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);
 		
@@ -622,10 +611,40 @@ public class LibraryManage extends JFrame {
 		serverResponse=client.sendRequestToServer(mes);
 		ArrayList<Book> resbook=new ArrayList<Book>();
 		resbook=(ArrayList<Book>)serverResponse.getData();
+		
+		DefaultTableModel tablemodel;
+		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
+				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
+
+				private static final long serialVersionUID = 1L;
+				/*
+				 * overload the method to change the table's factor
+				 */
+				@Override
+				public boolean isCellEditable(int row, int column) {
+
+				return false;
+				}
+		};
+		
+		for(int i=0;i<resbook.size();i++) {
+			String[] arr=new String[6];
+			arr[0]=resbook.get(i).getName();
+			arr[1]=resbook.get(i).getId();
+			arr[2]=resbook.get(i).getAuthor();
+			arr[3]=resbook.get(i).getPress();
+			arr[4]=String.valueOf(resbook.get(i).getStock());
+			if(resbook.get(i).getState()==true)
+				arr[5]="可借";
+			else
+				arr[5]="不可借";
+		}
+		
+		table.setModel(tablemodel);
 	}
 
 	protected void DelqrAvt(ActionEvent e) {
-		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()),addPressText.getText());
+		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
 		
 		Message mes =new Message();
 		mes.setData(tbook);
@@ -637,6 +656,8 @@ public class LibraryManage extends JFrame {
 		int res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
+		
+		SetTableShow();
 	}
 
 	protected void ModifyAvtshow(ActionEvent e) {
@@ -675,7 +696,7 @@ public class LibraryManage extends JFrame {
 
 	//增加书籍确认界面
 	protected void AddbookAvt(ActionEvent e) {
-		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()),addPressText.getText());
+		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
 		
 		Message mes =new Message();
 		mes.setData(tbook);
@@ -688,6 +709,7 @@ public class LibraryManage extends JFrame {
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
 		
+		SetTableShow();
 	}
 
 	//增加书籍
@@ -751,12 +773,54 @@ public class LibraryManage extends JFrame {
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"修改完成","提示",JOptionPane.WARNING_MESSAGE);
 		
+		SetTableShow();		
 		contentPane.setVisible(true);
 		modifyPane.setVisible(false);
 		panel.setVisible(false);
 		addPane.setVisible(false);
 	}
 
+	public void SetTableShow() {
+		ArrayList<Book> booklist=new ArrayList<Book>();		
+		
+		Message mes =new Message();
+		mes.setMessageType(MessageType.LibraryBookGetAll);
+		Message serverResponse=new Message();
+		Client client=new Client();
+		serverResponse=client.sendRequestToServer(mes);
+		booklist=(ArrayList<Book>)serverResponse.getData();
+		
+		DefaultTableModel tablemodel;
+		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
+				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
+
+				private static final long serialVersionUID = 1L;
+				/*
+				 * overload the method to change the table's factor
+				 */
+				@Override
+				public boolean isCellEditable(int row, int column) {
+
+				return false;
+				}
+		};
+		
+		for(int i=0;i<booklist.size();i++) {
+			String[] arr=new String[6];
+			arr[0]=booklist.get(i).getName();
+			arr[1]=booklist.get(i).getId();
+			arr[2]=booklist.get(i).getAuthor();
+			arr[3]=booklist.get(i).getPress();
+			arr[4]=String.valueOf(booklist.get(i).getStock());
+			if(booklist.get(i).getState()==true)
+				arr[5]="可借";
+			else
+				arr[5]="不可借";
+			tablemodel.addRow(arr);
+		}
+		
+		table.setModel(tablemodel);
+	}
 	
 	//退出到登录界面
 	protected void ExitAvt(ActionEvent e) {
