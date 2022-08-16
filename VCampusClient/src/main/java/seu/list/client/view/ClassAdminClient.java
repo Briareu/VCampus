@@ -104,36 +104,36 @@ public class ClassAdminClient extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JButton exitbutton = new JButton("退出");
+		JButton exitbutton = new JButton("閫�鍑�");
 		
-		JMenu mnNewMenu = new JMenu("菜单");
-		mnNewMenu.setFont(new Font("微軟正黑體", Font.PLAIN, 13));
+		JMenu mnNewMenu = new JMenu("鑿滃崟");
+		mnNewMenu.setFont(new Font("寰粺姝ｉ粦楂�", Font.PLAIN, 13));
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("浏览");
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("娴忚");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				exitbutton.setText("退出");
+				exitbutton.setText("閫�鍑�");
 			}
 		});
-		mntmNewMenuItem_3.setFont(new Font("宋体", Font.PLAIN, 15));
+		mntmNewMenuItem_3.setFont(new Font("瀹嬩綋", Font.PLAIN, 15));
 		mnNewMenu.add(mntmNewMenuItem_3);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("修改");
-		mntmNewMenuItem.setFont(new Font("宋体", Font.PLAIN, 15));
+		JMenuItem mntmNewMenuItem = new JMenuItem("淇敼");
+		mntmNewMenuItem.setFont(new Font("瀹嬩綋", Font.PLAIN, 15));
 		mnNewMenu.add(mntmNewMenuItem);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("增加");
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("澧炲姞");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(nowmodel == MODEL.ADD){
-					JOptionPane.showMessageDialog(null,"请先进行保存","提示",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null,"璇峰厛杩涜淇濆瓨","鎻愮ず",JOptionPane.WARNING_MESSAGE);
 				}
 				else if(nowmodel == MODEL.DELETE) {
-					JOptionPane.showMessageDialog(null,"请先完成删除操作","提示",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null,"璇峰厛瀹屾垚鍒犻櫎鎿嶄綔","鎻愮ず",JOptionPane.WARNING_MESSAGE);
 				}
 				else if(nowmodel == MODEL.MODIFY) {
-					JOptionPane.showMessageDialog(null,"请先完成修改操作","提示",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null,"璇峰厛瀹屾垚淇敼鎿嶄綔","鎻愮ず",JOptionPane.WARNING_MESSAGE);
 				}
 				else {
 					String[] arr = new String[6];
@@ -148,42 +148,42 @@ public class ClassAdminClient extends JFrame {
 					int count = table.getRowCount();
 					settargetrow(count - 1);
 					table.isCellEditable(count - 1, 1);
-					exitbutton.setText("确定");
+					exitbutton.setText("纭畾");
 					nowmodel = MODEL.ADD;
 				}
 			}
 		});
-		mntmNewMenuItem_1.setFont(new Font("宋体", Font.PLAIN, 15));
+		mntmNewMenuItem_1.setFont(new Font("瀹嬩綋", Font.PLAIN, 15));
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("删除");
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("鍒犻櫎");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nowmodel = MODEL.DELETE;
-				exitbutton.setText("删除");
+				exitbutton.setText("鍒犻櫎");
 			}
 		});
-		mntmNewMenuItem_2.setFont(new Font("宋体", Font.PLAIN, 15));
+		mntmNewMenuItem_2.setFont(new Font("瀹嬩綋", Font.PLAIN, 15));
 		mnNewMenu.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JComboBox select = new JComboBox<String>();
-		select.addItem("班级");
-		select.addItem("学号");
-		select.addItem("姓名");
+		select.addItem("鐝骇");
+		select.addItem("瀛﹀彿");
+		select.addItem("濮撳悕");
 		
 		textField = new JTextField();
-		textField.setText("🔍");
+		textField.setText("馃攳");
 		textField.setColumns(10);
 		
-		JButton serachbutton = new JButton("确认");
+		JButton serachbutton = new JButton("纭");
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		
-		JLabel lblNewLabel = new JLabel("学生学籍管理");
-		lblNewLabel.setFont(new Font("新宋体", Font.PLAIN, 23));
+		JLabel lblNewLabel = new JLabel("瀛︾敓瀛︾睄绠＄悊");
+		lblNewLabel.setFont(new Font("鏂板畫浣�", Font.PLAIN, 23));
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -230,7 +230,7 @@ public class ClassAdminClient extends JFrame {
 		
 		table = new JTable();
 		String[][] data = new String[][] {};
-		table.setFont(new Font("Adobe 仿宋 Std R", Font.PLAIN, 12));
+		table.setFont(new Font("Adobe 浠垮畫 Std R", Font.PLAIN, 12));
 		table.setModel(model);
 		table.getColumnModel().getColumn(5).setPreferredWidth(144);
 		scrollPane.setViewportView(table);
@@ -264,19 +264,22 @@ public class ClassAdminClient extends JFrame {
 					//save
 					int rownum = table.getSelectedRow();
 					if(rownum == -1)
-						JOptionPane.showMessageDialog(null,"请选择一行再进行删除","提示",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null,"璇烽�夋嫨涓�琛屽啀杩涜鍒犻櫎","鎻愮ず",JOptionPane.WARNING_MESSAGE);
 					//int res = server.delete((String) table.getValueAt(rownum, 3));
 					
 					Message mes = new Message();
 					Client client = new Client();
-					mes.setExtraMessage((String)table.getValueAt(rownum, 2));//set your data
-					mes.setMessageType(MessageType.ClassAdminDelete);
+					//mes.setExtraMessage((String)table.getValueAt(rownum, 2));//set your data
+					mes.setModuleType(ModuleType.Student); // 设定学生模块
+					mes.setMessageType(MessageType.ClassAdminDelete); // 设定学生模块的具体操作
+					mes.setData(table.getValueAt(rownum, 2)); // 放入数据
 					Message serverResponse = new Message();
-					serverResponse = client.sendRequestToServer(mes);
+					serverResponse = client.sendRequestToServer(mes); // 接收服务器回传的数据
+					
 					int res = (int)serverResponse.getData();
 					
 					if(res > 0)
-						JOptionPane.showMessageDialog(null,"完成删除","提示",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null,"瀹屾垚鍒犻櫎","鎻愮ず",JOptionPane.WARNING_MESSAGE);
 					model.removeRow(rownum);
 					table.setModel(model);
 				}

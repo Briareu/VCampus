@@ -5,12 +5,17 @@ import java.io.Serializable;
 
 
 public class Message implements Serializable {
-  private static final long serialVersionUID = 50000;
+  private static final long serialVersionUID = 50000L;
+  
+  
+  private Object data;
+  private String messageType;
+  private String moduleType;
+  
+  
   private int userType;//0-学生 1-管理员
   private String userId;
   private String extraMessage;
-  private Object data;
-  private String messageType;
   private String errorMessage;
   private boolean lastOperState;
 
@@ -51,5 +56,11 @@ public class Message implements Serializable {
   }
   public void setUserType(int userType) {
       this.userType = userType;
+  }
+  public String getModuleType() {
+	  return this.moduleType;
+  }
+  public void setModuleType(String moduleType) {
+	  this.moduleType = moduleType;
   }
 }

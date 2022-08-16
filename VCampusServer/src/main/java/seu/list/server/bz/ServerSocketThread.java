@@ -18,15 +18,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
+import java.util.ArrayList;
 
 import seu.list.common.Message;
 import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 import seu.list.common.Student;
 import seu.list.server.dao.ClassAdminServer;
+import seu.list.server.dao.*;
 
 public class ServerSocketThread implements Runnable {
 	private Socket clientSocket;
-	private ClassAdminServer classAdminServer = new ClassAdminServer();
+	//private ClassAdminServer classAdminServer = new ClassAdminServer();
 	// your access-class and server-class
 
 	ServerSocketThread(Socket socket) {
@@ -41,9 +44,43 @@ public class ServerSocketThread implements Runnable {
 			ObjectInputStream message = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
 			Message object = (Message)message.readObject();
 			System.out.println("已与客户端建立连接，当前客户端ip为："+clientSocket.getInetAddress().getHostAddress());
+			System.out.println(object.getModuleType());
 			System.out.println(object.getMessageType());
 			Message serverResponse = new Message();
 			
+			try {
+				switch(object.getModuleType())
+				{
+					case ModuleType.User: // 用户管理模块
+						
+						break;
+					case ModuleType.Student: // 学生学籍管理模块
+						ClassAdminServer classAdminServer = new ClassAdminServer(object);
+						classAdminServer.execute();
+						serverResponse.setData(classAdminServer.getDataToClient());
+						break;
+					case ModuleType.Course: // 选课模块
+						
+						break;
+					case ModuleType.Library: // 图书馆模块
+						
+						break;
+					case ModuleType.Shop: // 商店模块
+						
+						break;
+					case ModuleType.Dormitory: // 宿舍模块
+						
+						break;
+					default:
+						break;
+				}
+			} finally {
+				serverResponse.setMessageType(MessageType.operFeedback);
+				serverResponse.setLastOperState(true);
+				ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+				response.writeObject(serverResponse);
+			}
+			/*
 			//thread start run
 			switch(object.getMessageType())
 			{//switch start
@@ -95,12 +132,12 @@ public class ServerSocketThread implements Runnable {
 			
 //图书馆---------------------------------------------
 			//1.获取所有的书籍信息
-			case MessageType.LibraryUserGetAll:
+			case MessageType.LibraryBookGetAll:
 			{
 				try {
 					serverResponse.setMessageType(MessageType.operFeedback);
-					int res = libraryUserServer.createList();
-					serverResponse.setData(res);
+					//int res = libraryUserServer.createList();
+					//serverResponse.setData(res);
 					serverResponse.setMessageType(MessageType.operFeedback);
 					serverResponse.setLastOperState(true);
 					
@@ -118,8 +155,8 @@ public class ServerSocketThread implements Runnable {
 					String bookid = null;
 					serverResponse.setMessageType(MessageType.operFeedback);
 					bookid = object.getExtraMessage();//get id
-					int res = libraryUserServer.DeleteBook(bookid);
-					serverResponse.setData(res);
+					//int res = libraryUserServer.DeleteBook(bookid);
+					//serverResponse.setData(res);
 					serverResponse.setLastOperState(true);
 				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -135,8 +172,8 @@ public class ServerSocketThread implements Runnable {
 					String bookid = null;
 					serverResponse.setMessageType(MessageType.operFeedback);
 					bookid = object.getExtraMessage();//get id
-					int res = libraryUserServer.AddBook(bookid);
-					serverResponse.setData(res);
+					//int res = libraryUserServer.AddBook(bookid);
+					//serverResponse.setData(res);
 					serverResponse.setLastOperState(true);
 				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -151,8 +188,8 @@ public class ServerSocketThread implements Runnable {
 				try {
 					ArrayList<String> para = new ArrayList<String>();
 					serverResponse.setMessageType(MessageType.operFeedback);
-					para = object.getExtraMessage();
-					int res = libraryUserServer.Lendbook(para.get(0),para.get(1),para.get(2));
+					//para = object.getExtraMessage();
+					//int res = libraryUserServer.Lendbook(para.get(0),para.get(1),para.get(2));
 					serverResponse.setData(res);
 					serverResponse.setLastOperState(true);
 				}finally {
@@ -231,7 +268,7 @@ public class ServerSocketThread implements Runnable {
 			break;
 			
 			//9.寻找书籍
-			case MessageType.LibraryBookFind：
+			case MessageType.LibraryBookFind:
 			{
 				try {
 					String bookid = null;
@@ -252,6 +289,7 @@ public class ServerSocketThread implements Runnable {
 			
 //宿舍----------------------------------------------
 			}//end switch
+			*/
 		}//end first try
 		catch(IOException e) {
 			e.printStackTrace();
