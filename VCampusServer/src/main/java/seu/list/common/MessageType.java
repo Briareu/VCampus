@@ -17,14 +17,13 @@ public final class MessageType {
     public static final String ClassAdminUpdate = "CLASS_ADMIN_UPDATE";
 
     //server操作LibraryUser
-    public static final String LibraryBookGetAll = "CLASS_ADMIN_GETALL";
-    public static final String LibraryBookAdd = "CLASS_ADMIN_ADD";
-    public static final String LibraryBookDelete = "CLASS_ADMIN_DELETE";
-    public static final String LibraryBookUpdate = "CLASS_ADMIN_UPDATE";  
-    public static final String LibraryBookLend = "CLASS_ADMIN_UPDATE";
-    public static final String LibraryBookReturn = "CLASS_ADMIN_UPDATE";
-    public static final String LibraryBookFind = "CLASS_ADMIN_FIND";
-
+    public static final String LibraryBookGetAll = "LIB_GETALL";
+    public static final String LibraryBookAdd = "LIB_ADD";
+    public static final String LibraryBookDelete = "LIB_DELETE";
+    public static final String LibraryBookUpdate = "LIB_UPDATE";  
+    public static final String LibraryBookLend = "LIB_LEND";
+    public static final String LibraryBookReturn = "LIB_RETURN";
+    public static final String LibraryBookFind = "LIB_FIND";
     
     //Test
     public static final String TestAdmin = "TEST_ADMIN";

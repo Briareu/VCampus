@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 import seu.list.common.Client;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
-import seu.list.common.StudentManage;
 import seu.list.common.Book;
 
 public class LibraryManage extends JFrame {
@@ -29,7 +28,6 @@ public class LibraryManage extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JRadioButton nameRadioButton,idRadioButton,authorRadioButton,pressRadioButton,stockRadioButton;
 	
-	private LibraryUserServer manager;
 	private JButton deleteButton;
 	private JButton addButton;
 	private JLabel addNameLabel;
@@ -77,15 +75,13 @@ public class LibraryManage extends JFrame {
 	 * Create the frame.
 	 */
 	public LibraryManage() {
-		manager=new LibraryUserServer();
+		ArrayList<Book> resbook=new ArrayList<Book>();		
 		Message mes =new Message();
-		mes.setExtraMessage(manager);
 		mes.setMessageType(MessageType.LibraryBookGetAll);
 		Message serverResponse=new Message();
-		ArrayList<Book> resbook=new ArrayList<Book>();
 		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
-		manager.setBookList((ArrayList<Book>)serverResponse.getData());
+		resbook=(ArrayList<Book>)serverResponse.getData();
 
 		
 		setTitle("图书馆-管理员");
@@ -485,7 +481,7 @@ public class LibraryManage extends JFrame {
 		JButton modifyButton = new JButton("修改");
 		modifyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModifyAvt(e);
+				ModifyAvtshow(e);
 			}
 		});
 		modifyButton.setForeground(new Color(0, 0, 128));
@@ -520,7 +516,7 @@ public class LibraryManage extends JFrame {
 		deleteButton = new JButton("删除");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DeleteAvt(e);
+				DeleteAvtshow(e);
 			}
 		});
 		deleteButton.setForeground(new Color(0, 0, 128));
@@ -530,7 +526,7 @@ public class LibraryManage extends JFrame {
 		addButton = new JButton("增加");
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddAvt(e);
+				AddAvtshow(e);
 			}
 		});
 		addButton.setForeground(new Color(0, 0, 128));
@@ -632,7 +628,7 @@ public class LibraryManage extends JFrame {
 		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()),addPressText.getText());
 		
 		Message mes =new Message();
-		mes.setExtraMessage(tbook);
+		mes.setData(tbook);
 		mes.setMessageType(MessageType.LibraryBookDelete);
 		Message serverResponse=new Message();
 		Client client=new Client();
@@ -643,7 +639,7 @@ public class LibraryManage extends JFrame {
 			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
 	}
 
-	protected void ModifyAvt(ActionEvent e) {
+	protected void ModifyAvtshow(ActionEvent e) {
 		contentPane.setVisible(false);
 		modifyPane.setVisible(true);
 		panel.setVisible(true);
@@ -659,7 +655,7 @@ public class LibraryManage extends JFrame {
 		deletePane.setVisible(false);	
 	}
 
-	protected void DeleteAvt(ActionEvent e) {
+	protected void DeleteAvtshow(ActionEvent e) {
 		contentPane.setVisible(false);
 		modifyPane.setVisible(false);
 		panel.setVisible(false);
@@ -682,7 +678,7 @@ public class LibraryManage extends JFrame {
 		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()),addPressText.getText());
 		
 		Message mes =new Message();
-		mes.setExtraMessage(tbook);
+		mes.setData(tbook);
 		mes.setMessageType(MessageType.LibraryBookAdd);
 		Message serverResponse=new Message();
 		Client client=new Client();
@@ -695,7 +691,7 @@ public class LibraryManage extends JFrame {
 	}
 
 	//增加书籍
-	protected void AddAvt(ActionEvent e) {
+	protected void AddAvtshow(ActionEvent e) {
 		contentPane.setVisible(false);
 		modifyPane.setVisible(false);
 		panel.setVisible(false);
@@ -709,7 +705,7 @@ public class LibraryManage extends JFrame {
 				(pressRadioButton.isSelected()==false)&&(stockRadioButton.isSelected()==false))
 			JOptionPane.showMessageDialog(null, "请选择修改的书籍信息！", "要求",JOptionPane.WARNING_MESSAGE);
 
-     	Message mes=new Massage();
+     	Message mes=new Message();
 		int res=0;
 		mes.setMessageType(MessageType.LibraryBookUpdate);  //
 		if(nameRadioButton.isSelected()) {
@@ -717,40 +713,40 @@ public class LibraryManage extends JFrame {
 			para.add(oldIDText.getText());
 			para.add("Name");
 			para.add(modifiedText.getText());
-			mes.setExtraMessage(para);	
+			mes.setData(para);	
 		}
 		if(idRadioButton.isSelected()) {
 			ArrayList<String> para = new ArrayList<String>();
 			para.add(oldIDText.getText());
 			para.add("ID");
 			para.add(modifiedText.getText());
-			mes.setExtraMessage(para);		
+			mes.setData(para);		
 		}
 		if(authorRadioButton.isSelected()) {
 			ArrayList<String> para = new ArrayList<String>();
 			para.add(oldIDText.getText());
 			para.add("Author");
 			para.add(modifiedText.getText());
-			mes.setExtraMessage(para);	
+			mes.setData(para);	
 		}
 		if(pressRadioButton.isSelected()) {
 			ArrayList<String> para = new ArrayList<String>();
 			para.add(oldIDText.getText());
 			para.add("Press");
 			para.add(modifiedText.getText());
-			mes.setExtraMessage(para);	
+			mes.setData(para);	
 		}
 		if(stockRadioButton.isSelected()) {
 			ArrayList<String> para = new ArrayList<String>();
 			para.add(oldIDText.getText());
 			para.add("Stock");
 			para.add(modifiedText.getText());
-			mes.setExtraMessage(para);	
+			mes.setData(para);	
 		}
 
      	Message serverResponse=new Message();
 		Client client=new Client();
-		serverResponse=client.sendResquestToServer(mes);
+		serverResponse=client.sendRequestToServer(mes);
 		res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"修改完成","提示",JOptionPane.WARNING_MESSAGE);
