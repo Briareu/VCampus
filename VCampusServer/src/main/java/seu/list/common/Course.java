@@ -1,4 +1,4 @@
-package seu.list.common;
+package VCampusServer.src.main.java.seu.list.common;
 
 
 import java.util.Vector;
@@ -95,13 +95,7 @@ public class Course {
 				", CourseType='" + CourseType + '\'' +
 				'}';
 	}
-	//	private  String Semester;
-//	private String CourseID;
-//	private String CourseMajor;
-//	private String CourseName;
-//	private String teacherID;
-//	private String CourseState;
-//	private String CourseType;
+
 	public Vector<String> getContent() {
 		Vector<String> courseContents = new Vector<String>();
 		courseContents.add(Semester);

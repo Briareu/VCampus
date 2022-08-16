@@ -1,10 +1,9 @@
-package user;
+package VCampusClient.src.main.java.seu.list.common;
 
 import java.util.ArrayList;
-import shop.Shop;
-import shop.Goods;
+
 public class Studentuser extends User{
-void buy(ArrayList<Goods> Goodlist,Shop shop) {
+void buy(ArrayList<Goods> Goodlist, Shop shop) {
 	
 };
 int balance=0;

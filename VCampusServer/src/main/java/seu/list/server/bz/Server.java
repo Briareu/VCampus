@@ -1,10 +1,8 @@
-package seu.list.server.bz;
+package VCampusServer.src.main.java.seu.list.server.bz;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import seu.list.server.*;
 
-import seu.list.server.test.*;
 
 public class Server implements Runnable{
     //private ArrayList<ContactInfo> onlineUsers;

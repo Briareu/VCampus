@@ -1,4 +1,4 @@
-package seu.list.common;
+package VCampusClient.src.main.java.seu.list.common;
 /*
  * ClassName: shop
  *

@@ -1,4 +1,4 @@
-package seu.list.common;
+package VCampusClient.src.main.java.seu.list.common;
 
 public final class MessageType {
     public MessageType() {
@@ -25,7 +25,12 @@ public final class MessageType {
     public static final String LibraryBookReturn = "LIB_RETURN";
     public static final String LibraryBookFind = "LIB_FIND";
 
-
+    public static final String REQ_SEARCH_LESSON="REQ_SEARCH_LESSON";//数据库查询课程
+    public static final String REQ_REMOVE_LESSON="REQ_REMOVE_LESSON";//老师加课
+    public static final String REQ_ADD_LESSON="REQ_ADD_LESSON";//老师删课
+    public static final String REQ_SHOW_ALL_LESSON="REQ_SHOW_ALL_LESSON";//显示全部课程
+    public static final String REQ_STU_ADD_LESSON="REQ_STU_ADD_LESSON";//学生选课
+    public static final String REQ_STU_REMOVE_LESSON="REQ_STU_REMOVE_LESSON";//学生退课
     
     //Test
     public static final String TestAdmin = "TEST_ADMIN";
