@@ -1,5 +1,4 @@
-package seu.list.server.dao;
-
+package seu.list.server.db;
 import virtualSchoolServer.common.Book;
 import virtualSchoolServer.common.Course;
 import virtualSchoolServer.common.Goods;

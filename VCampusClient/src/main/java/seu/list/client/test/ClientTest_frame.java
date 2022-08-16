@@ -1,0 +1,1 @@
+package seu.list.client.test;import org.junit.Test;import virtualSchoolClient.src.vsst.client.view.ClientLoginFrame;import virtualSchoolClient.src.vsst.*;public class ClientTest_frame {    public static void main(String[] args)   	{   		ClientLoginFrame clf = new ClientLoginFrame();   	}}

@@ -1,5 +1,5 @@
 package seu.list.common;
-//import vss.server.bz.user;
+
 
 import java.util.Vector;
 
