@@ -1,6 +1,11 @@
-package seu.list.common;
+package main.java.seu.list.common;
+
+import main.java.seu.list.server.dao.CourseDaoImp;
+import main.java.seu.list.server.db.SqlHelperImp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Student implements Serializable {
     private String studentid;
@@ -97,6 +102,7 @@ public class Student implements Serializable {
 	public Student() {
         super();
     }
+
 
     public Student(String studentID, String name, String Teacher, String classID, String Major, String origin, String status, Boolean gender, String phone, double credit) {
         this.classid = classID;

@@ -6,11 +6,11 @@
  * 
  * this is a connection class
  */
-package seu.list.server.db;
+package main.java.seu.list.server.db;
 
 import java.sql.*;
 
-import seu.list.common.*;
+
 
 public class StudentAccessHelper{
 	private Connection con = null;

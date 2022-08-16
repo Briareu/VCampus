@@ -1,4 +1,4 @@
-package seu.list.common;
+package VCampusClient.src.main.java.seu.list.common;
 
 public final class ModuleType {
 	public static final String User = "USER"; // 用户管理模块

@@ -1,7 +1,10 @@
-package seu.list.client.view;
+package VCampusClient.src.main.java.seu.list.client.view;
 
-import virtualSchoolClient.src.vsst.common.ClientReq;
-import virtualSchoolClient.src.vsst.common.Course;
+
+
+import VCampusClient.src.main.java.seu.list.common.ModuleType;
+import main.java.seu.list.common.Course;
+import main.java.seu.list.common.Message;
 
 import java.awt.FlowLayout;
 
@@ -169,8 +172,9 @@ public class CourseInfor extends JDialog implements ActionListener {
 			course.setCourseState(CourseState.getText());
 			course.setSemester(Semester.getText());
 			course.setCourseType(CourseType.getText());
-			ClientReq clientReq = new ClientReq();
-			clientReq.setType("REQ_ADD_LESSON");
+			Message clientReq = new Message();
+			clientReq.setModuleType(ModuleType.Course);
+			clientReq.setMessageType("REQ_ADD_LESSON");
 			clientReq.setContent(course.getContent());
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());

@@ -1,8 +1,9 @@
-package client.bz
+package VCampusClient.src.main.java.seu.list.client.bz;
 
 
-import virtualSchoolClient.src.vsst.common.ClientReq;
-import virtualSchoolClient.src.vsst.common.User;
+
+
+import main.java.seu.list.common.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

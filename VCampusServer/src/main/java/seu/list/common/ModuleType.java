@@ -1,10 +1,10 @@
-package seu.list.common;
+package VCampusServer.src.main.java.seu.list.common;
 
 public final class ModuleType {
-	public static final String User = "USER"; // ÓÃ»§¹ÜÀíÄ£¿é
-	public static final String Student = "STUDENT"; // Ñ§ÉúÑ§¼®¹ÜÀíÄ£¿é
-	public static final String Course = "COURSE"; // Ñ¡¿ÎÏµÍ³Ä£¿é
-	public static final String Shop = "SHOP"; // ÉÌµêÄ£¿é
-	public static final String Library = "LIBRARY"; // Í¼Êé¹ÝÄ£¿é
-	public static final String Dormitory = "Dormitory"; // ËÞÉáÄ£¿é
+	public static final String User = "USER"; // ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
+	public static final String Student = "STUDENT"; // Ñ§ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
+	public static final String Course = "COURSE"; // Ñ¡ï¿½ï¿½ÏµÍ³Ä£ï¿½ï¿½
+	public static final String Shop = "SHOP"; // ï¿½Ìµï¿½Ä£ï¿½ï¿½
+	public static final String Library = "LIBRARY"; // Í¼ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
+	public static final String Dormitory = "Dormitory"; // ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
 }

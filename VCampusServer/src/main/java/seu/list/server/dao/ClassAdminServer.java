@@ -1,14 +1,18 @@
-package seu.list.server.dao;
+package main.java.seu.list.server.dao;
+
+import main.java.seu.list.common.Message;
+import main.java.seu.list.common.MessageType;
+import main.java.seu.list.common.Student;
+import main.java.seu.list.server.db.StudentAccessHelper;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
-import seu.list.server.db.*;
-import seu.list.common.*;
 
-public class ClassAdminServer extends StudentAccessHelper{
+
+public class ClassAdminServer extends StudentAccessHelper {
 	Connection con = null;
 	Statement s = null;
 	ResultSet rs = null;

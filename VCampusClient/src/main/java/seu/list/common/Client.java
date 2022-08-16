@@ -1,4 +1,4 @@
-package seu.list.common;
+package VCampusClient.src.main.java.seu.list.common;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import seu.list.common.*;
 
 
 public class Client {

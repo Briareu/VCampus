@@ -1,6 +1,9 @@
-package seu.list.server.dao;
+package VCampusServer.src.main.java.seu.list.server.dao;
 
-import virtualSchoolServer.common.Course;
+
+
+import VCampusServer.src.main.java.seu.list.common.Course;
+
 
 import java.util.*;
 
