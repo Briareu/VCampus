@@ -1,4 +1,4 @@
-package seu.list.server.bz;
+package virtualSchoolServer.server.bz;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

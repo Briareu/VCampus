@@ -1,4 +1,4 @@
-package main.java.seu.list.common;
+package seu.list.common;
 
 import java.io.Serializable;
 
@@ -45,7 +45,7 @@ public class Dormitory implements Serializable{
 
     public void setStudentBunkID(int StudentBunkID) 
     {
-        this.StudentBunkID=StudentBunkID;
+        this.StudentBunkID=StudentBunkIDD;
     }
     
     public int getWater() 

@@ -1,9 +1,8 @@
-package main.java.seu.list.server.dao;
+package seu.list.server.dao;
 import java.util.List;
 import java.util.Vector;
 
-import main.java.seu.list.common.User;
-
+import virtualSchoolServer.common.User;
 
 
 public interface UserDao {

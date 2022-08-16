@@ -1,19 +1,14 @@
-package VCampusServer.src.main.java.seu.list.server.dao;
+package seu.list.server.dao;
 
 
-
-
-
-import VCampusServer.src.main.java.seu.list.common.Course;
-import VCampusServer.src.main.java.seu.list.server.dao.CourseDao;
-import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
-
+import virtualSchoolServer.common.Course;
+import virtualSchoolServer.server.db.SqlHelperImp;
 
 import java.util.List;
 
 
 
-public class CourseDaoImp implements CourseDao {
+public class CourseDaoImp implements CourseDao{
     @Override
     public Course searchCourseByID(String courseID) {
         // TODO Auto-generated method stub

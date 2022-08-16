@@ -1,10 +1,9 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 //学生选课界面
-
-
-
-import VCampusClient.src.main.java.seu.list.common.*;
-import main.java.seu.list.common.Course;
+import tools.Tools;
+import virtualSchoolClient.src.vsst.common.ClientReq;
+import virtualSchoolClient.src.vsst.common.Course;
+import virtualSchoolClient.src.vsst.common.User;
 
 import java.awt.*;
 import java.io.IOException;
@@ -94,19 +93,16 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		DefaultTableModel model;
 		model = new DefaultTableModel(courseinformation, courselist);
 
-		Message mes = new Message();
-		Client client=new Client();
-		mes.setUserType(0);
-
-		mes.setModuleType(ModuleType.Course);
+		ClientReq clientReq = new ClientReq();
+		clientReq.setType("REQ_SHOW_ALL_LESSON");
 		//传数据
 		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-		oos.writeObject(mes);
+		oos.writeObject(clientReq);
 		oos.flush();
 		//接受数据
 		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-		mes = (Message) ois.readObject();
-		Vector<String> allCourseContents = (Vector<String>) mes.getData();
+		clientReq = (ClientReq) ois.readObject();
+		Vector<String> allCourseContents = clientReq.getContent();
 		System.out.println(allCourseContents.size());
 		Object sigRow[] = new  String[7];
 		for(int i=0;i<allCourseContents.size();) {
@@ -300,13 +296,12 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand() == "choose") {
 			this.setVisible(false);
-			Message clientReq = new Message();//新建申请用于交换
+			ClientReq clientReq = new ClientReq();//新建申请用于交换
 			Vector<String> reqContent = new Vector<String>();
             reqContent.add(jtf2.getText());
 			reqContent.add(userID);
-            clientReq.setData(reqContent);
-			clientReq.setModuleType(ModuleType.Course);
-			clientReq.setMessageType("REQ_STU_ADD_LESSON");
+            clientReq.setContent(reqContent);
+			clientReq.setType("REQ_STU_ADD_LESSON");
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				oos.writeObject(clientReq);
@@ -315,19 +310,17 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 				ClientStuCourseFrame csf = new ClientStuCourseFrame(userID,socket);
 			} catch(Exception e1) {
 				e1.printStackTrace();
-			}
-			clientReq.setModuleType(ModuleType.Course);
-			clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
+			}clientReq.setType("REQ_SHOW_ALL_LESSON");
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				oos.writeObject(clientReq);
 				oos.flush();
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				clientReq = (Message) ois.readObject();
+				clientReq = (ClientReq) ois.readObject();
 			} catch(Exception e1) {
 				e1.printStackTrace();
 			}
-			Vector<String>	allCourseInfor = (Vector<String>) clientReq.getData();
+			Vector<String>	allCourseInfor = clientReq.getContent();
 			int rowNumber = allCourseInfor.size()/7;
 			String[][] allCourseTable = new String[rowNumber][7];
 			int storingPlace = 0;
@@ -362,22 +355,21 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		}
 		else if(e.getActionCommand() == "chozen") {
 			this.setVisible(false);
-			Message clientReq = new Message();//新建申请用于交换
+			ClientReq clientReq = new ClientReq();//新建申请用于交换
 			User user = new User();
 			user.setId(userID);
-			clientReq.setData(user.getContent());
-			clientReq.setModuleType(ModuleType.Course);
-			clientReq.setMessageType("REQ_STU_ALL_CHOOOSE");
+			clientReq.setContent(user.getContent());
+			clientReq.setType("REQ_STU_ALL_CHOOOSE");
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				oos.writeObject(clientReq);
 				oos.flush();
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				clientReq = (Message) ois.readObject();
+				clientReq = (ClientReq) ois.readObject();
 			} catch(Exception e2) {
 				e2.printStackTrace();
 			}
-			Vector<String>	allCourseInfor = (Vector<String>) clientReq.getData();
+			Vector<String>	allCourseInfor = clientReq.getContent();
 			int rowNumber = allCourseInfor.size()/7;
 			String[][] allCourseTable = new String[rowNumber][7];
 			int storingPlace = 0;
@@ -411,25 +403,24 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			this.setLocationRelativeTo(null);
 		}
 		else if(e.getActionCommand() == "check") {
-			Message clientReq = new Message();//新建申请用于交换
-			clientReq.setModuleType(ModuleType.Course);
-			clientReq.setMessageType("REQ_SEARCH_LESSON");//查找课程
+			ClientReq clientReq = new ClientReq();//新建申请用于交换
+			clientReq.setType("REQ_SEARCH_LESSON");//查找课程
 			Vector<String> reqContent = new Vector<String>();
 			Course c = new Course();
 			c.setCourseID(jtf1.getText());
 			reqContent = c.getContent();
-			clientReq.setData(reqContent);//调用信息存进申请
+			clientReq.setContent(reqContent);//调用信息存进申请
 			//通信
 			try {
 			ObjectOutputStream oos5 = new ObjectOutputStream(socket.getOutputStream());//把这个socket通过OutputStream输出给Server端
 			oos5.writeObject(clientReq);//写进申请里面去（序列化）
 			oos5.flush();//上传等待处理
             ObjectInputStream ois5 = new ObjectInputStream(socket.getInputStream());//把这个socket通过InputStream写回client端
-			clientReq = (Message) ois5.readObject();}//读出（去序列化）
+			clientReq = (ClientReq) ois5.readObject();}//读出（去序列化）
 			catch(Exception e3) {
 				e3.printStackTrace();
 			}
-			Vector<String>	allCourseInfor = (Vector<String>) clientReq.getData();
+			Vector<String>	allCourseInfor = clientReq.getContent();
 			int rowNumber = allCourseInfor.size()/7;
 			String[][] allCourseTable = new String[rowNumber][7];
 			int storingPlace = 0;
@@ -464,13 +455,12 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		}
 	    else if(e.getActionCommand() == "cancel") {
 	    	this.setVisible(false);
-			Message clientReq = new Message();
+			ClientReq clientReq = new ClientReq();
 			Vector<String> content = new Vector<String>();
 			content.add(jtf2.getText());//课ID
 			content.add(userID);//人ID
-            clientReq.setData(content);
-			clientReq.setModuleType(ModuleType.Course);
-			clientReq.setMessageType("REQ_STU_REMOVE_LESSON");
+            clientReq.setContent(content);
+			clientReq.setType("REQ_STU_REMOVE_LESSON");
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				oos.writeObject(clientReq);
@@ -478,21 +468,20 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			} catch(Exception e4) {
 				e4.printStackTrace();
 			}
-			clientReq.setModuleType(ModuleType.Course);
-			clientReq.setMessageType("REQ_STU_ALL_CHOOOSE");
+			clientReq.setType("REQ_STU_ALL_CHOOOSE");
 			User user =new User();
 			user.setId(userID);
-			clientReq.setData(user.getContent());
+			clientReq.setContent(user.getContent());
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				oos.writeObject(clientReq);
 				oos.flush();
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				clientReq = (Message) ois.readObject();
+				clientReq = (ClientReq) ois.readObject();
 			} catch(Exception e1) {
 				e1.printStackTrace();
 			}
-			Vector<String>	allCourseInfor = (Vector<String>) clientReq.getData();
+			Vector<String>	allCourseInfor = clientReq.getContent();
 			int rowNumber = allCourseInfor.size()/7;
 			String[][] allCourseTable = new String[rowNumber][7];
 			int storingPlace = 0;

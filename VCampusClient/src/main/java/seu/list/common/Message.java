@@ -1,4 +1,4 @@
-package VCampusClient.src.main.java.seu.list.common;
+package seu.list.common;
 
 import java.io.Serializable;
 //与Client、GUI进行交互的过程中需要用到Message对象进行信息的传递

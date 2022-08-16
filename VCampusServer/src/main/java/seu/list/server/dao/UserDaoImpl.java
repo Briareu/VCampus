@@ -1,8 +1,6 @@
-package main.java.seu.list.server.dao;
-
-
-import main.java.seu.list.common.User;
-import main.java.seu.list.server.db.SqlHelperImp;
+package seu.list.server.dao;
+import virtualSchoolServer.common.User;
+import virtualSchoolServer.server.db.SqlHelperImp;
 
 import java.util.List;
 import java.util.Vector;
