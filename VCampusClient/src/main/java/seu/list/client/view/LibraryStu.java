@@ -13,6 +13,9 @@ import javax.swing.table.DefaultTableModel;
 
 import server.Library.Book;
 import server.Library.LibraryUserServer;
+import seu.list.common.Client;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
 
 public class LibraryStu extends JFrame {
 
@@ -25,7 +28,6 @@ public class LibraryStu extends JFrame {
 	private JButton qrLendButton,qrReturnButton,qxLendButton,qxReturnButton; //lendPane&returnPane
 	private JLayeredPane layerPane;
 	
-	private LibraryUserServer stu;
 
 	/**
 	 * Launch the application.
@@ -47,17 +49,13 @@ public class LibraryStu extends JFrame {
 	 * Create the frame.
 	 */
 	public LibraryStu() {
-		stu=new LibraryUserServer();
-		
-		manager=new LibraryUserServer();
+		ArrayList<Book> resbook=new ArrayList<Book>();		
 		Message mes =new Message();
-		mes.setExtraMessage(stu);
 		mes.setMessageType(MessageType.LibraryBookGetAll);
 		Message serverResponse=new Message();
-		ArrayList<Book> resbook=new ArrayList<Book>();
 		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
-		stu.setBookList((ArrayList<Book>)serverResponse.getData());
+		resbook=(ArrayList<Book>)serverResponse.getData();
 		
 		setTitle("图书馆-学生");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -398,5 +396,3 @@ public class LibraryStu extends JFrame {
 
 	}
 }
-
- 

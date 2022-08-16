@@ -17,13 +17,13 @@ public final class MessageType {
     public static final String ClassAdminUpdate = "CLASS_ADMIN_UPDATE";
 
     //server操作LibraryUser
-    public static final String LibraryBookGetAll = "LIBRARY_BOOK_GETALL";
-    public static final String LibraryBookAdd = "LIBRARY_BOOK_ADD";
-    public static final String LibraryBookDelete = "LIBRARY_BOOK_DELETE";
-    public static final String LibraryBookUpdate = "LIBRARY_BOOK_UPDATE";  
-    public static final String LibraryBookLend = "LIBRARY_BOOK_LEND";
-    public static final String LibraryBookReturn = "LIBRARY_BOOK_RETURN";
-    public static final String LibraryBookFind = "LIBRARY_BOOK_FIND";
+    public static final String LibraryBookGetAll = "LIB_GETALL";
+    public static final String LibraryBookAdd = "LIB_ADD";
+    public static final String LibraryBookDelete = "LIB_DELETE";
+    public static final String LibraryBookUpdate = "LIB_UPDATE";  
+    public static final String LibraryBookLend = "LIB_LEND";
+    public static final String LibraryBookReturn = "LIB_RETURN";
+    public static final String LibraryBookFind = "LIB_FIND";
 
     
     //Test

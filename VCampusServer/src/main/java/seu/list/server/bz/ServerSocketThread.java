@@ -136,8 +136,14 @@ public class ServerSocketThread implements Runnable {
 			{
 				try {
 					serverResponse.setMessageType(MessageType.operFeedback);
+<<<<<<< HEAD
 					//int res = libraryUserServer.createList();
 					//serverResponse.setData(res);
+=======
+					ArrayList<Book> bookList;
+					bookList = LibraryUserServer.createList();
+					serverResponse.setData(bookList);
+>>>>>>> 3a85065deef49020acdca7317217d34b54060c3a
 					serverResponse.setMessageType(MessageType.operFeedback);
 					serverResponse.setLastOperState(true);
 					
@@ -146,8 +152,9 @@ public class ServerSocketThread implements Runnable {
 					response.writeObject(serverResponse);
 				}
 			}
-			break;
+			break;	
 			
+<<<<<<< HEAD
 			//2.删除某一行书籍信息（管理员）
 			case MessageType.LibraryBookDelete:
 			{
@@ -183,14 +190,22 @@ public class ServerSocketThread implements Runnable {
 			break;		
 			
 			//4.修改某一行书籍信息
+=======
+			//2.修改某一行书籍信息
+>>>>>>> 3a85065deef49020acdca7317217d34b54060c3a
 			case MessageType.ClassAdminUpdate:
 			{
 				try {
 					ArrayList<String> para = new ArrayList<String>();
 					serverResponse.setMessageType(MessageType.operFeedback);
+<<<<<<< HEAD
 					//para = object.getExtraMessage();
 					//int res = libraryUserServer.Lendbook(para.get(0),para.get(1),para.get(2));
 					serverResponse.setData(res);
+=======
+					para = (ArrayList<String>) object.getData();
+					LibraryUserServer.ModifyBook(para.get(0),para.get(1),para.get(2));
+>>>>>>> 3a85065deef49020acdca7317217d34b54060c3a
 					serverResponse.setLastOperState(true);
 				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -199,15 +214,14 @@ public class ServerSocketThread implements Runnable {
 			}
 			break;
 			
-			//5.借书
+			//3.借书
 			case MessageType.LibraryBookLend:
 			{
 				try {
 					String bookid = null;
 					serverResponse.setMessageType(MessageType.operFeedback);
 					bookid = object.getExtraMessage();//get id
-					int res = libraryUserServer.Lendbook(bookid);
-					serverResponse.setData(res);
+					LibraryUserServer.LendBook(bookid);
 					serverResponse.setLastOperState(true);
 				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -216,15 +230,15 @@ public class ServerSocketThread implements Runnable {
 			}
 			break;	
 			
-			//6.还书
+			//4.还书
 			case MessageType.LibraryBookReturn:
 			{
 				try {
 					String bookid = null;
 					serverResponse.setMessageType(MessageType.operFeedback);
 					bookid = object.getExtraMessage();//get id
-					int res = libraryUserServer.Returnbook(bookid);
-					serverResponse.setData(res);
+					LibraryUserServer.ReturnBook(bookid);
+
 					serverResponse.setLastOperState(true);
 				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -233,15 +247,14 @@ public class ServerSocketThread implements Runnable {
 			}
 			break;	
 			
-			//7.增加书籍
+			//5.增加书籍
 			case MessageType.LibraryBookAdd:
 			{
 				try {
-					String bookid = null;
+					Book book;
 					serverResponse.setMessageType(MessageType.operFeedback);
-					bookid = object.getExtraMessage();//get Book
-					int res = libraryUserServer.AddBook(bookid);
-					serverResponse.setData(res);
+					book = (Book) object.getData();//get id
+					LibraryUserServer.AddBook(book);
 					serverResponse.setLastOperState(true);
 				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -250,15 +263,14 @@ public class ServerSocketThread implements Runnable {
 			}
 			break;
 			
-			//8.删除书籍
+			//6.删除书籍
 			case MessageType.LibraryBookDelete：
 			{
 				try {
 					String bookid = null;
 					serverResponse.setMessageType(MessageType.operFeedback);
-					bookid = object.getExtraMessage();//get Book
-					int res = libraryUserServer.AddBook(bookid);
-					serverResponse.setData(res);
+					bookid = object.getExtraMessage();//get id
+					LibraryUserServer.DeleteBook(bookid);
 					serverResponse.setLastOperState(true);
 				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -267,15 +279,21 @@ public class ServerSocketThread implements Runnable {
 			}
 			break;
 			
+<<<<<<< HEAD
 			//9.寻找书籍
 			case MessageType.LibraryBookFind:
+=======
+			//7.寻找书籍
+			case MessageType.LibraryBookFind：
+>>>>>>> 3a85065deef49020acdca7317217d34b54060c3a
 			{
 				try {
 					String bookid = null;
+					ArrayList<Book> booklist=new ArrayList<Book>();
 					serverResponse.setMessageType(MessageType.operFeedback);
 					bookid = object.getExtraMessage();//get Bookid
-					int res = libraryUserServer.FindBook(bookid);
-					serverResponse.setData(res);
+					booklist=LibraryUserServer.FindBook(bookid);
+					serverResponse.setData(booklist);
 					serverResponse.setLastOperState(true);
 				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());

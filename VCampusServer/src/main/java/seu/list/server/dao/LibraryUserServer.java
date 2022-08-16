@@ -7,15 +7,18 @@ import java.util.ArrayList;
 
 import com.sun.net.httpserver.Authenticator.Result;
 
+import seu.list.common.Book;
+import seu.list.server.db.Library_DbAccess;
 
-public class LibraryUserServer /*extends Library_DbAccess*/ {
-	Connection con = null;
+
+public class LibraryUserServer extends Library_DbAccess {
+	static Connection con = null;
 	Statement s = null;
 	ResultSet rs=null;
 	
 	private String id;
 	private String passwd;
-	private ArrayList<Book> bookList;
+	private static ArrayList<Book> bookList;
 	
 	public LibraryUserServer(String jid, String jpasswd) { 
 		this.id=jid;
@@ -32,9 +35,9 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 		bookList=tbooklist;
 	}
 	
-	public void createList() {
+	public static ArrayList<Book> createList() {
 		try {
-//			con=getConnection();
+			con=getConnection();
 			s = con.createStatement();// 创建SQL语句对象
 			rs=s.executeQuery("select * from BookList");	// 查询书籍信息
 						
@@ -55,6 +58,7 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 		} finally {
 //			closeConnection(con, rs, s);
 		}
+		return bookList;
 	}
 
 	public Integer Login() {  //return 0-正确；1-一卡通号错误；2-密码错误
@@ -63,7 +67,7 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 	}
 
 	//书名或书号查找
-	public ArrayList<Book> FindBook(String fbookid) {
+	public static ArrayList<Book> FindBook(String fbookid) {
 			ArrayList<Book> resbook=new ArrayList<Book>();		
 		try {
 			for(int i=0;i<bookList.size();i++) {
@@ -81,9 +85,9 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 	}
 	
 	//书号查找（唯一）
-	public Book FindBookID(String fbookid) {
+	public static Book FindBookID(String fbookid) {
+			Book resbook=new Book();		
 		try {
-			Book resbook=new Book();
 			for(int i=0;i<bookList.size();i++) {
 				Book tbook=bookList.get(i);
 				if(tbook.getName().equals(fbookid)||tbook.getId().equals(fbookid)) {
@@ -100,7 +104,7 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 	}	
 	
 	//学生
-	public void LendBook(String bookid) { //用书号查找（唯一）
+	public static void LendBook(String bookid) { //用书号查找（唯一）
 		try {
 			Book targetbook=FindBookID(bookid);
 		    int result=0;			
@@ -124,7 +128,7 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 	}
 	
 	//学生
-	public void ReturnBook(String bookid) {
+	public static void ReturnBook(String bookid) {
 		try {
 			Book targetbook=FindBookID(bookid); //用书号查找（唯一）
 		    int result=0;
@@ -145,7 +149,7 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 	}
 	
 	//管理员
-	public void AddBook(Book tbook) { 
+	public static void AddBook(Book tbook) { 
 		try {
 			int result=0;
 			bookList.add(tbook);		
@@ -160,7 +164,7 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 	}
 	
 	//管理员
-	public void DeleteBook(String bookid) { //用书号查找（唯一）
+	public static void DeleteBook(String bookid) { //用书号查找（唯一）
 		try {
 			int result=0;
 			Book tbook=FindBookID(bookid);
@@ -174,7 +178,7 @@ public class LibraryUserServer /*extends Library_DbAccess*/ {
 	}
 	
 	//管理员
-	public void ModifyBook(String bookid,String attr,String modattr) { //用书号查找（唯一）
+	public static void ModifyBook(String bookid,String attr,String modattr) { //用书号查找（唯一）
 		try {
 			int result=0;
 			Book tbook=FindBookID(bookid);
