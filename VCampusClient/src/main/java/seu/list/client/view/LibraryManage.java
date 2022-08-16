@@ -12,11 +12,11 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
-import client.student.Client;
-import client.student.Message;
-import client.student.StudentManage;
-import server.Library.Book;
-import server.Library.LibraryUserServer;
+import seu.list.common.Client;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.StudentManage;
+import seu.list.common.Book;
 
 public class LibraryManage extends JFrame {
 
