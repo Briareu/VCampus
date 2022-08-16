@@ -11,8 +11,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
-import server.Library.Book;
-import server.Library.LibraryUserServer;
+import seu.list.common.Book;
 import seu.list.common.Client;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
@@ -23,11 +22,11 @@ public class LibraryStu extends JFrame {
 	private JPanel lendPane,returnPane; //借书、还书界面
 	
 	private JTextField findText,lendIDText,returnIDText;
-	private JTable table;
 	private JButton returnBookButton,exitButton,lendBookButton;  //contentPane
 	private JButton qrLendButton,qrReturnButton,qxLendButton,qxReturnButton; //lendPane&returnPane
 	private JLayeredPane layerPane;
 	
+	private JTable table;	
 
 	/**
 	 * Launch the application.
@@ -49,13 +48,13 @@ public class LibraryStu extends JFrame {
 	 * Create the frame.
 	 */
 	public LibraryStu() {
-		ArrayList<Book> resbook=new ArrayList<Book>();		
+		ArrayList<Book> booklist=new ArrayList<Book>();		
 		Message mes =new Message();
 		mes.setMessageType(MessageType.LibraryBookGetAll);
 		Message serverResponse=new Message();
 		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
-		resbook=(ArrayList<Book>)serverResponse.getData();
+		booklist=(ArrayList<Book>)serverResponse.getData();
 		
 		setTitle("图书馆-学生");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -179,39 +178,45 @@ public class LibraryStu extends JFrame {
 					.addGap(445))
 		);
 		
-		table = new JTable();
-		table.setCellSelectionEnabled(true);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setFillsViewportHeight(true);
+		
+		DefaultTableModel tablemodel;
+		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
+				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
+
+				private static final long serialVersionUID = 1L;
+				/*
+				 * overload the method to change the table's factor
+				 */
+				@Override
+				public boolean isCellEditable(int row, int column) {
+
+				return false;
+				}
+		};
+		
+		for(int i=0;i<booklist.size();i++) {
+			String[] arr=new String[6];
+			arr[0]=booklist.get(i).getName();
+			arr[1]=booklist.get(i).getId();
+			arr[2]=booklist.get(i).getAuthor();
+			arr[3]=booklist.get(i).getPress();
+			arr[4]=String.valueOf(booklist.get(i).getStock());
+			if(booklist.get(i).getState()==true)
+				arr[5]="可借";
+			else
+				arr[5]="不可借";
+			
+			tablemodel.addRow(arr);
+		}
+		
+		table = new JTable(tablemodel);
 		table.setBackground(SystemColor.info);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"\u4E66\u540D", "\u4E66\u53F7", "\u4F5C\u8005", "\u51FA\u7248\u793E", "\u5E93\u5B58", "\u72B6\u6001"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, true, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		table.setFillsViewportHeight(true);
+		
+		table.setModel(tablemodel);
+		
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);	
-		
 		
 		lendIDText = new JTextField();
 		lendIDText.setForeground(UIManager.getColor("Button.shadow"));
@@ -354,6 +359,7 @@ public class LibraryStu extends JFrame {
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"还书完成","提示",JOptionPane.WARNING_MESSAGE);
 	
+		SetTableShow()
 	}
 
 	//借书
@@ -374,6 +380,7 @@ public class LibraryStu extends JFrame {
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"借书完成","提示",JOptionPane.WARNING_MESSAGE);
 		
+		SetTableShow();
 	}
 
 	//查询
@@ -386,8 +393,79 @@ public class LibraryStu extends JFrame {
 		serverResponse=client.sendRequestToServer(mes);
 		ArrayList<Book> resbook=new ArrayList<Book>();
 		resbook=(ArrayList<Book>)serverResponse.getData();
+		
+		DefaultTableModel tablemodel;
+		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
+				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
+
+				private static final long serialVersionUID = 1L;
+				/*
+				 * overload the method to change the table's factor
+				 */
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+		};
+		
+		for(int i=0;i<resbook.size();i++) {
+			String[] arr=new String[6];
+			arr[0]=resbook.get(i).getName();
+			arr[1]=resbook.get(i).getId();
+			arr[2]=resbook.get(i).getAuthor();
+			arr[3]=resbook.get(i).getPress();
+			arr[4]=String.valueOf(resbook.get(i).getStock());
+			if(resbook.get(i).getState()==true)
+				arr[5]="可借";
+			else
+				arr[5]="不可借";
+		}
+		
+		table.setModel(tablemodel);
 	}
 
+	public void SetTableShow() {
+		ArrayList<Book> booklist=new ArrayList<Book>();		
+		
+		Message mes =new Message();
+		mes.setMessageType(MessageType.LibraryBookGetAll);
+		Message serverResponse=new Message();
+		Client client=new Client();
+		serverResponse=client.sendRequestToServer(mes);
+		booklist=(ArrayList<Book>)serverResponse.getData();
+		
+		DefaultTableModel tablemodel;
+		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
+				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
+
+				private static final long serialVersionUID = 1L;
+				/*
+				 * overload the method to change the table's factor
+				 */
+				@Override
+				public boolean isCellEditable(int row, int column) {
+
+				return false;
+				}
+		};
+		
+		for(int i=0;i<booklist.size();i++) {
+			String[] arr=new String[6];
+			arr[0]=booklist.get(i).getName();
+			arr[1]=booklist.get(i).getId();
+			arr[2]=booklist.get(i).getAuthor();
+			arr[3]=booklist.get(i).getPress();
+			arr[4]=String.valueOf(booklist.get(i).getStock());
+			if(booklist.get(i).getState()==true)
+				arr[5]="可借";
+			else
+				arr[5]="不可借";
+			tablemodel.addRow(arr);
+		}
+		
+		table.setModel(tablemodel);
+	}
+	
 	//退出
 	protected void ExitAvt(ActionEvent e) {
 		 //登录界面LibraryLogin
