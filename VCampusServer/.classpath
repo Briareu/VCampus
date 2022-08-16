@@ -37,5 +37,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/access/Access_JDBC30.jar"/>
 	<classpathentry kind="lib" path="D:/access/UCanAccess-3.0.6-bin/ucanaccess-3.0.6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
