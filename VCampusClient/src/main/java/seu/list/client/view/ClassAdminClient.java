@@ -1,4 +1,3 @@
-//package VCampusClient.src.main.java.seu.list.client.view;
 package seu.list.client.view;
 
 import java.awt.BorderLayout;
@@ -8,12 +7,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Button;
+import java.awt.Dialog.ModalExclusionType;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.ScrollPane;
@@ -22,16 +26,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 
 import seu.list.common.*;
-//import seu.list.common.Client;
-import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.common.Student;
-import seu.list.client.bz.*;
+import seu.list.client.*;
+import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
+import seu.list.client.test.MainTest;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -48,8 +52,13 @@ public class ClassAdminClient extends JFrame {
 	private int targetrow;
 	private int targetcol;
 	private int target;
-	private enum MODEL{WATCHING, MODIFY, ADD,DELETE};
+
+	private enum MODEL {
+		WATCHING, MODIFY, ADD, DELETE
+	};
+
 	private MODEL nowmodel;
+
 	/**
 	 * Launch the application.
 	 */
@@ -69,11 +78,12 @@ public class ClassAdminClient extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("unchecked")
 	public ClassAdminClient() {
 		nowmodel = MODEL.WATCHING;
 		num = 0;
-		model = new DefaultTableModel(new Object[][] {},new String[] {
-			"\u73ED\u7EA7", "\u6559\u5E08", "\u5B66\u53F7", "\u59D3\u540D", "\u4E13\u4E1A", "\u8054\u7CFB\u7535\u8BDD"}) {
+		model = new DefaultTableModel(new Object[][] {}, new String[] { "\u73ED\u7EA7", "\u6559\u5E08", "\u5B66\u53F7",
+				"\u59D3\u540D", "\u4E13\u4E1A", "\u8054\u7CFB\u7535\u8BDD" }) {
 			/**
 				 * 
 				 */
@@ -90,11 +100,27 @@ public class ClassAdminClient extends JFrame {
 					} else {
 						return false;
 					}
-				}
-				else {
-					if(row == gettargetrow()) {
+				} else if(target == 1){
+					if (row == gettargetrow()) {
 						return true;
-					}else {
+					} else {
+						return false;
+					}
+				}else if(target == 2){
+					if(column == gettargetcol() && row == gettargetrow()) {
+						return true;
+					}
+					else {
+						return false;
+					}
+				}else {//set id
+					if((column == gettargetcol() || column == gettargetcol() + 1 || column ==gettargetcol() + 4 )&& row == gettargetrow()) {
+						return false;
+					}
+					else if(row == gettargetrow()) {
+						return true;
+					}
+					else {
 						return false;
 					}
 				}
@@ -102,43 +128,40 @@ public class ClassAdminClient extends JFrame {
 		};
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 603, 434);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
-		JButton exitbutton = new JButton("閫�鍑�");
-		
-		JMenu mnNewMenu = new JMenu("鑿滃崟");
-		mnNewMenu.setFont(new Font("寰粺姝ｉ粦楂�", Font.PLAIN, 13));
+
+		JButton exitbutton = new JButton("退出");
+
+		JMenu mnNewMenu = new JMenu("菜单");
+		mnNewMenu.setFont(new Font("微軟正黑體", Font.PLAIN, 13));
 		menuBar.add(mnNewMenu);
-		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("娴忚");
+
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("浏览");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				exitbutton.setText("閫�鍑�");
+				exitbutton.setText("退出");
 			}
 		});
-		mntmNewMenuItem_3.setFont(new Font("瀹嬩綋", Font.PLAIN, 15));
+		mntmNewMenuItem_3.setFont(new Font("宋体", Font.PLAIN, 15));
 		mnNewMenu.add(mntmNewMenuItem_3);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("淇敼");
-		mntmNewMenuItem.setFont(new Font("瀹嬩綋", Font.PLAIN, 15));
+
+		JMenuItem mntmNewMenuItem = new JMenuItem("修改");
+		mntmNewMenuItem.setFont(new Font("宋体", Font.PLAIN, 15));
 		mnNewMenu.add(mntmNewMenuItem);
-		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("澧炲姞");
+
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("增加");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(nowmodel == MODEL.ADD){
-					JOptionPane.showMessageDialog(null,"璇峰厛杩涜淇濆瓨","鎻愮ず",JOptionPane.WARNING_MESSAGE);
-				}
-				else if(nowmodel == MODEL.DELETE) {
-					JOptionPane.showMessageDialog(null,"璇峰厛瀹屾垚鍒犻櫎鎿嶄綔","鎻愮ず",JOptionPane.WARNING_MESSAGE);
-				}
-				else if(nowmodel == MODEL.MODIFY) {
-					JOptionPane.showMessageDialog(null,"璇峰厛瀹屾垚淇敼鎿嶄綔","鎻愮ず",JOptionPane.WARNING_MESSAGE);
-				}
-				else {
-					String[] arr = new String[6];
+				if (nowmodel == MODEL.ADD) {
+					JOptionPane.showMessageDialog(null, "请先进行保存", "提示", JOptionPane.WARNING_MESSAGE);
+				} else if (nowmodel == MODEL.DELETE) {
+					JOptionPane.showMessageDialog(null, "请先完成删除操作", "提示", JOptionPane.WARNING_MESSAGE);
+				} else if (nowmodel == MODEL.MODIFY) {
+					JOptionPane.showMessageDialog(null, "请先完成修改操作", "提示", JOptionPane.WARNING_MESSAGE);
+				} else {
+					/*String[] arr = new String[6];
 					arr[0] = "";
 					arr[1] = "";
 					arr[2] = "";
@@ -150,187 +173,222 @@ public class ClassAdminClient extends JFrame {
 					int count = table.getRowCount();
 					settargetrow(count - 1);
 					table.isCellEditable(count - 1, 1);
-					exitbutton.setText("纭畾");
+					exitbutton.setText("确定");*/
 					nowmodel = MODEL.ADD;
+					setAddFrame();
+					nowmodel = MODEL.WATCHING;
 				}
 			}
 		});
-		mntmNewMenuItem_1.setFont(new Font("瀹嬩綋", Font.PLAIN, 15));
+		mntmNewMenuItem_1.setFont(new Font("宋体", Font.PLAIN, 15));
 		mnNewMenu.add(mntmNewMenuItem_1);
-		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("鍒犻櫎");
+
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("删除");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nowmodel = MODEL.DELETE;
-				exitbutton.setText("鍒犻櫎");
+				exitbutton.setText("删除");
 			}
 		});
-		mntmNewMenuItem_2.setFont(new Font("瀹嬩綋", Font.PLAIN, 15));
+		mntmNewMenuItem_2.setFont(new Font("宋体", Font.PLAIN, 15));
 		mnNewMenu.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		JComboBox select = new JComboBox<String>();
-		select.addItem("鐝骇");
-		select.addItem("瀛﹀彿");
-		select.addItem("濮撳悕");
-		
+
+		JComboBox<String> select = new JComboBox<String>();
+		select.addItem("班级");
+		select.addItem("学号");
+		select.addItem("姓名");
+
 		textField = new JTextField();
-		textField.setText("馃攳");
+		textField.setText("🔍");
 		textField.setColumns(10);
-		
-		JButton serachbutton = new JButton("纭");
-		
+
+		JButton serachbutton = new JButton("确认");
+
 		JScrollPane scrollPane = new JScrollPane(table);
-		
-		JLabel lblNewLabel = new JLabel("瀛︾敓瀛︾睄绠＄悊");
-		lblNewLabel.setFont(new Font("鏂板畫浣�", Font.PLAIN, 23));
-		
+
+		JLabel lblNewLabel = new JLabel("学生学籍管理");
+		lblNewLabel.setFont(new Font("新宋体", Font.PLAIN, 23));
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(196)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(221, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(44, Short.MAX_VALUE)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 491, GroupLayout.PREFERRED_SIZE)
-					.addGap(44))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(306, Short.MAX_VALUE)
-					.addComponent(select, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(serachbutton, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
-					.addGap(31))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addGap(234)
-					.addComponent(exitbutton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(248, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(20)
-					.addComponent(lblNewLabel)
-					.addGap(30)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+		gl_contentPane
+				.setHorizontalGroup(
+						gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_contentPane.createSequentialGroup().addGap(196)
+										.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 162,
+												GroupLayout.PREFERRED_SIZE)
+										.addContainerGap(221, Short.MAX_VALUE))
+								.addGroup(gl_contentPane
+										.createSequentialGroup().addContainerGap(44, Short.MAX_VALUE)
+										.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 491,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(44))
+								.addGroup(
+										gl_contentPane.createSequentialGroup().addContainerGap(306, Short.MAX_VALUE)
+												.addComponent(select, GroupLayout.PREFERRED_SIZE, 67,
+														GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(textField, GroupLayout.PREFERRED_SIZE, 102,
+														GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(serachbutton, GroupLayout.PREFERRED_SIZE, 61,
+														GroupLayout.PREFERRED_SIZE)
+												.addGap(31))
+								.addGroup(Alignment.LEADING,
+										gl_contentPane.createSequentialGroup().addGap(234)
+												.addComponent(exitbutton, GroupLayout.PREFERRED_SIZE, 97,
+														GroupLayout.PREFERRED_SIZE)
+												.addContainerGap(248, Short.MAX_VALUE)));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+				.createSequentialGroup().addGap(20).addComponent(lblNewLabel).addGap(30)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(select, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(select, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
 						.addComponent(serachbutton))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 203, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(exitbutton)
-					.addContainerGap(21, Short.MAX_VALUE))
-		);
-		
-		
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 203, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(exitbutton)
+				.addContainerGap(21, Short.MAX_VALUE)));
+
 		table = new JTable();
-		String[][] data = new String[][] {};
-		table.setFont(new Font("Adobe 浠垮畫 Std R", Font.PLAIN, 12));
+		table.setFont(new Font("Adobe 仿宋 Std R", Font.PLAIN, 12));
 		table.setModel(model);
 		table.getColumnModel().getColumn(5).setPreferredWidth(144);
 		scrollPane.setViewportView(table);
 		table.setRowHeight(25);
 		addRows();
 		
+		/*table.getModel().addTableModelListener(new TableModelListener() {
+			public int lastrow = -2, lastcol = -2;
+			public String lastedit = null;
+			public void tableChanged(TableModelEvent e) {
+				if(nowmodel == MODEL.ADD)
+				{
+					if(lastrow == table.getEditingColumn() && lastcol == table.getEditingRow() && 
+							lastedit.compareTo((String) table.getValueAt(table.getEditingRow(), table.getEditingColumn())) == 0)
+					{
+						//empty
+					}
+					else
+					{
+						System.out.println("table changed!");
+						lastrow = table.getEditingRow();
+						lastcol = table.getEditingColumn();
+						lastedit = (String) table.getValueAt(lastrow, lastcol);
+						//check();
+					}
+				}
+			}
+		});*/
+
 		contentPane.setLayout(gl_contentPane);
 		exitbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switch(nowmodel) {
-				case WATCHING:
-				{
-					//exit
+				switch (nowmodel) {
+				case WATCHING: {
+					// exit
 					close();
 				}
-				break;
-				case MODIFY:
-				{
-					//save
+					break;
+				case MODIFY: {
+					// save
 				}
-				break;
-				case ADD:
-				{
-					//save
-					int rownum = table.getRowCount() - 1;
+					break;
+				case ADD: {
+					// save
 					
 				}
-				break;
-				case DELETE:
-				{
-					//save
+					break;
+				case DELETE: {
+					// save
 					int rownum = table.getSelectedRow();
-					if(rownum == -1)
-						JOptionPane.showMessageDialog(null,"璇烽�夋嫨涓�琛屽啀杩涜鍒犻櫎","鎻愮ず",JOptionPane.WARNING_MESSAGE);
-					//int res = server.delete((String) table.getValueAt(rownum, 3));
-					
-					Message mes = new Message(); // 新建一个Message对象
-					mes.setModuleType(ModuleType.Student); // 设定你是哪个模块的，这里是学生管理
-					mes.setMessageType(MessageType.ClassAdminDelete); // 设定你希望服务端进行的操作
-					mes.setData(table.getValueAt(rownum, 2)); // 放入你想传输的数据，如果不需要传就不用写这行
-															  // 数据可以是任意的抽象数据类型，因为接收的Object
-					Client client = new Client(ClientMainFrame.socket); // 新建一个用来发数据的对象
-																		// 参数务必用ClientMainFrame下的这个socket
+					if (rownum == -1)
+						JOptionPane.showMessageDialog(null, "请选择一行再进行删除", "提示", JOptionPane.WARNING_MESSAGE);
+					// int res = server.delete((String) table.getValueAt(rownum, 3));
+
+					Message mes = new Message();
+					Client client = new Client(ClientMainFrame.socket);
+					mes.setData((String) table.getValueAt(rownum, 2));// set your data
+					mes.setMessageType(MessageType.ClassAdminDelete);
+					mes.setModuleType(ModuleType.Student);
 					Message serverResponse = new Message();
-					serverResponse = client.sendRequestToServer(mes); // 接收服务器回传的数据
-					int res = (int)serverResponse.getData(); // 回传的数据可以转换成你想要的类型
-					
-					if(res > 0)
-						JOptionPane.showMessageDialog(null,"瀹屾垚鍒犻櫎","鎻愮ず",JOptionPane.WARNING_MESSAGE);
+					serverResponse = client.sendRequestToServer(mes);
+					int res = (int) serverResponse.getData();
+
+					if (res > 0)
+						JOptionPane.showMessageDialog(null, "完成删除", "提示", JOptionPane.WARNING_MESSAGE);
 					model.removeRow(rownum);
 					table.setModel(model);
 				}
-				break;
+					break;
 				}
 			}
 		});
 	}
+
+
 	@SuppressWarnings("unchecked")
 	void addRows() {
-		
-		Message mes = new Message(); 
-		mes.setModuleType(ModuleType.Student); 
-		mes.setMessageType(MessageType.ClassAdminGetAll); 
+		Message mes = new Message();
+		mes.setMessageType(MessageType.ClassAdminGetAll);// operation type
+		mes.setModuleType(ModuleType.Student);
 		Message serverresponse = new Message();
+		Vector<Student> stu = new Vector<Student>();// your data
 		Client client = new Client(ClientMainFrame.socket);
 		serverresponse = client.sendRequestToServer(mes);
-		Vector<Student> stu=new Vector<Student>();//your data
-		stu = (Vector<Student>)serverresponse.getData();
-		
-		
+		stu = (Vector<Student>) serverresponse.getData();
 		String[] arr = new String[6];
-		for(int i = 0; i < stu.size(); i++) {
+		for (int i = 0; i < stu.size(); i++) {
 			arr[0] = stu.get(i).getClassid();
 			arr[1] = stu.get(i).getTeacherid();
 			arr[2] = stu.get(i).getStudentid();
 			arr[3] = stu.get(i).getStudentName();
 			arr[4] = stu.get(i).getMajor();
 			arr[5] = stu.get(i).getStudentphone();
-			
+
 			model.addRow(arr);
 			table.setModel(model);
 		}
 	}
+
 	void settargetrow(int tar) {
 		targetrow = tar;
-		target = 1;//row
+		target = 1;// row
 	}
+
 	int gettargetrow() {
 		return targetrow;
 	}
+
 	void settargetcol(int tar) {
 		targetcol = tar;
-		targetcol = 0;//col
+		targetcol = 0;// col
 	}
+
 	int gettargetcol() {
 		return targetcol;
 	}
+	
+	void settarget(int tar) {
+		target = tar;
+	}
+	
+	void setAddFrame() {
+		this.setEnabled(false);
+		this.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
+		
+		ClassAdminForAdd frame = new ClassAdminForAdd(this);
+		frame.setVisible(true);
+	}
+
 	void close() {
 		this.dispose();
+		MainTest frame = new MainTest();
+		frame.setVisible(true);
 	}
 }

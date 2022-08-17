@@ -4,9 +4,11 @@
   <artifactId>VCampus</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 <!--AccessDB 数据库  驱动-->
-    <dependency>
-      <groupId>net.sf.ucanaccess</groupId>
-      <artifactId>ucanaccess</artifactId>
-      <version>4.0.1</version>
-    </dependency>
+    <dependencies>
+    	<dependency>
+    		<groupId>net.sf.ucanaccess</groupId>
+    		<artifactId>ucanaccess</artifactId>
+    		<version>4.0.4</version>
+    	</dependency>
+    </dependencies>
 </project>
