@@ -1,8 +1,8 @@
-package VCampusServer.src.main.java.seu.list.server.bz;
+//package VCampusServer.src.main.java.seu.list.server.bz;
+package seu.list.server.bz;
+
 import java.net.ServerSocket;
 import java.net.Socket;
-
-
 
 public class Server implements Runnable{
     //private ArrayList<ContactInfo> onlineUsers;
@@ -30,9 +30,10 @@ public class Server implements Runnable{
         }
     }
 
+    /*
     public static void main(String[] args) {
         Server server = new Server();
         server.run();
     }
-
+	*/
 }

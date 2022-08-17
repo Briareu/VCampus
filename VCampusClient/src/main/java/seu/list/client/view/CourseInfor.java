@@ -1,10 +1,15 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+//package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 
-
-
+/*
 import VCampusClient.src.main.java.seu.list.common.ModuleType;
 import main.java.seu.list.common.Course;
 import main.java.seu.list.common.Message;
+*/
+import seu.list.common.ModuleType;
+import seu.list.common.Course;
+import seu.list.common.Message;
+import seu.list.common.*;
 
 import java.awt.FlowLayout;
 
@@ -50,7 +55,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
 
-		JButton confirmButtom = new JButton("确定");
+		JButton confirmButtom = new JButton("纭畾");
 		confirmButtom.addActionListener(this);
 		confirmButtom.setActionCommand("confirm");
 		buttonPane.add(confirmButtom);
@@ -69,7 +74,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		//getContentPane().add(CourseID);
 		CourseID.setColumns(10);
 
-		JLabel lblcourseID = new JLabel("课程ID");
+		JLabel lblcourseID = new JLabel("璇剧▼ID");
 		//lblcourseID.setBounds(55, 36, 72, 18);
 		//getContentPane().add(lblcourseID);
 
@@ -81,7 +86,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		//CourseName.setBounds(152, 70, 86, 24);
 		//getContentPane().add(CourseName);
 		CourseName.setColumns(10);
-		JLabel lblcourseName = new JLabel("课程名称");
+		JLabel lblcourseName = new JLabel("璇剧▼鍚嶇О");
 //		lblcourseName.setBounds(55, 73, 72, 18);
 //		getContentPane().add(lblcourseName);
 		box2.add(CourseName);
@@ -92,7 +97,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		//getContentPane().add(CourseMajor);
 		CourseMajor.setColumns(10);
 
-		JLabel lblcourseMajor = new JLabel("课程专业");
+		JLabel lblcourseMajor = new JLabel("璇剧▼涓撲笟");
 //		lblcourseMajor.setBounds(55, 110, 72, 18);
 //		getContentPane().add(lblcourseMajor);
 		box3.add(CourseMajor);
@@ -104,7 +109,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		//getContentPane().add(teacherID);
 		teacherID.setColumns(10);
 
-		JLabel lblteacherID = new JLabel("授课教师");
+		JLabel lblteacherID = new JLabel("鎺堣鏁欏笀");
 //		lblteacherID.setBounds(55, 147, 72, 18);
 //		getContentPane().add(lblteacherID);
 		box4.add(teacherID);
@@ -116,7 +121,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		//getContentPane().add(Semester);
 		Semester.setColumns(10);
 
-		JLabel lblsemster = new JLabel("学年学期");
+		JLabel lblsemster = new JLabel("瀛﹀勾瀛︽湡");
 //		lblsemster.setBounds(55, 173, 72, 18);
 //		getContentPane().add(lblsemster);
 		box5.add(Semester);
@@ -129,7 +134,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		//getContentPane().add(CourseState);
 		CourseState.setColumns(10);
 
-		JLabel lblcourseState = new JLabel("课程状态");
+		JLabel lblcourseState = new JLabel("璇剧▼鐘舵��");
 //		lblcourseState.setBounds(55, 203, 72, 18);
 //		getContentPane().add(lblcourseState);
 		box6.add(CourseState);
@@ -143,7 +148,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		CourseType.setColumns(10);
 
 
-		JLabel lblcourseType = new JLabel("课程类型");
+		JLabel lblcourseType = new JLabel("璇剧▼绫诲瀷");
 //		lblcourseType.setBounds(55, 243, 72, 18);
 //		getContentPane().add(lblcourseType);
 		box7.add(CourseType);
@@ -175,6 +180,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 			Message clientReq = new Message();
 			clientReq.setModuleType(ModuleType.Course);
 			clientReq.setMessageType("REQ_ADD_LESSON");
+			//clientReq.setData(course.getContent());
 			clientReq.setContent(course.getContent());
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());

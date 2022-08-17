@@ -1,11 +1,17 @@
-package VCampusServer.src.main.java.seu.list.server.db;
+//package VCampusServer.src.main.java.seu.list.server.db;
+package seu.list.server.db;
 
-
+/*
 import VCampusServer.src.main.java.seu.list.common.Course;
 import VCampusServer.src.main.java.seu.list.common.User;
 import VCampusServer.src.main.java.seu.list.server.dao.DAOUtil;
 import VCampusServer.src.main.java.seu.list.server.db.SqlHelper;
+*/
 
+import seu.list.common.Course;
+import seu.list.common.User;
+import seu.list.server.dao.DAOUtil;
+import seu.list.server.db.SqlHelper;
 
 
 import java.io.File;
@@ -13,7 +19,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
+//import java.util.List;
+import java.util.*;
 
 
 
@@ -45,7 +52,7 @@ public class SqlHelperImp implements SqlHelper {
 				ps.setString(i+1, paras[i]);
 			}
 
-			//??锟斤拷???
+			//??閿熸枻鎷�???
 			ps.executeUpdate();
 
 		} catch (Exception e) {
@@ -85,7 +92,7 @@ public class SqlHelperImp implements SqlHelper {
 			for(int i=0;i<paras.length;i++){
 				ps.setString(i+1, paras[i]);
 			}
-			//??锟斤拷???
+			//??閿熸枻鎷�???
 			rs=ps.executeQuery();
 			users = DAOUtil.UserResultSet2List(rs);
 		} catch (Exception e) {
@@ -143,7 +150,7 @@ public class SqlHelperImp implements SqlHelper {
 
 	@Override
 	public List<String> sqlRelationQuery(String sql, String[] paras) {
-		// 用来获取对应关系
+		// 鐢ㄦ潵鑾峰彇瀵瑰簲鍏崇郴
 		PreparedStatement ps = null;
 		Connection ct = null;
 		ResultSet rs=null;

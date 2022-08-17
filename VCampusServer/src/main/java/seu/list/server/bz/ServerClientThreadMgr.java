@@ -1,11 +1,12 @@
-package main.java.seu.list.server.bz;
+//package main.java.seu.list.server.bz;
+package seu.list.server.bz;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 
 public class ServerClientThreadMgr {
-	private  static  Map<String, ServerSocketThread>  clientThreadPool = new LinkedHashMap<String, ServerSocketThread>();
+	private static Map<String, ServerSocketThread> clientThreadPool = new LinkedHashMap<String, ServerSocketThread>();
 
 	public synchronized static void add(String id, ServerSocketThread clientThreadSrv) {
 		clientThreadPool.put(id, clientThreadSrv);		

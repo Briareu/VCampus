@@ -1,9 +1,17 @@
-package main.java.seu.list.server.dao;
+//package main.java.seu.list.server.dao;
+package seu.list.server.dao;
 
+/*
 import main.java.seu.list.common.Message;
 import main.java.seu.list.common.MessageType;
 import main.java.seu.list.common.Student;
 import main.java.seu.list.server.db.StudentAccessHelper;
+*/
+
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.Student;
+import seu.list.server.db.StudentAccessHelper;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,7 +27,7 @@ public class ClassAdminServer extends StudentAccessHelper {
 	
 	// Modified by WU 8.16
 	private Message mesFromClient; // 从客户端收到的数据
-	private Object dataToClient = null; // 发给客户端的数据
+	private Message mesToClient; // 发给客户端的数据
 	
 	public ClassAdminServer(Message mesFromClient) {
 		this.mesFromClient = mesFromClient;
@@ -28,17 +36,17 @@ public class ClassAdminServer extends StudentAccessHelper {
 	public void execute() { 
 		// 根据类型去执行不同的DAO层操作，不同模块的DAO类需要修改这个函数
 		// 如果操作需要的参数，请在mesFromClient内取出
-		// 如果操作需要返回数据给客户端，请存入dataToClient，如果没有返回值，则默认为null
+		// 如果操作需要返回数据给客户端，请存入mesToClient，如果没有返回值，则默认为null
 		switch(this.mesFromClient.getMessageType()) 
 		{
 			case MessageType.ClassAdminAdd:
 				this.add();
 				break;
 			case MessageType.ClassAdminDelete:
-				this.dataToClient = this.delete(this.mesFromClient.getData().toString());
+				this.mesToClient.setData(this.delete(this.mesFromClient.getData().toString()));
 				break;
 			case MessageType.ClassAdminGetAll:
-				this.dataToClient = this.getall();
+				this.mesToClient.setData(this.getall());
 				break;
 			case MessageType.ClassAdminUpdate:
 				this.update();
@@ -48,8 +56,8 @@ public class ClassAdminServer extends StudentAccessHelper {
 		}
 	}
 
-	public Object getDataToClient() { // 无需修改，网络层需要调用这个函数
-		return this.dataToClient;
+	public Message getMesToClient() { // 无需修改，网络层需要调用这个函数
+		return this.mesToClient;
 	}
 	// Modified by WU 8.16
 	

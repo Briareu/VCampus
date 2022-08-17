@@ -1,8 +1,12 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+//package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 
+/*
 import VCampusClient.src.main.java.seu.list.common.ModuleType;
 import main.java.seu.list.common.Course;
 import main.java.seu.list.common.Message;
+*/
+import seu.list.common.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +28,7 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 	JComboBox jcb;
 	JTextField jtf,jtf1;
 	JButton jco_Search,jco_Add,jco_Delete;
-	Socket socket;//传送数据
+	Socket socket;//浼犻�佹暟鎹�
 	JScrollPane scrollPane;
 	JLabel jlb;
 	private String userID;
@@ -37,32 +41,32 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 		jp1 = new JPanel();
 		jp2 = new JPanel();
 		
-		String [] seOp = {"全部","课程号"};
-		jlb = new JLabel("课程名称:");
+		String [] seOp = {"鍏ㄩ儴","璇剧▼鍙�"};
+		jlb = new JLabel("璇剧▼鍚嶇О:");
 		jcb = new JComboBox(seOp);
 		jtf = new JTextField(20);
 		jtf1 = new JTextField(10);
-		jco_Search = new JButton("搜索");
+		jco_Search = new JButton("鎼滅储");
 		jco_Search.addActionListener(this);
 		jco_Search.setActionCommand("search");
-		jco_Add =new JButton("增加课程");
+		jco_Add =new JButton("澧炲姞璇剧▼");
 		jco_Add.addActionListener(this);
 		jco_Add.setActionCommand("add");
-		jco_Delete =new JButton("移除课程");
+		jco_Delete =new JButton("绉婚櫎璇剧▼");
 		jco_Delete.addActionListener(this);
 		jco_Delete.setActionCommand("delete");
 		Object[][] courseinformation= {};
-        Object[] courselist = {"学年学期","专业","课程编号","课程","授课人数","状态","类型"};
+        Object[] courselist = {"瀛﹀勾瀛︽湡","涓撲笟","璇剧▼缂栧彿","璇剧▼","鎺堣浜烘暟","鐘舵��","绫诲瀷"};
         DefaultTableModel model;
         model = new DefaultTableModel(courseinformation, courselist);
         
         Message clientReq = new Message();
 		clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
-		//传数据
+		//浼犳暟鎹�
 		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 		oos.writeObject(clientReq);
 		oos.flush();
-		//接受数据
+		//鎺ュ彈鏁版嵁
 		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 		clientReq = (Message) ois.readObject();
 		Vector<String> allCourseContents = clientReq.getContent();
@@ -86,7 +90,7 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 		jt = new JTable(lm);
 		jsp = new JScrollPane(jt);*/
 		
-		//添加组件
+		//娣诲姞缁勪欢
 		jp1.add(jcb);
 		jp1.add(jtf);
 		jp1.add(jco_Search);
@@ -108,7 +112,7 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand()=="search"){
-			if(jcb.getSelectedItem().equals("全部")) {
+			if(jcb.getSelectedItem().equals("鍏ㄩ儴")) {
 				Message clientReq = new Message();
 				clientReq.setModuleType(ModuleType.Course);
 				clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
@@ -133,7 +137,7 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 				jtb1.setModel(new DefaultTableModel(
 					allCourseTable,
 					new String[] {
-							"学年学期","专业","课程编号","课程","授课人数","状态","类型"
+							"瀛﹀勾瀛︽湡","涓撲笟","璇剧▼缂栧彿","璇剧▼","鎺堣浜烘暟","鐘舵��","绫诲瀷"
 					}
 				));
 				jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
@@ -146,22 +150,22 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 				scrollPane.setViewportView(jtb1);
 				this.setVisible(true);
 				this.setLocationRelativeTo(null);
-			}else if(jcb.getSelectedItem().equals("课程号")) {
-				Message clientReq = new Message();//新建申请用于交换
+			}else if(jcb.getSelectedItem().equals("璇剧▼鍙�")) {
+				Message clientReq = new Message();//鏂板缓鐢宠鐢ㄤ簬浜ゆ崲
 				clientReq.setModuleType(ModuleType.Course);
-				clientReq.setMessageType("REQ_SEARCH_LESSON");//查找课程
+				clientReq.setMessageType("REQ_SEARCH_LESSON");//鏌ユ壘璇剧▼
 				Vector<String> reqContent = new Vector<String>();
 				Course c = new Course();
 				c.setCourseID(jtf.getText());
 				reqContent = c.getContent();
-				clientReq.setContent(reqContent);//调用信息存进申请
-				//通信
+				clientReq.setContent(reqContent);//璋冪敤淇℃伅瀛樿繘鐢宠
+				//閫氫俊
 				try {
-				ObjectOutputStream oos5 = new ObjectOutputStream(socket.getOutputStream());//把这个socket通过OutputStream输出给Server端
-				oos5.writeObject(clientReq);//写进申请里面去（序列化）
-				oos5.flush();//上传等待处理
-	            ObjectInputStream ois5 = new ObjectInputStream(socket.getInputStream());//把这个socket通过InputStream写回client端
-				clientReq = (Message) ois5.readObject();}//读出（去序列化）
+				ObjectOutputStream oos5 = new ObjectOutputStream(socket.getOutputStream());//鎶婅繖涓猻ocket閫氳繃OutputStream杈撳嚭缁橲erver绔�
+				oos5.writeObject(clientReq);//鍐欒繘鐢宠閲岄潰鍘伙紙搴忓垪鍖栵級
+				oos5.flush();//涓婁紶绛夊緟澶勭悊
+	            ObjectInputStream ois5 = new ObjectInputStream(socket.getInputStream());//鎶婅繖涓猻ocket閫氳繃InputStream鍐欏洖client绔�
+				clientReq = (Message) ois5.readObject();}//璇诲嚭锛堝幓搴忓垪鍖栵級
 				catch(Exception e2) {
 					e2.printStackTrace();
 				}
@@ -177,7 +181,7 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 				jtb1.setModel(new DefaultTableModel(
 					allCourseTable,
 					new String[] {
-							"学年学期","专业","课程编号","课程","授课人数","状态","类型"
+							"瀛﹀勾瀛︽湡","涓撲笟","璇剧▼缂栧彿","璇剧▼","鎺堣浜烘暟","鐘舵��","绫诲瀷"
 					}
 				));
 				jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);

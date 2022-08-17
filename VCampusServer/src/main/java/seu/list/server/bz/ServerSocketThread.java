@@ -10,7 +10,8 @@
  * remember to update the 'MessageType.java' file
  * this is a demo, you can update the socket frame and the way of message-passing any time and tell us
  */
-package VCampusServer.src.main.java.seu.list.server.bz;
+//package VCampusServer.src.main.java.seu.list.server.bz;
+package seu.list.server.bz;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -19,19 +20,20 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
 
-
+/*
 import VCampusServer.src.main.java.seu.list.common.*;
 import VCampusServer.src.main.java.seu.list.server.dao.CourseDaoImp;
 import main.java.seu.list.server.dao.ClassAdminServer;
+*/
 
-
-
+import seu.list.common.*;
+import seu.list.server.dao.*;
+import seu.list.server.dao.CourseDaoImp;
+import seu.list.server.dao.ClassAdminServer;
 
 
 public class ServerSocketThread implements Runnable {
 	private Socket clientSocket;
-	//private ClassAdminServer classAdminServer = new ClassAdminServer();
-	// your access-class and server-class
 
 	ServerSocketThread(Socket socket) {
 		this.clientSocket = socket;
@@ -58,106 +60,13 @@ public class ServerSocketThread implements Runnable {
 					case ModuleType.Student: // 学生学籍管理模块
 						ClassAdminServer classAdminServer = new ClassAdminServer(object);
 						classAdminServer.execute();
-						serverResponse.setData(classAdminServer.getDataToClient());
+						serverResponse = classAdminServer.getMesToClient();
 						break;
 					case ModuleType.Course:
 						// 选课模块
-						String type= object.getMessageType();
-						if (type.equals(MessageType.REQ_STU_ADD_LESSON)) {
-							System.out.println("serving REQ_STU_ADD_LESSON");
-							System.out.println("adding....");
-							//学生选课
-							CourseDaoImp courseDao= new CourseDaoImp();
-							String CourseId = object.getContent().get(0);
-							String UserId =object.getContent().get(1);
-							boolean result = courseDao.sigAddCourse(CourseId,UserId);
-							System.out.println("REQ_STU_ADD_LESSON finished");
-						} else if (type.equals(MessageType.REQ_STU_REMOVE_LESSON)) {
-							System.out.println("serving REQ_STU_REMOVE_LESSON");
-							System.out.println("removing....");
-							//学生退课
-							CourseDaoImp courseDao= new CourseDaoImp();
-							String CourseId = object.getContent().get(0);
-							String UserId = object.getContent().get(1);
-							courseDao.sigRemoveCourse(CourseId,UserId);
-							System.out.println("REQ_STU_REMOVE_LESSON finshed");
-						} else if (type.equals(MessageType.REQ_ADD_LESSON)) {
-							System.out.println("serving REQ_ADD_LESSON");
-							System.out.println("adding....");
-							//老师添加课程
-							CourseDaoImp courseDao= new CourseDaoImp();
-							Course course=new Course();
-							course.setContent(object.getContent());
-							courseDao.genAddCourse(course);
-							System.out.println("REQ_ADD_LESSON finished");
-						} else if (type.equals(MessageType.REQ_REMOVE_LESSON)) {
-							//老师删除课程
-							System.out.println("serving REQ_REMOVE_LESSON");
-							System.out.println("removing.....");
-							String courseName = object.getContent().get(1);
-							CourseDaoImp courseDao = new CourseDaoImp();
-							boolean result = courseDao.genRemoveCourse(courseName);
-							System.out.println("REQ_REMOVE_LESSON finished");
-						} else if (type.equals(MessageType.REQ_SEARCH_LESSON)) {
-							System.out.println("serving REQ_SEARCH_LESSON");
-							System.out.println("searching.....");
-							//返回单个课程信息
-							Course course = new Course();
-							String courseID = object.getContent().get(0);
-							CourseDaoImp courseDao=new CourseDaoImp();
-							course = courseDao.searchCourseByID(courseID);
-							//course.print();
-							//content的更新
-							object.setContent(course.getContent());
-							// --发送至查询用户
-							ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-							oos.writeObject(object);//服务端写回
-							oos.flush();
-							System.out.println("REQ_SEARCH_LESSON finished");
-						} else if (type.equals(MessageType.REQ_SHOW_ALL_LESSON)) {
-							System.out.println("serving REQ_SHOW_ALL_LESSON");
-							System.out.println("grabbing.....");
-							//返回所有课程
-							Vector<String> sigCourseContent= new Vector<String>();
-							Vector<String> allCourseContent = new Vector<String>();
-							List<Course> allCourse = new LinkedList<Course>();
-							CourseDaoImp courseDao= new CourseDaoImp();
-							allCourse = courseDao.getAllCourse();
-							Iterator<Course> iteAllCourse = allCourse.iterator();
-							while(iteAllCourse.hasNext()) {
-								sigCourseContent = iteAllCourse.next().getContent();
-								for(int i=0;i<=4;i++) {
-									allCourseContent.add(sigCourseContent.get(i));
-								}
-							}
-							object.setContent(allCourseContent);
-							ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-							oos.writeObject(object);
-							oos.flush();
-							System.out.println("REQ_SHOW_ALL_LESSON finished");
-						} else if (type.equals(MessageType.REQ_STU_ALL_CHOOOSE)) {
-							System.out.println("serving REQ_STU_ALL_CHOOOSE");
-							System.out.println("grabbing......");
-							//返回所有该学生已选课程
-							Vector<String> sigCourseContent= new Vector<String>();
-							Vector<String> allCourseContent = new Vector<String>();
-							List<Course> allCourse = new LinkedList<Course>();
-							User user = new User();
-							user.setContent(object.getContent());
-							allCourse = user.getCourses();
-							Iterator<Course> iteAllCourse = allCourse.iterator();
-							while(iteAllCourse.hasNext()) {
-								sigCourseContent = iteAllCourse.next().getContent();
-								for(int i=0;i<=4;i++) {
-									allCourseContent.add(sigCourseContent.get(i));
-								}
-							}
-							object.setContent(allCourseContent);
-							ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-							oos.writeObject(object);
-							oos.flush();
-							System.out.println("REQ_STU_ALL_CHOOOSE finished");
-						}
+						CourseDaoImp courseServer = new CourseDaoImp(object);
+						courseServer.execute();
+						serverResponse = courseServer.getMesToClient();
 						break;
 					case ModuleType.Library: // 图书馆模块
 						
@@ -176,6 +85,8 @@ public class ServerSocketThread implements Runnable {
 				serverResponse.setLastOperState(true);
 				ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
 				response.writeObject(serverResponse);
+				response.flush();
+				clientSocket.close();
 			}
 			/*
 			//thread start run

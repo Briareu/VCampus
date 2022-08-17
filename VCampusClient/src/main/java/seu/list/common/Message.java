@@ -1,13 +1,15 @@
-package VCampusClient.src.main.java.seu.list.common;
+//package VCampusClient.src.main.java.seu.list.common;
+package seu.list.common;
 
 import java.io.Serializable;
 //与Client、GUI进行交互的过程中需要用到Message对象进行信息的传递
+import java.util.Vector;
 
 
 public class Message implements Serializable {
   private static final long serialVersionUID = 50000L;
   
-  
+  private Vector<String> Content;
   private Object data;
   private String messageType;
   private String moduleType;
@@ -62,5 +64,11 @@ public class Message implements Serializable {
   }
   public void setModuleType(String moduleType) {
 	  this.moduleType = moduleType;
+  }
+  public Vector<String> getContent() {
+      return Content;
+  }
+  public void setContent(Vector<String> content) {
+      Content = content;
   }
 }

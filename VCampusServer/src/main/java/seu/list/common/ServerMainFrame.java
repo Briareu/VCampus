@@ -5,13 +5,16 @@
 * ����˳�����ڣ����Ʒ��������߳�
 */
 
-package VCampusServer.src.main.java.seu.list.common;
+//package VCampusServer.src.main.java.seu.list.common;
+package seu.list.common;
+
+import seu.list.server.bz.*;
 
 public class ServerMainFrame 
 {
 	public static void main(String[] args)
 	{
 		Server srvThd = new Server();
-		srvThd.start();
+		srvThd.run();
 	}
 }
