@@ -9,11 +9,11 @@ import java.util.Vector;
 public class Message implements Serializable {
       private static final long serialVersionUID = 50000L;
 
-      private Vector<String> Content;
-      private Object data;
-      private String messageType;
-      private String moduleType;
-
+      private Vector<String> Content = null;
+      private Object data = null;
+      private String messageType = null;
+      private String moduleType = null;
+      private boolean isOffline = false;
 
       private int userType;//0-学生 1-管理员
       private String userId;
@@ -21,6 +21,12 @@ public class Message implements Serializable {
       private String errorMessage;
       private boolean lastOperState;
 
+      public void offline() {
+    	  this.isOffline = true;
+      }
+      public boolean isOffline() {
+    	  return isOffline;
+      }
       public Object getData() {
           return data;
       }

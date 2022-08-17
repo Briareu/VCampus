@@ -1,4 +1,4 @@
-package VCampusClient.src.main.java.seu.list.client.bz;
+package seu.list.client.test;
 
 
 
@@ -17,7 +17,7 @@ import java.net.Socket;
 public class ClientConServer{
 
 	/**
-	 * 用于登录验证和注册
+	 * 用于登录验证和注�?
 	 */
 	private User user;
 	public boolean IsConnect;
@@ -91,7 +91,7 @@ public class ClientConServer{
 		for(int i=0;i<getUser().getContent().size();i++) {
 			System.out.println(getUser().getContent().get(i));
 		}*/
-		//用来测试所传信息
+		//用来测试�?传信�?
 		
 		Req.setType("REQ_REGISTER");
 		try {
@@ -100,7 +100,7 @@ public class ClientConServer{
 			oos.flush();
 			
 			ObjectInputStream dis = new ObjectInputStream(getSocket().getInputStream());
-			//sign = dis.readInt();//从输入流中读取一个int型数据
+			//sign = dis.readInt();//从输入流中读取一个int型数�?
 			Req = (ClientReq) dis.readObject();
 			sign = Integer.valueOf(Req.getLevel());
 		} 

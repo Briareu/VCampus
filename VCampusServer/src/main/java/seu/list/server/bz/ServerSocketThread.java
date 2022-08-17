@@ -33,10 +33,13 @@ import seu.list.server.dao.ClassAdminServer;
 
 
 public class ServerSocketThread implements Runnable {
-	private Socket clientSocket;
+	private Socket clientSocket = null;
+	private String id = null;
+	private boolean isClosed = false;
 
-	ServerSocketThread(Socket socket) {
+	ServerSocketThread(Socket socket, String id) {
 		this.clientSocket = socket;
+		this.id = id;
 	}
 
 	@Override
@@ -44,284 +47,83 @@ public class ServerSocketThread implements Runnable {
 		
 		try {
 			//start try
-			ObjectInputStream message = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
-			Message object = (Message)message.readObject();
+			ObjectInputStream request = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
 			System.out.println("已与客户端建立连接，当前客户端ip为："+clientSocket.getInetAddress().getHostAddress());
-			System.out.println(object.getModuleType());
-			System.out.println(object.getMessageType());
-			Message serverResponse = new Message();
 			
-			try {
-				switch(object.getModuleType())
-				{
-					case ModuleType.User: // 用户管理模块
-						
-						break;
-					case ModuleType.Student: // 学生学籍管理模块
-						ClassAdminServer classAdminServer = new ClassAdminServer(object);
-						classAdminServer.execute();
-						serverResponse = classAdminServer.getMesToClient();
-						break;
-					case ModuleType.Course:
-						// 选课模块
-						CourseDaoImp courseServer = new CourseDaoImp(object);
-						courseServer.execute();
-						serverResponse = courseServer.getMesToClient();
-						break;
-					case ModuleType.Library: // 图书馆模块
-						
-						break;
-					case ModuleType.Shop: // 商店模块
-						
-						break;
-					case ModuleType.Dormitory: // 宿舍模块
-						
-						break;
-					default:
-						break;
+			while(!this.isClosed) {
+				Message message = (Message)request.readObject();
+				if(message.isOffline()) {
+					isClosed = true;
+					ServerClientThreadMgr.remove(this.id);
+					break;
 				}
-			} finally {
-				serverResponse.setMessageType(MessageType.operFeedback);
-				serverResponse.setLastOperState(true);
-				ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-				response.writeObject(serverResponse);
-				response.flush();
-				clientSocket.close();
-			}
-			/*
-			//thread start run
-			switch(object.getMessageType())
-			{//switch start
-			
-//用户登入登出---------------------------------------
-			
-			
-//主窗口--------------------------------------------
-			
-			
-//学生学籍管理---------------------------------------
-			
-			//1.获取所有的学生信息
-			case MessageType.ClassAdminGetAll:
-			{
+				
+				System.out.println(message.getModuleType());
+				System.out.println(message.getMessageType());
+				Message serverResponse = new Message();
+				
 				try {
-					Vector<Student> stu = new Vector<Student>();
-					stu = classAdminServer.getall();
-					serverResponse.setData(stu);
+					switch(message.getModuleType())
+					{
+						case ModuleType.User: // 用户管理模块
+							
+							break;
+						case ModuleType.Student: // 学生学籍管理模块
+							ClassAdminServer classAdminServer = new ClassAdminServer(message);
+							classAdminServer.execute();
+							serverResponse = classAdminServer.getMesToClient();
+							break;
+						case ModuleType.Course:
+							// 选课模块
+							CourseDaoImp courseServer = new CourseDaoImp(message);
+							courseServer.execute();
+							serverResponse = courseServer.getMesToClient();
+							break;
+						case ModuleType.Library: // 图书馆模块
+							
+							break;
+						case ModuleType.Shop: // 商店模块
+							
+							break;
+						case ModuleType.Dormitory: // 宿舍模块
+							
+							break;
+						default:
+							break;
+					}
+				} finally {
 					serverResponse.setMessageType(MessageType.operFeedback);
 					serverResponse.setLastOperState(true);
-					
-				}finally {
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
 					response.writeObject(serverResponse);
+					response.flush();
+					response.close();
 				}
 			}
-			break;//end of 1st function
-			
-			//2.删除某一行学生信息
-			case MessageType.ClassAdminDelete:
-			{
-				try {
-					String stu = null;
-					serverResponse.setMessageType(MessageType.operFeedback);
-					stu = object.getExtraMessage();//get id
-					int res = classAdminServer.delete(stu);
-					serverResponse.setData(res);
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;//end of 1st function
-			
-//选课-----------------------------------------------
-			
-			
-//图书馆---------------------------------------------
-			//1.获取所有的书籍信息
-			case MessageType.LibraryBookGetAll:
-			{
-				try {
-					serverResponse.setMessageType(MessageType.operFeedback);
-<<<<<<< HEAD
-					//int res = libraryUserServer.createList();
-					//serverResponse.setData(res);
-=======
-					ArrayList<Book> bookList;
-					bookList = LibraryUserServer.createList();
-					serverResponse.setData(bookList);
->>>>>>> 3a85065deef49020acdca7317217d34b54060c3a
-					serverResponse.setMessageType(MessageType.operFeedback);
-					serverResponse.setLastOperState(true);
-					
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;	
-			
-<<<<<<< HEAD
-			//2.删除某一行书籍信息（管理员）
-			case MessageType.LibraryBookDelete:
-			{
-				try {
-					String bookid = null;
-					serverResponse.setMessageType(MessageType.operFeedback);
-					bookid = object.getExtraMessage();//get id
-					//int res = libraryUserServer.DeleteBook(bookid);
-					//serverResponse.setData(res);
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;
-			
-			//3.增加某一行书籍信息
-			case MessageType.LibraryBookAdd:
-			{
-				try {
-					String bookid = null;
-					serverResponse.setMessageType(MessageType.operFeedback);
-					bookid = object.getExtraMessage();//get id
-					//int res = libraryUserServer.AddBook(bookid);
-					//serverResponse.setData(res);
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;		
-			
-			//4.修改某一行书籍信息
-=======
-			//2.修改某一行书籍信息
->>>>>>> 3a85065deef49020acdca7317217d34b54060c3a
-			case MessageType.ClassAdminUpdate:
-			{
-				try {
-					ArrayList<String> para = new ArrayList<String>();
-					serverResponse.setMessageType(MessageType.operFeedback);
-<<<<<<< HEAD
-					//para = object.getExtraMessage();
-					//int res = libraryUserServer.Lendbook(para.get(0),para.get(1),para.get(2));
-					serverResponse.setData(res);
-=======
-					para = (ArrayList<String>) object.getData();
-					LibraryUserServer.ModifyBook(para.get(0),para.get(1),para.get(2));
->>>>>>> 3a85065deef49020acdca7317217d34b54060c3a
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;
-			
-			//3.借书
-			case MessageType.LibraryBookLend:
-			{
-				try {
-					String bookid = null;
-					serverResponse.setMessageType(MessageType.operFeedback);
-					bookid = object.getExtraMessage();//get id
-					LibraryUserServer.LendBook(bookid);
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;	
-			
-			//4.还书
-			case MessageType.LibraryBookReturn:
-			{
-				try {
-					String bookid = null;
-					serverResponse.setMessageType(MessageType.operFeedback);
-					bookid = object.getExtraMessage();//get id
-					LibraryUserServer.ReturnBook(bookid);
-
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;	
-			
-			//5.增加书籍
-			case MessageType.LibraryBookAdd:
-			{
-				try {
-					Book book;
-					serverResponse.setMessageType(MessageType.operFeedback);
-					book = (Book) object.getData();//get id
-					LibraryUserServer.AddBook(book);
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;
-			
-			//6.删除书籍
-			case MessageType.LibraryBookDelete：
-			{
-				try {
-					String bookid = null;
-					serverResponse.setMessageType(MessageType.operFeedback);
-					bookid = object.getExtraMessage();//get id
-					LibraryUserServer.DeleteBook(bookid);
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;
-			
-<<<<<<< HEAD
-			//9.寻找书籍
-			case MessageType.LibraryBookFind:
-=======
-			//7.寻找书籍
-			case MessageType.LibraryBookFind：
->>>>>>> 3a85065deef49020acdca7317217d34b54060c3a
-			{
-				try {
-					String bookid = null;
-					ArrayList<Book> booklist=new ArrayList<Book>();
-					serverResponse.setMessageType(MessageType.operFeedback);
-					bookid = object.getExtraMessage();//get Bookid
-					booklist=LibraryUserServer.FindBook(bookid);
-					serverResponse.setData(booklist);
-					serverResponse.setLastOperState(true);
-				}finally {
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
-				}
-			}
-			break;	
-			
-//商店----------------------------------------------
-			
-			
-//宿舍----------------------------------------------
-			}//end switch
-			*/
-		}//end first try
+			request.close();
+			this.clientSocket.close();
+		}
 		catch(IOException e) {
 			e.printStackTrace();
 		}catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void close() {
+		System.out.println("关闭客户端线程：" + this.id);
+		this.isClosed = true;
+		
+		try {
+			if(!this.clientSocket.isClosed()) {
+				this.clientSocket.close();
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(ServerClientThreadMgr.get(id) != null) {
+			ServerClientThreadMgr.remove(id);
+		}
+	}
 }

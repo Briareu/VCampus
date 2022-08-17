@@ -6,7 +6,8 @@
  * 
  * this is a connection class
  */
-package main.java.seu.list.server.db;
+//package main.java.seu.list.server.db;
+package seu.list.server.db;
 
 import java.sql.*;
 

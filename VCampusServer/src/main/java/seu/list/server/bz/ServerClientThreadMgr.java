@@ -15,6 +15,11 @@ public class ServerClientThreadMgr {
 	public synchronized static ServerSocketThread remove(String id) {
 		return clientThreadPool.remove(id);		
 	}
+	
+	public synchronized static ServerSocketThread get(String id) {
+		ServerSocketThread ret = clientThreadPool.get(id);
+		return ret;
+	}
 
 	public synchronized static Map<String, ServerSocketThread> getPool(){
 		return clientThreadPool;

@@ -8,4 +8,5 @@ public final class ModuleType {
 	public static final String Shop = "SHOP"; // �̵�ģ��
 	public static final String Library = "LIBRARY"; // ͼ���ģ��
 	public static final String Dormitory = "Dormitory"; // ����ģ��
+	
 }
