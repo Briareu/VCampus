@@ -16,6 +16,6 @@ public class ServerMainFrame
 	public static void main(String[] args)
 	{
 		Server srvThd = new Server(IConstant.SERVER_PORT);
-		srvThd.run();
+		srvThd.start();
 	}
 }

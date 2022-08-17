@@ -9,70 +9,42 @@ import java.net.UnknownHostException;
 
 import seu.list.common.*;
 
-public class Client implements Runnable{
+public class Client {
 	private Socket socket;
-	private boolean isClosed = false;
-	private Message megFromServer = null;
 	
-	public Client(String addr, int port) {
-		try {
-			this.socket = new Socket(addr, port);
-		}catch (UnknownHostException e) {
-	        e.printStackTrace();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+	public Client(Socket socket) {
+		this.socket = socket;
 	}
 	
-	@Override
-	public void run() {
-		try {
-			ObjectInputStream response = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-			
-			while(!isClosed) {
-	            Message message = (Message)response.readObject();
-	            if(message.getMessageType() == MessageType.operFeedback) {
-	            	this.megFromServer = message;
+	public Message sendRequestToServer (Message clientRequest) { // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        try{
+            ObjectOutputStream request = new ObjectOutputStream(socket.getOutputStream());
+            request.writeObject(clientRequest); 
+            request.flush();
+            request.close();
+            
+            if(clientRequest.isOffline()) {
+            	return null;
+            }
+            ObjectInputStream response = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+            Message mesRet = new Message();
+			while(true) { // ç­‰å¾…æœåŠ¡å™¨å›åº”æ•°æ®
+	            mesRet = (Message)response.readObject();
+	            if(mesRet.getMessageType() == MessageType.operFeedback) {
+	            	break;
 	            }
 			}
 			response.close();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}catch(ClassNotFoundException e) {
+			return mesRet; // æŠŠæ”¶åˆ°çš„æ•°æ®è¿”å›ç»™å®¢æˆ·ç«¯
+        }catch (UnknownHostException e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }catch (IOException e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public Message getMesFromServer() {
-		while(this.megFromServer == null);
-		return this.megFromServer;
-	}
-	
-	public void sendRequestToServer (Message clientRequest) { // ²ÎÊıÊÇ·¢Ïò·şÎñÆ÷µÄÊı¾İ
-        try
-        {
-            ObjectOutputStream request = new ObjectOutputStream(socket.getOutputStream());
-            request.writeObject(clientRequest);
-            request.flush();
-            request.close();
-        }
-        catch (UnknownHostException e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
+        return null;
     }
-	
-	public void close() {
-		try {
-			if(!this.socket.isClosed()) {
-				this.socket.close();
-			}
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

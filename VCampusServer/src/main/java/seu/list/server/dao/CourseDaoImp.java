@@ -25,17 +25,17 @@ import java.util.Vector;
 
 public class CourseDaoImp implements CourseDao {
 		// Modified by WU 8.16
-		private Message mesFromClient; // ´Ó¿Í»§¶ËÊÕµ½µÄÊý¾Ý
-		private Message mesToClient; // ·¢¸ø¿Í»§¶ËµÄÊý¾Ý
+		private Message mesFromClient; // ï¿½Ó¿Í»ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		private Message mesToClient; // ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		public CourseDaoImp(Message mesFromClient) {
 			this.mesFromClient = mesFromClient;
 		}
 		
 		public void execute() { 
-			// ¸ù¾ÝÀàÐÍÈ¥Ö´ÐÐ²»Í¬µÄDAO²ã²Ù×÷£¬²»Í¬Ä£¿éµÄDAOÀàÐèÒªÐÞ¸ÄÕâ¸öº¯Êý
-			// Èç¹û²Ù×÷ÐèÒªµÄ²ÎÊý£¬ÇëÔÚmesFromClientÄÚÈ¡³ö
-			// Èç¹û²Ù×÷ÐèÒª·µ»ØÊý¾Ý¸ø¿Í»§¶Ë£¬Çë´æÈëmesToClient£¬Èç¹ûÃ»ÓÐ·µ»ØÖµ£¬ÔòÄ¬ÈÏÎªnull
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥Ö´ï¿½Ð²ï¿½Í¬ï¿½ï¿½DAOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ä£ï¿½ï¿½ï¿½DAOï¿½ï¿½ï¿½ï¿½Òªï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mesFromClientï¿½ï¿½È¡ï¿½ï¿½
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½Í»ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mesToClientï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð·ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Îªnull
 			switch(this.mesFromClient.getMessageType()) 
 			{
 				case MessageType.REQ_STU_ADD_LESSON: {
@@ -59,7 +59,7 @@ public class CourseDaoImp implements CourseDao {
 				case MessageType.REQ_ADD_LESSON:{
 					System.out.println("serving REQ_ADD_LESSON");
 					System.out.println("adding....");
-					//ÀÏÊ¦Ìí¼Ó¿Î³Ì
+					//ï¿½ï¿½Ê¦ï¿½ï¿½Ó¿Î³ï¿½
 					Course course = new Course();
 					course.setContent(this.mesFromClient.getContent());
 					this.mesToClient.setData(this.genAddCourse(course));
@@ -77,12 +77,9 @@ public class CourseDaoImp implements CourseDao {
 				case MessageType.REQ_SEARCH_LESSON: {
 					System.out.println("serving REQ_SEARCH_LESSON");
 					System.out.println("searching.....");
-					//·µ»Øµ¥¸ö¿Î³ÌÐÅÏ¢
 					Course course = new Course();
 					String courseID = this.mesFromClient.getContent().get(0);
 					course = this.searchCourseByID(courseID);
-					//course.print();
-					//contentµÄ¸üÐÂ
 					this.mesToClient.setContent(course.getContent());
 					System.out.println("REQ_SEARCH_LESSON finished");
 					break;
@@ -90,7 +87,6 @@ public class CourseDaoImp implements CourseDao {
 				case MessageType.REQ_SHOW_ALL_LESSON: {
 					System.out.println("serving REQ_SHOW_ALL_LESSON");
 					System.out.println("grabbing.....");
-					//·µ»ØËùÓÐ¿Î³Ì
 					Vector<String> sigCourseContent= new Vector<String>();
 					Vector<String> allCourseContent = new Vector<String>();
 					List<Course> allCourse = new LinkedList<Course>();
@@ -109,7 +105,7 @@ public class CourseDaoImp implements CourseDao {
 				case MessageType.REQ_STU_ALL_CHOOOSE: {
 					System.out.println("serving REQ_STU_ALL_CHOOOSE");
 					System.out.println("grabbing......");
-					//·µ»ØËùÓÐ¸ÃÑ§ÉúÒÑÑ¡¿Î³Ì
+					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½Î³ï¿½
 					Vector<String> sigCourseContent= new Vector<String>();
 					Vector<String> allCourseContent = new Vector<String>();
 					List<Course> allCourse = new LinkedList<Course>();
@@ -132,7 +128,7 @@ public class CourseDaoImp implements CourseDao {
 			}
 		}
 
-		public Message getMesToClient() { // ÎÞÐèÐÞ¸Ä£¬ÍøÂç²ãÐèÒªµ÷ÓÃÕâ¸öº¯Êý
+		public Message getMesToClient() { // ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			return this.mesToClient;
 		}
 		// Modified by WU 8.16

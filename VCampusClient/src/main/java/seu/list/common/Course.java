@@ -3,7 +3,9 @@ package seu.list.common;
 
 import java.util.Vector;
 
-public class Course {
+public class Course implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private  String Semester;
 	private String CourseID;
 	private String CourseMajor;

@@ -26,37 +26,49 @@ public class ClassAdminServer extends StudentAccessHelper {
 	ResultSet rs = null;
 	
 	// Modified by WU 8.16
-	private Message mesFromClient; // ´Ó¿Í»§¶ËÊÕµ½µÄÊı¾İ
-	private Message mesToClient; // ·¢¸ø¿Í»§¶ËµÄÊı¾İ
+	// åœ¨ä½ çš„DAOç±»æ–‡ä»¶é‡Œæ·»åŠ ä»¥ä¸‹ä¸¤ä¸ªæ•°æ®æˆå‘˜
+	private Message mesFromClient; // ä»å®¢æˆ·ç«¯å‘æ¥çš„ä¿¡æ¯
+	private Message mesToClient;  // é€å›ç»™å®¢æˆ·ç«¯çš„ä¿¡æ¯
 	
+	// åœ¨ä½ çš„DAOç±»æ–‡ä»¶é‡Œæ·»åŠ ä»¥ä¸‹è¿™æ ·çš„æ„é€ å‡½æ•°ï¼Œæ¥æ”¶ä»å®¢æˆ·ç«¯å‘æ¥çš„ä¿¡æ¯
 	public ClassAdminServer(Message mesFromClient) {
 		this.mesFromClient = mesFromClient;
 	}
 	
+	// åœ¨ä½ çš„DAOç±»æ–‡ä»¶é‡Œæ·»åŠ ä»¥ä¸‹è¿™æ ·ä¸€ä¸ªå‡½æ•°ï¼Œå‡½æ•°åç§°å°±å«executeï¼Œå‡½æ•°ä½“å†…å°±ä¸€ä¸ªswitchç»“æ„æ¥è¿›è¡Œä¸åŒç§ç±»çš„æ“ä½œ
 	public void execute() { 
-		// ¸ù¾İÀàĞÍÈ¥Ö´ĞĞ²»Í¬µÄDAO²ã²Ù×÷£¬²»Í¬Ä£¿éµÄDAOÀàĞèÒªĞŞ¸ÄÕâ¸öº¯Êı
-		// Èç¹û²Ù×÷ĞèÒªµÄ²ÎÊı£¬ÇëÔÚmesFromClientÄÚÈ¡³ö
-		// Èç¹û²Ù×÷ĞèÒª·µ»ØÊı¾İ¸ø¿Í»§¶Ë£¬Çë´æÈëmesToClient£¬Èç¹ûÃ»ÓĞ·µ»ØÖµ£¬ÔòÄ¬ÈÏÎªnull
-		switch(this.mesFromClient.getMessageType()) 
+		switch(this.mesFromClient.getMessageType()) // è¯»å–æ¥æ”¶åˆ°çš„ä¿¡æ¯
 		{
-			case MessageType.ClassAdminAdd:
+			// 
+			case MessageType.ClassAdminAdd:{
 				this.add();
 				break;
-			case MessageType.ClassAdminDelete:
-				this.mesToClient.setData(this.delete(this.mesFromClient.getData().toString()));
+			}
+			case MessageType.ClassAdminDelete:{
+				String para = (String)this.mesFromClient.getData(); 
+				// å¦‚æœä½ çš„DAOæ“ä½œéœ€è¦å‚æ•°ï¼Œå¯ä»¥ä»mesFromClientå–å‡ºæ¥å¹¶è½¬æ¢æˆä½ æƒ³è¦çš„ç±»å‹
+				int ret = this.delete(para);
+				// å¦‚æœä½ çš„DAOæ“ä½œæœ‰è¿”å›å€¼éœ€è¦é€å›ç»™å®¢æˆ·ç«¯ï¼Œæˆ–è€…æœ‰å…¶ä»–æ•°æ®æƒ³è¦é€å›å®¢æˆ·ç«¯ï¼Œ
+				// å¯ä»¥æ”¾å…¥mesToClientï¼Œå¯ä»¥æ”¾ä»»æ„æŠ½è±¡æ•°æ®ç±»å‹ï¼Œå› ä¸ºæ¥æ”¶çš„æ˜¯Object
+				this.mesToClient.setData(ret);
 				break;
-			case MessageType.ClassAdminGetAll:
-				this.mesToClient.setData(this.getall());
+			}
+			case MessageType.ClassAdminGetAll:{
+				Vector<Student> ret = this.getall();
+				this.mesToClient.setData(ret);
 				break;
-			case MessageType.ClassAdminUpdate:
+			}
+			case MessageType.ClassAdminUpdate:{
 				this.update();
 				break;
+			}
 			default:
 				break;
 		}
 	}
 
-	public Message getMesToClient() { // ÎŞĞèĞŞ¸Ä£¬ÍøÂç²ãĞèÒªµ÷ÓÃÕâ¸öº¯Êı
+	// åœ¨ä½ çš„DAOç±»æ–‡ä»¶ä¸­æ·»åŠ ä»¥ä¸‹è¿™æ ·çš„å‡½æ•°ï¼Œä¿æŒä¸€æ¨¡ä¸€æ ·
+	public Message getMesToClient() { 
 		return this.mesToClient;
 	}
 	// Modified by WU 8.16

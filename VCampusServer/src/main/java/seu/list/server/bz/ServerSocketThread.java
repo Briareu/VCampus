@@ -32,7 +32,7 @@ import seu.list.server.dao.CourseDaoImp;
 import seu.list.server.dao.ClassAdminServer;
 
 
-public class ServerSocketThread implements Runnable {
+public class ServerSocketThread extends Thread {
 	private Socket clientSocket = null;
 	private String id = null;
 	private boolean isClosed = false;
@@ -69,8 +69,11 @@ public class ServerSocketThread implements Runnable {
 							
 							break;
 						case ModuleType.Student: // 学生学籍管理模块
+							// 构造一个对应模块DAO类的对象，并送入客户端发来的信息
 							ClassAdminServer classAdminServer = new ClassAdminServer(message);
+							// 调用execute函数执行对应的操作
 							classAdminServer.execute();
+							// 获得想要发回客户端的数据
 							serverResponse = classAdminServer.getMesToClient();
 							break;
 						case ModuleType.Course:
@@ -95,7 +98,7 @@ public class ServerSocketThread implements Runnable {
 					serverResponse.setMessageType(MessageType.operFeedback);
 					serverResponse.setLastOperState(true);
 					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-					response.writeObject(serverResponse);
+					response.writeObject(serverResponse); // 这里统一发回数据给客户端
 					response.flush();
 					response.close();
 				}

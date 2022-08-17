@@ -26,11 +26,12 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 
 import seu.list.common.*;
-import seu.list.common.Client;
+//import seu.list.common.Client;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.Student;
-import seu.list.client.*;
+import seu.list.client.bz.*;
+import seu.list.client.bz.ClientMainFrame;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -268,16 +269,16 @@ public class ClassAdminClient extends JFrame {
 						JOptionPane.showMessageDialog(null,"璇烽�夋嫨涓�琛屽啀杩涜鍒犻櫎","鎻愮ず",JOptionPane.WARNING_MESSAGE);
 					//int res = server.delete((String) table.getValueAt(rownum, 3));
 					
-					Message mes = new Message();
-					Client client = new Client();
-					//mes.setExtraMessage((String)table.getValueAt(rownum, 2));//set your data
-					mes.setModuleType(ModuleType.Student); // 设定学生模块
-					mes.setMessageType(MessageType.ClassAdminDelete); // 设定学生模块的具体操作
-					mes.setData(table.getValueAt(rownum, 2)); // 放入数据
+					Message mes = new Message(); // 新建一个Message对象
+					mes.setModuleType(ModuleType.Student); // 设定你是哪个模块的，这里是学生管理
+					mes.setMessageType(MessageType.ClassAdminDelete); // 设定你希望服务端进行的操作
+					mes.setData(table.getValueAt(rownum, 2)); // 放入你想传输的数据，如果不需要传就不用写这行
+															  // 数据可以是任意的抽象数据类型，因为接收的Object
+					Client client = new Client(ClientMainFrame.socket); // 新建一个用来发数据的对象
+																		// 参数务必用ClientMainFrame下的这个socket
 					Message serverResponse = new Message();
 					serverResponse = client.sendRequestToServer(mes); // 接收服务器回传的数据
-					
-					int res = (int)serverResponse.getData();
+					int res = (int)serverResponse.getData(); // 回传的数据可以转换成你想要的类型
 					
 					if(res > 0)
 						JOptionPane.showMessageDialog(null,"瀹屾垚鍒犻櫎","鎻愮ず",JOptionPane.WARNING_MESSAGE);
@@ -291,13 +292,17 @@ public class ClassAdminClient extends JFrame {
 	}
 	@SuppressWarnings("unchecked")
 	void addRows() {
-		Message mes = new Message();
-		mes.setMessageType(MessageType.ClassAdminGetAll);//operation type
+		
+		Message mes = new Message(); 
+		mes.setModuleType(ModuleType.Student); 
+		mes.setMessageType(MessageType.ClassAdminGetAll); 
 		Message serverresponse = new Message();
-		Vector<Student> stu=new Vector<Student>();//your data
-		Client client = new Client();
+		Client client = new Client(ClientMainFrame.socket);
 		serverresponse = client.sendRequestToServer(mes);
+		Vector<Student> stu=new Vector<Student>();//your data
 		stu = (Vector<Student>)serverresponse.getData();
+		
+		
 		String[] arr = new String[6];
 		for(int i = 0; i < stu.size(); i++) {
 			arr[0] = stu.get(i).getClassid();

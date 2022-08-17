@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server implements Runnable{
+public class Server extends Thread{
 	private Integer thdNum = 10000;
 	private ServerSocket serverSocket;
 	private boolean isClosed = false;
@@ -29,7 +29,7 @@ public class Server implements Runnable{
             {
                 Socket socket = serverSocket.accept();
                 ServerSocketThread thd = new ServerSocketThread(socket, this.thdNum.toString());
-                thd.run();
+                thd.start();
                 ServerClientThreadMgr.add(this.thdNum.toString(), thd);
                 ++this.thdNum;
             }
