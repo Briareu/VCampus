@@ -133,8 +133,22 @@ public class ShopSever extends Shop_DbAccess{
 			int result=0;
 			Goods temp=SearchGoods_ID(ID);
 			int sum=temp.getGoodsNumber()+number;
-			temp.setGoodsNumber(number);
+			temp.setGoodsNumber(sum);
 			result=s.executeUpdate("update Goods set GoodsNumber='"+sum+"'where GoodsID='"+ID+"'");
+			//System.out.println(result);
+			 
+		}
+		catch (Exception e) {
+			e.printStackTrace();}
+		
+	}
+	
+	public static void ModifyGoodsPrice(int ID ,double price) {//修改价格（管理员）
+		try{
+			int result=0;
+			Goods temp=SearchGoods_ID(ID);
+			temp.setGoodsPrice(price);
+			result=s.executeUpdate("update Goods set GoodsPrice='"+price+"'where GoodsID='"+ID+"'");
 			//System.out.println(result);
 			 
 		}
