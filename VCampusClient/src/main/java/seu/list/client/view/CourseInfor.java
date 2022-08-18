@@ -1,11 +1,12 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 //package seu.list.client.view;
 
-import VCampusClient.src.main.java.seu.list.client.bz.Client;
-import VCampusClient.src.main.java.seu.list.common.Course;
-import VCampusClient.src.main.java.seu.list.common.Message;
-import VCampusClient.src.main.java.seu.list.common.ModuleType;
 
+
+import seu.list.client.bz.Client;
+import seu.list.common.Course;
+import seu.list.common.Message;
+import seu.list.common.ModuleType;
 
 import java.awt.FlowLayout;
 

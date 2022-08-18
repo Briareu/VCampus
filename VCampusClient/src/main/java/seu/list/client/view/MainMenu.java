@@ -1,13 +1,10 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import seu.list.client.bz.ClientMainFrame;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -52,18 +49,18 @@ public class MainMenu extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("\u6B22\u8FCE\u4F7F\u7528\u865A\u62DF\u6821\u56ED\u7CFB\u7EDF\uFF01");
-		lblNewLabel.setFont(new Font("����", Font.BOLD, 30));
+		lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 30));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(98, 0, 426, 53);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("\u7528\u6237\u540D\uFF1A");
-		lblNewLabel_1.setFont(new Font("����", Font.BOLD, 20));
+		lblNewLabel_1.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		lblNewLabel_1.setBounds(22, 46, 164, 39);
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnNewButton = new JButton("\u5B66\u7C4D\u7BA1\u7406");
-		btnNewButton.setFont(new Font("����", Font.BOLD, 20));
+		btnNewButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton.setBounds(89, 95, 153, 39);
 		contentPane.add(btnNewButton);
 		
@@ -72,28 +69,27 @@ public class MainMenu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1.setFont(new Font("����", Font.BOLD, 20));
+		btnNewButton_1.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton_1.setBounds(347, 95, 153, 39);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("\u9009\u8BFE");
-		btnNewButton_2.setFont(new Font("����", Font.BOLD, 20));
+		btnNewButton_2.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton_2.setBounds(89, 172, 153, 39);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("\u5BBF\u820D");
-		btnNewButton_3.setFont(new Font("����", Font.BOLD, 20));
+		btnNewButton_3.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton_3.setBounds(347, 172, 153, 39);
 		contentPane.add(btnNewButton_3);
 		
 		JButton btnNewButton_4 = new JButton("\u5546\u5E97");
-		btnNewButton_4.setFont(new Font("����", Font.BOLD, 20));
+		btnNewButton_4.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton_4.setBounds(89, 256, 153, 39);
 		contentPane.add(btnNewButton_4);
 		
 		JButton btnNewButton_4_1 = new JButton("\u9000\u51FA");
-<<<<<<< HEAD:VCampusClient/src/main/java/seu/list/client/view/MainMenu.java
-=======
+
 		btnNewButton_4_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) { // 退出按钮
@@ -101,8 +97,8 @@ public class MainMenu extends JFrame {
 				System.exit(0);
 			}
 		});
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463:VCampusClient/src/main/java/seu/list/client/view/mainMenu.java
-		btnNewButton_4_1.setFont(new Font("����", Font.BOLD, 20));
+
+		btnNewButton_4_1.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton_4_1.setBounds(423, 345, 153, 39);
 		contentPane.add(btnNewButton_4_1);
 	}

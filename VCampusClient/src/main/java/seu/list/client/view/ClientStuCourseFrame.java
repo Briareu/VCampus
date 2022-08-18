@@ -5,11 +5,9 @@ package seu.list.client.view;
 
 
 
-import VCampusClient.src.main.java.seu.list.client.bz.Client;
-import VCampusClient.src.main.java.seu.list.common.*;
 
 
-import seu.list.client.bz.ClientMainFrame;
+
 /*
 import VCampusClient.src.main.java.seu.list.common.*;
 import main.java.seu.list.common.Course;
@@ -109,7 +107,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 
 		Message mes = new Message();
 
-		Client client=new Client(this.socket);
+
 
 		mes.setUserType(0);
 

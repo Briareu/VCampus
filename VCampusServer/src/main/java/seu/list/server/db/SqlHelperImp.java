@@ -8,11 +8,10 @@ import VCampusServer.src.main.java.seu.list.server.dao.DAOUtil;
 import VCampusServer.src.main.java.seu.list.server.db.SqlHelper;
 */
 
+
 import seu.list.common.Course;
 import seu.list.common.User;
 import seu.list.server.dao.DAOUtil;
-
-
 
 
 import java.io.File;

@@ -5,8 +5,7 @@ package seu.list.common;
 import main.java.seu.list.server.dao.CourseDaoImp;
 import main.java.seu.list.server.db.SqlHelperImp;
 */
-import seu.list.server.dao.CourseDaoImp;
-import seu.list.server.db.SqlHelperImp;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,11 +1,9 @@
 
-package VCampusServer.src.main.java.seu.list.server.dao;
+package seu.list.server.dao;
 
 
 
 
-import VCampusServer.src.main.java.seu.list.common.User;
-import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
 
 
 

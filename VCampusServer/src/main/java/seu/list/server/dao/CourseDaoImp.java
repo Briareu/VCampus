@@ -1,4 +1,4 @@
-package VCampusServer.src.main.java.seu.list.server.dao;
+package seu.list.server.dao;
 //package seu.list.server.dao;
 
 
@@ -8,13 +8,14 @@ import VCampusServer.src.main.java.seu.list.common.Course;
 import VCampusServer.src.main.java.seu.list.server.dao.CourseDao;
 import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
 */
-import VCampusClient.src.main.java.seu.list.common.Message;
-import VCampusServer.src.main.java.seu.list.common.Course;
 
-import VCampusServer.src.main.java.seu.list.common.MessageType;
-import VCampusServer.src.main.java.seu.list.common.User;
-import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
 
+
+import seu.list.common.Course;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.User;
+import seu.list.server.db.SqlHelperImp;
 
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
@@ -42,7 +43,7 @@ public class CourseDaoImp implements CourseDao {
 					System.out.println("adding....");
 					String CourseId = this.mesFromClient.getContent().get(0);
 					String UserId = this.mesFromClient.getContent().get(1);
-					this.mesToClient.setData(this.sigAddCourse(CourseId, UserId));
+					this.sigAddCourse(CourseId, UserId);
 					System.out.println("REQ_STU_ADD_LESSON finished");
 					break;
 				}

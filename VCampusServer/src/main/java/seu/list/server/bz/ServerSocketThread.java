@@ -13,6 +13,16 @@
 //package VCampusServer.src.main.java.seu.list.server.bz;
 package seu.list.server.bz;
 
+
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
+import seu.list.server.dao.ClassAdminServer;
+import seu.list.server.dao.CourseDaoImp;
+import seu.list.server.dao.UserDao;
+import seu.list.server.dao.UserDaoImpl;
+
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,6 +32,7 @@ import java.util.*;
 
 
 /*
+<<<<<<< HEAD
 import VCampusClient.src.main.java.seu.list.common.Message;
 import VCampusServer.src.main.java.seu.list.common.MessageType;
 import VCampusServer.src.main.java.seu.list.common.ModuleType;
@@ -31,6 +42,7 @@ import VCampusServer.src.main.java.seu.list.server.dao.UserDaoImpl;
 */
 import seu.list.common.*;
 import seu.list.server.dao.*;
+
 
 
 

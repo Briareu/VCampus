@@ -1,10 +1,10 @@
 
-package VCampusServer.src.main.java.seu.list.server.dao;
-import VCampusServer.src.main.java.seu.list.common.User;
-
-
-
 package seu.list.server.dao;
+
+
+
+
+
 
 
 import java.util.List;

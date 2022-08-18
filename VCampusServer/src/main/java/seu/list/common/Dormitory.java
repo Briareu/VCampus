@@ -2,11 +2,9 @@
 package seu.list.common;
 
 import java.io.Serializable;
-<<<<<<< HEAD
-import java.util.Vector;
-=======
+
 import java.util.*;
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 
 public class Dormitory implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -122,9 +120,7 @@ public class Dormitory implements Serializable{
     {
         return "Dormitory{" + "userID="+userID+"DormitoryID=" + DormitoryID + ", StudentBunkID=" + StudentBunkID +",Water="+Water+",Electricity="+Electricity+",DormitoryScore="+DormitoryScore+",DormitoryMaintain="+DormitoryMaintain+",StudentExchange="+StudentExchange+"}";
     }
-<<<<<<< HEAD
 
-=======
     
     /*
 >>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463

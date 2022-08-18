@@ -63,14 +63,11 @@ public class LibraryManage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-<<<<<<< HEAD
-	public LibraryManage() {
-	    ArrayList<Book> booklist=new ArrayList<Book>();
-=======
+
 	public LibraryManage() {		
 	    ArrayList<Book> booklist=new ArrayList<Book>();		
 		
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
@@ -83,10 +80,7 @@ public class LibraryManage extends JFrame {
 		serverResponse=client.sendRequestToServer(mes);
 		booklist=(ArrayList<Book>)serverResponse.getData();
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 		setTitle("图书馆-管理员");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -121,53 +115,11 @@ public class LibraryManage extends JFrame {
 		deletePane.setBackground(UIManager.getColor("Panel.background"));
 		deletePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		layerPane.add(deletePane, BorderLayout.NORTH);
-<<<<<<< HEAD
-
-		delNameLabel = new JLabel("书名");
-		delNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delNameLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
 		delIDLabel = new JLabel("书号");
 		delIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		delIDLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
-		delAuthorLabel = new JLabel("作者");
-		delAuthorLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delAuthorLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
-		delPressLabel = new JLabel("出版社");
-		delPressLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delPressLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
-		delStockLabel = new JLabel("库存");
-		delStockLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delStockLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
-		delStockText = new JTextField();
-		delStockText.setColumns(10);
-
-		delPressText = new JTextField();
-		delPressText.setColumns(10);
-
-		delAuthorText = new JTextField();
-		delAuthorText.setColumns(10);
-
 		delIDText = new JTextField();
 		delIDText.setColumns(10);
-
-		delNameText = new JTextField();
-		delNameText.setColumns(10);
-
-=======
-		
-		delIDLabel = new JLabel("书号");
-		delIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delIDLabel.setFont(new Font("宋体", Font.BOLD, 25));
-		
-		delIDText = new JTextField();
-		delIDText.setColumns(10);
-		
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 		delqrButton = new JButton("确定");
 		delqrButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -664,12 +616,9 @@ public class LibraryManage extends JFrame {
 
 	protected void DelqrAvt(ActionEvent e) {
 		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
-<<<<<<< HEAD
 
-=======
 		//Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()), addPressText.getText());
-		
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
@@ -724,9 +673,7 @@ public class LibraryManage extends JFrame {
 	protected void AddbookAvt(ActionEvent e) {
 
 		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
-<<<<<<< HEAD
 
-=======
 		//Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()), addPressText.getText());
 
 		String[]arr=new String[5];
@@ -737,7 +684,7 @@ public class LibraryManage extends JFrame {
 		arr[4]=addStockText.getText();
 
 		
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
@@ -837,12 +784,9 @@ public class LibraryManage extends JFrame {
 		Message serverResponse=new Message();
 
 		serverResponse=client.sendRequestToServer(mes);
-<<<<<<< HEAD
-		booklist=(ArrayList<Book>)serverResponse.getData();
 
-=======
 		
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 				"书名", "书号", "作者", "出版社", "库存", "状态"}) {

@@ -1,5 +1,6 @@
-//package VCampusServer.src.main.java.seu.list.server.dao;
+
 package seu.list.server.dao;
+
 
 import seu.list.common.Course;
 import seu.list.common.User;
@@ -9,10 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-import VCampusServer.src.main.java.seu.list.common.Course;
-import VCampusServer.src.main.java.seu.list.common.User;
-*/
 
 
 

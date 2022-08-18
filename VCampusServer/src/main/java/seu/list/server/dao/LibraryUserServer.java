@@ -77,6 +77,7 @@ public class LibraryUserServer extends Library_DbAccess {
 			rs=s.executeQuery("select * from BookList");	// 查询书籍信息
 						
 			//把数据库中的数据读入bookList
+
 			while(rs.next()) {
 				Book tempBook=new Book();
 				tempBook.setName(rs.getString("Name"));
@@ -103,9 +104,11 @@ public class LibraryUserServer extends Library_DbAccess {
 
 	}
 
+
 	//书名或书号查找
 	public ArrayList<Book> FindBook(String fbookid) {
 		ArrayList<Book> resbook=new ArrayList<Book>();		
+
 		try {
 			for(int i=0;i<bookList.size();i++) {
 				Book tbook=bookList.get(i);
@@ -144,6 +147,7 @@ public class LibraryUserServer extends Library_DbAccess {
 	//学生
 	public int LendBook(String bookid) { //用书号查找（唯一）
 		int res=0;	
+
 		try {
 			int result1=0,result2=0,result3=0;
 			Book targetbook=FindBookID(bookid);
@@ -158,6 +162,7 @@ public class LibraryUserServer extends Library_DbAccess {
 	    	//不可借抛出异常
 		    }
 		    if(targetbook.getStock()-1==0) {
+
 		    	result2 = s.executeUpdate("update BookList set State=0 where ID='"+targetbook.getId()+"'");
 		    	targetbook.setState(false);	
 		    }
@@ -186,7 +191,7 @@ public class LibraryUserServer extends Library_DbAccess {
 		    targetbook.setStock(targetbook.getStock()+1);		
 		    targetbook.setStock(targetbook.getStock()-1);
     	    result1 = s.executeUpdate("update BookList set Stock='"+targetbook.getStock()+"' where ID='"+targetbook.getId()+"'");	
-    	    
+
 		    if(targetbook.getState()==false) {
 		    	targetbook.setState(true);
 			    result1 = s.executeUpdate("update BookList set State=1 where ID='"+targetbook.getId()+"'");
@@ -224,9 +229,11 @@ public class LibraryUserServer extends Library_DbAccess {
 		return res;
 	}
 
+	
 	//管理员
 	public int DeleteBook(String bookid) { //用书号查找（唯一）
 		int res=0;
+
 		try {
 			int result=0;
 			Book tbook=FindBookID(bookid);
