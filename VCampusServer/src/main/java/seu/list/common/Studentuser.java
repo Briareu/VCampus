@@ -1,4 +1,4 @@
-package user;
+package seu.list.common;
 
 import java.util.ArrayList;
 import shop.Shop;

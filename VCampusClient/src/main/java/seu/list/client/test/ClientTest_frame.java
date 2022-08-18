@@ -1,1 +1,1 @@
-package VCampusClient.src.main.java.seu.list.client.test;public class ClientTest_frame {    public static void main(String[] args)   	{ 		seu.list.client.view.ClientLoginFrame clf = new seu.list.client.view.ClientLoginFrame();   	}}
+/*package VCampusClient.src.main.java.seu.list.client.test;public class ClientTest_frame {    public static void main(String[] args)   	{ 		seu.list.client.view.ClientLoginFrame clf = new seu.list.client.view.ClientLoginFrame();   	}}*/

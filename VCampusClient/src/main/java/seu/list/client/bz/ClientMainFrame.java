@@ -1,5 +1,6 @@
 package seu.list.client.bz;
 
+import seu.list.client.view.MainMenu;
 import seu.list.common.*;
 
 import java.net.Socket;
@@ -19,8 +20,15 @@ public class ClientMainFrame {
 		// 启动各种窗口
 		
 		
+		MainMenu mainMenu = new MainMenu();
+		mainMenu.setVisible(true);
+		
 		
 		// 要关闭客户端时，给服务器发送下线通知
+		goOffline();
+	}
+	
+	public static void goOffline() {
 		Message offlineMes = new Message();
 		offlineMes.offline();
 		Client client = new Client(socket);
@@ -33,5 +41,4 @@ public class ClientMainFrame {
 			e.printStackTrace();
 		}
 	}
-
 }

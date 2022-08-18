@@ -1,8 +1,12 @@
-package main.java.seu.list.common;
+//package main.java.seu.list.common;
+package seu.list.common;
 
 import java.io.Serializable;
+import java.util.*;
 
 public class Dormitory implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private String userID;  //学生姓名
 	private String DormitoryID;  //宿舍号
 	private int StudentBunkID;  //床位

@@ -1,4 +1,5 @@
-package Vshopclient;
+//package Vshopclient;
+package seu.list.client.view;
 
 import java.awt.EventQueue;
 

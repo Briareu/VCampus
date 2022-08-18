@@ -11,9 +11,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import seu.list.common.Client;
+//import seu.list.common.Client;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
+import seu.list.client.bz.*;
 import seu.list.common.Book;
 
 public class LibraryManage extends JFrame {
@@ -60,7 +61,7 @@ public class LibraryManage extends JFrame {
 		Message mes =new Message();
 		mes.setMessageType(MessageType.LibraryBookGetAll);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		booklist=(ArrayList<Book>)serverResponse.getData();
 
@@ -607,7 +608,7 @@ public class LibraryManage extends JFrame {
 		mes.setExtraMessage(findText.getText());
 		mes.setMessageType(MessageType.LibraryBookFind);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		ArrayList<Book> resbook=new ArrayList<Book>();
 		resbook=(ArrayList<Book>)serverResponse.getData();
@@ -644,13 +645,14 @@ public class LibraryManage extends JFrame {
 	}
 
 	protected void DelqrAvt(ActionEvent e) {
-		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
+		//Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
+		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()), addPressText.getText());
 		
 		Message mes =new Message();
 		mes.setData(tbook);
 		mes.setMessageType(MessageType.LibraryBookDelete);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		
 		int res = (int)serverResponse.getData();
@@ -696,13 +698,14 @@ public class LibraryManage extends JFrame {
 
 	//增加书籍确认界面
 	protected void AddbookAvt(ActionEvent e) {
-		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
+		//Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
+		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()), addPressText.getText());
 		
 		Message mes =new Message();
 		mes.setData(tbook);
 		mes.setMessageType(MessageType.LibraryBookAdd);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		
 		int res = (int)serverResponse.getData();
@@ -767,7 +770,7 @@ public class LibraryManage extends JFrame {
 		}
 
      	Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		res = (int)serverResponse.getData();
 		if(res > 0)
@@ -786,7 +789,7 @@ public class LibraryManage extends JFrame {
 		Message mes =new Message();
 		mes.setMessageType(MessageType.LibraryBookGetAll);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		booklist=(ArrayList<Book>)serverResponse.getData();
 		

@@ -15,6 +15,8 @@
 
 import java.io.Serializable;
 public class Goods implements Serializable{
+		private static final long serialVersionUID = 1L;
+	
 		private int GoodsID;
 		private String GoodsName;
 		private double GoodsPrice;

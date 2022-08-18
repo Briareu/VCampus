@@ -1,9 +1,12 @@
 package seu.list.client.view;
 
+/*
 import Manage.collegemanage;
 import style.stylefont;
 import tools.EasyCode;
 import tools.Tools;
+*/
+import seu.list.client.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,9 +47,9 @@ public class ManageWindow {
 
         JLayeredPane jPanel3=new JLayeredPane();
         jPanel3.setBounds(420,20,WIDTH-420-40,HEIGHT-95);
-        collegemanage collegeMan=new collegemanage(0,0,WIDTH-420,HEIGHT-95);
-        jPanel3.add(collegeMan,(Integer)(JLayeredPane.PALETTE_LAYER));
-        jPanel3.moveToFront(collegeMan);
+        //collegemanage collegeMan=new collegemanage(0,0,WIDTH-420,HEIGHT-95);
+        //jPanel3.add(collegeMan,(Integer)(JLayeredPane.PALETTE_LAYER));
+        //jPanel3.moveToFront(collegeMan);
         jPanel1.add(jPanel3);
 
         jPanel2.add(box1);

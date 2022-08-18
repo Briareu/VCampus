@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import seu.list.common.Book;
-import seu.list.common.Client;
+//import seu.list.common.Client;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
+import seu.list.client.bz.*;
 
 public class LibraryStu extends JFrame {
 
@@ -52,7 +53,7 @@ public class LibraryStu extends JFrame {
 		Message mes =new Message();
 		mes.setMessageType(MessageType.LibraryBookGetAll);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		booklist=(ArrayList<Book>)serverResponse.getData();
 		
@@ -352,14 +353,14 @@ public class LibraryStu extends JFrame {
 		mes.setExtraMessage(returnIDText.getText());
 		mes.setMessageType(MessageType.LibraryBookLend);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		
 		int res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"还书完成","提示",JOptionPane.WARNING_MESSAGE);
 	
-		SetTableShow()
+		SetTableShow();
 	}
 
 	//借书
@@ -373,7 +374,7 @@ public class LibraryStu extends JFrame {
 		mes.setExtraMessage(lendIDText.getText());
 		mes.setMessageType(MessageType.LibraryBookReturn);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		
 		int res = (int)serverResponse.getData();
@@ -389,7 +390,7 @@ public class LibraryStu extends JFrame {
 		mes.setExtraMessage(findText.getText());
 		mes.setMessageType(MessageType.LibraryBookFind);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		ArrayList<Book> resbook=new ArrayList<Book>();
 		resbook=(ArrayList<Book>)serverResponse.getData();
@@ -430,7 +431,7 @@ public class LibraryStu extends JFrame {
 		Message mes =new Message();
 		mes.setMessageType(MessageType.LibraryBookGetAll);
 		Message serverResponse=new Message();
-		Client client=new Client();
+		Client client=new Client(ClientMainFrame.socket);
 		serverResponse=client.sendRequestToServer(mes);
 		booklist=(ArrayList<Book>)serverResponse.getData();
 		

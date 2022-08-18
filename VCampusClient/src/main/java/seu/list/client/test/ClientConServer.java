@@ -2,23 +2,23 @@ package seu.list.client.test;
 
 
 
-
+/*
 import main.java.seu.list.common.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+*/
 
 
-
-
-
+/*
 public class ClientConServer{
-
+*/
 	/**
-	 * 用于登录验证和注�?
+	 * 用于登录验证和注�?
 	 */
+/*
 	private User user;
 	public boolean IsConnect;
 	private static Socket s;
@@ -91,8 +91,8 @@ public class ClientConServer{
 		for(int i=0;i<getUser().getContent().size();i++) {
 			System.out.println(getUser().getContent().get(i));
 		}*/
-		//用来测试�?传信�?
-		
+		//用来测试�?传信�?
+		/*
 		Req.setType("REQ_REGISTER");
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(getSocket().getOutputStream());
@@ -100,7 +100,7 @@ public class ClientConServer{
 			oos.flush();
 			
 			ObjectInputStream dis = new ObjectInputStream(getSocket().getInputStream());
-			//sign = dis.readInt();//从输入流中读取一个int型数�?
+			//sign = dis.readInt();//从输入流中读取一个int型数�?
 			Req = (ClientReq) dis.readObject();
 			sign = Integer.valueOf(Req.getLevel());
 		} 
@@ -129,3 +129,4 @@ public class ClientConServer{
 		ClientConServer.s = s;
 	}
 }
+*/

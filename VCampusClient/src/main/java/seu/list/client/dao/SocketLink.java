@@ -1,14 +1,15 @@
-package client.dao;
+package seu.list.client.dao;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/*
 import virtualSchoolClient.src.vsst.client.bz.ClientConServer;
 import virtualSchoolClient.src.vsst.common.ClientReq;
+*/
 
 
-
-
+/*
 public class SocketLink {
 	ClientReq sendMsm;
 	ClientReq receiveMsm;
@@ -45,3 +46,4 @@ public class SocketLink {
 		
 	}
 }
+*/

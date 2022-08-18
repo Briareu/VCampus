@@ -1,4 +1,5 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+//package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Font;

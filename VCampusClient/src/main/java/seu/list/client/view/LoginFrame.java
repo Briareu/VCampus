@@ -13,7 +13,9 @@ import java.net.URISyntaxException;
 import java.util.Objects;
 import javax.swing.JCheckBox;
 import java.awt.Color;
+
 import seu.list.common.*;
+import seu.list.client.bz.*;
 //import vc.bz.IUserSrv;
 //import vc.bz.impl.IUserSrvImpl;
 
@@ -125,22 +127,24 @@ public class LoginFrame extends  JFrame implements  ActionListener{
         this.setVisible(true);
     }
 
+    
     @Override
     public void actionPerformed(ActionEvent e) {
+    	/*
         if(e.getSource()==login)
         {
-            IUserSrv us=new IUserSrvImpl();
+            //IUserSrv us=new IUserSrvImpl();
             User user=new User();
             String acco=account.getText().trim();
-            user.setAccount(acco);
-            user.setPassword(new String(pass.getPassword()));
+            //user.setAccount(acco);
+            //user.setPassword(new String(pass.getPassword()));
             User retUser=null;
             try {
-                retUser = us.login(user);
+                //retUser = us.login(user);
                 if (retUser != null) {
-                    QQLogger.clientLogger().info(user.getQqNo() + ":" + "楠岃瘉鎴愬姛");
+                    //QQLogger.clientLogger().info(user.getQqNo() + ":" + "楠岃瘉鎴愬姛");
                     //retUser.setStatus(UserStatus.ONLINE);
-                    new ClientMainFrm(retUser, us);
+                    //new ClientMainFrm(retUser, us);
                     // 鍚屾椂鍏抽棴鎺夌櫥闄嗙晫闈�
                     this.dispose();
                 } else {
@@ -167,10 +171,13 @@ public class LoginFrame extends  JFrame implements  ActionListener{
             r.dispose();
             this.setVisible(true);
         }
+        */
     }
-}
+    
+    /*
     static public void main(String[]args)
     {
         LoginFrame frame1=new LoginFrame();
     }
+    */
 }

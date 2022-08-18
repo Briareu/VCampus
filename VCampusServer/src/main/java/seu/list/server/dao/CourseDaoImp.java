@@ -33,9 +33,6 @@ public class CourseDaoImp implements CourseDao {
 		}
 		
 		public void execute() { 
-			// ��������ȥִ�в�ͬ��DAO���������ͬģ���DAO����Ҫ�޸��������
-			// ���������Ҫ�Ĳ���������mesFromClient��ȡ��
-			// ���������Ҫ�������ݸ��ͻ��ˣ������mesToClient�����û�з���ֵ����Ĭ��Ϊnull
 			switch(this.mesFromClient.getMessageType()) 
 			{
 				case MessageType.REQ_STU_ADD_LESSON: {
