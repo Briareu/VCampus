@@ -1,8 +1,11 @@
-package VCampusClient.src.main.java.seu.list.common;
+//package VCampusClient.src.main.java.seu.list.common;
+package seu.list.common;
 
 import java.io.Serializable;
 
 public class Student implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
     private String studentid;
     private String studentName;
     private String teacher;
@@ -13,7 +16,7 @@ public class Student implements Serializable {
     private String studentstatus;
     private String studentphone;
     private double studentcredit;
-    
+
     public String getStudentid() {
 		return studentid;
 	}

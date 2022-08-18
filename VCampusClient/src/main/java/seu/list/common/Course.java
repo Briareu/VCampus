@@ -1,5 +1,5 @@
-package seu.list.common;
-//import vss.server.bz.user;
+package VCampusClient.src.main.java.seu.list.common;
+
 
 import java.util.Vector;
 

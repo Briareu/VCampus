@@ -1,5 +1,5 @@
 //package VCampusServer.src.main.java.seu.list.common;
-package seu.list.common;
+package VCampusServer.src.main.java.seu.list.common;
 
 public final class ModuleType {
 	public static final String User = "USER"; // �û�����ģ��

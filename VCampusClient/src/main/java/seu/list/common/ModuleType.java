@@ -1,11 +1,20 @@
-package seu.list.common;
+package VCampusClient.src.main.java.seu.list.common;
 //package VCampusClient.src.main.java.seu.list.common;
 
 public final class ModuleType {
-	public static final String User = "USER"; // ÓÃ»§¹ÜÀíÄ£¿é
-	public static final String Student = "STUDENT"; // Ñ§ÉúÑ§¼®¹ÜÀíÄ£¿é
-	public static final String Course = "COURSE"; // Ñ¡¿ÎÏµÍ³Ä£¿é
-	public static final String Shop = "SHOP"; // ÉÌµêÄ£¿é
-	public static final String Library = "LIBRARY"; // Í¼Êé¹İÄ£¿é
-	public static final String Dormitory = "Dormitory"; // ËŞÉáÄ£¿é
+<<<<<<< HEAD
+	public static final String User = "USER"; // ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
+	public static final String Student = "STUDENT"; // Ñ§ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
+	public static final String Course = "COURSE"; // Ñ¡ï¿½ï¿½ÏµÍ³Ä£ï¿½ï¿½
+	public static final String Shop = "SHOP"; // ï¿½Ìµï¿½Ä£ï¿½ï¿½
+	public static final String Library = "LIBRARY"; // Í¼ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
+	public static final String Dormitory = "Dormitory"; // ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
+=======
+	public static final String User = "USER"; // ç”¨æˆ·æ¨¡å—
+	public static final String Student = "STUDENT"; // å­¦ç”Ÿæ¨¡å—
+	public static final String Course = "COURSE"; // è¯¾ç¨‹æ¨¡å—
+	public static final String Shop = "SHOP"; // å•†åº—æ¨¡å—
+	public static final String Library = "LIBRARY"; // å›¾ä¹¦é¦†æ¨¡å—
+	public static final String Dormitory = "Dormitory"; // å®¿èˆæ¨¡å—
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 }

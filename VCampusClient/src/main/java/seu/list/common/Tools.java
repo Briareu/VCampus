@@ -1,5 +1,4 @@
-//package VCampusClient.src.main.java.seu.list.client.view;
-package seu.list.client.view;
+package VCampusClient.src.main.java.seu.list.common;
 
 import javax.swing.*;
 import java.awt.*;

@@ -3,8 +3,9 @@ package VCampusClient.src.main.java.seu.list.client.view;
 
 
 
+import VCampusClient.src.main.java.seu.list.client.bz.Client;
 import VCampusClient.src.main.java.seu.list.common.*;
-import main.java.seu.list.common.Course;
+
 
 import java.awt.*;
 import java.io.IOException;
@@ -41,11 +42,12 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 
 
 	Font f1=new Font("华文行楷",Font.PLAIN,18);
-	
-	public ClientStuCourseFrame(String number, Socket socket) throws ClassNotFoundException, SQLException,IOException, ClassNotFoundException 
+
+	public ClientStuCourseFrame(String number, Socket socket) throws ClassNotFoundException, SQLException,IOException, ClassNotFoundException
 	{
 		Tools.setWindowspos(WIDTH,HEIGHT,jframe);
-		this.socket = socket;
+		this.socket=socket;
+		Client client =new Client(socket);
 		userID=number;
 		jframe.setTitle("选课管理系统");
 		jbackground=new JPanel();
@@ -90,23 +92,19 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 
 
 		Object[][] courseinformation= {};
-		Object[] courselist = {"学年学期","课程编号","专业","课程","授课教师","状态","类型"};
+		Object[] courselist = {"课程编号","学年学期","课程","专业","授课教师","状态","类型"};
 		DefaultTableModel model;
 		model = new DefaultTableModel(courseinformation, courselist);
 
 		Message mes = new Message();
-		Client client=new Client();
+
 		mes.setUserType(0);
 
 		mes.setModuleType(ModuleType.Course);
-		//传数据
-		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-		oos.writeObject(mes);
-		oos.flush();
-		//接受数据
-		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-		mes = (Message) ois.readObject();
-		Vector<String> allCourseContents = (Vector<String>) mes.getData();
+		mes.setMessageType(MessageType.REQ_SHOW_ALL_LESSON);
+		Message rec=new Message();
+		rec=client.sendRequestToServer(mes);
+		Vector<String> allCourseContents =  rec.getContent();
 		System.out.println(allCourseContents.size());
 		Object sigRow[] = new  String[7];
 		for(int i=0;i<allCourseContents.size();) {
@@ -231,7 +229,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
         Object[] courselist = {"学年学期","专业","课程编号","课程","授课人数","状态","类型"};
         DefaultTableModel model;
         model = new DefaultTableModel(courseinformation, courselist);
-        
+
         ClientReq clientReq = new ClientReq();
 		clientReq.setType("REQ_SHOW_ALL_LESSON");
 		//传数据
@@ -251,11 +249,11 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			}
 			model.addRow(sigRow);
 		}
-		
+
         jtb1=new JTable();
 		jtb1.setModel(model);
 		scrollPane = new JScrollPane(jtb1);
-		
+
 		jb1.addActionListener(this);
 		jb1.setActionCommand("choose");
 		jb2.addActionListener(this);
@@ -264,12 +262,12 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		jb3.setActionCommand("check");
 		jb4.addActionListener(this);
 		jb4.setActionCommand("cancel");
-		
+
 		jp1=new JPanel();
 		jp3=new JPanel();
 		jp4=new JPanel();
 		jp5=new JPanel();
-		
+
 	    jp1.add(jl1);
 		jp1.add(jtf2);
 		jp1.add(jb1);
@@ -279,55 +277,50 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		jp4.add(jtf1);
 		jp3.add(jp4);
 		jp3.add(jp5);
-		
-		
+
+
 		//cm=new CouTableModel(0);
 		//jt = new JTable(cm);
 
-		
+
 		int w=Toolkit.getDefaultToolkit().getScreenSize().width;
 		int h=Toolkit.getDefaultToolkit().getScreenSize().height;
 		getContentPane().add(jp3,BorderLayout.EAST);
 		getContentPane().add(jp1,BorderLayout.SOUTH);
-		getContentPane().add(scrollPane,BorderLayout.WEST);	
-		
+		getContentPane().add(scrollPane,BorderLayout.WEST);
+
 		this.setTitle("学生选课");
-		this.setSize(w/2,(h-25)/2); 
+		this.setSize(w/2,(h-25)/2);
 
 		this.setLocationRelativeTo(null);*/
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Client client =new Client(this.socket);
 		if(e.getActionCommand() == "choose") {
 			this.setVisible(false);
 			Message clientReq = new Message();//新建申请用于交换
 			Vector<String> reqContent = new Vector<String>();
-            reqContent.add(jtf2.getText());
+			reqContent.add(jtf2.getText());
 			reqContent.add(userID);
-            clientReq.setData(reqContent);
+			clientReq.setContent(reqContent);
 			clientReq.setModuleType(ModuleType.Course);
 			clientReq.setMessageType("REQ_STU_ADD_LESSON");
-			try {
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(clientReq);
-				oos.flush();
-				//this.setVisible(false);
-				ClientStuCourseFrame csf = new ClientStuCourseFrame(userID,socket);
-			} catch(Exception e1) {
-				e1.printStackTrace();
-			}
-			clientReq.setModuleType(ModuleType.Course);
+			Message rec=client.sendRequestToServer(clientReq);
+//			try {
+//				ClientStuCourseFrame csf = new ClientStuCourseFrame(userID,this.socket);
+//			} catch (ClassNotFoundException ex) {
+//				throw new RuntimeException(ex);
+//			} catch (SQLException ex) {
+//				throw new RuntimeException(ex);
+//			} catch (IOException ex) {
+//				throw new RuntimeException(ex);
+//			}
+//			clientReq.setModuleType(ModuleType.Course);
 			clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
-			try {
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(clientReq);
-				oos.flush();
-				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				clientReq = (Message) ois.readObject();
-			} catch(Exception e1) {
-				e1.printStackTrace();
-			}
-			Vector<String>	allCourseInfor = (Vector<String>) clientReq.getData();
+			rec=client.sendRequestToServer(clientReq);
+
+			Vector<String>	allCourseInfor = rec.getContent();
 			int rowNumber = allCourseInfor.size()/7;
 			String[][] allCourseTable = new String[rowNumber][7];
 			int storingPlace = 0;
@@ -337,10 +330,10 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			}
 			jtb1 = new JTable();
 			jtb1.setModel(new DefaultTableModel(
-				allCourseTable,
-				new String[] {
-						"学年学期","课程编号","专业","课程","授课教师","状态","类型"
-				}
+					allCourseTable,
+					new String[] {
+							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+					}
 			));
 			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
 			jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
@@ -365,19 +358,12 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			Message clientReq = new Message();//新建申请用于交换
 			User user = new User();
 			user.setId(userID);
-			clientReq.setData(user.getContent());
+			clientReq.setContent(user.getContent());
 			clientReq.setModuleType(ModuleType.Course);
 			clientReq.setMessageType("REQ_STU_ALL_CHOOOSE");
-			try {
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(clientReq);
-				oos.flush();
-				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				clientReq = (Message) ois.readObject();
-			} catch(Exception e2) {
-				e2.printStackTrace();
-			}
-			Vector<String>	allCourseInfor = (Vector<String>) clientReq.getData();
+			Message rec=client.sendRequestToServer(clientReq);
+
+			Vector<String>	allCourseInfor = rec.getContent();
 			int rowNumber = allCourseInfor.size()/7;
 			String[][] allCourseTable = new String[rowNumber][7];
 			int storingPlace = 0;
@@ -387,10 +373,10 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			}
 			jtb1 = new JTable();
 			jtb1.setModel(new DefaultTableModel(
-				allCourseTable,
-				new String[] {
-						"学年学期","课程编号","专业","课程","授课教师","状态","类型"
-				}
+					allCourseTable,
+					new String[] {
+							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+					}
 			));
 			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
 			jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
@@ -418,18 +404,12 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			Course c = new Course();
 			c.setCourseID(jtf1.getText());
 			reqContent = c.getContent();
-			clientReq.setData(reqContent);//调用信息存进申请
+			clientReq.setContent(reqContent);//调用信息存进申请
+			Message rec=client.sendRequestToServer(clientReq);
+			System.out.println(rec.getContent());
 			//通信
-			try {
-			ObjectOutputStream oos5 = new ObjectOutputStream(socket.getOutputStream());//把这个socket通过OutputStream输出给Server端
-			oos5.writeObject(clientReq);//写进申请里面去（序列化）
-			oos5.flush();//上传等待处理
-            ObjectInputStream ois5 = new ObjectInputStream(socket.getInputStream());//把这个socket通过InputStream写回client端
-			clientReq = (Message) ois5.readObject();}//读出（去序列化）
-			catch(Exception e3) {
-				e3.printStackTrace();
-			}
-			Vector<String>	allCourseInfor = (Vector<String>) clientReq.getData();
+
+			Vector<String>	allCourseInfor =  rec.getContent();
 			int rowNumber = allCourseInfor.size()/7;
 			String[][] allCourseTable = new String[rowNumber][7];
 			int storingPlace = 0;
@@ -439,10 +419,10 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			}
 			jtb1 = new JTable();
 			jtb1.setModel(new DefaultTableModel(
-				allCourseTable,
-				new String[] {
-						"学年学期","课程编号","专业","课程","授课教师","状态","类型"
-				}
+					allCourseTable,
+					new String[] {
+							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+					}
 			));
 			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
 			jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
@@ -462,37 +442,25 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			//this.setVisible(true);
 			this.setLocationRelativeTo(null);
 		}
-	    else if(e.getActionCommand() == "cancel") {
-	    	this.setVisible(false);
+		else if(e.getActionCommand() == "cancel") {
+			this.setVisible(false);
 			Message clientReq = new Message();
 			Vector<String> content = new Vector<String>();
 			content.add(jtf2.getText());//课ID
 			content.add(userID);//人ID
-            clientReq.setData(content);
+			clientReq.setContent(content);
 			clientReq.setModuleType(ModuleType.Course);
 			clientReq.setMessageType("REQ_STU_REMOVE_LESSON");
-			try {
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(clientReq);
-				oos.flush();
-			} catch(Exception e4) {
-				e4.printStackTrace();
-			}
+			Message rec=client.sendRequestToServer(clientReq);
+
 			clientReq.setModuleType(ModuleType.Course);
 			clientReq.setMessageType("REQ_STU_ALL_CHOOOSE");
 			User user =new User();
 			user.setId(userID);
-			clientReq.setData(user.getContent());
-			try {
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(clientReq);
-				oos.flush();
-				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				clientReq = (Message) ois.readObject();
-			} catch(Exception e1) {
-				e1.printStackTrace();
-			}
-			Vector<String>	allCourseInfor = (Vector<String>) clientReq.getData();
+			clientReq.setContent(user.getContent());
+			rec=client.sendRequestToServer(clientReq);
+
+			Vector<String>	allCourseInfor =  rec.getContent();
 			int rowNumber = allCourseInfor.size()/7;
 			String[][] allCourseTable = new String[rowNumber][7];
 			int storingPlace = 0;
@@ -502,10 +470,10 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			}
 			jtb1 = new JTable();
 			jtb1.setModel(new DefaultTableModel(
-				allCourseTable,
-				new String[] {
-						"学年学期","课程编号","专业","课程","授课教师","状态","类型"
-				}
+					allCourseTable,
+					new String[] {
+							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+					}
 			));
 			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
 			jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
@@ -525,7 +493,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			jtb1.setRowHeight(50);
 			//this.setVisible(true);
 			this.setLocationRelativeTo(null);
-	    }
-	  }
+		}
 	}
+}
 	

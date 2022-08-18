@@ -64,22 +64,22 @@ public class ClassAdminForAdd extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		JButton Commitbtn = new JButton("确定");
-		
+
 		Commitbtn.setFont(new Font("宋体", Font.PLAIN, 15));
-		
+
 		JButton exitbtn = new JButton("返回");
-		
+
 		exitbtn.setFont(new Font("宋体", Font.PLAIN, 15));
-		
+
 		JComboBox selectmode = new JComboBox();
 		selectmode.addItem("学生");
 		selectmode.addItem("班级");
-		
+
 		JLabel lblNewLabel = new JLabel("模式");
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -118,9 +118,9 @@ public class ClassAdminForAdd extends JFrame {
 						.addComponent(exitbtn))
 					.addGap(47))
 		);
-		
+
 		table = new JTable();
-		
+
 		if((selectmode.getSelectedItem().toString()).equalsIgnoreCase("学生")) {
 			table.setModel(new DefaultTableModel(
 					new Object[][] {
@@ -141,7 +141,7 @@ public class ClassAdminForAdd extends JFrame {
 					}
 				));
 		}
-		
+
 		selectmode.addItemListener(new ItemListener() {
 
 			@Override
@@ -168,9 +168,9 @@ public class ClassAdminForAdd extends JFrame {
 						));
 				}
 			}
-			
+
 		});
-		
+
 		Commitbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if((selectmode.getSelectedItem().toString()).equalsIgnoreCase("学生")) {
@@ -192,9 +192,9 @@ public class ClassAdminForAdd extends JFrame {
 						mes.setModuleType(ModuleType.Student);
 						mes.setMessageType(MessageType.ClassAdminAdd);
 						mes.setData(stu);
-						
+
 						Client client = new Client(ClientMainFrame.socket);
-						
+
 						Message serverResponse = new Message();
 						serverResponse = client.sendRequestToServer(mes);
 						int res = (int)serverResponse.getData();
@@ -216,11 +216,11 @@ public class ClassAdminForAdd extends JFrame {
 				}
 			}
 		});
-		
+
 		table.setRowHeight(25);
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);
-		
+
 		exitbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cac.setEnabled(true);
@@ -228,7 +228,7 @@ public class ClassAdminForAdd extends JFrame {
 			}
 		});
 	}
-	
+
 	void close() {
 		this.dispose();
 	}

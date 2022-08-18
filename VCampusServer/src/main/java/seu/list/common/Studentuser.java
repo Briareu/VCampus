@@ -1,11 +1,13 @@
-package user;
+package seu.list.common;
 
 import java.util.ArrayList;
-import shop.Shop;
-import shop.Goods;
+//import shop.Shop;
+//import shop.Goods;
+import seu.list.common.*;
+
 public class Studentuser extends User{
 void buy(ArrayList<Goods> Goodlist,Shop shop) {
-	
+
 };
 int balance=0;
 public int getBalance() {

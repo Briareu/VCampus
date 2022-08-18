@@ -1,4 +1,4 @@
-package seu.list.client.bz;
+package VCampusClient.src.main.java.seu.list.client.bz;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -7,7 +7,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import seu.list.common.*;
+import VCampusClient.src.main.java.seu.list.common.Message;
+import VCampusClient.src.main.java.seu.list.common.MessageType;
 
 public class Client {
 	private Socket socket;
@@ -21,7 +22,9 @@ public class Client {
             ObjectOutputStream request = new ObjectOutputStream(socket.getOutputStream());
             request.writeObject(clientRequest); 
             request.flush();
-            request.close();
+			System.out.println("socket.shutdownOutput()");
+			//socket.shutdownOutput();
+            //request.close();
             
             if(clientRequest.isOffline()) {
             	return null;
@@ -30,11 +33,14 @@ public class Client {
             Message mesRet = new Message();
 			while(true) { // 等待服务器回应数据
 	            mesRet = (Message)response.readObject();
-	            if(mesRet.getMessageType() == MessageType.operFeedback) {
+	            if(mesRet.getMessageType().equals(MessageType.operFeedback)) {
 	            	break;
 	            }
 			}
-			response.close();
+			System.out.println(mesRet.getContent());
+			System.out.println("socket.shutdownInput()");
+			//socket.shutdownInput();
+			//response.close();
 			return mesRet; // 把收到的数据返回给客户端
         }catch (UnknownHostException e) {
             // TODO: handle exception

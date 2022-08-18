@@ -1,5 +1,5 @@
 //package VCampusServer.src.main.java.seu.list.common;
-package seu.list.common;
+package VCampusServer.src.main.java.seu.list.common;
 
 public class IConstant {
 	public static final int SERVER_PORT = 8888;

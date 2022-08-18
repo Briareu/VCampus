@@ -1,4 +1,5 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+//package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -58,95 +59,95 @@ public class ClassStudentClient extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		JLabel lblNewLabel = new JLabel("个人信息管理");
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 23));
-		
+
 		JLabel lblNewLabel_1 = new JLabel("姓名");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_2 = new JLabel("学号");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_3 = new JLabel("专业");
 		lblNewLabel_3.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_4 = new JLabel("班级");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_4.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_5 = new JLabel("老师");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_5.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_6 = new JLabel("性别");
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_6.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_7 = new JLabel("籍贯");
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_7.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_8 = new JLabel("政治面貌");
 		lblNewLabel_8.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_9 = new JLabel("联系电话");
 		lblNewLabel_9.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		JLabel lblNewLabel_10 = new JLabel("账户余额");
 		lblNewLabel_10.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		name = new JTextField();
 		name.setEditable(false);
 		name.setFont(new Font("宋体", Font.PLAIN, 15));
 		name.setColumns(10);
-		
+
 		studentid = new JTextField();
 		studentid.setEditable(false);
 		studentid.setFont(new Font("宋体", Font.PLAIN, 15));
 		studentid.setColumns(10);
-		
+
 		major = new JTextField();
 		major.setEditable(false);
 		major.setFont(new Font("宋体", Font.PLAIN, 15));
 		major.setColumns(10);
-		
+
 		classid = new JTextField();
 		classid.setEditable(false);
 		classid.setFont(new Font("宋体", Font.PLAIN, 15));
 		classid.setColumns(10);
-		
+
 		teacherid = new JTextField();
 		teacherid.setEditable(false);
 		teacherid.setFont(new Font("宋体", Font.PLAIN, 15));
 		teacherid.setColumns(10);
-		
+
 		phone = new JTextField();
 		phone.setEditable(false);
 		phone.setFont(new Font("宋体", Font.PLAIN, 15));
 		phone.setColumns(10);
-		
+
 		credit = new JTextField();
 		credit.setEditable(false);
 		credit.setFont(new Font("宋体", Font.PLAIN, 15));
 		credit.setColumns(10);
-		
+
 		origion = new JTextField();
 		origion.setEditable(false);
 		origion.setFont(new Font("宋体", Font.PLAIN, 15));
 		origion.setColumns(10);
-		
+
 		final JComboBox gender = new JComboBox();
 		gender.setEnabled(false);
 		gender.setFont(new Font("宋体", Font.PLAIN, 15));
 		gender.addItem("未知");
 		gender.addItem("男");
 		gender.addItem("女");
-		
+
 		gender.setToolTipText("");
-		
+
 		final JComboBox status = new JComboBox();
 		status.setEnabled(false);
 		status.setFont(new Font("宋体", Font.PLAIN, 15));
@@ -163,15 +164,15 @@ public class ClassStudentClient extends JFrame {
 		status.addItem("九三学社社员");
 		status.addItem("台盟盟员");
 		status.addItem("无党派人士");
-		
+
 		JLabel lblNewLabel_11 = new JLabel("元");
 		lblNewLabel_11.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+
 		final JButton modifybutton = new JButton("修改");
 		modifybutton.setFont(new Font("新宋体", Font.PLAIN, 15));
 		JButton investbutton = new JButton("充值");
 		investbutton.setFont(new Font("宋体", Font.PLAIN, 15));
-		
+
 		modifybutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(modifybutton.getText().compareTo("修改") == 0) {
@@ -207,7 +208,7 @@ public class ClassStudentClient extends JFrame {
 				}
 			}
 		});
-		
+
 		investbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String info = JOptionPane.showInputDialog(null, "请输入充值金额", "充值", JOptionPane.WARNING_MESSAGE);
@@ -219,7 +220,7 @@ public class ClassStudentClient extends JFrame {
 				}
 			}
 		});
-		
+
 		JButton exitbutton = new JButton("退出");
 		exitbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -248,7 +249,7 @@ public class ClassStudentClient extends JFrame {
 			}
 		});
 		exitbutton.setFont(new Font("新宋体", Font.PLAIN, 15));
-		
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

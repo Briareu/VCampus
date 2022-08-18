@@ -1,13 +1,20 @@
-package main.java.seu.list.common;
+//package main.java.seu.list.common;
+package seu.list.common;
 
+/*
 import main.java.seu.list.server.dao.CourseDaoImp;
 import main.java.seu.list.server.db.SqlHelperImp;
+*/
+import seu.list.server.dao.CourseDaoImp;
+import seu.list.server.db.SqlHelperImp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Student implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
     private String studentid;
     private String studentName;
     private String teacher;
@@ -18,7 +25,7 @@ public class Student implements Serializable {
     private String studentstatus;
     private String studentphone;
     private double studentcredit;
-    
+
     public String getStudentid() {
 		return studentid;
 	}

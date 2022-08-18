@@ -1,5 +1,5 @@
 //package VCampusServer.src.main.java.seu.list.server.bz;
-package seu.list.server.bz;
+package VCampusServer.src.main.java.seu.list.server.bz;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -28,6 +28,7 @@ public class Server extends Thread{
             while(!isClosed)
             {
                 Socket socket = serverSocket.accept();
+                System.out.println("Thread"+this.thdNum.toString()+"已经建立");
                 ServerSocketThread thd = new ServerSocketThread(socket, this.thdNum.toString());
                 thd.start();
                 ServerClientThreadMgr.add(this.thdNum.toString(), thd);

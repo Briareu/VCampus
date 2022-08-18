@@ -1,5 +1,5 @@
-//package VCampusServer.src.main.java.seu.list.common;
-package seu.list.common;
+package VCampusClient.src.main.java.seu.list.common;
+//package seu.list.common;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -9,7 +9,7 @@ import java.util.Vector;
 public class Message implements Serializable {
       private static final long serialVersionUID = 50000L;
 
-      private Vector<String> Content = null;
+      public  Vector<String> Content = null;
       private Object data = null;
       private String messageType = null;
       private String moduleType = null;
@@ -75,6 +75,6 @@ public class Message implements Serializable {
             return Content;
         }
       public void setContent(Vector<String> content) {
-            Content = content;
+          Content=content;
         }
 }

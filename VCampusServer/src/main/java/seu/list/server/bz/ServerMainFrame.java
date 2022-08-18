@@ -1,6 +1,8 @@
-package seu.list.server.bz;
+package VCampusServer.src.main.java.seu.list.server.bz;
 
-import seu.list.common.IConstant;
+import VCampusServer.src.main.java.seu.list.common.IConstant;
+import VCampusServer.src.main.java.seu.list.server.bz.Server;
+
 
 /**
 * @author ��Ľ��
