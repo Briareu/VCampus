@@ -1,11 +1,8 @@
-package VCampusServer.src.main.java.seu.list.common;
-//package seu.list.common;
-//
-//<<<<<<< HEAD
+package seu.list.common;
 
 
-import VCampusServer.src.main.java.seu.list.server.dao.CourseDaoImp;
-import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
+
+
 //=======
 ///*
 //import main.java.seu.list.server.dao.CourseDaoImp;
@@ -15,6 +12,9 @@ import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
 //import seu.list.server.db.SqlHelperImp;
 //
 //>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
+import seu.list.server.dao.CourseDaoImp;
+import seu.list.server.db.SqlHelperImp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +125,7 @@ public class User implements java.io.Serializable {
 		List<Course> cList=new ArrayList<Course>();
 		for(String cID:courseIDset)
 		{
-			//cList.add(new CourseDaoImp().searchCourseByID(cID));
+			cList.add(new CourseDaoImp().searchCourseByID(cID));
 		}
 		return cList;
 	}

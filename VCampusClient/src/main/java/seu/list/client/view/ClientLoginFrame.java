@@ -1,10 +1,12 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 
 
 
 
-import VCampusClient.src.main.java.seu.list.client.bz.Client;
-import VCampusClient.src.main.java.seu.list.common.*;
+
+
+import seu.list.client.bz.Client;
+import seu.list.common.*;
 
 import javax.swing.*;
 import java.awt.*;

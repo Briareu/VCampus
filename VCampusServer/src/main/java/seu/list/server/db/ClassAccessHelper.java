@@ -62,10 +62,10 @@ public class ClassAccessHelper{
 
 	public int insert(Connection connection, ClassManage clss) throws Exception{
 		PreparedStatement ps = con.prepareStatement("insert into Class(ClassID,TeacherId,Major,ClassSize) values(?,?,?,?)");
-		ps.setString(0, clss.getClassID());
-		ps.setString(1, clss.getTeacherID());
-		ps.setString(2, clss.getMajor());
-		ps.setDouble(3, clss.getClassSize());
+		ps.setString(1, clss.getClassID());
+		ps.setString(2, clss.getTeacherID());
+		ps.setString(3, clss.getMajor());
+		ps.setDouble(4, clss.getClassSize());
 		int result = ps.executeUpdate();
 		ps.close();
 		con.close();

@@ -118,4 +118,4 @@ public class Shop_DbAccess {
 	
 	
 	    
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+

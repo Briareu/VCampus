@@ -1,14 +1,11 @@
-package VCampusClient.src.main.java.seu.list.client.bz;
+package seu.list.client.bz;
 
 
 
-import VCampusClient.src.main.java.seu.list.client.view.ClientCourseFrame;
-import VCampusClient.src.main.java.seu.list.client.view.ClientLoginFrame;
-import VCampusClient.src.main.java.seu.list.client.view.ClientStuCourseFrame;
-import VCampusClient.src.main.java.seu.list.client.view.ClientTeacherFrame;
-import VCampusClient.src.main.java.seu.list.common.IConstant;
-import VCampusClient.src.main.java.seu.list.common.Message;
 
+
+import seu.list.client.view.ClientStuCourseFrame;
+import seu.list.client.view.ClientTeacherFrame;
 import seu.list.client.view.MainMenu;
 import seu.list.common.*;
 
@@ -53,7 +50,7 @@ public class ClientMainFrame {
 		
 		
 		// 要关闭客户端时，给服务器发送下线通知
-		goOffline();
+		//goOffline();
 	}
 	
 	public static void goOffline() {

@@ -58,12 +58,10 @@ public class LibraryStu extends JFrame {
 	 * Create the frame.
 	 */
 	public LibraryStu() {
-<<<<<<< HEAD
-		ArrayList<Book> booklist=new ArrayList<Book>();
-=======
+
 		ArrayList<Book> booklist=new ArrayList<Book>();		
 		
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
@@ -71,15 +69,11 @@ public class LibraryStu extends JFrame {
 		Message serverResponse=new Message();
 
 		serverResponse=client.sendRequestToServer(mes);
-<<<<<<< HEAD
-		booklist=(ArrayList<Book>)serverResponse.getData();
 
-=======
 		//booklist=(ArrayList<Book>)serverResponse.getData();
 		
 		System.out.print(serverResponse.getData());
-		
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 		setTitle("图书馆-学生");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -217,10 +211,8 @@ public class LibraryStu extends JFrame {
 				return false;
 				}
 		};
-<<<<<<< HEAD
 
-		for(int i=0;i<booklist.size();i++) {
-=======
+
 		
 /*		for(int i=0;i<booklist.size();i++) {
 >>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
@@ -254,7 +246,7 @@ public class LibraryStu extends JFrame {
 			tablemodel.addRow(arr);
 		}
 		
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 		table = new JTable(tablemodel);
 		table.setBackground(SystemColor.info);
 		table.setFillsViewportHeight(true);
@@ -406,13 +398,10 @@ public class LibraryStu extends JFrame {
 		int res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"还书完成","提示",JOptionPane.WARNING_MESSAGE);
-<<<<<<< HEAD
 
-		SetTableShow()
-=======
 	
 		SetTableShow();
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 	}
 
 	//借书

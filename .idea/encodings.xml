@@ -4,5 +4,8 @@
     <file url="file://$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/ClientReq.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/ModuleType.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/ClassAdminServer.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

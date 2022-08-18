@@ -1,4 +1,4 @@
-package VCampusServer.src.main.java.seu.list.common;
+package seu.list.common;
 //package seu.list.common;
 
 

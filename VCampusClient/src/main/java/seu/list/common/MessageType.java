@@ -1,4 +1,4 @@
-package VCampusClient.src.main.java.seu.list.common;
+package seu.list.common;
 //package seu.list.common;
 
 public final class MessageType {

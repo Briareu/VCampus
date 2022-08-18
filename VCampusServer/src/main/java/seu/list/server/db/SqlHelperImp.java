@@ -1,5 +1,5 @@
 //package VCampusServer.src.main.java.seu.list.server.db;
-package VCampusServer.src.main.java.seu.list.server.db;
+package seu.list.server.db;
 
 /*
 import VCampusServer.src.main.java.seu.list.common.Course;
@@ -8,11 +8,10 @@ import VCampusServer.src.main.java.seu.list.server.dao.DAOUtil;
 import VCampusServer.src.main.java.seu.list.server.db.SqlHelper;
 */
 
-import VCampusServer.src.main.java.seu.list.common.Course;
-import VCampusServer.src.main.java.seu.list.common.User;
-import VCampusServer.src.main.java.seu.list.server.dao.DAOUtil;
 
-
+import seu.list.common.Course;
+import seu.list.common.User;
+import seu.list.server.dao.DAOUtil;
 
 
 import java.io.File;

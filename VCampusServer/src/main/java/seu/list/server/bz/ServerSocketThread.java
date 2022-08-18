@@ -11,7 +11,15 @@
  * this is a demo, you can update the socket frame and the way of message-passing any time and tell us
  */
 //package VCampusServer.src.main.java.seu.list.server.bz;
-package VCampusServer.src.main.java.seu.list.server.bz;
+package seu.list.server.bz;
+
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
+import seu.list.server.dao.ClassAdminServer;
+import seu.list.server.dao.CourseDaoImp;
+import seu.list.server.dao.UserDao;
+import seu.list.server.dao.UserDaoImpl;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -28,12 +36,6 @@ import main.java.seu.list.server.dao.ClassAdminServer;
 
 
 
-import VCampusClient.src.main.java.seu.list.common.Message;
-import VCampusServer.src.main.java.seu.list.common.MessageType;
-import VCampusServer.src.main.java.seu.list.common.ModuleType;
-import VCampusServer.src.main.java.seu.list.server.dao.CourseDaoImp;
-import VCampusServer.src.main.java.seu.list.server.dao.UserDao;
-import VCampusServer.src.main.java.seu.list.server.dao.UserDaoImpl;
 
 //import seu.list.server.dao.ClassAdminServer;
 
@@ -78,11 +80,11 @@ public class ServerSocketThread extends Thread {
 							break;
 						case ModuleType.Student: // 学生学籍管理模块
 							// 构造一个对应模块DAO类的对象，并送入客户端发来的信息
-//							ClassAdminServer classAdminServer = new ClassAdminServer(message);
-//							// 调用execute函数执行对应的操作
-//							classAdminServer.execute();
-//							// 获得想要发回客户端的数据
-//							serverResponse = classAdminServer.getMesToClient();
+							ClassAdminServer classAdminServer = new ClassAdminServer(message);
+							// 调用execute函数执行对应的操作
+							classAdminServer.execute();
+							// 获得想要发回客户端的数据
+							serverResponse = classAdminServer.getMesToClient();
 							break;
 						case ModuleType.Course:
 							// 选课模块
