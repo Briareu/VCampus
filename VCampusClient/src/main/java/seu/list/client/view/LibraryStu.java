@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import seu.list.common.Book;
-import seu.list.common.Client;
+import seu.list.client.bz.Client;
+import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
 public class LibraryStu extends JFrame {
 
@@ -31,7 +33,7 @@ public class LibraryStu extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -43,18 +45,23 @@ public class LibraryStu extends JFrame {
 			}
 		});
 	}
+	*/
 
 	/**
 	 * Create the frame.
 	 */
 	public LibraryStu() {
 		ArrayList<Book> booklist=new ArrayList<Book>();		
+		
 		Message mes =new Message();
-		mes.setMessageType(MessageType.LibraryBookGetAll);
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
+		mes.setMessageType(MessageType.LibraryBookGetAll);	
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
-		booklist=(ArrayList<Book>)serverResponse.getData();
+		//booklist=(ArrayList<Book>)serverResponse.getData();
+		
+		System.out.print(serverResponse.getData());
 		
 		setTitle("图书馆-学生");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -194,7 +201,7 @@ public class LibraryStu extends JFrame {
 				}
 		};
 		
-		for(int i=0;i<booklist.size();i++) {
+/*		for(int i=0;i<booklist.size();i++) {
 			String[] arr=new String[6];
 			arr[0]=booklist.get(i).getName();
 			arr[1]=booklist.get(i).getId();
@@ -206,6 +213,19 @@ public class LibraryStu extends JFrame {
 			else
 				arr[5]="不可借";
 			
+			tablemodel.addRow(arr);
+		}
+		
+		*/
+		
+		for(int i=0;i<2;i++) {
+			String[] arr=new String[6];
+			arr[0]="书名"+i;
+			arr[1]="书号"+i;
+			arr[2]="作者"+i;
+			arr[3]="出版社"+i;
+			arr[4]=""+i;
+			arr[5]="可借";
 			tablemodel.addRow(arr);
 		}
 		
@@ -349,17 +369,18 @@ public class LibraryStu extends JFrame {
 		returnPane.setVisible(true);
 		
 		Message mes =new Message();
-		mes.setExtraMessage(returnIDText.getText());
-		mes.setMessageType(MessageType.LibraryBookLend);
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
+		mes.setMessageType(MessageType.LibraryBookReturn);
+		mes.setData(returnIDText.getText());
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
 		
 		int res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"还书完成","提示",JOptionPane.WARNING_MESSAGE);
 	
-		SetTableShow()
+		SetTableShow();
 	}
 
 	//借书
@@ -370,10 +391,11 @@ public class LibraryStu extends JFrame {
 		lendPane.setVisible(true);
 		
 		Message mes =new Message();
-		mes.setExtraMessage(lendIDText.getText());
-		mes.setMessageType(MessageType.LibraryBookReturn);
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
+		mes.setMessageType(MessageType.LibraryBookLend);
+		mes.setData(lendIDText.getText());
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
 		
 		int res = (int)serverResponse.getData();
@@ -386,11 +408,13 @@ public class LibraryStu extends JFrame {
 	//查询
 	protected void FindAvt(ActionEvent e) {
 		Message mes =new Message();
-		mes.setExtraMessage(findText.getText());
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookFind);
+		mes.setData(findText.getText());
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
+		
 		ArrayList<Book> resbook=new ArrayList<Book>();
 		resbook=(ArrayList<Book>)serverResponse.getData();
 		
@@ -428,10 +452,12 @@ public class LibraryStu extends JFrame {
 		ArrayList<Book> booklist=new ArrayList<Book>();		
 		
 		Message mes =new Message();
-		mes.setMessageType(MessageType.LibraryBookGetAll);
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
+		mes.setMessageType(MessageType.LibraryBookGetAll);		
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
+		
 		booklist=(ArrayList<Book>)serverResponse.getData();
 		
 		DefaultTableModel tablemodel;

@@ -5,15 +5,15 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import seu.list.common.Client;
+import seu.list.client.bz.Client;
+import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 import seu.list.common.Book;
 
 public class LibraryManage extends JFrame {
@@ -28,8 +28,8 @@ public class LibraryManage extends JFrame {
 	private JLabel addNameLabel,addIDLabel,addAuthorLabel,addPressLabel,addStockLabel;
 	private JTextField addNameText,addIDText,addAuthorText,addPressText,addStockText;
 	private JButton addqrButton,addqxButton;
-	private JLabel delNameLabel,delIDLabel,delAuthorLabel,delPressLabel,delStockLabel;
-	private JTextField delStockText,delPressText,delAuthorText,delIDText,delNameText;
+	private JLabel delIDLabel;
+	private JTextField delIDText;
 	private JButton delqrButton,delqxButton;
 	
 	private JTable table;
@@ -39,7 +39,7 @@ public class LibraryManage extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -51,20 +51,23 @@ public class LibraryManage extends JFrame {
 			}
 		});
 	}
+	*/
 
 	/**
 	 * Create the frame.
 	 */
 	public LibraryManage() {		
 	    ArrayList<Book> booklist=new ArrayList<Book>();		
+		
 		Message mes =new Message();
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookGetAll);
+		mes.setData(MessageType.LibraryBookGetAll);		
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
 		booklist=(ArrayList<Book>)serverResponse.getData();
 
-		
 		setTitle("图书馆-管理员");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -98,42 +101,14 @@ public class LibraryManage extends JFrame {
 		layerPane.setLayer(deletePane, 400);
 		deletePane.setBackground(UIManager.getColor("Panel.background"));
 		deletePane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		layerPane.add(deletePane, BorderLayout.NORTH);	
-		
-		delNameLabel = new JLabel("书名");
-		delNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delNameLabel.setFont(new Font("宋体", Font.BOLD, 25));
+		layerPane.add(deletePane, BorderLayout.NORTH);
 		
 		delIDLabel = new JLabel("书号");
 		delIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		delIDLabel.setFont(new Font("宋体", Font.BOLD, 25));
 		
-		delAuthorLabel = new JLabel("作者");
-		delAuthorLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delAuthorLabel.setFont(new Font("宋体", Font.BOLD, 25));
-		
-		delPressLabel = new JLabel("出版社");
-		delPressLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delPressLabel.setFont(new Font("宋体", Font.BOLD, 25));
-		
-		delStockLabel = new JLabel("库存");
-		delStockLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		delStockLabel.setFont(new Font("宋体", Font.BOLD, 25));
-		
-		delStockText = new JTextField();
-		delStockText.setColumns(10);
-		
-		delPressText = new JTextField();
-		delPressText.setColumns(10);
-		
-		delAuthorText = new JTextField();
-		delAuthorText.setColumns(10);
-		
 		delIDText = new JTextField();
 		delIDText.setColumns(10);
-		
-		delNameText = new JTextField();
-		delNameText.setColumns(10);
 		
 		delqrButton = new JButton("确定");
 		delqrButton.addActionListener(new ActionListener() {
@@ -152,69 +127,46 @@ public class LibraryManage extends JFrame {
 		});
 		delqxButton.setForeground(Color.BLACK);
 		delqxButton.setFont(new Font("楷体", Font.BOLD, 29));
+		
+		JLabel lblNewLabel = new JLabel("删 除 书 籍");
+		lblNewLabel.setForeground(UIManager.getColor("Button.focus"));
+		lblNewLabel.setFont(new Font("黑体", Font.PLAIN, 30));
 		GroupLayout gl_deletePane = new GroupLayout(deletePane);
 		gl_deletePane.setHorizontalGroup(
-			gl_deletePane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_deletePane.createSequentialGroup()
-					.addGap(122)
+			gl_deletePane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_deletePane.createSequentialGroup()
 					.addGroup(gl_deletePane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_deletePane.createSequentialGroup()
-							.addComponent(delNameLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-							.addGap(26)
-							.addComponent(delNameText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_deletePane.createSequentialGroup()
-							.addComponent(delIDLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-							.addGap(26)
-							.addComponent(delIDText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_deletePane.createSequentialGroup()
-							.addComponent(delAuthorLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-							.addGap(26)
-							.addComponent(delAuthorText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_deletePane.createSequentialGroup()
-							.addComponent(delPressLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-							.addGap(26)
-							.addComponent(delPressText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_deletePane.createSequentialGroup()
-							.addComponent(delStockLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-							.addGap(26)
-							.addComponent(delStockText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_deletePane.createSequentialGroup()
-							.addGap(101)
+							.addGap(210)
 							.addComponent(delqrButton)
-							.addGap(124)
-							.addComponent(delqxButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(125, Short.MAX_VALUE))
+							.addGap(121)
+							.addComponent(delqxButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_deletePane.createSequentialGroup()
+							.addGap(107)
+							.addComponent(delIDLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+							.addGap(30)
+							.addComponent(delIDText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(136, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_deletePane.createSequentialGroup()
+					.addContainerGap(279, Short.MAX_VALUE)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
+					.addGap(246))
 		);
 		gl_deletePane.setVerticalGroup(
 			gl_deletePane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_deletePane.createSequentialGroup()
-					.addGap(57)
+					.addGap(74)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addGap(62)
 					.addGroup(gl_deletePane.createParallelGroup(Alignment.LEADING)
-						.addComponent(delNameLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(delNameText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-					.addGap(16)
-					.addGroup(gl_deletePane.createParallelGroup(Alignment.LEADING)
+						.addComponent(delIDLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_deletePane.createSequentialGroup()
-							.addGap(2)
-							.addComponent(delIDLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-						.addComponent(delIDText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-					.addGap(13)
-					.addGroup(gl_deletePane.createParallelGroup(Alignment.LEADING)
-						.addComponent(delAuthorLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(delAuthorText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-					.addGap(15)
-					.addGroup(gl_deletePane.createParallelGroup(Alignment.LEADING)
-						.addComponent(delPressLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(delPressText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-					.addGap(16)
-					.addGroup(gl_deletePane.createParallelGroup(Alignment.LEADING)
-						.addComponent(delStockLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(delStockText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-					.addGap(40)
-					.addGroup(gl_deletePane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(delqrButton, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-						.addComponent(delqxButton, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(57, Short.MAX_VALUE))
+							.addComponent(delIDText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(88)
+							.addGroup(gl_deletePane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(delqrButton, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+								.addComponent(delqxButton, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(122, Short.MAX_VALUE))
 		);
 		deletePane.setLayout(gl_deletePane);
 		
@@ -272,62 +224,68 @@ public class LibraryManage extends JFrame {
 		addqxButton.setFont(new Font("楷体", Font.BOLD, 29));
 		GroupLayout gl_addPane = new GroupLayout(addPane);
 		gl_addPane.setHorizontalGroup(
-			gl_addPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_addPane.createSequentialGroup()
-					.addContainerGap(135, Short.MAX_VALUE)
-					.addGroup(gl_addPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(addNameLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-						.addComponent(addIDLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(addAuthorLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(addPressLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-						.addComponent(addStockLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(26)
-					.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(addStockText)
-						.addComponent(addPressText)
-						.addComponent(addAuthorText)
-						.addComponent(addIDText)
-						.addComponent(addNameText, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
-					.addGap(116))
-				.addGroup(gl_addPane.createSequentialGroup()
-					.addGap(194)
-					.addComponent(addqrButton)
-					.addGap(113)
-					.addComponent(addqxButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(239, Short.MAX_VALUE))
-		);
-		gl_addPane.setVerticalGroup(
-			gl_addPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_addPane.createSequentialGroup()
-					.addContainerGap(45, Short.MAX_VALUE)
-					.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(addNameText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addNameLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_addPane.createSequentialGroup()
-							.addGap(16)
+				gl_addPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(Alignment.LEADING, gl_addPane.createSequentialGroup()
+						.addGap(122)
+						.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_addPane.createSequentialGroup()
+								.addComponent(addNameLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+								.addGap(26)
+								.addComponent(addNameText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_addPane.createSequentialGroup()
+								.addComponent(addIDLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+								.addGap(26)
+								.addComponent(addIDText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_addPane.createSequentialGroup()
+								.addComponent(addAuthorLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+								.addGap(26)
+								.addComponent(addAuthorText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_addPane.createSequentialGroup()
+								.addComponent(addPressLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+								.addGap(26)
+								.addComponent(addPressText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_addPane.createSequentialGroup()
+								.addComponent(addStockLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+								.addGap(26)
+								.addComponent(addStockText, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_addPane.createSequentialGroup()
+								.addGap(101)
+								.addComponent(addqrButton)
+								.addGap(124)
+								.addComponent(addqxButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap(125, Short.MAX_VALUE))
+			);
+			gl_addPane.setVerticalGroup(
+				gl_addPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_addPane.createSequentialGroup()
+						.addGap(57)
+						.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(addNameLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+							.addComponent(addNameText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+						.addGap(16)
+						.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_addPane.createSequentialGroup()
+								.addGap(2)
+								.addComponent(addIDLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
 							.addComponent(addIDText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_addPane.createSequentialGroup()
-							.addGap(18)
-							.addComponent(addIDLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))
-					.addGap(13)
-					.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(addAuthorText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addAuthorLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-					.addGap(15)
-					.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(addPressText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addPressLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-					.addGap(16)
-					.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(addStockText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addStockLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-					.addGap(49)
-					.addGroup(gl_addPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(addqrButton)
-						.addComponent(addqxButton, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-					.addGap(135))
-		);
+						.addGap(13)
+						.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(addAuthorLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+							.addComponent(addAuthorText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+						.addGap(15)
+						.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(addPressLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+							.addComponent(addPressText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+						.addGap(16)
+						.addGroup(gl_addPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(addStockLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+							.addComponent(addStockText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+						.addGap(40)
+						.addGroup(gl_addPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(addqrButton, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+							.addComponent(addqxButton, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(57, Short.MAX_VALUE))
+			);
 		addPane.setLayout(gl_addPane);
 		
 		nameRadioButton = new JRadioButton("书名");
@@ -604,11 +562,13 @@ public class LibraryManage extends JFrame {
 
 	protected void FindAvt(ActionEvent e) {
 		Message mes =new Message();
-		mes.setExtraMessage(findText.getText());
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookFind);
+		mes.setData(findText.getText());
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
+
 		ArrayList<Book> resbook=new ArrayList<Book>();
 		resbook=(ArrayList<Book>)serverResponse.getData();
 		
@@ -647,10 +607,11 @@ public class LibraryManage extends JFrame {
 		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
 		
 		Message mes =new Message();
-		mes.setData(tbook);
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookDelete);
+		mes.setData(delIDText.getText());
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
 		
 		int res = (int)serverResponse.getData();
@@ -696,13 +657,19 @@ public class LibraryManage extends JFrame {
 
 	//增加书籍确认界面
 	protected void AddbookAvt(ActionEvent e) {
-		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
+		String[]arr=new String[5];
+		arr[0]=addNameText.getText();
+		arr[1]=addIDText.getText();
+		arr[2]=addAuthorText.getText();
+		arr[3]=addPressText.getText();
+		arr[4]=addStockText.getText();
 		
 		Message mes =new Message();
-		mes.setData(tbook);
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookAdd);
+		mes.setData(arr);
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
 		
 		int res = (int)serverResponse.getData();
@@ -724,11 +691,14 @@ public class LibraryManage extends JFrame {
 	//修改信息确认
 	protected void ModiInfo(ActionEvent e) {
 		if((nameRadioButton.isSelected()==false)&&(idRadioButton.isSelected()==false)&&(authorRadioButton.isSelected()==false)&&
-				(pressRadioButton.isSelected()==false)&&(stockRadioButton.isSelected()==false))
+				(pressRadioButton.isSelected()==false)&&(stockRadioButton.isSelected()==false)) {
 			JOptionPane.showMessageDialog(null, "请选择修改的书籍信息！", "要求",JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 
-     	Message mes=new Message();
-		int res=0;
+		Message mes =new Message();
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookUpdate);  //
 		if(nameRadioButton.isSelected()) {
 			ArrayList<String> para = new ArrayList<String>();
@@ -766,8 +736,9 @@ public class LibraryManage extends JFrame {
 			mes.setData(para);	
 		}
 
+		int res=0;
+		
      	Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
 		res = (int)serverResponse.getData();
 		if(res > 0)
@@ -784,11 +755,11 @@ public class LibraryManage extends JFrame {
 		ArrayList<Book> booklist=new ArrayList<Book>();		
 		
 		Message mes =new Message();
-		mes.setMessageType(MessageType.LibraryBookGetAll);
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
+		mes.setMessageType(MessageType.LibraryBookGetAll);	
 		Message serverResponse=new Message();
-		Client client=new Client();
 		serverResponse=client.sendRequestToServer(mes);
-		booklist=(ArrayList<Book>)serverResponse.getData();
 		
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {

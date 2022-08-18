@@ -1,6 +1,8 @@
 package seu.list.common;
 
-public class Book {
+public class Book implements java.io.Serializable{
+	private static final long serialVersionID=1L;
+	
 	private String id;
 	private String name;
 	private String author;
@@ -8,7 +10,7 @@ public class Book {
 	private String press;  //出版社：
 	private Boolean state;  //状态 0-不可借阅；1-可借阅
 	
-	public Book(String jid,String jname,String jauthor,Integer jstock,String press) {
+	public Book(String jid,String jname,String jauthor,String press,Integer jstock) {
 		this.setId(jid);
 		this.setName(jname);
 		this.setAuthor(jauthor);
@@ -67,6 +69,4 @@ public class Book {
 	public void setState(boolean b) {
 		this.state = b;
 	}
-	
-	
 }
