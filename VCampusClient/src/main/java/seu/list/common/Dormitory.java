@@ -123,23 +123,29 @@ public class Dormitory implements Serializable{
 		Vector<String> dormitoryContents = new Vector<String>();
 		dormitoryContents.add(userID);
 		dormitoryContents.add(DormitoryID);
-    	dormitoryContents.add(StudentBunkID);
-    	dormitoryContents.add(Water);
-    	dormitoryContents.add(Electricity);
-    	dormitoryContents.add(DormitoryScore);
-    	dormitoryContents.add(DormitoryMaintain);
-    	dormitoryContents.add(StudentExchange);
+		dormitoryContents.add(String.valueOf(StudentBunkID));
+    	//dormitoryContents.add(StudentBunkID);
+		dormitoryContents.add((String.valueOf(Water)));
+    	//dormitoryContents.add(Water);
+		dormitoryContents.add(String.valueOf(Electricity));
+    	//dormitoryContents.add(Electricity);
+		dormitoryContents.add(String.valueOf(DormitoryScore));
+    	//dormitoryContents.add(DormitoryScore);
+		dormitoryContents.add(String.valueOf(DormitoryMaintain));
+    	//dormitoryContents.add(DormitoryMaintain);
+		dormitoryContents.add(String.valueOf(StudentExchange));
+    	//dormitoryContents.add(StudentExchange);
 		return dormitoryContents;
 	}
     
 	public void setContent(Vector<String> content) {
 		userID = content.get(0);
 		DormitoryID = content.get(1);
-    	StudentBunkID = content.get(2);
-    	Water = content.get(3);
-    	Electricity = content.get(4);
-    	DormitoryScore = content.get(5);
-    	DormitoryMaintain =content.get(6);
-    	StudentExchange =content.get(7);
+    	StudentBunkID = Integer.parseInt(content.get(2));
+    	Water = Integer.parseInt(content.get(3));
+    	Electricity = Integer.parseInt(content.get(4));
+    	DormitoryScore = Integer.parseInt(content.get(5));
+    	DormitoryMaintain = Boolean.parseBoolean(content.get(6));
+    	StudentExchange = Boolean.parseBoolean(content.get(7));
 	}
 }
