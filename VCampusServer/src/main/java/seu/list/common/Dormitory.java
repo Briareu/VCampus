@@ -2,6 +2,7 @@
 package seu.list.common;
 
 import java.io.Serializable;
+import java.util.*;
 
 public class Dormitory implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -118,6 +119,7 @@ public class Dormitory implements Serializable{
         return "Dormitory{" + "userID="+userID+"DormitoryID=" + DormitoryID + ", StudentBunkID=" + StudentBunkID +",Water="+Water+",Electricity="+Electricity+",DormitoryScore="+DormitoryScore+",DormitoryMaintain="+DormitoryMaintain+",StudentExchange="+StudentExchange+"}";
     }
     
+    /*
     public Vector<String> getContent() {
 		Vector<String> dormitoryContents = new Vector<String>();
 		dormitoryContents.add(userID);
@@ -140,5 +142,36 @@ public class Dormitory implements Serializable{
     	DormitoryScore = content.get(5);
     	DormitoryMaintain =content.get(6);
     	StudentExchange =content.get(7);
+	}
+	*/
+	
+	public Vector<String> getContent() {
+		Vector<String> dormitoryContents = new Vector<String>();
+		dormitoryContents.add(userID);
+		dormitoryContents.add(DormitoryID);
+		dormitoryContents.add(String.valueOf(StudentBunkID));
+    	//dormitoryContents.add(StudentBunkID);
+		dormitoryContents.add((String.valueOf(Water)));
+    	//dormitoryContents.add(Water);
+		dormitoryContents.add(String.valueOf(Electricity));
+    	//dormitoryContents.add(Electricity);
+		dormitoryContents.add(String.valueOf(DormitoryScore));
+    	//dormitoryContents.add(DormitoryScore);
+		dormitoryContents.add(String.valueOf(DormitoryMaintain));
+    	//dormitoryContents.add(DormitoryMaintain);
+		dormitoryContents.add(String.valueOf(StudentExchange));
+    	//dormitoryContents.add(StudentExchange);
+		return dormitoryContents;
+	}
+    
+	public void setContent(Vector<String> content) {
+		userID = content.get(0);
+		DormitoryID = content.get(1);
+    	StudentBunkID = Integer.parseInt(content.get(2));
+    	Water = Integer.parseInt(content.get(3));
+    	Electricity = Integer.parseInt(content.get(4));
+    	DormitoryScore = Integer.parseInt(content.get(5));
+    	DormitoryMaintain = Boolean.parseBoolean(content.get(6));
+    	StudentExchange = Boolean.parseBoolean(content.get(7));
 	}
 }

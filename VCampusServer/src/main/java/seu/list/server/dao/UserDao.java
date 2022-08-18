@@ -1,9 +1,11 @@
-package main.java.seu.list.server.dao;
+//package main.java.seu.list.server.dao;
+package seu.list.server.dao;
+
 import java.util.List;
 import java.util.Vector;
 
-import main.java.seu.list.common.User;
-
+//import main.java.seu.list.common.User;
+import seu.list.common.*;
 
 
 public interface UserDao {

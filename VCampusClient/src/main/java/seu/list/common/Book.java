@@ -1,11 +1,8 @@
 package seu.list.common;
 
 public class Book implements java.io.Serializable{
-<<<<<<< HEAD
 	private static final long serialVersionUID = 1L;
-=======
-	private static final long serialVersionID=1L;
->>>>>>> 17ee2429488a538f370319a65d292eb46137dab9
+
 	
 	private String id;
 	private String name;

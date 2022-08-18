@@ -1,3 +1,4 @@
+/*
 package seu.list.server.test;
 
 
@@ -42,8 +43,10 @@ public class ServerTest {
 		}
 		
 		tempDao.searchUser("123").print();*/
+/*
 		System.out.println("Server strated");
 		ServerSocketSrvImp sssi=new ServerSocketSrvImp();
 		sssi.run();
 	}
 }
+*/

@@ -1,4 +1,6 @@
-package DAO;
+//package DAO;
+package seu.list.server.db;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

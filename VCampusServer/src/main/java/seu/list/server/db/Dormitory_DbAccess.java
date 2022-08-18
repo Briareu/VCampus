@@ -1,4 +1,8 @@
-package main.java.seu.list.server.db;
+//package main.java.seu.list.server.db;
+package seu.list.server.db;
+
+import java.sql.*;
+import java.net.*;
 
 public class Dormitory_DbAccess {
 

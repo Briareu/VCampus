@@ -95,7 +95,7 @@ public class MainMenu extends JFrame {
 		btnNewButton_4_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) { // 退出按钮
-				ClientMainFrame.goOffline();
+				//ClientMainFrame.goOffline();
 				System.exit(0);
 			}
 		});
