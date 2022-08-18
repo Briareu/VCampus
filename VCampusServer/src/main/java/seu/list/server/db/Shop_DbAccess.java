@@ -26,7 +26,7 @@ public class Shop_DbAccess {
 		
 		try {
 			con = DriverManager
-					.getConnection("jdbc:ucanaccess://C:\\javaeclipse\\Vshop1.0\\Databaseshop.accdb");
+					.getConnection("jdbc:ucanaccess://db/Databaseshop.accdb");
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
