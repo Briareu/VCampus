@@ -19,14 +19,14 @@ public class Client {
 	public Message sendRequestToServer (Message clientRequest) { // �����Ƿ��������������
         try{
             ObjectOutputStream request = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream response = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
             request.writeObject(clientRequest); 
             request.flush();
-            request.close();
             
             if(clientRequest.isOffline()) {
             	return null;
             }
-            ObjectInputStream response = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+
             Message mesRet = new Message();
 			while(true) { // 等待服务器回应数据
 	            mesRet = (Message)response.readObject();
@@ -34,6 +34,7 @@ public class Client {
 	            	break;
 	            }
 			}
+			request.close();
 			response.close();
 			return mesRet; // 把收到的数据返回给客户端
         }catch (UnknownHostException e) {

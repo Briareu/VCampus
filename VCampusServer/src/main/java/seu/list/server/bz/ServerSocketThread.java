@@ -48,6 +48,7 @@ public class ServerSocketThread extends Thread {
 		try {
 			//start try
 			ObjectInputStream request = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+			ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
 			System.out.println("已与客户端建立连接，当前客户端ip为："+clientSocket.getInetAddress().getHostAddress());
 			
 			while(!this.isClosed) {
@@ -97,13 +98,12 @@ public class ServerSocketThread extends Thread {
 				} finally {
 					serverResponse.setMessageType(MessageType.operFeedback);
 					serverResponse.setLastOperState(true);
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
 					response.writeObject(serverResponse); // 这里统一发回数据给客户端
 					response.flush();
-					response.close();
 				}
 			}
 			request.close();
+			response.close();
 			this.clientSocket.close();
 		}
 		catch(IOException e) {

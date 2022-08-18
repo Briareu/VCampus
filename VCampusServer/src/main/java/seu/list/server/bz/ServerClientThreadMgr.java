@@ -1,8 +1,7 @@
 //package main.java.seu.list.server.bz;
 package seu.list.server.bz;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class ServerClientThreadMgr {
@@ -22,10 +21,18 @@ public class ServerClientThreadMgr {
 	}
 
 	public synchronized static Map<String, ServerSocketThread> getPool(){
+		Iterator<Map.Entry<String, ServerSocketThread>> entries = clientThreadPool.entrySet().iterator();
+		while(entries.hasNext()) {
+			Map.Entry<String, ServerSocketThread> entry = entries.next();
+			ServerSocketThread thd = entry.getValue();
+			thd.close();
+		}
+		
 		return clientThreadPool;
 	}
 	
 	public synchronized static void clear() {
+		
 		clientThreadPool.clear();		
 	}
 

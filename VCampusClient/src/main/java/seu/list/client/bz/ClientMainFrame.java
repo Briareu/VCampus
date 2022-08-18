@@ -19,6 +19,11 @@ public class ClientMainFrame {
 		
 		// 启动各种窗口
 		
+		// test
+		Message mesToServer = new Message();
+		mesToServer.setData("Hello");
+		// test
+		
 		
 		MainMenu mainMenu = new MainMenu();
 		mainMenu.setVisible(true);
