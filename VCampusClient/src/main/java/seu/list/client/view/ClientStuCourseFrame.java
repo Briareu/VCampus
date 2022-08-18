@@ -1,10 +1,21 @@
-package VCampusClient.src.main.java.seu.list.client.view;
+//package VCampusClient.src.main.java.seu.list.client.view;
+package seu.list.client.view;
 //学生选课界面
+
 
 
 
 import VCampusClient.src.main.java.seu.list.client.bz.Client;
 import VCampusClient.src.main.java.seu.list.common.*;
+
+
+import seu.list.client.bz.ClientMainFrame;
+/*
+import VCampusClient.src.main.java.seu.list.common.*;
+import main.java.seu.list.common.Course;
+*/
+import seu.list.common.*;
+import seu.list.client.bz.*;
 
 
 import java.awt.*;
@@ -22,8 +33,8 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class ClientStuCourseFrame extends JFrame implements ActionListener{
-
-	//private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
+	
 	final int WIDTH=1200;
 	final int HEIGHT=800;
 	JFrame jframe=new JFrame();
@@ -97,6 +108,8 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		model = new DefaultTableModel(courseinformation, courselist);
 
 		Message mes = new Message();
+
+		Client client=new Client(this.socket);
 
 		mes.setUserType(0);
 

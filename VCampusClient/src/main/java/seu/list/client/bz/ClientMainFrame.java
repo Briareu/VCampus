@@ -9,6 +9,10 @@ import VCampusClient.src.main.java.seu.list.client.view.ClientTeacherFrame;
 import VCampusClient.src.main.java.seu.list.common.IConstant;
 import VCampusClient.src.main.java.seu.list.common.Message;
 
+import seu.list.client.view.MainMenu;
+import seu.list.common.*;
+
+
 import java.net.Socket;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,6 +29,7 @@ public class ClientMainFrame {
 		}
 
 		// 启动各种窗口
+
 		//ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
 		//ClientStuCourseFrame s=new ClientStuCourseFrame("2",socket);
 		///ClientLoginFrame c=new ClientLoginFrame(socket);
@@ -40,6 +45,29 @@ public class ClientMainFrame {
 //		}catch(IOException e) {
 //			e.printStackTrace();
 //		}
-	}
 
+		
+		
+		MainMenu mainMenu = new MainMenu();
+		mainMenu.setVisible(true);
+		
+		
+		// 要关闭客户端时，给服务器发送下线通知
+		goOffline();
+	}
+	
+	public static void goOffline() {
+		Message offlineMes = new Message();
+		offlineMes.offline();
+		Client client = new Client(socket);
+		client.sendRequestToServer(offlineMes);
+		try {
+			if(!socket.isClosed()) {
+				socket.close();
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 }
