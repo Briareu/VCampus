@@ -1,4 +1,4 @@
-//package main.java.seu.list.server.db;
+
 package seu.list.server.db;
 
 import java.sql.*;
@@ -45,3 +45,4 @@ public class Dormitory_DbAccess {
 		}
 	}
 }
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463

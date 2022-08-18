@@ -1,4 +1,4 @@
-package seu.list.client.view;
+package VCampusClient.src.main.java.seu.list.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -92,6 +92,8 @@ public class MainMenu extends JFrame {
 		contentPane.add(btnNewButton_4);
 		
 		JButton btnNewButton_4_1 = new JButton("\u9000\u51FA");
+<<<<<<< HEAD:VCampusClient/src/main/java/seu/list/client/view/MainMenu.java
+=======
 		btnNewButton_4_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) { // 退出按钮
@@ -99,6 +101,7 @@ public class MainMenu extends JFrame {
 				System.exit(0);
 			}
 		});
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463:VCampusClient/src/main/java/seu/list/client/view/mainMenu.java
 		btnNewButton_4_1.setFont(new Font("����", Font.BOLD, 20));
 		btnNewButton_4_1.setBounds(423, 345, 153, 39);
 		contentPane.add(btnNewButton_4_1);

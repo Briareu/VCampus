@@ -28,6 +28,8 @@ public class Server extends Thread{
             while(!isClosed)
             {
                 Socket socket = this.serverSocket.accept();
+                System.out.println("Thread"+this.thdNum.toString()+"已经建立");
+
                 ServerSocketThread thd = new ServerSocketThread(socket, this.thdNum.toString());
                 thd.start();
                 ServerClientThreadMgr.add(this.thdNum.toString(), thd);

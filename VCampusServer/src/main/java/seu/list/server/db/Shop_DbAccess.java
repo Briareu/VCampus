@@ -1,4 +1,4 @@
-//package DAO;
+
 package seu.list.server.db;
 
 import java.sql.Connection;
@@ -118,3 +118,4 @@ public class Shop_DbAccess {
 	
 	
 	    
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463

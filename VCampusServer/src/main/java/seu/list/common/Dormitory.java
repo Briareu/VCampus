@@ -2,7 +2,11 @@
 package seu.list.common;
 
 import java.io.Serializable;
+<<<<<<< HEAD
+import java.util.Vector;
+=======
 import java.util.*;
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 
 public class Dormitory implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -15,13 +19,13 @@ public class Dormitory implements Serializable{
 	private int DormitoryScore;  //卫生评分
 	private boolean DormitoryMaintain;  //维修申请
 	private boolean StudentExchange;  //调换申请
-	
-	public Dormitory() 
+
+	public Dormitory()
 	{
         super();
     }
-	
-	public Dormitory(String userID,String DormitoryID, int StudentBunkID,int Water,int Electricity,int DormitoryScore,boolean DormitoryMaintain,boolean StudentExchange) 
+
+	public Dormitory(String userID,String DormitoryID, int StudentBunkID,int Water,int Electricity,int DormitoryScore,boolean DormitoryMaintain,boolean StudentExchange)
 	{
 		this.userID=userID;
         this.DormitoryID=DormitoryID;
@@ -32,94 +36,98 @@ public class Dormitory implements Serializable{
         this.DormitoryMaintain=DormitoryMaintain;
         this.StudentExchange=StudentExchange;
     }
-	
-	public String getuserID() 
+
+	public String getuserID()
 	{
         return userID;
     }
 
-    public void setuserID(String userID) 
+    public void setuserID(String userID)
     {
         this.userID = userID;
     }
-    
-	public String getDormitoryID() 
+
+	public String getDormitoryID()
 	{
         return DormitoryID;
     }
 
-    public void setDormitoryID(String DormitoryID) 
+    public void setDormitoryID(String DormitoryID)
     {
         this.DormitoryID = DormitoryID;
     }
-    
-    public int getStudentBunkID() 
+
+    public int getStudentBunkID()
 	{
         return StudentBunkID;
     }
 
-    public void setStudentBunkID(int StudentBunkID) 
+    public void setStudentBunkID(int StudentBunkID)
     {
         this.StudentBunkID=StudentBunkID;
     }
-    
-    public int getWater() 
+
+    public int getWater()
 	{
         return Water;
     }
 
-    public void setWater(int Water) 
+    public void setWater(int Water)
     {
         this.Water=Water;
     }
-    
-    public int getElectricity() 
+
+    public int getElectricity()
 	{
         return Electricity;
     }
 
-    public void setElectricity(int Electricity) 
+    public void setElectricity(int Electricity)
     {
         this.Electricity=Electricity;
     }
-    
-    public int getDormitoryScore() 
+
+    public int getDormitoryScore()
 	{
         return DormitoryScore;
     }
 
-    public void setDormitoryScore(int DormitoryScore) 
+    public void setDormitoryScore(int DormitoryScore)
     {
-        this.DormitoryScore=DormitoryScore; 
+        this.DormitoryScore=DormitoryScore;
     }
-    
-    public boolean getDormitoryMaintain() 
+
+    public boolean getDormitoryMaintain()
 	{
         return DormitoryMaintain;
     }
 
-    public void setDormitoryMaintain(boolean DormitoryMaintain) 
+    public void setDormitoryMaintain(boolean DormitoryMaintain)
     {
         this.DormitoryMaintain=DormitoryMaintain;
     }
 
-    public boolean getStudentExchange() 
+    public boolean getStudentExchange()
    	{
            return StudentExchange;
        }
 
-    public void setStudentExchange(boolean StudentExchange) 
+    public void setStudentExchange(boolean StudentExchange)
     {
     	this.StudentExchange=StudentExchange;
     }
-    
+
     @Override
-    public String toString() 
+    public String toString()
     {
         return "Dormitory{" + "userID="+userID+"DormitoryID=" + DormitoryID + ", StudentBunkID=" + StudentBunkID +",Water="+Water+",Electricity="+Electricity+",DormitoryScore="+DormitoryScore+",DormitoryMaintain="+DormitoryMaintain+",StudentExchange="+StudentExchange+"}";
     }
+<<<<<<< HEAD
+
+=======
     
     /*
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
     public Vector<String> getContent() {
 		Vector<String> dormitoryContents = new Vector<String>();
 		dormitoryContents.add(userID);
@@ -132,7 +140,7 @@ public class Dormitory implements Serializable{
     	dormitoryContents.add(StudentExchange);
 		return dormitoryContents;
 	}
-    
+
 	public void setContent(Vector<String> content) {
 		userID = content.get(0);
 		DormitoryID = content.get(1);

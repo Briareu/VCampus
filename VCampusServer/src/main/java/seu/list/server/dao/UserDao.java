@@ -1,11 +1,26 @@
-//package main.java.seu.list.server.dao;
+
+package VCampusServer.src.main.java.seu.list.server.dao;
+import VCampusServer.src.main.java.seu.list.common.User;
+
+
+
 package seu.list.server.dao;
+
 
 import java.util.List;
 import java.util.Vector;
 
+
+
+
 //import main.java.seu.list.common.User;
 import seu.list.common.*;
+
+
+
+//import main.java.seu.list.common.User;
+import seu.list.common.*;
+
 
 
 public interface UserDao {

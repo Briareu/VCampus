@@ -1,5 +1,5 @@
-//package VCampusServer.src.main.java.seu.list.server.dao;
-package seu.list.server.dao;
+package VCampusServer.src.main.java.seu.list.server.dao;
+//package seu.list.server.dao;
 
 
 
@@ -8,12 +8,13 @@ import VCampusServer.src.main.java.seu.list.common.Course;
 import VCampusServer.src.main.java.seu.list.server.dao.CourseDao;
 import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
 */
-import seu.list.common.Course;
-import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.common.User;
-import seu.list.server.dao.CourseDao;
-import seu.list.server.db.SqlHelperImp;
+import VCampusClient.src.main.java.seu.list.common.Message;
+import VCampusServer.src.main.java.seu.list.common.Course;
+
+import VCampusServer.src.main.java.seu.list.common.MessageType;
+import VCampusServer.src.main.java.seu.list.common.User;
+import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
+
 
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
@@ -25,14 +26,15 @@ import java.util.Vector;
 
 public class CourseDaoImp implements CourseDao {
 		// Modified by WU 8.16
-		private Message mesFromClient; // �ӿͻ����յ�������
-		private Message mesToClient; // �����ͻ��˵�����
-		
+		private Message mesFromClient;
+		private Message mesToClient=new Message();
+		public CourseDaoImp(){};
 		public CourseDaoImp(Message mesFromClient) {
 			this.mesFromClient = mesFromClient;
 		}
 		
 		public void execute() { 
+
 			switch(this.mesFromClient.getMessageType()) 
 			{
 				case MessageType.REQ_STU_ADD_LESSON: {
@@ -66,7 +68,7 @@ public class CourseDaoImp implements CourseDao {
 				case MessageType.REQ_REMOVE_LESSON: {
 					System.out.println("serving REQ_REMOVE_LESSON");
 					System.out.println("removing.....");
-					String courseName = this.mesFromClient.getContent().get(1);
+					String courseName = this.mesFromClient.getContent().get(2);
 					this.mesToClient.setData(this.genRemoveCourse(courseName));
 					System.out.println("REQ_REMOVE_LESSON finished");
 					break;
@@ -75,9 +77,13 @@ public class CourseDaoImp implements CourseDao {
 					System.out.println("serving REQ_SEARCH_LESSON");
 					System.out.println("searching.....");
 					Course course = new Course();
-					String courseID = this.mesFromClient.getContent().get(0);
-					course = this.searchCourseByID(courseID);
+					String courseID = this.mesFromClient.getContent().get(1);
+					System.out.println("CourseID为"+courseID);
+					course=this.searchCourseByID(courseID);
+					//System.out.println(course.getContent());
 					this.mesToClient.setContent(course.getContent());
+
+					System.out.println(this.mesToClient.getContent());
 					System.out.println("REQ_SEARCH_LESSON finished");
 					break;
 				}
@@ -91,10 +97,11 @@ public class CourseDaoImp implements CourseDao {
 					Iterator<Course> iteAllCourse = allCourse.iterator();
 					while(iteAllCourse.hasNext()) {
 						sigCourseContent = iteAllCourse.next().getContent();
-						for(int i=0;i<=4;i++) {
+						for(int i=0;i<=6;i++) {
 							allCourseContent.add(sigCourseContent.get(i));
 						}
 					}
+					System.out.println(allCourseContent);
 					this.mesToClient.setContent(allCourseContent);
 					System.out.println("REQ_SHOW_ALL_LESSON finished");
 					break;
@@ -112,7 +119,7 @@ public class CourseDaoImp implements CourseDao {
 					Iterator<Course> iteAllCourse = allCourse.iterator();
 					while(iteAllCourse.hasNext()) {
 						sigCourseContent = iteAllCourse.next().getContent();
-						for(int i=0;i<=4;i++) {
+						for(int i=0;i<=6;i++) {
 							allCourseContent.add(sigCourseContent.get(i));
 						}
 					}
@@ -126,6 +133,7 @@ public class CourseDaoImp implements CourseDao {
 		}
 
 		public Message getMesToClient() { // �����޸ģ��������Ҫ�����������
+			System.out.println("mesToClient的内容是"+this.mesToClient.getContent());
 			return this.mesToClient;
 		}
 		// Modified by WU 8.16
@@ -134,11 +142,12 @@ public class CourseDaoImp implements CourseDao {
     @Override
     public Course searchCourseByID(String courseID) {
         // TODO Auto-generated method stub
-        String sql = "select * from tb_Class where CourseID = ?";
+        String sql = "select * from tb_Class where cID =?";
         String[] paras = new String[1];
         paras[0] = courseID;
         List<Course> cList=new SqlHelperImp().sqlCourseQuery(sql, paras);
         if(cList!=null&&cList.size()>0) {
+			System.out.println(cList.get(0));
             return cList.get(0);
         }else
             return null;
@@ -173,7 +182,7 @@ public class CourseDaoImp implements CourseDao {
     @Override
     public boolean genAddCourse(Course course) {
         // TODO Auto-generated method stub
-        String sql="insert into tb_Class(Semester,CourseID,CourseMajor,CourseName,teacherID，CourseState，CourseType) values (?,?,?,?,?,?,?)";
+        String sql="insert into tb_Class(Semester,cID,CourseMajor,courseName,teacherID,CourseState,CourseType) values (?,?,?,?,?,?,?)";
         String[] paras=new String[7];
         paras[0]=course.getSemester();
         paras[1]=course.getCourseID();
@@ -188,9 +197,10 @@ public class CourseDaoImp implements CourseDao {
     @Override
     public boolean genRemoveCourse(String courseName) {
         // TODO Auto-generated method stub
-        String sql="delete from tb_Class where CourseName = ?";
+        String sql="delete from tb_Class where courseName = ?";
         String[] paras=new String[1];
         paras[0]=courseName;
+		System.out.println("课程名是："+paras[0]);
         return new SqlHelperImp().sqlUpdate(sql, paras);
     }
 }

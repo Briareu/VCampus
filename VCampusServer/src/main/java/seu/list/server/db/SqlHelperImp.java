@@ -11,7 +11,8 @@ import VCampusServer.src.main.java.seu.list.server.db.SqlHelper;
 import seu.list.common.Course;
 import seu.list.common.User;
 import seu.list.server.dao.DAOUtil;
-import seu.list.server.db.SqlHelper;
+
+
 
 
 import java.io.File;
@@ -41,18 +42,18 @@ public class SqlHelperImp implements SqlHelper {
 		Connection ct=null;
 		boolean b=true;
 		try {
-			//1.????????
+
 			Class.forName(ACCESS_DRIVER);
-			//2.???????
-			ct=DriverManager.getConnection(url);
+
+			ct=DriverManager.getConnection(url,user,passwd);
 			ps=ct.prepareStatement(sql);
-			//??ps???????
+
 			for(int i=0;i<paras.length;i++)
 			{
 				ps.setString(i+1, paras[i]);
 			}
 
-			//??閿熸枻鎷�???
+
 			ps.executeUpdate();
 
 		} catch (Exception e) {
@@ -130,6 +131,7 @@ public class SqlHelperImp implements SqlHelper {
 			}
 			rs=ps.executeQuery();
 			courses = DAOUtil.CourseResultSet2List(rs);
+			System.out.println(courses);
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
@@ -147,6 +149,7 @@ public class SqlHelperImp implements SqlHelper {
 		}
 		return courses;
 	}
+
 
 	@Override
 	public List<String> sqlRelationQuery(String sql, String[] paras) {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Studentuser extends User{
 void buy(ArrayList<Goods> Goodlist, Shop shop) {
-	
+
 };
 int balance=0;
 public int getBalance() {

@@ -29,13 +29,13 @@ public class LibraryStu extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel lendPane,returnPane; //借书、还书界面
-	
+
 	private JTextField findText,lendIDText,returnIDText;
 	private JButton returnBookButton,exitButton,lendBookButton;  //contentPane
 	private JButton qrLendButton,qrReturnButton,qxLendButton,qxReturnButton; //lendPane&returnPane
 	private JLayeredPane layerPane;
-	
-	private JTable table;	
+
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -58,8 +58,12 @@ public class LibraryStu extends JFrame {
 	 * Create the frame.
 	 */
 	public LibraryStu() {
+<<<<<<< HEAD
+		ArrayList<Book> booklist=new ArrayList<Book>();
+=======
 		ArrayList<Book> booklist=new ArrayList<Book>();		
 		
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
@@ -67,45 +71,50 @@ public class LibraryStu extends JFrame {
 		Message serverResponse=new Message();
 
 		serverResponse=client.sendRequestToServer(mes);
+<<<<<<< HEAD
+		booklist=(ArrayList<Book>)serverResponse.getData();
+
+=======
 		//booklist=(ArrayList<Book>)serverResponse.getData();
 		
 		System.out.print(serverResponse.getData());
 		
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 		setTitle("图书馆-学生");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		setBounds(100, 100, 770, 520);
-		
+
 		layerPane=new JLayeredPane();
 		layerPane.setInheritsPopupMenu(true);
 		layerPane.setIgnoreRepaint(true);
 		setContentPane(layerPane);
 		layerPane.setLayout(new BorderLayout(0, 0));
-			
-		lendPane = new JPanel();	
+
+		lendPane = new JPanel();
 		layerPane.setLayer(lendPane, 200);
 		lendPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		lendPane.setBackground(UIManager.getColor("Panel.background"));	
+		lendPane.setBackground(UIManager.getColor("Panel.background"));
 		layerPane.add(lendPane, BorderLayout.SOUTH);
-		
-		returnPane = new JPanel();		
+
+		returnPane = new JPanel();
 		layerPane.setLayer(returnPane, 300);
 		returnPane.setBackground(UIManager.getColor("Panel.background"));
-		returnPane.setBorder(new EmptyBorder(5, 5, 5, 5));	
+		returnPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		layerPane.add(returnPane, BorderLayout.NORTH);
-		
+
 		contentPane = new JPanel();
 		layerPane.setLayer(contentPane, 2);
 		contentPane.setBackground(UIManager.getColor("InternalFrame.borderColor"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		layerPane.add(contentPane);	
-		
+		layerPane.add(contentPane);
+
 		findText = new JTextField();
 		findText.setForeground(UIManager.getColor("Button.shadow"));
 		findText.setFont(new Font("华文新魏", Font.PLAIN, 20));
 		findText.setText("书名/书号");
 		findText.setColumns(10);
-		
+
 		JButton findButton = new JButton("查询");
 		findButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,9 +123,9 @@ public class LibraryStu extends JFrame {
 		});
 		findButton.setBackground(SystemColor.activeCaption);
 		findButton.setFont(new Font("宋体", Font.BOLD, 25));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
-		
+
 		returnBookButton = new JButton("还书");
 		returnBookButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,7 +135,7 @@ public class LibraryStu extends JFrame {
 		returnBookButton.setForeground(new Color(0, 0, 128));
 		returnBookButton.setFont(new Font("楷体", Font.BOLD, 25));
 		returnBookButton.setBackground(Color.LIGHT_GRAY);
-		
+
 		exitButton = new JButton("退出");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -136,7 +145,7 @@ public class LibraryStu extends JFrame {
 		exitButton.setForeground(new Color(0, 0, 128));
 		exitButton.setFont(new Font("楷体", Font.BOLD, 25));
 		exitButton.setBackground(Color.LIGHT_GRAY);
-		
+
 		lendBookButton = new JButton("借书");
 		lendBookButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -146,7 +155,7 @@ public class LibraryStu extends JFrame {
 		lendBookButton.setForeground(new Color(0, 0, 128));
 		lendBookButton.setFont(new Font("楷体", Font.BOLD, 25));
 		lendBookButton.setBackground(Color.LIGHT_GRAY);
-		
+
 		//contentPane
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -192,8 +201,8 @@ public class LibraryStu extends JFrame {
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE))
 					.addGap(445))
 		);
-		
-		
+
+
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
@@ -208,8 +217,13 @@ public class LibraryStu extends JFrame {
 				return false;
 				}
 		};
+<<<<<<< HEAD
+
+		for(int i=0;i<booklist.size();i++) {
+=======
 		
 /*		for(int i=0;i<booklist.size();i++) {
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 			String[] arr=new String[6];
 			arr[0]=booklist.get(i).getName();
 			arr[1]=booklist.get(i).getId();
@@ -220,9 +234,12 @@ public class LibraryStu extends JFrame {
 				arr[5]="可借";
 			else
 				arr[5]="不可借";
-			
+
 			tablemodel.addRow(arr);
 		}
+<<<<<<< HEAD
+
+=======
 		
 		*/
 		
@@ -237,27 +254,28 @@ public class LibraryStu extends JFrame {
 			tablemodel.addRow(arr);
 		}
 		
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 		table = new JTable(tablemodel);
 		table.setBackground(SystemColor.info);
 		table.setFillsViewportHeight(true);
-		
+
 		table.setModel(tablemodel);
-		
+
 		scrollPane.setViewportView(table);
-		contentPane.setLayout(gl_contentPane);	
-		
+		contentPane.setLayout(gl_contentPane);
+
 		lendIDText = new JTextField();
 		lendIDText.setForeground(UIManager.getColor("Button.shadow"));
 		lendIDText.setFont(new Font("华文新魏", Font.PLAIN, 20));
 		lendIDText.setText("书号");
-		lendIDText.setColumns(10);		
-		
+		lendIDText.setColumns(10);
+
 		returnIDText = new JTextField();
 		returnIDText.setForeground(UIManager.getColor("Button.shadow"));
 		returnIDText.setFont(new Font("华文新魏", Font.PLAIN, 20));
 		returnIDText.setText("书号");
-		returnIDText.setColumns(10);		
-		
+		returnIDText.setColumns(10);
+
 		qrLendButton = new JButton("确认");
 		qrLendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -267,7 +285,7 @@ public class LibraryStu extends JFrame {
 		qrLendButton.setForeground(new Color(0, 0, 128));
 		qrLendButton.setFont(new Font("楷体", Font.BOLD, 25));
 		qrLendButton.setBackground(Color.LIGHT_GRAY);
-		
+
 		qrReturnButton = new JButton("确认");
 		qrReturnButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -277,7 +295,7 @@ public class LibraryStu extends JFrame {
 		qrReturnButton.setForeground(new Color(0, 0, 128));
 		qrReturnButton.setFont(new Font("楷体", Font.BOLD, 25));
 		qrReturnButton.setBackground(Color.LIGHT_GRAY);
-		
+
 		qxLendButton = new JButton("取消");
 		qxLendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -286,8 +304,8 @@ public class LibraryStu extends JFrame {
 		});
 		qxLendButton.setForeground(new Color(0, 0, 128));
 		qxLendButton.setFont(new Font("楷体", Font.BOLD, 25));
-		qxLendButton.setBackground(Color.LIGHT_GRAY);		
-		
+		qxLendButton.setBackground(Color.LIGHT_GRAY);
+
 		qxReturnButton = new JButton("取消");
 		qxReturnButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -296,8 +314,8 @@ public class LibraryStu extends JFrame {
 		});
 		qxReturnButton.setForeground(new Color(0, 0, 128));
 		qxReturnButton.setFont(new Font("楷体", Font.BOLD, 25));
-		qxReturnButton.setBackground(Color.LIGHT_GRAY);			
-		
+		qxReturnButton.setBackground(Color.LIGHT_GRAY);
+
 		//lendPane
         GroupLayout gl_lendPane = new GroupLayout(lendPane);
 		gl_lendPane.setHorizontalGroup(
@@ -324,7 +342,7 @@ public class LibraryStu extends JFrame {
 						.addContainerGap(177, Short.MAX_VALUE))
 			);
 		lendPane.setLayout(gl_lendPane);
-		
+
 		//returnPane
         GroupLayout gl_returnPane = new GroupLayout(returnPane);
         gl_returnPane.setHorizontalGroup(
@@ -351,17 +369,17 @@ public class LibraryStu extends JFrame {
         			.addContainerGap(177, Short.MAX_VALUE))
         );
         returnPane.setLayout(gl_returnPane);
-		
+
 		contentPane.setVisible(true);
 		lendPane.setVisible(false);
 		returnPane.setVisible(false);
 	}
 
-	
+
 	protected void qxReturnAvt(ActionEvent e) {
 		contentPane.setVisible(true);
 		lendPane.setVisible(false);
-		returnPane.setVisible(false);			
+		returnPane.setVisible(false);
 	}
 
 	protected void qxLendAvt(ActionEvent e) {
@@ -375,7 +393,7 @@ public class LibraryStu extends JFrame {
 		contentPane.setVisible(false);
 		lendPane.setVisible(false);
 		returnPane.setVisible(true);
-		
+
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
@@ -384,12 +402,17 @@ public class LibraryStu extends JFrame {
 		Message serverResponse=new Message();
 
 		serverResponse=client.sendRequestToServer(mes);
-		
+
 		int res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"还书完成","提示",JOptionPane.WARNING_MESSAGE);
+<<<<<<< HEAD
+
+		SetTableShow()
+=======
 	
 		SetTableShow();
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 	}
 
 	//借书
@@ -398,7 +421,7 @@ public class LibraryStu extends JFrame {
 		contentPane.setVisible(false);
 		returnPane.setVisible(false);
 		lendPane.setVisible(true);
-		
+
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
@@ -407,11 +430,11 @@ public class LibraryStu extends JFrame {
 		Message serverResponse=new Message();
 
 		serverResponse=client.sendRequestToServer(mes);
-		
+
 		int res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"借书完成","提示",JOptionPane.WARNING_MESSAGE);
-		
+
 		SetTableShow();
 	}
 
@@ -428,7 +451,7 @@ public class LibraryStu extends JFrame {
 		
 		ArrayList<Book> resbook=new ArrayList<Book>();
 		resbook=(ArrayList<Book>)serverResponse.getData();
-		
+
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
@@ -442,7 +465,7 @@ public class LibraryStu extends JFrame {
 					return false;
 				}
 		};
-		
+
 		for(int i=0;i<resbook.size();i++) {
 			String[] arr=new String[6];
 			arr[0]=resbook.get(i).getName();
@@ -455,13 +478,13 @@ public class LibraryStu extends JFrame {
 			else
 				arr[5]="不可借";
 		}
-		
+
 		table.setModel(tablemodel);
 	}
 
 	public void SetTableShow() {
-		ArrayList<Book> booklist=new ArrayList<Book>();		
-		
+		ArrayList<Book> booklist=new ArrayList<Book>();
+
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
@@ -471,7 +494,7 @@ public class LibraryStu extends JFrame {
 		serverResponse=client.sendRequestToServer(mes);
 		
 		booklist=(ArrayList<Book>)serverResponse.getData();
-		
+
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
@@ -486,7 +509,7 @@ public class LibraryStu extends JFrame {
 				return false;
 				}
 		};
-		
+
 		for(int i=0;i<booklist.size();i++) {
 			String[] arr=new String[6];
 			arr[0]=booklist.get(i).getName();
@@ -500,14 +523,14 @@ public class LibraryStu extends JFrame {
 				arr[5]="不可借";
 			tablemodel.addRow(arr);
 		}
-		
+
 		table.setModel(tablemodel);
 	}
-	
+
 	//退出
 	protected void ExitAvt(ActionEvent e) {
 		 //登录界面LibraryLogin
-		
+
 		this.setVisible(false);//关闭本界面
 
 	}

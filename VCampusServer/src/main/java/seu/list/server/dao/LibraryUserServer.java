@@ -18,6 +18,7 @@ import seu.list.server.db.Library_DbAccess;
 public class LibraryUserServer extends Library_DbAccess {
 	Connection con = null;
 	Statement s = null;
+
 	ResultSet rs=null,rsl=null;
 	
 	private static ArrayList<Book> bookList;
@@ -63,14 +64,15 @@ public class LibraryUserServer extends Library_DbAccess {
 	public Message getMesToClient() {
 		return this.mesToClient;
 	}
-	
+
 	public void setBookList(ArrayList<Book> tbooklist) {
 		bookList=tbooklist;
 	}
-	
+
 	public ArrayList<Book> createList() {
 		try {
 			con=getConnection();
+
 			s = con.createStatement();// 创建SQL语句对象
 			rs=s.executeQuery("select * from BookList");	// 查询书籍信息
 						
@@ -83,7 +85,7 @@ public class LibraryUserServer extends Library_DbAccess {
 				tempBook.setPress(rs.getString("Press"));
 				tempBook.setStock(rs.getInt("Stock"));
 				tempBook.setState((rs.getInt("State")==0)?false:true);
-				
+
 				bookList.add(tempBook);
 			}
 				
@@ -98,7 +100,7 @@ public class LibraryUserServer extends Library_DbAccess {
 
 	public Integer Login() {  //return 0-正确；1-一卡通号错误；2-密码错误
 		return 0;
-		
+
 	}
 
 	//书名或书号查找
@@ -108,9 +110,9 @@ public class LibraryUserServer extends Library_DbAccess {
 			for(int i=0;i<bookList.size();i++) {
 				Book tbook=bookList.get(i);
 				if(tbook.getName().equals(fbookid)||tbook.getId().equals(fbookid))
-					resbook.add(tbook);				
+					resbook.add(tbook);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -126,7 +128,7 @@ public class LibraryUserServer extends Library_DbAccess {
 			for(int i=0;i<bookList.size();i++) {
 				Book tbook=bookList.get(i);
 				if(tbook.getName().equals(fbookid)||tbook.getId().equals(fbookid)) {
-					resbook=tbook;	
+					resbook=tbook;
 					break;
 				}
 			}
@@ -136,7 +138,8 @@ public class LibraryUserServer extends Library_DbAccess {
 			closeConnection(con, rs, s);
 		}
 		return resbook;
-	}	
+	}
+	
 	
 	//学生
 	public int LendBook(String bookid) { //用书号查找（唯一）
@@ -144,6 +147,7 @@ public class LibraryUserServer extends Library_DbAccess {
 		try {
 			int result1=0,result2=0,result3=0;
 			Book targetbook=FindBookID(bookid);
+
 		    String[] arr=new String[5];		    		
 			
 		    if(targetbook.getStock()-1>=0) {
@@ -182,6 +186,7 @@ public class LibraryUserServer extends Library_DbAccess {
 		    targetbook.setStock(targetbook.getStock()+1);		
 		    targetbook.setStock(targetbook.getStock()-1);
     	    result1 = s.executeUpdate("update BookList set Stock='"+targetbook.getStock()+"' where ID='"+targetbook.getId()+"'");	
+    	    
 		    if(targetbook.getState()==false) {
 		    	targetbook.setState(true);
 			    result1 = s.executeUpdate("update BookList set State=1 where ID='"+targetbook.getId()+"'");
@@ -201,9 +206,10 @@ public class LibraryUserServer extends Library_DbAccess {
 	//管理员
 	public int AddBook(Book tbook) { 
 		int res=0;
+
 		try {
 			int result=0;
-			bookList.add(tbook);		
+			bookList.add(tbook);
 			result=s.executeUpdate("insert into text values('"+tbook.getName()+"','"+tbook.getId()+"','"+tbook.getAuthor()+
 					"','"+tbook.getPress()+"','"+tbook.getStock()+"','"+tbook.getState()+"')");
 			if(result>0) {
@@ -217,7 +223,7 @@ public class LibraryUserServer extends Library_DbAccess {
 		}
 		return res;
 	}
-	
+
 	//管理员
 	public int DeleteBook(String bookid) { //用书号查找（唯一）
 		int res=0;
@@ -237,12 +243,14 @@ public class LibraryUserServer extends Library_DbAccess {
 		}
 		return res;
 	}
+
 	
 	//管理员
 	public void ModifyBook(String[] arr) { //用书号查找（唯一）
 		String bookid=arr[0];
 		String attr=arr[1];
 		String modattr=arr[2];
+
 		try {
 			int result=0;
 			Book tbook=FindBookID(bookid);
@@ -276,10 +284,11 @@ public class LibraryUserServer extends Library_DbAccess {
 		} finally {
 			closeConnection(con, rs, s);
 		}
-		
+
 	}
+
 	
-/*	
+	/*	
 	public static void main(String[] args) {
 		LibraryUserServer u=new LibraryUserServer();
 		u.LendBook("PLM");

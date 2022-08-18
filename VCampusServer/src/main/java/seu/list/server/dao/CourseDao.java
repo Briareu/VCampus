@@ -3,7 +3,9 @@ package seu.list.server.dao;
 
 
 //import VCampusServer.src.main.java.seu.list.common.Course;
+//import VCampusClient.src.main.java.seu.list.common.Message;
 import seu.list.common.*;
+
 
 import java.util.*;
 

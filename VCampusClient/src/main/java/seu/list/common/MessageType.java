@@ -1,12 +1,13 @@
-//package VCampusClient.src.main.java.seu.list.common;
-package seu.list.common;
+package VCampusClient.src.main.java.seu.list.common;
+//package seu.list.common;
 
 public final class MessageType {
-    public MessageType() {
-        // TODO Auto-generated constructor stub
-    }
 
 
+
+    public static final String REQ_LOGIN="REQ_LOGIN";
+    public static final String REQ_LOGOUT="REQ_LOGOUT";
+    public static final String REQ_REGISTER="REQ_REGISTER";
     //Message-Type
     public static final String operFeedback = "OPER_FEEDBACK";
 

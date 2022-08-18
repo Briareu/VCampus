@@ -1,4 +1,4 @@
-package seu.list.client.view;
+package VCampusClient.src.main.java.seu.list.client.view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

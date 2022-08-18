@@ -7,7 +7,7 @@ import seu.list.common.*;
 
 public class Studentuser extends User{
 void buy(ArrayList<Goods> Goodlist,Shop shop) {
-	
+
 };
 int balance=0;
 public int getBalance() {

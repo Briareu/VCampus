@@ -10,23 +10,28 @@ public class Book implements java.io.Serializable{
 	private Integer stock;  //库存
 	private String press;  //出版社：
 	private Boolean state;  //状态 0-不可借阅；1-可借阅
+<<<<<<< HEAD
+
+	public Book(String jid,String jname,String jauthor,Integer jstock,String press) {
+=======
 	
 	public Book(String jid,String jname,String jauthor,String press,Integer jstock) {
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
 		this.setId(jid);
 		this.setName(jname);
 		this.setAuthor(jauthor);
 		this.setStock(jstock);
 		this.setPress(press);
-		
+
 		if(jstock<0)
 			throw new RuntimeException();
-		
+
 		if(jstock==0)
 			this.setState(false);
 		else
 			this.setState(true);
 	}
-	
+
 	public Book() {}
 
 	public String getId() {
@@ -35,39 +40,45 @@ public class Book implements java.io.Serializable{
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getAuthor() {
 		return author;
 	}
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
+
 	public Integer getStock() {
 		return stock;
 	}
 	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
-	
+
 	public String getPress() {
 		return press;
 	}
 	public void setPress(String press) {
 		this.press = press;
 	}
-	
+
 	public Boolean getState() {
 		return state;
 	}
 	public void setState(boolean b) {
 		this.state = b;
 	}
+<<<<<<< HEAD
+
+
 }
+=======
+}
+>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463

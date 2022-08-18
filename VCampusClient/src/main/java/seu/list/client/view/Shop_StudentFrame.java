@@ -83,9 +83,9 @@ public class Shop_StudentFrame {
 		frame.setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 577, 449);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		double total=0.0;
-		
+
 		JLabel lblNewLabel = new JLabel("总计：");
 		lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		lblNewLabel.setEnabled(false);
@@ -94,7 +94,7 @@ public class Shop_StudentFrame {
 		textField.setEnabled(false);
 		textField.setColumns(10);
 		textField.setText(total+"");
-		
+
 		btnNewButton = new JButton("结账");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -107,9 +107,9 @@ public class Shop_StudentFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
+
 		// JScrollPane scrollPane = new JScrollPane(table);
-		
+
 		btnNewButton_1 = new JButton("退出");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -118,7 +118,7 @@ public class Shop_StudentFrame {
 			}
 		});
 		btnNewButton_1.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setEnabled(false);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -159,9 +159,9 @@ public class Shop_StudentFrame {
 							.addComponent(btnNewButton_1)))
 					.addContainerGap(19, Short.MAX_VALUE))
 		);
-		
+
 		table = new JTable();
-		
+
 		scrollPane.setViewportView(table);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setRowHeight(25);
@@ -180,13 +180,13 @@ public class Shop_StudentFrame {
 				return columnEditables[column];
 			}
 		});
-		
+
 		MyCellEditor cellEditor = new MyCellEditor(new JTextField());
 		TableColumn tableColumn = table.getColumn("Number");
 		tableColumn.setCellEditor(cellEditor);//确保输入合法
 
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
-		
+
 		TableModel tableModel = table.getModel();
 		tableModel.addTableModelListener(new TableModelListener() {
 		    @Override

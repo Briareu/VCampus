@@ -85,7 +85,7 @@ public class ClassAdminClient extends JFrame {
 		model = new DefaultTableModel(new Object[][] {}, new String[] { "\u73ED\u7EA7", "\u6559\u5E08", "\u5B66\u53F7",
 				"\u59D3\u540D", "\u4E13\u4E1A", "\u8054\u7CFB\u7535\u8BDD" }) {
 			/**
-				 * 
+				 *
 				 */
 			private static final long serialVersionUID = 1L;
 
@@ -262,14 +262,14 @@ public class ClassAdminClient extends JFrame {
 		scrollPane.setViewportView(table);
 		table.setRowHeight(25);
 		addRows();
-		
+
 		/*table.getModel().addTableModelListener(new TableModelListener() {
 			public int lastrow = -2, lastcol = -2;
 			public String lastedit = null;
 			public void tableChanged(TableModelEvent e) {
 				if(nowmodel == MODEL.ADD)
 				{
-					if(lastrow == table.getEditingColumn() && lastcol == table.getEditingRow() && 
+					if(lastrow == table.getEditingColumn() && lastcol == table.getEditingRow() &&
 							lastedit.compareTo((String) table.getValueAt(table.getEditingRow(), table.getEditingColumn())) == 0)
 					{
 						//empty
@@ -301,7 +301,7 @@ public class ClassAdminClient extends JFrame {
 					break;
 				case ADD: {
 					// save
-					
+
 				}
 					break;
 				case DELETE: {
@@ -373,15 +373,15 @@ public class ClassAdminClient extends JFrame {
 	int gettargetcol() {
 		return targetcol;
 	}
-	
+
 	void settarget(int tar) {
 		target = tar;
 	}
-	
+
 	void setAddFrame() {
 		this.setEnabled(false);
 		this.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
-		
+
 		ClassAdminForAdd frame = new ClassAdminForAdd(this);
 		frame.setVisible(true);
 	}

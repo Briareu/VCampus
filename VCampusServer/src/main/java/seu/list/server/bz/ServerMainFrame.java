@@ -1,3 +1,4 @@
+
 /**
 * @author 吴慕陶
 * @JDKversion jdk 1.8.0_341
@@ -7,7 +8,15 @@
 
 package seu.list.server.bz;
 
+//package VCampusServer.src.main.java.seu.list.server.bz;
+
+/*
+import VCampusServer.src.main.java.seu.list.common.IConstant;
+import VCampusServer.src.main.java.seu.list.server.bz.Server;
+*/
 import seu.list.common.IConstant;
+import seu.list.server.bz.Server;
+
 
 import java.util.*;
 
