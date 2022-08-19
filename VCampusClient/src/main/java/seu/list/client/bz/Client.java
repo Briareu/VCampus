@@ -43,8 +43,8 @@ public class Client {
 	            }
 			}
 
-			request.close();
-			response.close();
+//			request.close();
+//			response.close();
 
 			System.out.println(mesRet.getContent());
 			System.out.println("socket.shutdownInput()");
