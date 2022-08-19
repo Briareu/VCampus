@@ -13,15 +13,15 @@ public class Dormitory implements Serializable{
 	private int Water;  //水费
 	private int Electricity;  //电费
 	private int DormitoryScore;  //卫生评分
-	private boolean DormitoryMaintain;  //维修申请
-	private boolean StudentExchange;  //调换申请
+	private String DormitoryMaintain;  //维修申请
+	private String StudentExchange;  //调换申请
 
 	public Dormitory()
 	{
         super();
     }
 
-	public Dormitory(String userID,String DormitoryID, int StudentBunkID,int Water,int Electricity,int DormitoryScore,boolean DormitoryMaintain,boolean StudentExchange)
+	public Dormitory(String userID,String DormitoryID, int StudentBunkID,int Water,int Electricity,int DormitoryScore,String DormitoryMaintain,String StudentExchange)
 	{
 		this.userID=userID;
         this.DormitoryID=DormitoryID;
@@ -93,22 +93,22 @@ public class Dormitory implements Serializable{
         this.DormitoryScore=DormitoryScore;
     }
 
-    public boolean getDormitoryMaintain()
+    public String getDormitoryMaintain()
 	{
         return DormitoryMaintain;
     }
 
-    public void setDormitoryMaintain(boolean DormitoryMaintain)
+    public void setDormitoryMaintain(String DormitoryMaintain)
     {
         this.DormitoryMaintain=DormitoryMaintain;
     }
 
-    public boolean getStudentExchange()
+    public String getStudentExchange()
    	{
            return StudentExchange;
        }
 
-    public void setStudentExchange(boolean StudentExchange)
+    public void setStudentExchange(String StudentExchange)
     {
     	this.StudentExchange=StudentExchange;
     }
@@ -131,9 +131,9 @@ public class Dormitory implements Serializable{
     	//dormitoryContents.add(Electricity);
 		dormitoryContents.add(String.valueOf(DormitoryScore));
     	//dormitoryContents.add(DormitoryScore);
-		dormitoryContents.add(String.valueOf(DormitoryMaintain));
+		dormitoryContents.add(DormitoryMaintain);
     	//dormitoryContents.add(DormitoryMaintain);
-		dormitoryContents.add(String.valueOf(StudentExchange));
+		dormitoryContents.add(StudentExchange);
     	//dormitoryContents.add(StudentExchange);
 		return dormitoryContents;
 	}
@@ -145,7 +145,7 @@ public class Dormitory implements Serializable{
     	Water = Integer.parseInt(content.get(3));
     	Electricity = Integer.parseInt(content.get(4));
     	DormitoryScore = Integer.parseInt(content.get(5));
-    	DormitoryMaintain = Boolean.parseBoolean(content.get(6));
-    	StudentExchange = Boolean.parseBoolean(content.get(7));
+    	DormitoryMaintain = content.get(6);
+    	StudentExchange = content.get(7);
 	}
 }
