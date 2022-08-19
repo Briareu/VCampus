@@ -10,6 +10,7 @@ import main.java.seu.list.common.Message;
 import seu.list.client.bz.Client;
 import seu.list.common.Course;
 import seu.list.common.Message;
+import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 
 
@@ -27,14 +28,19 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 
-public class ClientCourseFrame extends JDialog implements ActionListener{
+public class ClientCourseFrame extends JFrame implements ActionListener{
+
+
+	JFrame jFrame=new JFrame();
+	final int WIDTH=1200;
+	final int HEIGHT=800;
 	JPanel jp1,jp2;
 	JTable jtb1;
 	JScrollPane jsp;
 	JComboBox jcb;
 	JTextField jtf,jtf1;
 	JButton jco_Search,jco_Add,jco_Delete;
-	Socket socket;//浼犻�佹暟鎹�
+	Socket socket;
 	JScrollPane scrollPane;
 	JLabel jlb;
 	private String userID;
@@ -42,24 +48,54 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 	int index = 0;
 	
 	public ClientCourseFrame(String ID, Socket socket) throws ClassNotFoundException, SQLException,IOException, ClassNotFoundException {
+		Tools.setWindowspos(WIDTH,HEIGHT,jFrame);
 		userID=ID;
 		this.socket=socket;
 		Client client=new Client(this.socket);
-		jp1 = new JPanel();
-		jp2 = new JPanel();
+		JPanel jbackground=new JPanel();
+		jbackground.setBackground(new Color(66,99,116));
+		jbackground.setLayout(null);
+		jbackground.setBounds(0,0,WIDTH,HEIGHT);
+		jFrame.add(jbackground);
+		jp1=new JPanel();
+		jp1.setBackground(new Color(255,251,240));
+		jp1.setBounds(0,0,WIDTH,HEIGHT-700);
+		jbackground.add(jp1);
+		JLabel jtitle=new JLabel("选课系统");
+		jtitle.setFont(new Font("宋体",Font.BOLD,70));
+		jp1.add(jtitle);
+
+		jp2=new JPanel();
+		jp2.setLayout(new FlowLayout(FlowLayout.RIGHT,50,10));
+		jp2.setBounds(0,HEIGHT-700,WIDTH,700);
+
+
+		Box box1,box2,box3,boxH;
+		box1=Box.createHorizontalBox();
+		box2=Box.createHorizontalBox();
+		box3=Box.createHorizontalBox();
+		boxH=Box.createVerticalBox();
+
+//		jp1 = new JPanel();
+//		jp2 = new JPanel();
 
 		String [] seOp = {"全部","课程号"};
 		jlb = new JLabel("课程名称:");
+		jlb.setFont(new Font("微软雅黑",Font.BOLD,20));
 		jcb = new JComboBox(seOp);
+		jcb.setFont(new Font("微软雅黑",Font.BOLD,20));
 		jtf = new JTextField(20);
 		jtf1 = new JTextField(10);
 		jco_Search = new JButton("搜索");
+		jco_Search.setFont(new Font("微软雅黑",Font.BOLD,20));
 		jco_Search.addActionListener(this);
 		jco_Search.setActionCommand("search");
 		jco_Add =new JButton("增加课程");
+		jco_Add.setFont(new Font("微软雅黑",Font.BOLD,20));
 		jco_Add.addActionListener(this);
 		jco_Add.setActionCommand("add");
 		jco_Delete =new JButton("移除课程");
+		jco_Delete.setFont(new Font("微软雅黑",Font.BOLD,20));
 		jco_Delete.addActionListener(this);
 		jco_Delete.setActionCommand("delete");
 		Object[][] courseinformation= {};
@@ -83,8 +119,14 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 
 		jtb1=new JTable();
 		jtb1.setModel(model);
+		jtb1.setPreferredSize(new Dimension(WIDTH-100,2000));
+		jtb1.setFont(new Font("微软雅黑",Font.BOLD,20));
+		jtb1.getTableHeader().setPreferredSize(new Dimension(1, 40));
+		jtb1.getTableHeader().setFont(new Font("宋体",Font.BOLD,25));
+		jtb1.setRowHeight(50);
 		scrollPane = new JScrollPane(jtb1);
-
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
 
 		/*
 		lm = new LibModel();
@@ -93,23 +135,49 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 		jsp = new JScrollPane(jt);*/
 
 		//添加组件
-		jp1.add(jcb);
-		jp1.add(jtf);
-		jp1.add(jco_Search);
+//		jp1.add(jcb);
+//		jp1.add(jtf);
+//		jp1.add(jco_Search);
+		box1.add(Box.createHorizontalStrut(1000));
+		box1.add(jcb);
+		box1.add(Box.createHorizontalStrut(10));
+		box1.add(jtf);
+		box1.add(Box.createHorizontalStrut(10));
+		box1.add(jco_Search);
 
-		jp2.add(jco_Add);
-		jp2.add(jlb);
-		jp2.add(jtf1);
-		jp2.add(jco_Delete);
+		box2.add(Box.createHorizontalStrut(400));
+		box2.add(scrollPane);
+		box3.add(Box.createHorizontalStrut(1000));
+		box3.add(jco_Add);
+		box3.add(Box.createHorizontalStrut(10));
+		box3.add(jlb);
+		box3.add(Box.createHorizontalStrut(10));
+		box3.add(jtf1);
+		box3.add(Box.createHorizontalStrut(10));
+		box3.add(jco_Delete);
+//		jp2.add(jco_Add);
+//		jp2.add(jlb);
+//		jp2.add(jtf1);
+//		jp2.add(jco_Delete);
 
-		this.setLocationRelativeTo(null);
-		this.add(jp1,BorderLayout.NORTH);
-		this.add(scrollPane,BorderLayout.CENTER);
-		this.add(jp2,BorderLayout.SOUTH);
 
-		this.setSize(700, 400);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		boxH.add(box1);
+		boxH.add(Box.createVerticalStrut(10));
+		boxH.add(box2);
+		boxH.add(Box.createVerticalStrut(10));
+		boxH.add(box3);
+		jp2.add(boxH);
+		jbackground.add(jp2);
+		jFrame.setVisible(true);
+		jFrame.validate();
+		//this.setLocationRelativeTo(null);
+//		this.add(jp1,BorderLayout.NORTH);
+//		this.add(jp3,BorderLayout.CENTER);
+//		this.add(jp2,BorderLayout.SOUTH);
+
+		//this.setSize(WIDTH, HEIGHT);
+		//this.setLocationRelativeTo(null);
+		//this.setVisible(true);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -143,9 +211,18 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 				jtb1.getColumnModel().getColumn(4).setPreferredWidth(161);
 				jtb1.getColumnModel().getColumn(5).setPreferredWidth(161);
 				jtb1.getColumnModel().getColumn(6).setPreferredWidth(161);
+
+				jtb1.setPreferredSize(new Dimension(WIDTH-100,2000));
+				jtb1.setFont(new Font("微软雅黑",Font.BOLD,20));
+				jtb1.getTableHeader().setPreferredSize(new Dimension(1, 40));
+				jtb1.getTableHeader().setFont(new Font("宋体",Font.BOLD,25));
+				jtb1.setRowHeight(50);
+
+				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
 				scrollPane.setViewportView(jtb1);
-				this.setVisible(true);
-				this.setLocationRelativeTo(null);
+
+
 			}else if(jcb.getSelectedItem().equals("课程号")) {
 				Message clientReq = new Message();//新建申请用于交换
 				clientReq.setModuleType(ModuleType.Course);
@@ -179,9 +256,15 @@ public class ClientCourseFrame extends JDialog implements ActionListener{
 				jtb1.getColumnModel().getColumn(4).setPreferredWidth(161);
 				jtb1.getColumnModel().getColumn(5).setPreferredWidth(161);
 				jtb1.getColumnModel().getColumn(6).setPreferredWidth(161);
+				jtb1.setPreferredSize(new Dimension(WIDTH-100,2000));
+				jtb1.setFont(new Font("微软雅黑",Font.BOLD,20));
+				jtb1.getTableHeader().setPreferredSize(new Dimension(1, 40));
+				jtb1.getTableHeader().setFont(new Font("宋体",Font.BOLD,25));
+				jtb1.setRowHeight(50);
+
+				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
 				scrollPane.setViewportView(jtb1);
-				this.setVisible(true);
-				this.setLocationRelativeTo(null);
 			}
 
 		}

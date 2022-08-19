@@ -8,7 +8,7 @@ import seu.list.common.Course;
 import seu.list.common.Message;
 import seu.list.common.ModuleType;
 
-import java.awt.FlowLayout;
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -22,8 +22,8 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 
 public class CourseInfor extends JDialog implements ActionListener {
-	private final int WIDTH=500;
-	private final int HEIGHT=500;
+	private final int WIDTH=400;
+	private final int HEIGHT=450;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField Semester;
 	private JTextField CourseID;
@@ -56,6 +56,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 
 
 		JButton confirmButtom = new JButton("确定");
+		confirmButtom.setFont(new Font("微软雅黑",Font.BOLD,20));
 		confirmButtom.addActionListener(this);
 		confirmButtom.setActionCommand("confirm");
 		buttonPane.add(confirmButtom);
@@ -67,6 +68,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		Box box5= Box.createHorizontalBox();
 		Box box6= Box.createHorizontalBox();
 		Box box7= Box.createHorizontalBox();
+		Box box8=Box.createHorizontalBox();
 		Box boxH= Box.createVerticalBox();
 
 		CourseID = new JTextField();
@@ -77,7 +79,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		JLabel lblcourseID = new JLabel("课程ID");
 		//lblcourseID.setBounds(55, 36, 72, 18);
 		//getContentPane().add(lblcourseID);
-
+		lblcourseID.setFont(new Font("微软雅黑",Font.BOLD,20));
 		box1.add(CourseID);
 		box1.add(lblcourseID);
 
@@ -87,6 +89,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		//getContentPane().add(CourseName);
 		CourseName.setColumns(10);
 		JLabel lblcourseName = new JLabel("课程名称");
+		lblcourseName.setFont(new Font("微软雅黑",Font.BOLD,20));
 //		lblcourseName.setBounds(55, 73, 72, 18);
 //		getContentPane().add(lblcourseName);
 		box2.add(CourseName);
@@ -98,6 +101,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		CourseMajor.setColumns(10);
 
 		JLabel lblcourseMajor = new JLabel("课程专业");
+		lblcourseMajor.setFont(new Font("微软雅黑",Font.BOLD,20));
 //		lblcourseMajor.setBounds(55, 110, 72, 18);
 //		getContentPane().add(lblcourseMajor);
 		box3.add(CourseMajor);
@@ -110,6 +114,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		teacherID.setColumns(10);
 
 		JLabel lblteacherID = new JLabel("授课教师");
+		lblteacherID.setFont(new Font("微软雅黑",Font.BOLD,20));
 //		lblteacherID.setBounds(55, 147, 72, 18);
 //		getContentPane().add(lblteacherID);
 		box4.add(teacherID);
@@ -122,6 +127,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		Semester.setColumns(10);
 
 		JLabel lblsemster = new JLabel("学年学期");
+		lblsemster.setFont(new Font("微软雅黑",Font.BOLD,20));
 //		lblsemster.setBounds(55, 173, 72, 18);
 //		getContentPane().add(lblsemster);
 		box5.add(Semester);
@@ -135,6 +141,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		CourseState.setColumns(10);
 
 		JLabel lblcourseState = new JLabel("课程状态");
+		lblcourseState.setFont(new Font("微软雅黑",Font.BOLD,20));
 //		lblcourseState.setBounds(55, 203, 72, 18);
 //		getContentPane().add(lblcourseState);
 		box6.add(CourseState);
@@ -149,19 +156,31 @@ public class CourseInfor extends JDialog implements ActionListener {
 
 
 		JLabel lblcourseType = new JLabel("课程类型");
+		lblcourseType.setFont(new Font("微软雅黑",Font.BOLD,20));
 //		lblcourseType.setBounds(55, 243, 72, 18);
 //		getContentPane().add(lblcourseType);
 		box7.add(CourseType);
 		box7.add(lblcourseType);
 
+		box8.add(Box.createHorizontalStrut(100));
+		box8.add(confirmButtom);
+		boxH.add(Box.createVerticalStrut(20));
 		boxH.add(box1);
+		boxH.add(Box.createVerticalStrut(15));
 		boxH.add(box2);
+		boxH.add(Box.createVerticalStrut(15));
 		boxH.add(box3);
+		boxH.add(Box.createVerticalStrut(15));
 		boxH.add(box4);
+		boxH.add(Box.createVerticalStrut(15));
 		boxH.add(box5);
+		boxH.add(Box.createVerticalStrut(15));
 		boxH.add(box6);
+		boxH.add(Box.createVerticalStrut(15));
 		boxH.add(box7);
-		boxH.add(confirmButtom);
+		boxH.add(Box.createVerticalStrut(25));
+		boxH.add(box8);
+		boxH.add(Box.createVerticalStrut(15));
 		contentPanel.add(boxH);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
