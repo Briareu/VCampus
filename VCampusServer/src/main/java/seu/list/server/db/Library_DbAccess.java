@@ -1,5 +1,6 @@
 
 package seu.list.server.db;
+
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;

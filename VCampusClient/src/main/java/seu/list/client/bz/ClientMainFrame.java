@@ -2,8 +2,6 @@ package seu.list.client.bz;
 
 
 
-
-
 import seu.list.client.view.ClientStuCourseFrame;
 import seu.list.client.view.ClientTeacherFrame;
 import seu.list.client.view.MainMenu;
@@ -43,6 +41,11 @@ public class ClientMainFrame {
 //			e.printStackTrace();
 //		}
 
+		
+		// test
+		Message mesToServer = new Message();
+		mesToServer.setData("Hello");
+		// test
 		
 		
 		MainMenu mainMenu = new MainMenu();

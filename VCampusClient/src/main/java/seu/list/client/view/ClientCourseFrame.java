@@ -12,6 +12,8 @@ import seu.list.common.Course;
 import seu.list.common.Message;
 import seu.list.common.ModuleType;
 
+
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;

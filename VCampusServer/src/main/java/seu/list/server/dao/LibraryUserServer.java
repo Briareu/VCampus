@@ -63,7 +63,6 @@ public class LibraryUserServer extends Library_DbAccess {
 	
 	public Message getMesToClient() {
 		return this.mesToClient;
-
 	}
 
 	public void setBookList(ArrayList<Book> tbooklist) {
@@ -124,12 +123,10 @@ public class LibraryUserServer extends Library_DbAccess {
 		}
 		return resbook;
 	}
-
 	
 	//书号查找（唯一）
 	public Book FindBookID(String fbookid) {
 		Book resbook=new Book();		
-
 		try {
 			for(int i=0;i<bookList.size();i++) {
 				Book tbook=bookList.get(i);
@@ -144,8 +141,8 @@ public class LibraryUserServer extends Library_DbAccess {
 			closeConnection(con, rs, s);
 		}
 		return resbook;
-
-	}	
+	}
+	
 	
 	//学生
 	public int LendBook(String bookid) { //用书号查找（唯一）
@@ -160,7 +157,6 @@ public class LibraryUserServer extends Library_DbAccess {
 		    if(targetbook.getStock()-1>=0) {
 		    	targetbook.setStock(targetbook.getStock()-1);
 		    	result1 = s.executeUpdate("update BookList set Stock='"+targetbook.getStock()+"' where ID='"+targetbook.getId()+"'");			    	
-
 		    }
 		    else {
 	    	//不可借抛出异常
@@ -177,7 +173,6 @@ public class LibraryUserServer extends Library_DbAccess {
 				System.out.println("Lend completion\t");
 			}
 		    
-
 		}catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -185,7 +180,6 @@ public class LibraryUserServer extends Library_DbAccess {
 			}
 		return res;
 	}
-
 	
 	//学生
 	public int ReturnBook(String bookid) {
@@ -213,7 +207,6 @@ public class LibraryUserServer extends Library_DbAccess {
 		}
 		return res;
 	}
-
 	
 	//管理员
 	public int AddBook(Book tbook) { 
@@ -302,8 +295,7 @@ public class LibraryUserServer extends Library_DbAccess {
 	}
 
 	
-/*	
->>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+	/*	
 	public static void main(String[] args) {
 		LibraryUserServer u=new LibraryUserServer();
 		u.LendBook("PLM");

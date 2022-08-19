@@ -13,6 +13,7 @@
 //package VCampusServer.src.main.java.seu.list.server.bz;
 package seu.list.server.bz;
 
+
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
@@ -21,6 +22,7 @@ import seu.list.server.dao.CourseDaoImp;
 import seu.list.server.dao.UserDao;
 import seu.list.server.dao.UserDaoImpl;
 
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,16 +30,20 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
 
+
 /*
-import VCampusServer.src.main.java.seu.list.common.*;
+<<<<<<< HEAD
+import VCampusClient.src.main.java.seu.list.common.Message;
+import VCampusServer.src.main.java.seu.list.common.MessageType;
+import VCampusServer.src.main.java.seu.list.common.ModuleType;
 import VCampusServer.src.main.java.seu.list.server.dao.CourseDaoImp;
-import main.java.seu.list.server.dao.ClassAdminServer;
+import VCampusServer.src.main.java.seu.list.server.dao.UserDao;
+import VCampusServer.src.main.java.seu.list.server.dao.UserDaoImpl;
 */
+import seu.list.common.*;
+import seu.list.server.dao.*;
 
 
-
-
-//import seu.list.server.dao.ClassAdminServer;
 
 
 public class ServerSocketThread extends Thread {
@@ -50,16 +56,18 @@ public class ServerSocketThread extends Thread {
 		this.id = id;
 	}
 
-	@Override
+	//@Override
 	public synchronized void run() {
 		
 		try {
 			//start try
+			ObjectInputStream request = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+			ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+
 
 			System.out.println("已与客户端建立连接，当前客户端ip为："+clientSocket.getInetAddress().getHostAddress());
 			
 			while(!this.isClosed) {
-				ObjectInputStream request = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
 				Message message = (Message)request.readObject();
 				if(message.isOffline()) {
 					isClosed = true;
@@ -109,14 +117,21 @@ public class ServerSocketThread extends Thread {
 					System.out.println("执行回调语句");
 					serverResponse.setMessageType(MessageType.operFeedback);
 					serverResponse.setLastOperState(true);
-					ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
 					response.writeObject(serverResponse); // 这里统一发回数据给客户端
 					response.flush();
-					//response.close();
+
 				}
 			}
+			
 			//request.close();
-			this.clientSocket.close();
+			//response.close();
+			try {
+				if(!this.clientSocket.isClosed()) {
+					this.clientSocket.close();
+				}
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 		catch(IOException e) {
 			e.printStackTrace();

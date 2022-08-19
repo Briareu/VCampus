@@ -3,6 +3,7 @@ package seu.list.client.bz;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,8 +23,10 @@ public class Client {
 	public Message sendRequestToServer (Message clientRequest) { // �����Ƿ��������������
         try{
             ObjectOutputStream request = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream response = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
             request.writeObject(clientRequest); 
             request.flush();
+
 			System.out.println("socket.shutdownOutput()");
 			//socket.shutdownOutput();
             //request.close();
@@ -31,7 +34,7 @@ public class Client {
             if(clientRequest.isOffline()) {
             	return null;
             }
-            ObjectInputStream response = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+
             Message mesRet = new Message();
 			while(true) { // 等待服务器回应数据
 	            mesRet = (Message)response.readObject();
@@ -39,10 +42,15 @@ public class Client {
 	            	break;
 	            }
 			}
+
+			request.close();
+			response.close();
+
 			System.out.println(mesRet.getContent());
 			System.out.println("socket.shutdownInput()");
 			//socket.shutdownInput();
 			//response.close();
+
 			return mesRet; // 把收到的数据返回给客户端
         }catch (UnknownHostException e) {
             // TODO: handle exception

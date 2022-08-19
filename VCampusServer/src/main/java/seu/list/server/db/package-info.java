@@ -1,1 +1,1 @@
-//package seu.list.server.db;
+package seu.list.server.db;

@@ -24,11 +24,12 @@ public class Server extends Thread{
         try
         {
             System.out.println("服务端已启动，等待客户端连接..");
-
+            
             while(!isClosed)
             {
-                Socket socket = serverSocket.accept();
+                Socket socket = this.serverSocket.accept();
                 System.out.println("Thread"+this.thdNum.toString()+"已经建立");
+
                 ServerSocketThread thd = new ServerSocketThread(socket, this.thdNum.toString());
                 thd.start();
                 ServerClientThreadMgr.add(this.thdNum.toString(), thd);
