@@ -61,13 +61,13 @@ public class ServerSocketThread extends Thread {
 		
 		try {
 			//start try
-			ObjectInputStream request = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
-			ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
 
 
 			System.out.println("已与客户端建立连接，当前客户端ip为："+clientSocket.getInetAddress().getHostAddress());
 			
 			while(!this.isClosed) {
+				ObjectInputStream request = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+				ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
 				Message message = (Message)request.readObject();
 				if(message.isOffline()) {
 					isClosed = true;
