@@ -7,7 +7,15 @@ import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
-
+/*
+import common.Dormitory;
+import common.IConstant;
+import Message.MessageType;
+import Message.Message;
+import client.Client;
+import client.ClientMainFrame;
+import Message.ModuleType;
+*/
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -17,6 +25,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.Font;
@@ -32,10 +42,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
+/*
 import seu.list.common.*;
 import seu.list.client.*;
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
+*/
 
 public class DormitoryAdminClient extends JFrame {
 
@@ -218,7 +230,13 @@ public class DormitoryAdminClient extends JFrame {
 		mes.setModuleType(ModuleType.Dormitory);
 		mes.setMessageType(MessageType.DormAdShow);
 		
-		Client client = new Client(ClientMainFrame.socket);
+		Socket socket = null;
+		try {
+			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		Client client = new Client(socket);
 		
 		Message rec=new Message();
 		rec=client.sendRequestToServer(mes);
