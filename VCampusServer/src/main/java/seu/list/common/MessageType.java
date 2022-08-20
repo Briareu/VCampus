@@ -46,6 +46,7 @@ public final class MessageType {
     public static final String DormDelete="REMOVE_DORM";  //删除宿舍
     public static final String DormSearch="SEARCH_DORM";  //查找宿舍
     public static final String DormAdShow="SHOW_AD_DORM";  //管理员显示
+    public static final String DormModify ="MODIFY_DORM"; 
     public static final String DormStShow="SHOW_ST_DORM";  //学生显示
     public static final String DormMaintain="MAINTAIN_DORM";  //维修设置
     public static final String DormExcange="REXCHANGE_DORM";  //调换设置
