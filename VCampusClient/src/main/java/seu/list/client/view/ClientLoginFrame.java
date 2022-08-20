@@ -337,11 +337,12 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         }
         //注册界面
         if(arg0.getActionCommand().equals("jb_register")){
-           // ClientRegisterFrame crf = new ClientRegisterFrame();
+            ClientRegisterFrame crf = new ClientRegisterFrame(this.socket);
         }
         else if(arg0.getActionCommand().equals("jb_login"))
         {
             //登录界面
+
             Client ccs = new Client(this.socket);
             User u=new User();
             u.setPwd(jpf_password.getText());
@@ -365,6 +366,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
                 if(sign==0||sign==1) {
                     this.setVisible(false);
                     MainMenu csf = new MainMenu();
+                    csf.setVisible(true);
                 }
                 else if(sign==2) {
                     JOptionPane.showMessageDialog(null,"用户名或密码错误！","错误",JOptionPane.ERROR_MESSAGE);

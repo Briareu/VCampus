@@ -12,7 +12,10 @@ package seu.list.server.dao;
 
 
 
+import seu.list.common.Message;
+import seu.list.common.MessageType;
 import seu.list.common.User;
+import seu.list.server.bz.ServerClientThreadMgr;
 import seu.list.server.db.SqlHelperImp;
 
 import java.util.List;
@@ -21,8 +24,80 @@ import java.util.Vector;
 
 
 public class UserDaoImpl implements UserDao {
+		private Message mesFromClient;
+		private Message mesToClient=new Message();
+		private String id;
 
+	public Message getMesFromClient() {
+		return mesFromClient;
+	}
 
+	public void setMesFromClient(Message mesFromClient) {
+		this.mesFromClient = mesFromClient;
+	}
+
+	public Message getMesToClient() {
+		return mesToClient;
+	}
+
+	public void setMesToClient(Message mesToClient) {
+		this.mesToClient = mesToClient;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public UserDaoImpl(Message mesFromClient, String id){this.mesFromClient=mesFromClient;this.id=id;}
+		public void excute(){
+			User u=new User();
+			u.setContent(mesFromClient.getContent());
+			switch (this.mesFromClient.getMessageType()){
+				case MessageType.REQ_LOGIN:
+				{
+					User user=this.getUserByPwd(this.mesFromClient.getContent());
+					if(user==null){
+						System.out.println("User"+ u.getId()+"验证失败");
+						mesToClient.setMessageType("FAILED");
+						mesToClient.setUserType(2);
+					}else{
+						System.out.println("User " + u.getId() + " 验证成功 ");
+						mesToClient.setUserType(Integer.valueOf(user.getRole()));
+					}
+					break;
+				}
+				case MessageType.REQ_REGISTER:
+				{
+					User user=this.getUser(u);
+					if(user==null){
+						user=this.addUser(u);
+						mesToClient.setUserType(Integer.valueOf(u.getRole()));
+					}else {
+						System.out.println("User"+u.getId()+"注册失败，已有此人");
+						mesToClient.setMessageType("FAILED");
+						mesToClient.setUserType(3);
+					}
+					break;
+				}
+				case MessageType.REQ_LOGOUT:
+				{
+					String userID= mesFromClient.getContent().get(0);
+					User user=this.searchUser(userID);
+					if(user==null){
+						System.out.println("此人不存在");
+					}else{
+						ServerClientThreadMgr.remove(this.id);
+						System.out.println("User " + u.getId() + " 登出成功 ");
+					}
+					break;
+				}
+				default:break;
+			}
+		}
 
 		@Override
 		public User getUser(User user) {

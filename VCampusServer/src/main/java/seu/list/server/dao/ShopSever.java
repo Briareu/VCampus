@@ -27,10 +27,10 @@ public class ShopSever extends Shop_DbAccess {
 
 	public void excute() {
 		switch(this.mesFromClient.getMessageType()){
-		    case MessageType.GoodsgetAll:{
-		    	this.getGoodsList();
-		    	break;
-		    }
+//		    case MessageType.GoodsgetAll:{
+//		    	this.getGoodsList();
+//		    	break;
+//		    }
 		    
 			case MessageType.GoodsSearch_ID:{
 				String para=(String)this.mesFromClient.getData();

@@ -46,7 +46,7 @@ public class Client {
 //			request.close();
 //			response.close();
 
-			System.out.println(mesRet.getContent());
+			System.out.println(mesRet.getUserType());
 			System.out.println("socket.shutdownInput()");
 			//socket.shutdownInput();
 			//response.close();

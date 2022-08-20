@@ -33,6 +33,7 @@ public class User implements java.io.Serializable {
 	private String money;//8
 	private Vector<String> userContents;
 
+
 	public void print() {
 		System.out.print(id+"\n"+name+"\n"+age+"\n"+sex+"\n"+major+"\n"+grade+"\n"+pwd+"\n"+role+"\n"+money+"\n"+"\n");
 	}

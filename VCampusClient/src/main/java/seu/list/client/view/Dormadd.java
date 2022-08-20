@@ -78,10 +78,10 @@ public class Dormadd extends JDialog {
 						arr[0]=AuserIDField.getText();
 						arr[1]=AdormIDField.getText();
 						arr[2]=AbunkIDField.getText();
-						arr[3]=parseInt(AwaterField.getText());
-						arr[4]=parseInt(AelectricityField.getText());
+						//arr[3]=parseInt(AwaterField.getText());
+						//arr[4]=parseInt(AelectricityField.getText());
 						arr[5]=AexchangeField.getText();
-						arr[6]=parseInt(AscoreField.getText());
+						//arr[6]=parseInt(AscoreField.getText());
 						arr[7]=AmaintainField.getText();
 						
 						Message mes =new Message();

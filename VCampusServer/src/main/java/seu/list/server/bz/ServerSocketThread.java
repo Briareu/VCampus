@@ -83,8 +83,9 @@ public class ServerSocketThread extends Thread {
 					switch(message.getModuleType())
 					{
 						case ModuleType.User: // 用户管理模块
-							UserDao iud=new UserDaoImpl();
-
+							UserDaoImpl iud=new UserDaoImpl(message,this.id);
+							iud.excute();
+							serverResponse=iud.getMesToClient();
 							break;
 						case ModuleType.Student: // 学生学籍管理模块
 							// 构造一个对应模块DAO类的对象，并送入客户端发来的信息

@@ -2,6 +2,7 @@ package seu.list.client.bz;
 
 
 
+import seu.list.client.view.ClientLoginFrame;
 import seu.list.client.view.ClientStuCourseFrame;
 import seu.list.client.view.ClientTeacherFrame;
 import seu.list.client.view.MainMenu;
@@ -24,7 +25,7 @@ public class ClientMainFrame {
 		}
 
 		// 启动各种窗口
-
+		ClientLoginFrame c=new ClientLoginFrame(socket);
 		//ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
 		//ClientStuCourseFrame s=new ClientStuCourseFrame("2",socket);
 		///ClientLoginFrame c=new ClientLoginFrame(socket);
@@ -43,13 +44,13 @@ public class ClientMainFrame {
 
 		
 		// test
-		Message mesToServer = new Message();
-		mesToServer.setData("Hello");
+//		Message mesToServer = new Message();
+//		mesToServer.setData("Hello");
 		// test
 		
 		
-		MainMenu mainMenu = new MainMenu();
-		mainMenu.setVisible(true);
+//		MainMenu mainMenu = new MainMenu();
+//		mainMenu.setVisible(true);
 		
 		
 		// 要关闭客户端时，给服务器发送下线通知

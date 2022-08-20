@@ -6,7 +6,9 @@ public final class MessageType {
         // TODO Auto-generated constructor stub
     }
 
-
+    public static final String REQ_LOGIN="REQ_LOGIN";
+    public static final String REQ_LOGOUT="REQ_LOGOUT";
+    public static final String REQ_REGISTER="REQ_REGISTER";
     //Message-Type
     public static final String operFeedback = "OPER_FEEDBACK";
 

@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+
 public class Dormmodify extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -72,7 +73,7 @@ public class Dormmodify extends JDialog {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								// TODO Auto-generated method stub
-								ADD(e);
+								//ADD(e);
 								setVisible(false);
 								ArrayList<String> para = new ArrayList<String>();
 								para.add(userIDField.getText());
@@ -88,7 +89,7 @@ public class Dormmodify extends JDialog {
 								Message mes =new Message();
 								Client client=new Client(ClientMainFrame.socket);
 								mes.setModuleType(ModuleType.Dormitory);
-								mes.setMessageType(MessageType.DormModify); 
+								//mes.setMessageType(MessageType.DormModify);
 								mes.setData(para);
 								
 								Message serverResponse=new Message();
