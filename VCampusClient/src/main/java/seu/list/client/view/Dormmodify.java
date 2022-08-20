@@ -7,6 +7,15 @@ import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
+/*
+import common.Dormitory;
+import common.IConstant;
+import Message.MessageType;
+import Message.Message;
+import client.Client;
+import client.ClientMainFrame;
+import Message.ModuleType;
+*/
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -19,6 +28,8 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -27,7 +38,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-
 
 public class Dormmodify extends JDialog {
 
@@ -73,23 +83,24 @@ public class Dormmodify extends JDialog {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								// TODO Auto-generated method stub
-								//ADD(e);
 								setVisible(false);
 								ArrayList<String> para = new ArrayList<String>();
 								para.add(userIDField.getText());
 								String usertype = (String) modifyt.getSelectedItem();
-								if ("宿舍".equals(usertype)) para.add("宿舍");
-								if ("床位".equals(usertype)) para.add("床位");
 								if ("卫生评分".equals(usertype)) para.add("卫生评分");
 								if ("水费".equals(usertype)) para.add("水费");
 								if ("电费".equals(usertype)) para.add("电费");
-								if ("调换申请".equals(usertype)) para.add("调换申请");
-								if ("维修申请".equals(usertype)) para.add("维修申请");
 								para.add(modifyField_1.getText());
 								Message mes =new Message();
-								Client client=new Client(ClientMainFrame.socket);
+								Socket socket = null;
+								try {
+									socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+								}catch (IOException e1) {
+									e1.printStackTrace();
+								}
+								Client client = new Client(socket);
 								mes.setModuleType(ModuleType.Dormitory);
-								//mes.setMessageType(MessageType.DormModify);
+								mes.setMessageType(MessageType.DormModify); 
 								mes.setData(para);
 								
 								Message serverResponse=new Message();
@@ -146,7 +157,7 @@ public class Dormmodify extends JDialog {
 		userIDField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		userIDField.setColumns(10);
 		
-		modifyt.setModel(new DefaultComboBoxModel(new String[] {"宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"}));
+		modifyt.setModel(new DefaultComboBoxModel(new String[] {"卫生评分", "水费", "电费"}));
 		
 		JLabel lblNewLabel_2 = new JLabel("修改项目：");
 		lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
