@@ -7,6 +7,16 @@ import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
+
+/*
+import common.Dormitory;
+import common.IConstant;
+import Message.MessageType;
+import Message.Message;
+import client.Client;
+import client.ClientMainFrame;
+import Message.ModuleType;
+*/
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -23,6 +33,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 
 import javax.swing.JTextField;
 
@@ -100,7 +112,14 @@ public class Dormdelete extends JDialog {
 								// TODO Auto-generated method stub
 								
 								Message mes =new Message();
-								Client client=new Client(ClientMainFrame.socket);
+								Socket socket = null;
+								try {
+									socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+								}catch (IOException e1) {
+									e1.printStackTrace();
+								}
+								Client client = new Client(socket);
+								
 								mes.setModuleType(ModuleType.Dormitory);
 								mes.setMessageType(MessageType.DormDelete);
 								
