@@ -10,6 +10,15 @@ import seu.list.common.ModuleType;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+/*
+import common.Dormitory;
+import common.IConstant;
+import Message.MessageType;
+import Message.Message;
+import client.Client;
+import client.ClientMainFrame;
+import Message.ModuleType;
+*/
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -23,6 +32,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 
 import javax.swing.JTextField;
 
@@ -74,21 +85,28 @@ public class Dormadd extends JDialog {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						String[]arr=new String[8];
-						arr[0]=AuserIDField.getText();
-						arr[1]=AdormIDField.getText();
-						arr[2]=AbunkIDField.getText();
-						//arr[3]=parseInt(AwaterField.getText());
-						//arr[4]=parseInt(AelectricityField.getText());
-						arr[5]=AexchangeField.getText();
-						//arr[6]=parseInt(AscoreField.getText());
-						arr[7]=AmaintainField.getText();
+						Dormitory temp = new Dormitory();
+						temp.setuserID(AuserIDField.getText());
+						temp.setDormitoryID(AdormIDField.getText());
+						temp.setStudentBunkID(Integer.parseInt(AbunkIDField.getText()));
+						temp.setWater(Integer.parseInt(AwaterField.getText()));
+						temp.setElectricity(Integer.parseInt(AelectricityField.getText()));
+						temp.setDormitoryScore(Integer.parseInt(AexchangeField.getText()));
+						temp.setDormitoryMaintain(AmaintainField.getText());
+						temp.setStudentExchange(AscoreField.getText());
 						
 						Message mes =new Message();
-						Client client=new Client(ClientMainFrame.socket);
+						Socket socket = null;
+						try {
+							socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+						}catch (IOException e1) {
+							e1.printStackTrace();
+						}
+						Client client = new Client(socket);
+						
 						mes.setModuleType(ModuleType.Dormitory);
 						mes.setMessageType(MessageType.DormAdd);
-						mes.setData(arr);
+						mes.setData(temp);
 						Message serverResponse=new Message();
 
 						serverResponse=client.sendRequestToServer(mes);
