@@ -106,7 +106,9 @@ public class ServerSocketThread extends Thread {
 							
 							break;
 						case ModuleType.Shop: // 商店模块
-							
+							 ShopSever shop_sever=new ShopSever(message);
+						         shop_sever.excute();
+						         serverResponse=shop_sever.getMesToClient();
 							break;
 						case ModuleType.Dormitory: // 宿舍模块
 							
