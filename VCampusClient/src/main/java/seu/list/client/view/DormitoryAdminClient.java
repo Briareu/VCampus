@@ -1,21 +1,13 @@
-//package view;
 package seu.list.client.view;
 
 import seu.list.common.Dormitory;
+import seu.list.common.IConstant;
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
-/*
-import common.Dormitory;
-import common.IConstant;
-import Message.MessageType;
-import Message.Message;
-import client.Client;
-import client.ClientMainFrame;
-import Message.ModuleType;
-*/
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -42,23 +34,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-/*
-import seu.list.common.*;
-import seu.list.client.*;
-import seu.list.client.bz.Client;
-import seu.list.client.bz.ClientMainFrame;
-*/
-
 public class DormitoryAdminClient extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField searchField;
 	private JTable table;
+	static Socket socket;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -70,11 +56,12 @@ public class DormitoryAdminClient extends JFrame {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the frame.
 	 */
-	public DormitoryAdminClient() {
+	public DormitoryAdminClient(Socket socket) {
+		this.socket=socket;
 		setFont(new Font("微软雅黑", Font.BOLD, 12));
 		setTitle("宿舍-管理员");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -206,6 +193,7 @@ public class DormitoryAdminClient extends JFrame {
 					.addGap(9))
 		);
 		
+		
 		table = new JTable();
 		table.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 		table.setModel(new DefaultTableModel(
@@ -220,6 +208,9 @@ public class DormitoryAdminClient extends JFrame {
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);
 		
+		setVisible(true);
+		validate();
+		
 		Object[][] dorminformation= {};
 		Object[] dormlist = {"学号","宿舍","床位","卫生评分","水费","电费","调换申请","维修申请"};
 		DefaultTableModel model;
@@ -230,20 +221,21 @@ public class DormitoryAdminClient extends JFrame {
 		mes.setModuleType(ModuleType.Dormitory);
 		mes.setMessageType(MessageType.DormAdShow);
 		
-		Socket socket = null;
+		
 		try {
 			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
-		Client client = new Client(socket);
+		Client client = new Client(this.socket);
 		
 		Message rec=new Message();
 		rec=client.sendRequestToServer(mes);
 		ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) rec.getData();
+		System.out.println(allDormitoryContents);
 		System.out.println(allDormitoryContents.size());
 		Object sigRow[] = new  String[8];
-		for(int i=0;i<allDormitoryContents.size();) {
+		for(int i=0;i<allDormitoryContents.size();i++) {
 			String[] arr=new String[8];
 			arr[0]=allDormitoryContents.get(i).getuserID();
 			arr[1]=allDormitoryContents.get(i).getDormitoryID();
@@ -255,7 +247,9 @@ public class DormitoryAdminClient extends JFrame {
 			arr[7]=allDormitoryContents.get(i).getDormitoryMaintain();
 			
 			model.addRow(arr);
+			table.setModel(model);
 		}
+		
 	}
 
 	protected void ModifyAct(ActionEvent e) {
