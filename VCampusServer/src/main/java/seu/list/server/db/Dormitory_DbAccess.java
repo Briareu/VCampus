@@ -13,19 +13,16 @@ public class Dormitory_DbAccess {
 	public Connection getConnection() {
 		try {
 			// 装载驱动
-			Class.forName("com.hxtt.sql.access.AccessDriver");
+			
+			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+			
 			// 建立连接
-			String path = null;
-			try {
-				path = this.getClass().getResource("Dormitory.mdb").toURI().getPath().substring(1);
-			} catch (URISyntaxException e1) {
-				e1.printStackTrace();
-			} // 定位数据库文件的位置
-			String url = "jdbc:Access:///" + path; // Access 驱动
-
+			String url = "jdbc:ucanaccess://C:\\Users\\BUG\\Desktop\\Dormitory.mdb";
 			conn = DriverManager.getConnection(url);
+			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
