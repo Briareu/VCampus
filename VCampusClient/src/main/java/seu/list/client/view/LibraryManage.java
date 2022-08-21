@@ -9,18 +9,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-
-//import seu.list.common.Client;
-import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.client.bz.*;
-
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
-
 import seu.list.common.Book;
 
 public class LibraryManage extends JFrame {
@@ -30,7 +23,7 @@ public class LibraryManage extends JFrame {
 	private JLayeredPane layerPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JRadioButton nameRadioButton,idRadioButton,authorRadioButton,pressRadioButton,stockRadioButton;
-
+	
 	private JButton deleteButton,addButton;
 	private JLabel addNameLabel,addIDLabel,addAuthorLabel,addPressLabel,addStockLabel;
 	private JTextField addNameText,addIDText,addAuthorText,addPressText,addStockText;
@@ -38,9 +31,10 @@ public class LibraryManage extends JFrame {
 	private JLabel delIDLabel;
 	private JTextField delIDText;
 	private JButton delqrButton,delqxButton;
-
+	
 	private JTable table;
-
+	private JButton modqxButton;
+	
 
 
 	/**
@@ -58,68 +52,64 @@ public class LibraryManage extends JFrame {
 			}
 		});
 	}
-	*/
+*/
 
 	/**
 	 * Create the frame.
 	 */
-
 	public LibraryManage() {		
 	    ArrayList<Book> booklist=new ArrayList<Book>();		
 		
-
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
-		mes.setMessageType(MessageType.LibraryBookGetAll);
-		mes.setData(MessageType.LibraryBookGetAll);		
+		mes.setMessageType(MessageType.LibraryBookGetAll);	
 		Message serverResponse=new Message();
-
-
-
 		serverResponse=client.sendRequestToServer(mes);
 		booklist=(ArrayList<Book>)serverResponse.getData();
 
-
 		setTitle("图书馆-管理员");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		setBounds(100, 100, 770, 520);
-
+		
 		layerPane=new JLayeredPane();
 		layerPane.setInheritsPopupMenu(true);
 		layerPane.setIgnoreRepaint(true);
 		setContentPane(layerPane);
 		layerPane.setLayout(new BorderLayout(0, 0));
-
-
+		
+		
 		contentPane = new JPanel();
 		layerPane.setLayer(contentPane, 2);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		layerPane.add(contentPane);
-
+		
 		modifyPane = new JPanel();
 		modifyPane.setBackground(UIManager.getColor("Panel.background"));
 		layerPane.setLayer(modifyPane, 200);
 		modifyPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		layerPane.add(modifyPane, BorderLayout.WEST);
-
+		layerPane.add(modifyPane, BorderLayout.NORTH);		
+		
 		addPane = new JPanel();
 		layerPane.setLayer(addPane, 300);
 		addPane.setBackground(UIManager.getColor("Panel.background"));
 		addPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		layerPane.add(addPane, BorderLayout.SOUTH);
-
+		layerPane.add(addPane, BorderLayout.EAST);	
+		
 		deletePane = new JPanel();
 		layerPane.setLayer(deletePane, 400);
 		deletePane.setBackground(UIManager.getColor("Panel.background"));
 		deletePane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		layerPane.add(deletePane, BorderLayout.NORTH);
+		layerPane.add(deletePane, BorderLayout.EAST);
+		
 		delIDLabel = new JLabel("书号");
 		delIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		delIDLabel.setFont(new Font("宋体", Font.BOLD, 25));
+		
 		delIDText = new JTextField();
 		delIDText.setColumns(10);
+		
 		delqrButton = new JButton("确定");
 		delqrButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,7 +118,7 @@ public class LibraryManage extends JFrame {
 		});
 		delqrButton.setForeground(Color.BLACK);
 		delqrButton.setFont(new Font("楷体", Font.BOLD, 29));
-
+		
 		delqxButton = new JButton("取消");
 		delqxButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -179,51 +169,51 @@ public class LibraryManage extends JFrame {
 					.addContainerGap(122, Short.MAX_VALUE))
 		);
 		deletePane.setLayout(gl_deletePane);
-
+		
 		addNameLabel = new JLabel("书名");
 		addNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		addNameLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		addIDLabel = new JLabel("书号");
 		addIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		addIDLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		addAuthorLabel = new JLabel("作者");
 		addAuthorLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		addAuthorLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		addPressLabel = new JLabel("出版社");
 		addPressLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		addPressLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		addStockLabel = new JLabel("库存");
 		addStockLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		addStockLabel.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		addNameText = new JTextField();
 		addNameText.setColumns(10);
-
+		
 		addIDText = new JTextField();
 		addIDText.setColumns(10);
-
+		
 		addAuthorText = new JTextField();
 		addAuthorText.setColumns(10);
-
+		
 		addPressText = new JTextField();
 		addPressText.setColumns(10);
-
+		
 		addStockText = new JTextField();
 		addStockText.setColumns(10);
-
+		
 		addqrButton = new JButton("确定");
 		addqrButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddbookAvt(e);
 			}
 		});
-		addqrButton.setForeground(UIManager.getColor("Button.focus"));
+		addqrButton.setForeground(Color.BLACK);
 		addqrButton.setFont(new Font("楷体", Font.BOLD, 29));
-
+		
 		addqxButton = new JButton("取消");
 		addqxButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -297,30 +287,30 @@ public class LibraryManage extends JFrame {
 						.addContainerGap(57, Short.MAX_VALUE))
 			);
 		addPane.setLayout(gl_addPane);
-
+		
 		nameRadioButton = new JRadioButton("书名");
 		buttonGroup.add(nameRadioButton);
 		nameRadioButton.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		JLabel selectLabel = new JLabel("请选择修改信息：");
 		selectLabel.setFont(new Font("华文中宋", Font.BOLD, 25));
-
+		
 		idRadioButton = new JRadioButton("书号");
 		buttonGroup.add(idRadioButton);
 		idRadioButton.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		authorRadioButton = new JRadioButton("作者");
 		buttonGroup.add(authorRadioButton);
 		authorRadioButton.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		pressRadioButton = new JRadioButton("出版社");
 		buttonGroup.add(pressRadioButton);
 		pressRadioButton.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		stockRadioButton = new JRadioButton("库存");
 		buttonGroup.add(stockRadioButton);
 		stockRadioButton.setFont(new Font("宋体", Font.BOLD, 25));
-
+		
 		panel = new JPanel();
 		panel.setForeground(UIManager.getColor("Panel.background"));
 		GroupLayout gl_modifyPane = new GroupLayout(modifyPane);
@@ -365,20 +355,20 @@ public class LibraryManage extends JFrame {
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 423, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(27, Short.MAX_VALUE))
 		);
-
+		
 		JLabel oldIDLabel = new JLabel("原书号：");
 		oldIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		oldIDLabel.setFont(new Font("华文中宋", Font.PLAIN, 25));
-
+		
 		JLabel modifiedLabel = new JLabel("修改后信息：");
 		modifiedLabel.setFont(new Font("华文中宋", Font.PLAIN, 25));
-
+		
 		oldIDText = new JTextField();
 		oldIDText.setColumns(10);
-
+		
 		modifiedText = new JTextField();
 		modifiedText.setColumns(10);
-
+		
 		JButton modqrButton = new JButton("确认修改");
 		modqrButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -386,26 +376,35 @@ public class LibraryManage extends JFrame {
 			}
 		});
 		modqrButton.setFont(new Font("宋体", Font.BOLD, 25));
+		
+		modqxButton = new JButton("取消");
+		modqxButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modqxAvt(e);
+			}
+		});
+		modqxButton.setFont(new Font("宋体", Font.BOLD, 25));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-									.addComponent(oldIDLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addGap(18)
-									.addComponent(oldIDText, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(modifiedLabel, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(modifiedText, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE))))
+							.addComponent(oldIDLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(oldIDText, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(145)
-							.addComponent(modqrButton, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(modifiedLabel, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(modifiedText, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(61)
+					.addComponent(modqrButton, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+					.addComponent(modqxButton, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+					.addGap(76))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -418,15 +417,17 @@ public class LibraryManage extends JFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 						.addComponent(modifiedLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
 						.addComponent(modifiedText, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-					.addGap(82)
-					.addComponent(modqrButton)
-					.addContainerGap(95, Short.MAX_VALUE))
+					.addGap(92)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(modqxButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+						.addComponent(modqrButton))
+					.addGap(85))
 		);
 		panel.setLayout(gl_panel);
 		modifyPane.setLayout(gl_modifyPane);
-
+		
 		JScrollPane scrollPane = new JScrollPane();
-
+		
 		JButton modifyButton = new JButton("修改");
 		modifyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -436,7 +437,7 @@ public class LibraryManage extends JFrame {
 		modifyButton.setForeground(new Color(0, 0, 128));
 		modifyButton.setFont(new Font("楷体", Font.BOLD, 25));
 		modifyButton.setBackground(Color.LIGHT_GRAY);
-
+		
 		JButton exitButton = new JButton("退出");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -446,13 +447,13 @@ public class LibraryManage extends JFrame {
 		exitButton.setForeground(new Color(0, 0, 128));
 		exitButton.setFont(new Font("楷体", Font.BOLD, 25));
 		exitButton.setBackground(Color.LIGHT_GRAY);
-
+		
 		findText = new JTextField();
 		findText.setFont(new Font("华文新魏", Font.PLAIN, 20));
 		findText.setForeground(UIManager.getColor("Button.shadow"));
 		findText.setText("书名/书号");
 		findText.setColumns(10);
-
+		
 		JButton findButton = new JButton("查询");
 		findButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -461,7 +462,7 @@ public class LibraryManage extends JFrame {
 		});
 		findButton.setFont(new Font("宋体", Font.BOLD, 25));
 		findButton.setBackground(SystemColor.activeCaption);
-
+		
 		deleteButton = new JButton("删除");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -471,7 +472,7 @@ public class LibraryManage extends JFrame {
 		deleteButton.setForeground(new Color(0, 0, 128));
 		deleteButton.setFont(new Font("楷体", Font.BOLD, 25));
 		deleteButton.setBackground(Color.LIGHT_GRAY);
-
+		
 		addButton = new JButton("增加");
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -523,7 +524,7 @@ public class LibraryManage extends JFrame {
 							.addGap(34)))
 					.addGap(36))
 		);
-
+		
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
@@ -538,7 +539,7 @@ public class LibraryManage extends JFrame {
 				return false;
 				}
 		};
-
+		
 		for(int i=0;i<booklist.size();i++) {
 			String[] arr=new String[6];
 			arr[0]=booklist.get(i).getName();
@@ -550,24 +551,33 @@ public class LibraryManage extends JFrame {
 				arr[5]="可借";
 			else
 				arr[5]="不可借";
-
+			
 			tablemodel.addRow(arr);
 		}
-
+		
 		table = new JTable(tablemodel);
 		table.setBackground(SystemColor.info);
 		table.setFillsViewportHeight(true);
-
+		
 		table.setModel(tablemodel);
-
+		
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);
-
+		
 		contentPane.setVisible(true);
 		modifyPane.setVisible(false);
 		panel.setVisible(false);
 		addPane.setVisible(false);
 		deletePane.setVisible(false);
+	}
+
+	//修改页面取消
+	protected void modqxAvt(ActionEvent e) {
+		contentPane.setVisible(true);
+		modifyPane.setVisible(false);
+		panel.setVisible(false);
+		addPane.setVisible(false);
+		deletePane.setVisible(false);	
 	}
 
 	protected void FindAvt(ActionEvent e) {
@@ -577,12 +587,11 @@ public class LibraryManage extends JFrame {
 		mes.setMessageType(MessageType.LibraryBookFind);
 		mes.setData(findText.getText());
 		Message serverResponse=new Message();
-
 		serverResponse=client.sendRequestToServer(mes);
 
 		ArrayList<Book> resbook=new ArrayList<Book>();
 		resbook=(ArrayList<Book>)serverResponse.getData();
-
+		
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
@@ -597,7 +606,7 @@ public class LibraryManage extends JFrame {
 				return false;
 				}
 		};
-
+		
 		for(int i=0;i<resbook.size();i++) {
 			String[] arr=new String[6];
 			arr[0]=resbook.get(i).getName();
@@ -609,30 +618,32 @@ public class LibraryManage extends JFrame {
 				arr[5]="可借";
 			else
 				arr[5]="不可借";
+			
+			tablemodel.addRow(arr);
 		}
-
+		
 		table.setModel(tablemodel);
 	}
 
-	protected void DelqrAvt(ActionEvent e) {
-		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
-
-		//Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()), addPressText.getText());
-
+	protected void DelqrAvt(ActionEvent e) {	
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookDelete);
 		mes.setData(delIDText.getText());
 		Message serverResponse=new Message();
-
 		serverResponse=client.sendRequestToServer(mes);
-
-		int res = (int)serverResponse.getData();
-		if(res > 0)
-			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
-
+		
+		JOptionPane.showMessageDialog(null,"完成");
+		
 		SetTableShow();
+		contentPane.setVisible(true);
+		modifyPane.setVisible(false);
+		panel.setVisible(false);
+		addPane.setVisible(false);
+		deletePane.setVisible(false);
+		
+		delIDText.setText("");
 	}
 
 	protected void ModifyAvtshow(ActionEvent e) {
@@ -648,7 +659,7 @@ public class LibraryManage extends JFrame {
 		modifyPane.setVisible(false);
 		panel.setVisible(false);
 		addPane.setVisible(false);
-		deletePane.setVisible(false);
+		deletePane.setVisible(false);	
 	}
 
 	protected void DeleteAvtshow(ActionEvent e) {
@@ -657,7 +668,7 @@ public class LibraryManage extends JFrame {
 		panel.setVisible(false);
 		addPane.setVisible(false);
 		deletePane.setVisible(true);
-
+		
 	}
 
 	//增加书籍界面取消
@@ -666,39 +677,40 @@ public class LibraryManage extends JFrame {
 		modifyPane.setVisible(false);
 		panel.setVisible(false);
 		addPane.setVisible(false);
-		deletePane.setVisible(false);
+		deletePane.setVisible(false);		
 	}
 
 	//增加书籍确认界面
 	protected void AddbookAvt(ActionEvent e) {
-
-		Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),addPressText.getText(),Integer.parseInt(addStockText.getText()));
-
-		//Book tbook=new Book(addIDText.getText(),addNameText.getText(),addAuthorText.getText(),Integer.parseInt(addStockText.getText()), addPressText.getText());
-
 		String[]arr=new String[5];
 		arr[0]=addNameText.getText();
 		arr[1]=addIDText.getText();
 		arr[2]=addAuthorText.getText();
 		arr[3]=addPressText.getText();
 		arr[4]=addStockText.getText();
-
 		
-
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookAdd);
 		mes.setData(arr);
 		Message serverResponse=new Message();
-
 		serverResponse=client.sendRequestToServer(mes);
-
-		int res = (int)serverResponse.getData();
-		if(res > 0)
-			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
-
+		
+		JOptionPane.showMessageDialog(null,"完成");
+		
 		SetTableShow();
+		contentPane.setVisible(true);
+		modifyPane.setVisible(false);
+		panel.setVisible(false);
+		addPane.setVisible(false);
+		deletePane.setVisible(false);
+		
+		addNameText.setText("");
+		addIDText.setText("");
+		addAuthorText.setText("");
+		addPressText.setText("");
+		addStockText.setText("");
 	}
 
 	//增加书籍
@@ -707,7 +719,7 @@ public class LibraryManage extends JFrame {
 		modifyPane.setVisible(false);
 		panel.setVisible(false);
 		addPane.setVisible(true);
-
+		deletePane.setVisible(false);
 	}
 
 	//修改信息确认
@@ -727,66 +739,78 @@ public class LibraryManage extends JFrame {
 			para.add(oldIDText.getText());
 			para.add("Name");
 			para.add(modifiedText.getText());
-			mes.setData(para);
+			mes.setData(para);	
 		}
 		if(idRadioButton.isSelected()) {
 			ArrayList<String> para = new ArrayList<String>();
 			para.add(oldIDText.getText());
 			para.add("ID");
 			para.add(modifiedText.getText());
-			mes.setData(para);
+			mes.setData(para);		
 		}
 		if(authorRadioButton.isSelected()) {
 			ArrayList<String> para = new ArrayList<String>();
 			para.add(oldIDText.getText());
 			para.add("Author");
 			para.add(modifiedText.getText());
-			mes.setData(para);
+			mes.setData(para);	
 		}
 		if(pressRadioButton.isSelected()) {
 			ArrayList<String> para = new ArrayList<String>();
 			para.add(oldIDText.getText());
 			para.add("Press");
 			para.add(modifiedText.getText());
-			mes.setData(para);
+			mes.setData(para);	
 		}
 		if(stockRadioButton.isSelected()) {
+			if((!this.isNumeric(modifiedText.getText()))||(Integer.valueOf(modifiedText.getText())<0)) {
+				JOptionPane.showMessageDialog(null, "库存请输入正整数！", "警告", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			ArrayList<String> para = new ArrayList<String>();
 			para.add(oldIDText.getText());
 			para.add("Stock");
 			para.add(modifiedText.getText());
-			mes.setData(para);
+			mes.setData(para);	
 		}
 
 		int res=0;
 		
      	Message serverResponse=new Message();
-
 		serverResponse=client.sendRequestToServer(mes);
-		res = (int)serverResponse.getData();
-		if(res > 0)
-			JOptionPane.showMessageDialog(null,"修改完成","提示",JOptionPane.WARNING_MESSAGE);
+		res=(int) serverResponse.getData();
+		
+		if(res>0)
+			JOptionPane.showMessageDialog(null,"修改完成");
+		if(res==0) {
+			JOptionPane.showMessageDialog(null, "此书号不存在", "警告", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 
-		SetTableShow();
+		buttonGroup.clearSelection();
+		
+		SetTableShow();		
 		contentPane.setVisible(true);
 		modifyPane.setVisible(false);
 		panel.setVisible(false);
 		addPane.setVisible(false);
+		
+		oldIDText.setText("");
+		modifiedText.setText("");
 	}
 
 	public void SetTableShow() {
-		ArrayList<Book> booklist=new ArrayList<Book>();
-
+		ArrayList<Book> booklist=new ArrayList<Book>();		
+		
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Library);
 		mes.setMessageType(MessageType.LibraryBookGetAll);	
 		Message serverResponse=new Message();
-
 		serverResponse=client.sendRequestToServer(mes);
-
+		booklist=(ArrayList<Book>)serverResponse.getData();
 		
-
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 				"书名", "书号", "作者", "出版社", "库存", "状态"}) {
@@ -801,7 +825,7 @@ public class LibraryManage extends JFrame {
 				return false;
 				}
 		};
-
+		
 		for(int i=0;i<booklist.size();i++) {
 			String[] arr=new String[6];
 			arr[0]=booklist.get(i).getName();
@@ -815,14 +839,22 @@ public class LibraryManage extends JFrame {
 				arr[5]="不可借";
 			tablemodel.addRow(arr);
 		}
-
+		
 		table.setModel(tablemodel);
 	}
-
+	
 	//退出到登录界面
 	protected void ExitAvt(ActionEvent e) {
 
 		this.setVisible(false);//关闭本界面
-
+		
 	}
+	
+	public boolean isNumeric(String str){
+		for (int i = str.length();--i>=0;){ 
+			if (!Character.isDigit(str.charAt(i)))
+				return false;
+			}
+		     return true;
+		  }
 }

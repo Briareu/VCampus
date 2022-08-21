@@ -103,7 +103,10 @@ public class ServerSocketThread extends Thread {
 							System.out.println(serverResponse.getContent());
 							break;
 						case ModuleType.Library: // 图书馆模块
-							
+							LibraryUserServer libServer = new LibraryUserServer(message);
+							libServer.execute();
+							serverResponse = libServer.getMesToClient();
+							System.out.println(serverResponse.getContent());
 							break;
 						case ModuleType.Shop: // 商店模块
 							 ShopSever shop_sever=new ShopSever(message);

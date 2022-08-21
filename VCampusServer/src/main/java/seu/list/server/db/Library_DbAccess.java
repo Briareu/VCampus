@@ -51,7 +51,3 @@ public class Library_DbAccess {
 	}
 
 }
-
-
-
-
