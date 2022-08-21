@@ -18,15 +18,19 @@ package seu.list.common;
 import java.io.Serializable;
 
 public class ClassManage implements Serializable{
-	private String ClassID;
-	private String Major;
-	private String TeacherID;
-	private int ClassSize;//exist students' number
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String ClassID = null;
+	private String Major = null;
+	private String TeacherID = null;
+	private int ClassSize = 0;//exist students' number
+	
 	public ClassManage() {
 		super();
 	}
-
+	
 	public ClassManage(String classid, String major, String teacherID, int classsize)
 	{
 		ClassID = classid;
@@ -66,7 +70,7 @@ public class ClassManage implements Serializable{
 	public void setClassSize(int classSize) {
 		ClassSize = classSize;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Class{" + "ClassID" + ClassID + ", Major" + Major + ", TeacherID" + TeacherID + ", ClassSize" + ClassSize + "}";

@@ -38,7 +38,7 @@ public class ClassAdminServer extends StudentAccessHelper {
 			break;
 		case MessageType.ClassAdminDelete:
 			try {
-				String para = (String)this.mesFromClient.getData();
+				List<Object> para = (List<Object>)this.mesFromClient.getData();
 				int ret = delete(con, para);
 				this.mesToClient.setData(ret);
 			} catch (Exception e2) {
@@ -65,7 +65,7 @@ public class ClassAdminServer extends StudentAccessHelper {
 				e.printStackTrace();
 			}
 			break;
-		case MessageType.ClassStudentSearch:
+		case MessageType.ClassAdminSearch:
 			try {
 				List<Object> para = (List<Object>)this.mesFromClient.getData();
 				Vector<Student> ret = this.select(con, para);
@@ -73,6 +73,56 @@ public class ClassAdminServer extends StudentAccessHelper {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			break;
+			//above is for student 
+			//below is for class
+		case MessageType.ClassAdd:
+			try {
+				int ret = addclass(con, (ClassManage) this.mesFromClient.getData());
+				this.mesToClient.setData(ret);
+			} catch (Exception e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
+			break;
+		case MessageType.ClassDelete:
+			try {
+				String para = (String)this.mesFromClient.getData();
+				int ret = deleteclass(con, para);
+				this.mesToClient.setData(ret);
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			break;
+		case MessageType.ClassGetAll:
+			try {
+				Vector<ClassManage> ret = this.getallclass(con);
+				this.mesToClient.setData(ret);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			break;
+		case MessageType.ClassSearch:
+			try {
+				List<Object> para = (List<Object>)this.mesFromClient.getData();
+				Vector<ClassManage> ret = this.selectclass(con, para);
+				this.mesToClient.setData(ret);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case MessageType.ClassUpdate:
+			try {
+				List<Object> para = (List<Object>)this.mesFromClient.getData();
+				int ret = this.updateclass(con, para);
+				this.mesToClient.setData(ret);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		default:
 			break;
 		}

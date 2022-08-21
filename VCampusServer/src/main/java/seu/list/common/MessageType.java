@@ -18,7 +18,13 @@ public final class MessageType {
     public static final String ClassAdminAdd = "CLASS_ADMIN_ADD";
     public static final String ClassAdminDelete = "CLASS_ADMIN_DELETE";
     public static final String ClassAdminUpdate = "CLASS_ADMIN_UPDATE";
-    public static final String ClassStudentSearch = "CLASS_STUDENT_SEARCH";
+    public static final String ClassAdminSearch = "CLASS_ADMIN_SEARCH";//up is to do with student manage
+    public static final String ClassSearch = "CLASS_SEARCH";
+    public static final String ClassGetAll = "CLASS_GET_ALL";
+    public static final String ClassDelete = "CLASS_DELETE";
+    public static final String ClassAdd = "CLASS_ADD";
+    public static final String ClassUpdate = "CLASS_UPDATE";//here is for class managing
+
 
     //server操作LibraryUser
     public static final String LibraryBookGetAll = "LIB_GETALL";

@@ -1,30 +1,20 @@
-//package main.java.seu.list.common;
 package seu.list.common;
 
-/*
-import main.java.seu.list.server.dao.CourseDaoImp;
-import main.java.seu.list.server.db.SqlHelperImp;
-*/
-
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Student implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-    private String studentid;
-    private String studentName;
-    private String teacher;
-    private String major;
-    private String classid;
-    private Boolean studentgender;
-    private String studentorigion;
-    private String studentstatus;
-    private String studentphone;
-    private double studentcredit;
-
+    private String studentid = null;
+    private String studentName = null;
+    private String teacher = null;
+    private String major = null;
+    private String classid = null;
+    private Boolean studentgender = true;
+    private String studentorigion = null;
+    private String studentstatus = null;
+    private String studentphone = null;
+    private double studentcredit = 0.0;
+    
     public String getStudentid() {
 		return studentid;
 	}
@@ -109,7 +99,6 @@ public class Student implements Serializable {
         super();
     }
 
-
     public Student(String studentID, String name, String Teacher, String classID, String Major, String origin, String status, Boolean gender, String phone, double credit) {
         this.classid = classID;
         this.studentcredit = credit;
@@ -121,6 +110,12 @@ public class Student implements Serializable {
         this.studentstatus = status;
         this.teacher=Teacher;
         this.major = Major;
+    }
+    
+    @Override
+    public String toString() {
+    	 return "Student [Studentname=" + studentName + " StudentID=" + studentid + " Teacher=" + teacher + " ClassID=" + classid + " Major=" + major + " StudentOrigion=" + 
+    studentorigion + " StudentStatus=" + studentstatus + " StudentGender=" + studentgender  + " StudentPhone=" + studentphone + " StudentCredit=" + studentcredit + "]";
     }
 }
 
