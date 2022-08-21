@@ -114,7 +114,11 @@ public class ServerSocketThread extends Thread {
 						         serverResponse=shop_sever.getMesToClient();
 							break;
 						case ModuleType.Dormitory: // 宿舍模块
+							DormitoryAdminServer dormitoryServer = new DormitoryAdminServer(message);
+							dormitoryServer.execute();
+							serverResponse = dormitoryServer.getMesToClient();
 							
+							System.out.println(serverResponse.getData());
 							break;
 						default:
 							break;
