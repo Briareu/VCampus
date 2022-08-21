@@ -1,5 +1,4 @@
-package DAO;
-
+package seu.list.server.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -7,14 +6,9 @@ import java.util.List;
 import java.util.Vector;
 import java.util.ArrayList;
 
-import common.Dormitory;
-import db.Dormitory_DbAccess;
-import Message.Message;
-import Message.MessageType;
-/*
 import seu.list.server.db.*;
 import seu.list.common.*;
-*/
+
 public class DormitoryAdminServer extends Dormitory_DbAccess{
 	static Connection con = null;
 	static Statement s = null;
@@ -97,7 +91,6 @@ public class DormitoryAdminServer extends Dormitory_DbAccess{
 				con = getConnection();
 				s = con.createStatement();// 创建SQL语句对象
 				rs = s.executeQuery("select * from Dormitory");	// 查询商品信息
-
 				//把数据库中的数据读入
 				while(rs.next()) {
 					Dormitory temp=new Dormitory();
@@ -109,8 +102,10 @@ public class DormitoryAdminServer extends Dormitory_DbAccess{
 					temp.setDormitoryScore(rs.getInt("DormitoryScore"));
 					temp.setDormitoryMaintain(rs.getString("DormitoryMaintain"));
 					temp.setStudentExchange(rs.getString("StudentExchange"));
+					System.out.println(temp);
 					Dorm.add(temp);
 				}
+				this.mesToClient.setData(Dorm);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
