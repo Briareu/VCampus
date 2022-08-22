@@ -1,6 +1,5 @@
 package seu.list.client.view;
 
-
 import seu.list.common.Dormitory;
 import seu.list.common.IConstant;
 import seu.list.client.bz.Client;
@@ -8,7 +7,6 @@ import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
-
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -101,8 +99,6 @@ public class DormitoryAdminClient extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Dormmodify Modify = new Dormmodify();
-				Modify.setVisible(true);
 				ModifyAct(e);
 			}
 		});
@@ -127,8 +123,6 @@ public class DormitoryAdminClient extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Dormdelete delete = new Dormdelete();
-				delete.setVisible(true);
 				DeleteAct(e);
 			}
 		});
@@ -141,8 +135,6 @@ public class DormitoryAdminClient extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Dormadd add = new Dormadd();
-				add.setVisible(true);
 				AddAct(e);
 			}
 		});
@@ -256,17 +248,22 @@ public class DormitoryAdminClient extends JFrame {
 
 	protected void ModifyAct(ActionEvent e) {
 		// TODO Auto-generated method stub
+		Dormmodify Modify = new Dormmodify(socket);
+		Modify.setVisible(true);
 		SetTableShow();
 	}
 
 	protected void AddAct(ActionEvent e) {
 		// TODO Auto-generated method stub
+		Dormadd add = new Dormadd(socket);
+		add.setVisible(true);
 		SetTableShow();
 	}
 
 	protected void DeleteAct(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		Dormdelete delete = new Dormdelete(socket);
+		delete.setVisible(true);
 		SetTableShow();
 	}
 
@@ -278,6 +275,7 @@ public class DormitoryAdminClient extends JFrame {
 		Client client = new Client(ClientMainFrame.socket);
 		mes.setModuleType(ModuleType.Dormitory);
 		mes.setMessageType(MessageType.DormAdShow);
+		mes.setData();
 		Message serverResponse = new Message();
 
 		serverResponse = client.sendRequestToServer(mes);
@@ -315,36 +313,43 @@ public class DormitoryAdminClient extends JFrame {
 
 	protected void SearchAct(ActionEvent e) {
 		// TODO Auto-generated method stub
-		Message mes =new Message();
-		Client client=new Client(ClientMainFrame.socket);
-		mes.setModuleType(ModuleType.Dormitory);
-		mes.setMessageType(MessageType.DormSearch);
-		mes.setData(searchField.getText());
-		
-		Message serverResponse=new Message();
-
-		serverResponse=client.sendRequestToServer(mes);
-
-		ArrayList<Dormitory> res=new ArrayList<Dormitory>();
-		res=(ArrayList<Dormitory>)serverResponse.getData();
-		
 		Object[][] dorminformation= {};
 		Object[] dormlist = {"学号","宿舍","床位","卫生评分","水费","电费","调换申请","维修申请"};
 		DefaultTableModel model;
 		model = new DefaultTableModel(dorminformation, dormlist);
 
-		for(int i=0;i<res.size();i++) {
-			String[] arr=new String[8];
-			arr[0]=res.get(i).getuserID();
-			arr[1]=res.get(i).getDormitoryID();
-			arr[2]=String.valueOf(res.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(res.get(i).getWater());
-			arr[4]=String.valueOf(res.get(i).getElectricity());
-			arr[5]=String.valueOf(res.get(i).getDormitoryScore());
-			arr[6]=res.get(i).getStudentExchange();
-			arr[7]=res.get(i).getDormitoryMaintain();
+		Message mes = new Message();
+		mes.setUserType(1);
+		mes.setModuleType(ModuleType.Dormitory);
+		mes.setData(searchField.getText());
+		
+		try {
+			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+		}catch (IOException e1) {
+			e1.printStackTrace();
 		}
-
-		table.setModel(model);
+		Client client = new Client(this.socket);
+		
+		Message rec=new Message();
+		rec=client.sendRequestToServer(mes);
+		ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) rec.getData();
+		System.out.println(allDormitoryContents);
+		System.out.println(allDormitoryContents.size());
+		Object sigRow[] = new  String[8];
+		for(int i=0;i<allDormitoryContents.size();i++) {
+			String[] arr=new String[8];
+			arr[0]=allDormitoryContents.get(i).getuserID();
+			arr[1]=allDormitoryContents.get(i).getDormitoryID();
+			arr[2]=String.valueOf(allDormitoryContents.get(i).getStudentBunkID());
+			arr[3]=String.valueOf(allDormitoryContents.get(i).getWater());
+			arr[4]=String.valueOf(allDormitoryContents.get(i).getElectricity());
+			arr[5]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
+			arr[6]=allDormitoryContents.get(i).getStudentExchange();
+			arr[7]=allDormitoryContents.get(i).getDormitoryMaintain();
+			
+			model.addRow(arr);
+			table.setModel(model);
+		}
 	}
 }
+
