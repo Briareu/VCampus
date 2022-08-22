@@ -74,6 +74,8 @@ public class ClassAdminForAdd extends JFrame {
 		CAC = cac;
 		StuAll = Stu;
 		ClssAll = Clss;
+
+		setTitle("学生管理界面");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 573, 286);
 		contentPane = new JPanel();

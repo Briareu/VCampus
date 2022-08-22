@@ -76,32 +76,36 @@ public class ClassAdminForDelete extends JFrame {
 	public ClassAdminForDelete(final ClassAdminClient cac, Vector<Student> Stu, Vector<ClassManage> Clss) {
 		CAC = cac;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 573, 380);
+		setBounds(100, 100, 790, 480);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
+		setTitle("学生管理界面");
+
 		JButton Commitbtn = new JButton("确定");
 
-		Commitbtn.setFont(new Font("宋体", Font.PLAIN, 15));
+		Commitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
 		JButton exitbtn = new JButton("返回");
 
-		exitbtn.setFont(new Font("宋体", Font.PLAIN, 15));
+		exitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
 		JComboBox selectmode = new JComboBox();
+		selectmode.setFont(new Font("宋体", Font.PLAIN, 18));
 		selectmode.addItem("学生");
 		selectmode.addItem("班级");
 		
 		JComboBox searchbtn = new JComboBox();
+		searchbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
 		JLabel lblNewLabel = new JLabel("模式");
-		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
+		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 24));
 
 		JScrollPane scrollPane = new JScrollPane();
 
 		searchdata = new JTextField();
-		searchdata.setText("🔍");
+		searchdata.setFont(new Font("宋体", Font.PLAIN, 15));
 		searchdata.setColumns(10);
 
 		table = new JTable();
@@ -416,6 +420,7 @@ public class ClassAdminForDelete extends JFrame {
 		scrollPane.setViewportView(table);
 
 		JButton btnNewButton = new JButton("查找");
+		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 18));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				table.getCellEditor().stopCellEditing();
@@ -608,29 +613,30 @@ public class ClassAdminForDelete extends JFrame {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap(437, Short.MAX_VALUE)
+					.addComponent(searchbtn, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(searchdata, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+					.addGap(26))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(39)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-							.addGap(4)
-							.addComponent(selectmode, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(286)
-							.addComponent(searchbtn, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(searchdata, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(54)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 446, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(100)
-							.addComponent(Commitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-							.addGap(153)
-							.addComponent(exitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(12, Short.MAX_VALUE))
+					.addGap(39)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+					.addGap(4)
+					.addComponent(selectmode, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(568, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(99)
+					.addComponent(Commitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 396, Short.MAX_VALUE)
+					.addComponent(exitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addGap(77))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(70)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 647, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(49, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -644,14 +650,15 @@ public class ClassAdminForDelete extends JFrame {
 					.addGap(3)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewButton)
-						.addComponent(searchdata, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(searchdata, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 						.addComponent(searchbtn, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(10)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
 					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Commitbtn)
-						.addComponent(exitbtn)))
+						.addComponent(exitbtn))
+					.addGap(29))
 		);
 		contentPane.setLayout(gl_contentPane);
 

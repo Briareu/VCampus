@@ -72,6 +72,8 @@ public class ClassStudentClient extends JFrame {
 	public ClassStudentClient(String id, String pwd) {
 		PWD = pwd;
 		ID = id;
+
+		setTitle("学生个人信息管理界面");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 441);
 		contentPane = new JPanel();
