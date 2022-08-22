@@ -1,19 +1,14 @@
-//package view;
 package seu.list.client.view;
 
-import seu.list.common.*;
+import seu.list.common.Dormitory;
+import seu.list.common.IConstant;
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
-/*
-import common.Dormitory;
-import common.IConstant;
-import Message.MessageType;
-import Message.Message;
-import client.Client;
-import client.ClientMainFrame;
-import Message.ModuleType;
-*/
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -42,13 +37,14 @@ public class Dormdelete extends JDialog {
 	private JButton cancelButton;
 	private JPanel buttonPane;
 	private JTextField DeuserIDField;
+	static Socket socket;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			Dormdelete dialog = new Dormdelete();
+			Dormdelete dialog = new Dormdelete(socket);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -59,7 +55,8 @@ public class Dormdelete extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Dormdelete() {
+	public Dormdelete(Socket socket) {
+		setVisible(true);
 		setTitle("删除宿舍");
 		setBounds(100, 100, 391, 283);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -107,28 +104,7 @@ public class Dormdelete extends JDialog {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								// TODO Auto-generated method stub
-								
-								Message mes =new Message();
-								Socket socket = null;
-								try {
-									socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
-								}catch (IOException e1) {
-									e1.printStackTrace();
-								}
-								Client client = new Client(socket);
-								
-								mes.setModuleType(ModuleType.Dormitory);
-								mes.setMessageType(MessageType.DormDelete);
-								
-								mes.setData(DeuserIDField.getText());
-								Message serverResponse=new Message();
-								
-								serverResponse=client.sendRequestToServer(mes);
-
-								int res = (int)serverResponse.getData();
-								if(res > 0)
-									JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
-								
+								DeleteAct(e);
 								setVisible(false);
 							}
 					
@@ -185,6 +161,30 @@ public class Dormdelete extends JDialog {
 					.addGap(12))
 		);
 		getContentPane().setLayout(groupLayout);
+	}
+
+	protected void DeleteAct(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Message mes = new Message();
+		mes.setUserType(1);
+		mes.setModuleType(ModuleType.Dormitory);
+		mes.setMessageType(MessageType.DormDelete);
+		try {
+			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+		}catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		Client client = new Client(socket);
+		System.out.println(DeuserIDField.getText());
+		mes.setData(DeuserIDField.getText());
+		Message serverResponse=new Message();
+		
+		serverResponse=client.sendRequestToServer(mes);
+
+		int res = (int)serverResponse.getData();
+		if(res > 0)
+			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
+		
 	}
 
 }
