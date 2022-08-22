@@ -34,15 +34,16 @@ public class ServerMainFrame
 		Server srvThd = new Server(IConstant.SERVER_PORT);
 		srvThd.start();
 		
-		System.out.println("输入1关闭服务器：");
+		System.out.println("输入close关闭服务器：");
 		Scanner scan = new Scanner(System.in);
 		while(scan.hasNext()) {
-			int input = scan.nextInt();
-			if(input == 1) {
+			String input = scan.next();
+			if(input.equals("close")) {
 				srvThd.close();
 				break;
 			}
 		}
 		scan.close();
+		System.exit(0);
 	}
 }

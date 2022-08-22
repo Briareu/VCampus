@@ -25,43 +25,24 @@ public class ClientMainFrame {
 		}
 
 		// 启动各种窗口
-		ClientLoginFrame c=new ClientLoginFrame(socket);
+		//ClientLoginFrame c=new ClientLoginFrame(socket);
 		//ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
 		//ClientStuCourseFrame s=new ClientStuCourseFrame("2",socket);
 		///ClientLoginFrame c=new ClientLoginFrame(socket);
-		// 要关闭客户端时，给服务器发送下线通知
-//		Message offlineMes = new Message();
-//		offlineMes.offline();
-//		Client client = new Client(socket);
-//		client.sendRequestToServer(offlineMes);
-//		try {
-//			if(!socket.isClosed()) {
-//				socket.close();
-//			}
-//		}catch(IOException e) {
-//			e.printStackTrace();
-//		}
+
 
 		
 		// test
-//		Message mesToServer = new Message();
-//		mesToServer.setData("Hello");
+		String testPwd = "sadadsadq";
+		String testUserAdminID = "10001";
+		String testUserStuID = "00001";
+		MainMenu mainMenu = new MainMenu(testUserAdminID, testPwd);
+		mainMenu.setVisible(true);
 		// test
-		
-		
-//		MainMenu mainMenu = new MainMenu();
-//		mainMenu.setVisible(true);
-		
 		
 		// 要关闭客户端时，给服务器发送下线通知
 		//goOffline();
-	}
-	
-	public static void goOffline() {
-		Message offlineMes = new Message();
-		offlineMes.offline();
-		Client client = new Client(socket);
-		client.sendRequestToServer(offlineMes);
+		// 客户端程序即将关闭，关闭socket
 		try {
 			if(!socket.isClosed()) {
 				socket.close();
@@ -69,6 +50,14 @@ public class ClientMainFrame {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-
+		// 退出程序
+		System.exit(0);
+	}
+	
+	public static void goOffline() {
+		Message offlineMes = new Message();
+		offlineMes.offline();
+		Client client = new Client(socket);
+		client.sendRequestToServer(offlineMes);
 	}
 }

@@ -1,10 +1,5 @@
 package seu.list.client.view;
 
-
-
-
-
-
 import seu.list.client.bz.Client;
 import seu.list.common.*;
 
@@ -365,7 +360,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
             {
                 if(sign==0||sign==1) {
                     this.setVisible(false);
-                    MainMenu csf = new MainMenu();
+                    MainMenu csf = new MainMenu(u.getId(), u.getPwd());
                     csf.setVisible(true);
                 }
                 else if(sign==2) {

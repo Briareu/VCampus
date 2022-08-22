@@ -1,16 +1,4 @@
-
 package seu.list.server.dao;
-
-
-
-
-
-
-
-
-
-
-
 
 import seu.list.common.Message;
 import seu.list.common.MessageType;

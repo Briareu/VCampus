@@ -1,27 +1,9 @@
-
 package seu.list.server.dao;
-
-
-
-
-
-
 
 import java.util.List;
 import java.util.Vector;
 
-
-
-
-//import main.java.seu.list.common.User;
 import seu.list.common.*;
-
-
-
-//import main.java.seu.list.common.User;
-import seu.list.common.*;
-
-
 
 public interface UserDao {
     

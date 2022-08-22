@@ -28,7 +28,7 @@ public class Server extends Thread{
             while(!isClosed)
             {
                 Socket socket = this.serverSocket.accept();
-                System.out.println("Thread"+this.thdNum.toString()+"已经建立");
+                System.out.println("Thread: "+this.thdNum.toString()+", 已经建立");
 
                 ServerSocketThread thd = new ServerSocketThread(socket, this.thdNum.toString());
                 thd.start();
@@ -39,13 +39,8 @@ public class Server extends Thread{
         {
             e.printStackTrace();
         }
-    }
-    
-    public void close() {
-    	System.out.println("服务器关闭！");
-    	this.isClosed = true;
-    	ServerClientThreadMgr.clear();
-    	try {
+        
+        try {
     		if(!this.serverSocket.isClosed()) {
     			this.serverSocket.close();
     		}
@@ -53,11 +48,11 @@ public class Server extends Thread{
     		e.printStackTrace();
     	}
     }
-
-    /*
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.run();
+    
+    public void close() {
+    	System.out.println("服务器关闭！");
+    	this.isClosed = true;
+    	ServerClientThreadMgr.clear();
     }
-	*/
+
 }

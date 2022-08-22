@@ -1,15 +1,4 @@
 package seu.list.server.dao;
-//package seu.list.server.dao;
-
-
-
-/*
-import VCampusServer.src.main.java.seu.list.common.Course;
-import VCampusServer.src.main.java.seu.list.server.dao.CourseDao;
-import VCampusServer.src.main.java.seu.list.server.db.SqlHelperImp;
-*/
-
-
 
 import seu.list.common.Course;
 import seu.list.common.Message;
@@ -22,8 +11,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
-
-
 
 public class CourseDaoImp implements CourseDao {
 		// Modified by WU 8.16

@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
 import seu.list.common.Goods;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
@@ -77,20 +76,22 @@ public class ShopSever extends Shop_DbAccess {
 
 	private static ArrayList<Goods> GoodsList=new ArrayList<Goods>();
 	
+	/*
 	 public static void main(String[] args) {
 		//System.out.println(getList().get(1).getGoodsName());
-		 /* ArrayList<Integer> a=new ArrayList<Integer>();
+		  ArrayList<Integer> a=new ArrayList<Integer>();
 		 ArrayList<Integer> b=new ArrayList<Integer>();
 		 a.add(1);
 		 b.add(1);
 		 buy(a,b);
 		// System.out.println(SearchGoods_ID(1).getGoodsName());
 		Goods agoods=new Goods(5,"apple",3.0,100);
-		Addgoods(agoods);*/
+		Addgoods(agoods);
 		//AddnumberofGoods(1,3);
 		//Deletegoods(5);
 		//ModifyGoodsPrice(1,5.5);
 	 }
+	 */
 	 
 	public static ArrayList<Goods> getGoodsList() {
 		return GoodsList;

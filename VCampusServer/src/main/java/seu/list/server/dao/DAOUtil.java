@@ -1,6 +1,4 @@
-
 package seu.list.server.dao;
-
 
 import seu.list.common.Course;
 import seu.list.common.User;
@@ -10,14 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
 public class DAOUtil {
-
-
-
 	public static List<Course> CourseResultSet2List(ResultSet rs) throws SQLException {
 		List<Course> courses = new ArrayList<Course>();
 		while(rs.next())
