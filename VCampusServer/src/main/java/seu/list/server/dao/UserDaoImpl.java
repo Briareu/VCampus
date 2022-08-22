@@ -118,6 +118,7 @@ public class UserDaoImpl implements UserDao {
 			// TODO 自动生成的方法存根
 			String sql = "insert into tb_User(uID, uName, uAge, uSex,uGrade, uMajor,uPwd,uRole,uMoney) values (?,?,?,?,?,?,?,?,?)";
 			String[] paras = new String[9];
+			System.out.println(user);
 			paras[0] = user.getId();
 			paras[1] = user.getName();
 			paras[2] = user.getAge();
@@ -133,7 +134,7 @@ public class UserDaoImpl implements UserDao {
 
 		@Override
 		public boolean delUser(String userID) {
-			if(this.searchUser(userID).getRole()=="老师"){
+			if(this.searchUser(userID).getRole()=="1"){
 				return false;
 			}else {
 				String sql = "delete from tb_User where uID = ?";

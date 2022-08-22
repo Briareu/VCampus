@@ -14,7 +14,7 @@ public class Message implements Serializable {
       private String messageType = null;
       private String moduleType = null;
       private boolean isOffline = false;
-
+      private boolean isSeccess=false;
       private int userType;//0-学生 1-管理员
       private String userId;
       private String extraMessage;
@@ -24,7 +24,12 @@ public class Message implements Serializable {
       public void offline() {
     	  this.isOffline = true;
       }
-      public boolean isOffline() {
+
+    public boolean isSeccess() {return isSeccess;}
+
+    public void setSeccess(boolean seccess) {isSeccess = seccess;}
+
+    public boolean isOffline() {
     	  return isOffline;
       }
       public Object getData() {

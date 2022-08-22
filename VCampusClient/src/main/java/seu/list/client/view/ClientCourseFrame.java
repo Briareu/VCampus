@@ -271,6 +271,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		else if(e.getActionCommand()=="add") {
 			CourseInfor courseInfor = new CourseInfor(userID,this.socket);
 			this.setVisible(false);
+
 		}
 		else if(e.getActionCommand()=="delete") {
 			Message clientReq = new Message();
@@ -281,17 +282,53 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 			reqContent.set(2,jtf1.getText());
 			clientReq.setContent(reqContent);
 			Message rec=client.sendRequestToServer(clientReq);
-			ObjectOutputStream oos;
-			this.setVisible(false);
-			try {
-				ClientCourseFrame ccf = new ClientCourseFrame(userID,this.socket);
-			} catch (ClassNotFoundException ex) {
-				throw new RuntimeException(ex);
-			} catch (SQLException ex) {
-				throw new RuntimeException(ex);
-			} catch (IOException ex) {
-				throw new RuntimeException(ex);
+
+
+			clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
+			rec=client.sendRequestToServer(clientReq);
+
+			Vector<String>	allCourseInfor = rec.getContent();
+			int rowNumber = allCourseInfor.size()/7;
+			String[][] allCourseTable = new String[rowNumber][7];
+			int storingPlace = 0;
+			for(int i=0;i<rowNumber;i++) {
+				for(int j=0;j<7;j++)
+					allCourseTable[i][j] = allCourseInfor.get(storingPlace++);
 			}
+			jtb1 = new JTable();
+			jtb1.setModel(new DefaultTableModel(
+					allCourseTable,
+					new String[] {
+							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+					}
+			));
+			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
+			jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
+			jtb1.getColumnModel().getColumn(2).setPreferredWidth(161);
+			jtb1.getColumnModel().getColumn(3).setPreferredWidth(161);
+			jtb1.getColumnModel().getColumn(4).setPreferredWidth(161);
+			jtb1.getColumnModel().getColumn(5).setPreferredWidth(161);
+			jtb1.getColumnModel().getColumn(6).setPreferredWidth(161);
+
+			jtb1.setPreferredSize(new Dimension(WIDTH-100,2000));
+			jtb1.setFont(new Font("微软雅黑",Font.BOLD,20));
+			jtb1.getTableHeader().setPreferredSize(new Dimension(1, 40));
+			jtb1.getTableHeader().setFont(new Font("宋体",Font.BOLD,25));
+			jtb1.setRowHeight(50);
+
+			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+			scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
+			scrollPane.setViewportView(jtb1);
+//			this.setVisible(false);
+//			try {
+//				ClientCourseFrame ccf = new ClientCourseFrame(userID,this.socket);
+//			} catch (ClassNotFoundException ex) {
+//				throw new RuntimeException(ex);
+//			} catch (SQLException ex) {
+//				throw new RuntimeException(ex);
+//			} catch (IOException ex) {
+//				throw new RuntimeException(ex);
+//			}
 
 		}
 	}

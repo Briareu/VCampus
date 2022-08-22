@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
-import seu.list.client.test.MainTest;
+//import seu.list.client.test.MainTest;
 import seu.list.common.ClassManage;
 import seu.list.common.Message;
 import seu.list.common.MessageType;

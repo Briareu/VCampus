@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
-import seu.list.client.test.MainTest;
+//import seu.list.client.test.MainTest;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
@@ -604,7 +604,7 @@ public class ClassStudentClient extends JFrame {
 	}
 	void close() {
 		this.dispose();
-		MainTest frame = new MainTest();
-		frame.setVisible(true);
+		//MainTest frame = new MainTest();
+		//frame.setVisible(true);
 	}
 }

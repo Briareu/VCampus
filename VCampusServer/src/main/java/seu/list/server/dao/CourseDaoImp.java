@@ -43,7 +43,8 @@ public class CourseDaoImp implements CourseDao {
 					System.out.println("adding....");
 					String CourseId = this.mesFromClient.getContent().get(0);
 					String UserId = this.mesFromClient.getContent().get(1);
-					this.sigAddCourse(CourseId, UserId);
+
+					this.mesToClient.setSeccess(this.sigAddCourse(CourseId,UserId));
 					System.out.println("REQ_STU_ADD_LESSON finished");
 					break;
 				}
@@ -52,17 +53,20 @@ public class CourseDaoImp implements CourseDao {
 					System.out.println("removing....");
 					String CourseId = this.mesFromClient.getContent().get(0);
 					String UserId = this.mesFromClient.getContent().get(1);
-					this.mesToClient.setData(this.sigRemoveCourse(CourseId,UserId));
+
+					this.mesToClient.setSeccess(this.sigRemoveCourse(CourseId,UserId));
 					System.out.println("REQ_STU_REMOVE_LESSON finshed");
 					break;
 				}
 				case MessageType.REQ_ADD_LESSON:{
 					System.out.println("serving REQ_ADD_LESSON");
 					System.out.println("adding....");
-					//��ʦ��ӿγ�
+
 					Course course = new Course();
 					course.setContent(this.mesFromClient.getContent());
-					this.mesToClient.setData(this.genAddCourse(course));
+
+					this.mesToClient.setSeccess(this.genAddCourse(course));
+					//this.mesToClient.setData(this.genAddCourse(course));
 					System.out.println("REQ_ADD_LESSON finished");
 					break;
 				}
@@ -70,7 +74,8 @@ public class CourseDaoImp implements CourseDao {
 					System.out.println("serving REQ_REMOVE_LESSON");
 					System.out.println("removing.....");
 					String courseName = this.mesFromClient.getContent().get(2);
-					this.mesToClient.setData(this.genRemoveCourse(courseName));
+
+					this.mesToClient.setSeccess(this.genRemoveCourse(courseName));
 					System.out.println("REQ_REMOVE_LESSON finished");
 					break;
 				}

@@ -202,16 +202,21 @@ public class CourseInfor extends JDialog implements ActionListener {
 			clientReq.setMessageType("REQ_ADD_LESSON");
 			clientReq.setContent(course.getContent());
 			Message rec= client.sendRequestToServer(clientReq);
-			try {
-				ClientCourseFrame ccf = new ClientCourseFrame(userID,this.socket);
-			} catch (ClassNotFoundException ex) {
-				throw new RuntimeException(ex);
-			} catch (SQLException ex) {
-				throw new RuntimeException(ex);
-			} catch (IOException ex) {
-				throw new RuntimeException(ex);
+			if(rec.isSeccess()){
+				try {
+					ClientCourseFrame ccf = new ClientCourseFrame(userID,this.socket);
+				} catch (ClassNotFoundException ex) {
+					throw new RuntimeException(ex);
+				} catch (SQLException ex) {
+					throw new RuntimeException(ex);
+				} catch (IOException ex) {
+					throw new RuntimeException(ex);
+				}
+				this.setVisible(false);
+			}else{
+				JOptionPane.showMessageDialog(null,"课程id不可重复，请重新填写","错误",JOptionPane.ERROR_MESSAGE);
 			}
-			this.setVisible(false);
+
 		}
 	}
 }
