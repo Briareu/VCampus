@@ -1,22 +1,15 @@
-//package view;
 package seu.list.client.view;
 
-import seu.list.common.*;
+import seu.list.common.Dormitory;
+import seu.list.common.IConstant;
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
-
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-/*
-import common.Dormitory;
-import common.IConstant;
-import Message.MessageType;
-import Message.Message;
-import client.Client;
-import client.ClientMainFrame;
-import Message.ModuleType;
-*/
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -50,24 +43,30 @@ public class Dormadd extends JDialog {
 	private JTextField AelectricityField;
 	private JTextField AexchangeField;
 	private JTextField AmaintainField;
+	static Socket socket;
+	private Message mes =new Message();
+	private Client client;
+	private Dormitory temp;
 
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		try {
-			Dormadd dialog = new Dormadd();
+			Dormadd dialog = new Dormadd(socket);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	*/
 	/**
 	 * Create the dialog.
 	 */
-	public Dormadd() {
+	public Dormadd(Socket socket) {
+		setVisible(true);
 		setTitle("添加宿舍");
 		setBounds(100, 100, 469, 496);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -83,36 +82,7 @@ public class Dormadd extends JDialog {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						Dormitory temp = new Dormitory();
-						temp.setuserID(AuserIDField.getText());
-						temp.setDormitoryID(AdormIDField.getText());
-						temp.setStudentBunkID(Integer.parseInt(AbunkIDField.getText()));
-						temp.setWater(Integer.parseInt(AwaterField.getText()));
-						temp.setElectricity(Integer.parseInt(AelectricityField.getText()));
-						temp.setDormitoryScore(Integer.parseInt(AexchangeField.getText()));
-						temp.setDormitoryMaintain(AmaintainField.getText());
-						temp.setStudentExchange(AscoreField.getText());
-						
-						Message mes =new Message();
-						Socket socket = null;
-						try {
-							socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
-						}catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						Client client = new Client(socket);
-						
-						mes.setModuleType(ModuleType.Dormitory);
-						mes.setMessageType(MessageType.DormAdd);
-						mes.setData(temp);
-						Message serverResponse=new Message();
-
-						serverResponse=client.sendRequestToServer(mes);
-
-						int res = (int)serverResponse.getData();
-						if(res > 0)
-							JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
-
+						AddAct(e);
 						setVisible(false);
 					}
 			
@@ -127,7 +97,7 @@ public class Dormadd extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						setVisible(false);
-;					}
+					}
 				
 				});
 			}
@@ -303,6 +273,50 @@ public class Dormadd extends JDialog {
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setLayout(groupLayout);
+		
+		
+		
+		
+		
+		
+		
+
+		
+
+	}
+
+	protected void AddAct(ActionEvent e) {
+		// TODO Auto-generated method stub
+		temp = new Dormitory();
+		temp.setuserID(AuserIDField.getText());
+		temp.setDormitoryID(AdormIDField.getText());
+		temp.setStudentBunkID(Integer.parseInt(AbunkIDField.getText()));
+		temp.setWater(Integer.parseInt(AwaterField.getText()));
+		temp.setElectricity(Integer.parseInt(AelectricityField.getText()));
+		temp.setDormitoryScore(Integer.parseInt(AexchangeField.getText()));
+		temp.setDormitoryMaintain(AmaintainField.getText());
+		temp.setStudentExchange(AscoreField.getText());
+		System.out.println("!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(temp);
+		Message mes =new Message();
+		mes.setUserType(1);
+		mes.setModuleType(ModuleType.Dormitory);
+		mes.setMessageType(MessageType.DormAdd);
+		try {
+			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+		}catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		System.out.println(temp);
+		client = new Client(socket);
+		mes.setData(temp);
+		Message serverResponse=new Message();
+		
+		
+		serverResponse=client.sendRequestToServer(mes);
+		int res = (int)serverResponse.getData();
+		if(res > 0)
+			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
 	}
 
 }

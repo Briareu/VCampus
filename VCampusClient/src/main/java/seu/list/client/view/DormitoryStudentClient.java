@@ -1,256 +1,296 @@
-//package VCampusClient.src.main.java.seu.list.client.view;
 package seu.list.client.view;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import seu.list.client.bz.Client;
+import seu.list.client.bz.ClientMainFrame;
+import seu.list.common.Dormitory;
+import seu.list.common.IConstant;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
 
 public class DormitoryStudentClient extends JFrame {
-	
-	public DormitoryStudentClient(String title) {
-		// 调用父类
-		super(title);
 
-		// 添加面板
-		JPanel root = new JPanel();
-		this.setContentPane(root);
+	private JPanel contentPane;
+	static Socket socket;
+	/**
+	 * Launch the application.
+	 */
+	/*
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DormitoryStudentClient frame = new DormitoryStudentClient(socket);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}*/
 
-		root.setLayout(null);
-
-		// 添加按钮
-		JButton modifyButton = new JButton("维修登记");
-		JButton exchangeButton = new JButton("宿舍登记");
-		JButton exitButton = new JButton("退出");
-
-		root.add(modifyButton);
-		root.add(exchangeButton);
-		root.add(exitButton);
-
-		modifyButton.setBounds(20, 200, 100, 30);
-		exchangeButton.setBounds(140, 200, 100, 30);
-		exitButton.setBounds(260, 200, 100, 30);
-
-		// 添加文本
-		JLabel manageLabel = new JLabel("宿舍信息");
-		JLabel nameLabel = new JLabel("姓名:???");
-		JLabel numberLabel = new JLabel("学号：???");
-		JLabel dormIDLabel = new JLabel("宿舍：???");
-		JLabel scoreLabel = new JLabel("卫生评分：???");
-		JLabel bunkIDLabel = new JLabel("床位号：???");
-		JLabel waterLabel = new JLabel("水费：???");
-		JLabel electricityLabel = new JLabel("电费：???");
-		JLabel modifyLabel = new JLabel("维修状态：???");
-
-		root.add(manageLabel);
-		root.add(nameLabel);
-		root.add(numberLabel);
-		root.add(dormIDLabel);
-		root.add(scoreLabel);
-		root.add(bunkIDLabel);
-		root.add(waterLabel);
-		root.add(electricityLabel);
-
-		manageLabel.setBounds(0, 0, 400, 60);
-		manageLabel.setFont(new Font("微软雅黑", Font.BOLD, 25));
-		manageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-		nameLabel.setBounds(50, 60, 180, 30);
-		nameLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
-		numberLabel.setBounds(50, 90, 180, 30);
-		numberLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		numberLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
-		dormIDLabel.setBounds(50, 120, 180, 30);
-		dormIDLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		dormIDLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
-		scoreLabel.setBounds(50, 150, 180, 30);
-		scoreLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		scoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
-		bunkIDLabel.setBounds(210, 60, 180, 30);
+	/**
+	 * Create the frame.
+	 */
+	public DormitoryStudentClient(String userID,Socket socket) {
+		setFont(new Font("微软雅黑", Font.BOLD, 12));
+		setTitle("宿舍-学生");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 544, 389);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		JLabel dormLabel = new JLabel("宿舍信息");
+		dormLabel.setFont(new Font("微软雅黑", Font.BOLD, 25));
+		dormLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel userIDLabel_1 = new JLabel("学号：");
+		userIDLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel dormIDLabel_2 = new JLabel("宿舍：");
+		dormIDLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel bunkIDLabel = new JLabel("床位：");
 		bunkIDLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		bunkIDLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
-		waterLabel.setBounds(210, 90, 180, 30);
+		
+		JLabel scoreLabel = new JLabel("卫生评分：");
+		scoreLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel waterLabel = new JLabel("水费：");
 		waterLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		waterLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
-		electricityLabel.setBounds(210, 120, 180, 30);
+		
+		JLabel electricityLabel = new JLabel("电费：");
 		electricityLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		electricityLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
-		// 设置监听器
-		ActionListener modifyListener = new ModifyListener();
-		modifyButton.addActionListener(modifyListener);
-
-		ActionListener exchangeListener = new ExchangeListener();
-		exchangeButton.addActionListener(exchangeListener);
-
-		ActionListener exitListener = new ExitListener();
-		exitButton.addActionListener(exitListener);
-	}
-
-	// 宿舍维修登记响应
-	private class ModifyListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			System.out.println("**维修登记成功");
-			
-			JFrame Modify=new JFrame("维修登记");
-			Modify.setSize(300,250);
-			Modify.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			JPanel Modifypanel = new JPanel();
-			Modify.setContentPane(Modifypanel);
-			Modify.setLayout(null);
-			
-			//标题
-			JLabel ModifyLabel=new JLabel("维修登记");
-			ModifyLabel.setBounds(0, 10, 300, 50);
-			ModifyLabel.setFont(new Font(null, Font.BOLD, 25));
-			ModifyLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			Modify.add(ModifyLabel);
-			
-			//申请的宿舍
-			JTextField Number=new JTextField(10);
-			Number.setBounds(150, 70, 100, 25);
-			Number.setFont(new Font("微软黑雅", Font.PLAIN, 14));
-			Modifypanel.add(Number);
-			
-			JLabel NumberLabel=new JLabel("维修宿舍号：");
-			NumberLabel.setBounds(50, 70, 100, 25);
-			NumberLabel.setFont(new Font("微软黑雅", Font.PLAIN, 14));
-			Modifypanel.add(NumberLabel);
-			
-			//维修内容
-			JTextField Text=new JTextField(10);
-			Text.setBounds(150, 110, 100, 25);
-			Text.setFont(new Font(null, Font.PLAIN, 14));
-			Modifypanel.add(Text);
-			
-			JLabel TextLabel=new JLabel("维修内容：");
-			TextLabel.setBounds(50, 110, 100, 25);
-			TextLabel.setFont(new Font("微软黑雅", Font.PLAIN, 14));
-			Modifypanel.add(TextLabel);
-			
-			//按钮
-			JButton OKButton=new JButton("确定");
-			OKButton.setBounds(150, 150, 100, 30);
-			Modifypanel.add(OKButton);
-			
-			JButton ReturnButton=new JButton("取消");
-			ReturnButton.setBounds(30, 150, 100, 30);
-			Modifypanel.add(ReturnButton);
-			
-			Object[] stu=new Object[2];
-			OKButton.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					stu[0]=Number.getText();
-					stu[2]=Text.getText();
-					//-------------
-				}
-			});
-			
-			Modify.setVisible(true);
-		}
-	}
-
-	// 调换申请响应
-	private class ExchangeListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			System.out.println("**申请成功");
-
-			JFrame Exchange=new JFrame("宿舍调换申请登记");
-			Exchange.setSize(300,250);
-			Exchange.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			JPanel Exchangepanel = new JPanel();
-			Exchange.setContentPane(Exchangepanel);
-			Exchange.setLayout(null);
-			
-			//标题
-			JLabel ExchangeLabel=new JLabel("宿舍调换");
-			ExchangeLabel.setBounds(0, 10, 300, 50);
-			ExchangeLabel.setFont(new Font("微软黑雅", Font.BOLD, 25));
-			ExchangeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			Exchange.add(ExchangeLabel);
-			
-			//申请的宿舍
-			JTextField Number=new JTextField(10);
-			Number.setBounds(150, 70, 100, 25);
-			Number.setFont(new Font(null, Font.PLAIN, 14));
-			Exchangepanel.add(Number);
-			
-			JLabel NumberLabel=new JLabel("原宿舍号：");
-			NumberLabel.setBounds(30, 70, 120, 25);
-			NumberLabel.setFont(new Font("微软黑雅", Font.PLAIN, 14));
-			Exchangepanel.add(NumberLabel);
-			
-			//维修内容
-			JTextField Text=new JTextField(10);
-			Text.setBounds(150, 110, 100, 25);
-			Text.setFont(new Font(null, Font.PLAIN, 14));
-			Exchangepanel.add(Text);
-			
-			JLabel TextLabel=new JLabel("申请调换宿舍号：");
-			TextLabel.setBounds(30, 110, 120, 25);
-			TextLabel.setFont(new Font("微软黑雅", Font.PLAIN, 14));
-			Exchangepanel.add(TextLabel);
-			
-			//按钮
-			JButton OKButton=new JButton("确定");
-			OKButton.setBounds(150, 150, 100, 30);
-			Exchangepanel.add(OKButton);
-			
-			JButton ReturnButton=new JButton("取消");
-			ReturnButton.setBounds(30, 150, 100, 30);
-			Exchangepanel.add(ReturnButton);
-			
-			Object[] stu=new Object[2];
-			OKButton.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					stu[0]=Number.getText();
-					stu[2]=Text.getText();
-					//-------------
-				}
-			});
-			
-			Exchange.setVisible(true);
-		}
-
-	}
-
-	// 退出响应
-	private class ExitListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			System.out.println("**退出成功");
-
-		}
-
-	}
+		
+		JLabel exchangeLabel = new JLabel("调换申请：");
+		exchangeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		exchangeLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 	
+		JLabel maintainLabel = new JLabel("维修申请：");
+		maintainLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JButton maintianButton = new JButton("维修登记");
+		maintianButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		maintianButton.addActionListener(new ActionListener()
+				{
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						MaintainAct(e);
+						
+					}
+			
+				});
+		
+		JButton exchangeButton = new JButton("宿舍调换申请");
+		exchangeButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		exchangeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ExchangeAct(e);
+			}
+		});
+		
+		JButton exitButton = new JButton("退出");
+		exitButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		exitButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				setVisible(false);
+			}
+		});
+		
+		JLabel UserIDLabel = new JLabel("");
+		UserIDLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel DormIDLabel = new JLabel("");
+		DormIDLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel BunkIDLabel_1 = new JLabel("");
+		BunkIDLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel ScoreLabel_2 = new JLabel("");
+		ScoreLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel WaterLabel_3 = new JLabel("");
+		WaterLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel ElectricityLabel_4 = new JLabel("");
+		ElectricityLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
+		ElectricityLabel_4.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel ExchangeLabel_5 = new JLabel("");
+		ExchangeLabel_5.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		JLabel MaintainLabel_6 = new JLabel("");
+		MaintainLabel_6.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(31)
+							.addComponent(maintianButton, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+							.addGap(45)
+							.addComponent(exchangeButton)
+							.addGap(39)
+							.addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(120)
+							.addComponent(dormLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(66)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(dormIDLabel_2, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+								.addComponent(userIDLabel_1, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+								.addComponent(bunkIDLabel)
+								.addComponent(scoreLabel))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(UserIDLabel, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+								.addComponent(ScoreLabel_2)
+								.addComponent(BunkIDLabel_1)
+								.addComponent(DormIDLabel))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(maintainLabel)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(MaintainLabel_6))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addComponent(exchangeLabel)
+													.addPreferredGap(ComponentPlacement.UNRELATED)
+													.addComponent(ExchangeLabel_5))
+												.addComponent(electricityLabel))
+											.addGap(18))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addComponent(waterLabel, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+											.addGap(22)))
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(WaterLabel_3)
+										.addComponent(ElectricityLabel_4))
+									.addGap(53)))))
+					.addGap(54))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(26)
+					.addComponent(dormLabel, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(UserIDLabel)
+						.addComponent(userIDLabel_1, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(waterLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(WaterLabel_3))
+					.addGap(7)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(dormIDLabel_2, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+						.addComponent(DormIDLabel)
+						.addComponent(electricityLabel)
+						.addComponent(ElectricityLabel_4))
+					.addGap(12)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(bunkIDLabel)
+						.addComponent(BunkIDLabel_1)
+						.addComponent(exchangeLabel)
+						.addComponent(ExchangeLabel_5))
+					.addGap(26)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(scoreLabel)
+						.addComponent(ScoreLabel_2)
+						.addComponent(maintainLabel)
+						.addComponent(MaintainLabel_6))
+					.addGap(27)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(maintianButton)
+						.addComponent(exchangeButton)
+						.addComponent(exitButton))
+					.addGap(51))
+		);
+		contentPane.setLayout(gl_contentPane);
+		
+		setVisible(true);
+		validate();
+		
+		Object[][] dorminformation= {};
+		Object[] dormlist = {"学号","宿舍","床位","卫生评分","水费","电费","调换申请","维修申请"};
+		DefaultTableModel model;
+		model = new DefaultTableModel(dorminformation, dormlist);
+
+		Message mes = new Message();
+		mes.setUserType(1);
+		mes.setModuleType(ModuleType.Dormitory);
+		mes.setMessageType(MessageType.DormStShow);
+		
+		
+		try {
+			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		Client client = new Client(this.socket);
+		
+		Message rec=new Message();
+		rec=client.sendRequestToServer(mes);
+		Dormitory dorm =(Dormitory) rec.getData();
+		System.out.println(dorm);
+		UserIDLabel.setText(dorm.getuserID());
+		DormIDLabel.setText(dorm.getDormitoryID());
+		BunkIDLabel_1.setText(String.valueOf(dorm.getStudentBunkID()));
+		ScoreLabel_2.setText(String.valueOf(dorm.getDormitoryScore()));
+		WaterLabel_3.setText(String.valueOf(dorm.getWater()));
+		ElectricityLabel_4.setText(String.valueOf(dorm.getElectricity()));
+		MaintainLabel_6.setText(dorm.getDormitoryMaintain());
+		ExchangeLabel_5.setText(dorm.getStudentExchange());
+	}
+
+	protected void ExchangeAct(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Dormexchange Exchange = new Dormexchange(socket);
+		Exchange.setVisible(true);
+	}
+
+	protected void MaintainAct(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Dormmaintain Maintain = new Dormmaintain(socket);
+		Maintain.setVisible(true);
+	}
 }

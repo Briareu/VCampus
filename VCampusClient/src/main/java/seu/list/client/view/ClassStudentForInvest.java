@@ -62,7 +62,7 @@ public class ClassStudentForInvest extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+		setTitle("充值");
 		JLabel lblNewLabel = new JLabel("请输入您想要充值的金额");
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
 		

@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Button;
 import java.awt.Dialog.ModalExclusionType;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -86,6 +87,7 @@ public class ClassAdminClient extends JFrame {
 	public ClassAdminClient() {
 		nowmodel = MODEL.WATCHING;
 		num = 0;
+		setTitle("学生管理界面");
 		model = new DefaultTableModel(new Object[][] {}, new String[] { "\u73ED\u7EA7", "\u6559\u5E08", "\u5B66\u53F7",
 				"\u59D3\u540D", "\u4E13\u4E1A", "\u8054\u7CFB\u7535\u8BDD" }) {
 			/**
@@ -129,15 +131,16 @@ public class ClassAdminClient extends JFrame {
 			}
 		};
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 603, 434);
+		setBounds(100, 100, 809, 494);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		JButton exitbutton = new JButton("退出");
+		exitbutton.setFont(new Font("宋体", Font.PLAIN, 18));
 
 		JMenu mnNewMenu = new JMenu("菜单");
-		mnNewMenu.setFont(new Font("微軟正黑體", Font.PLAIN, 13));
+		mnNewMenu.setFont(new Font("微軟正黑體", Font.PLAIN, 17));
 		menuBar.add(mnNewMenu);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("修改");
@@ -154,7 +157,7 @@ public class ClassAdminClient extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem.setFont(new Font("宋体", Font.PLAIN, 15));
+		mntmNewMenuItem.setFont(new Font("宋体", Font.PLAIN, 18));
 		mnNewMenu.add(mntmNewMenuItem);
 
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("增加");
@@ -179,7 +182,7 @@ public class ClassAdminClient extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem_1.setFont(new Font("宋体", Font.PLAIN, 15));
+		mntmNewMenuItem_1.setFont(new Font("宋体", Font.PLAIN, 18));
 		mnNewMenu.add(mntmNewMenuItem_1);
 
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("删除");
@@ -190,13 +193,14 @@ public class ClassAdminClient extends JFrame {
 				nowmodel = MODEL.WATCHING;
 			}
 		});
-		mntmNewMenuItem_2.setFont(new Font("宋体", Font.PLAIN, 15));
+		mntmNewMenuItem_2.setFont(new Font("宋体", Font.PLAIN, 18));
 		mnNewMenu.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		JComboBox<String> select = new JComboBox<String>();
+		select.setFont(new Font("宋体", Font.PLAIN, 18));
 		select.addItem("全部");
 		select.addItem("班级");
 		select.addItem("学号");
@@ -206,6 +210,7 @@ public class ClassAdminClient extends JFrame {
 		search.setColumns(10);
 
 		JButton serachbutton = new JButton("确认");
+		serachbutton.setFont(new Font("宋体", Font.PLAIN, 18));
 		serachbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switch (select.getSelectedIndex()) {
@@ -279,57 +284,56 @@ public class ClassAdminClient extends JFrame {
 		scrollPane = new JScrollPane(table);
 
 		JLabel lblNewLabel = new JLabel("学生学籍管理");
-		lblNewLabel.setFont(new Font("新宋体", Font.PLAIN, 23));
+		lblNewLabel.setFont(new Font("新宋体", Font.PLAIN, 28));
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane
-				.setHorizontalGroup(
-						gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createSequentialGroup().addGap(196)
-										.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 162,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(221, Short.MAX_VALUE))
-								.addGroup(gl_contentPane
-										.createSequentialGroup().addContainerGap(44, Short.MAX_VALUE)
-										.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 491,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(44))
-								.addGroup(
-										gl_contentPane.createSequentialGroup().addContainerGap(306, Short.MAX_VALUE)
-												.addComponent(select, GroupLayout.PREFERRED_SIZE, 67,
-														GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(search, GroupLayout.PREFERRED_SIZE, 102,
-														GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(serachbutton, GroupLayout.PREFERRED_SIZE, 61,
-														GroupLayout.PREFERRED_SIZE)
-												.addGap(31))
-								.addGroup(Alignment.LEADING,
-										gl_contentPane.createSequentialGroup().addGap(234)
-												.addComponent(exitbutton, GroupLayout.PREFERRED_SIZE, 97,
-														GroupLayout.PREFERRED_SIZE)
-												.addContainerGap(248, Short.MAX_VALUE)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(20).addComponent(lblNewLabel).addGap(30)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(search, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(select, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap(454, Short.MAX_VALUE)
+					.addComponent(select, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(search, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(serachbutton, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+					.addGap(31))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(287)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(299, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(53)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 688, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(44, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(340)
+					.addComponent(exitbutton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(348, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel)
+					.addGap(40)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(search, Alignment.TRAILING)
+						.addComponent(select, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(serachbutton))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 203, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(exitbutton)
-				.addContainerGap(21, Short.MAX_VALUE)));
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(exitbutton)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 
 		table = new JTable();
-		table.setFont(new Font("Adobe 仿宋 Std R", Font.PLAIN, 12));
+		table.setFont(new Font("Adobe 仿宋 Std R", Font.PLAIN, 17));
 		table.setModel(model);
 		table.getColumnModel().getColumn(5).setPreferredWidth(144);
 		scrollPane.setViewportView(table);
 		table.setRowHeight(25);
+		table.getTableHeader().setPreferredSize(new Dimension(table.getTableHeader().getWidth(), 35));
 		addRows();
 		getClasses();
 
