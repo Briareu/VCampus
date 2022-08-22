@@ -26,6 +26,7 @@ import seu.list.common.ModuleType;
 import seu.list.server.dao.*;
 
 import java.io.BufferedInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -34,6 +35,9 @@ import java.util.*;
 
 public class ServerSocketThread extends Thread {
 	private Socket clientSocket = null;
+	private ObjectOutputStream response;
+	private ObjectInputStream request;
+	
 	private String id = null;
 	private boolean isClosed = false;
 
@@ -49,76 +53,80 @@ public class ServerSocketThread extends Thread {
 			System.out.println("已与客户端建立连接，当前客户端ip为："+clientSocket.getInetAddress().getHostAddress());
 			
 			while(!this.isClosed) {
-				ObjectInputStream request = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
-				ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-				Message message = (Message)request.readObject();
+				Message message = new Message();
+				Message serverResponse = new Message();
+				
+				//ObjectInputStream request = new ObjectInputStream(clientSocket.getInputStream());
+				try {
+					ObjectInputStream request = new ObjectInputStream(clientSocket.getInputStream());
+					message = (Message)request.readObject();
+				}catch(EOFException e) {
+					e.printStackTrace();
+				}
+				
 				if(message.isOffline()) {
 					isClosed = true;
 					ServerClientThreadMgr.remove(this.id);
 					break;
 				}
-				
 				System.out.println(message.getModuleType());
 				System.out.println(message.getMessageType());
-				Message serverResponse = new Message();
 				
-				try {
-					switch(message.getModuleType())
-					{
-						case ModuleType.User: {// 用户管理模块
-							UserDaoImpl iud=new UserDaoImpl(message,this.id);
-							iud.excute();
-							serverResponse=iud.getMesToClient();
-							break;
-						}
-						case ModuleType.Student: {// 学生学籍管理模块
-							// 构造一个对应模块DAO类的对象，并送入客户端发来的信息
-							ClassAdminServer classAdminServer = new ClassAdminServer(message);
-							// 调用execute函数执行对应的操作
-							classAdminServer.execute();
-							// 获得想要发回客户端的数据
-							serverResponse = classAdminServer.getMesToClient();
-							break;
-						}
-						case ModuleType.Course: {
-							// 选课模块
-							CourseDaoImp courseServer = new CourseDaoImp(message);
-							courseServer.execute();
-							serverResponse = courseServer.getMesToClient();
-							System.out.println(serverResponse.getContent());
-							break;
-						}
-						case ModuleType.Library: {// 图书馆模块
-							LibraryUserServer libServer = new LibraryUserServer(message);
-							libServer.execute();
-							serverResponse = libServer.getMesToClient();
-							System.out.println(serverResponse.getContent());
-							break;
-						}
-						case ModuleType.Shop: {// 商店模块
-							ShopSever shop_sever=new ShopSever(message);
-						    shop_sever.excute();
-						    serverResponse=shop_sever.getMesToClient();
-							break;
-						}
-						case ModuleType.Dormitory: {// 宿舍模块
-							DormitoryAdminServer dormitoryServer = new DormitoryAdminServer(message);
-							dormitoryServer.execute();
-							serverResponse = dormitoryServer.getMesToClient();
-							System.out.println(serverResponse.getData());
-							break;
-						}
-						default:
-							break;
-					}
-				} finally {
-					System.out.println("执行回调语句");
-					serverResponse.setMessageType(MessageType.operFeedback);
-					serverResponse.setLastOperState(true);
-					response.writeObject(serverResponse); // 这里统一发回数据给客户端
-					response.flush();
 
+				switch(message.getModuleType()) {
+					case ModuleType.User: {// 用户管理模块
+						UserDaoImpl iud=new UserDaoImpl(message,this.id);
+						iud.excute();
+						serverResponse=iud.getMesToClient();
+						break;
+					}
+					case ModuleType.Student: {// 学生学籍管理模块
+						// 构造一个对应模块DAO类的对象，并送入客户端发来的信息
+						ClassAdminServer classAdminServer = new ClassAdminServer(message);
+						// 调用execute函数执行对应的操作
+						classAdminServer.execute();
+						// 获得想要发回客户端的数据
+						serverResponse = classAdminServer.getMesToClient();
+						break;
+					}
+					case ModuleType.Course: {
+						// 选课模块
+						CourseDaoImp courseServer = new CourseDaoImp(message);
+						courseServer.execute();
+						serverResponse = courseServer.getMesToClient();
+						System.out.println(serverResponse.getContent());
+						break;
+					}
+					case ModuleType.Library: {// 图书馆模块
+						LibraryUserServer libServer = new LibraryUserServer(message);
+						libServer.execute();
+						serverResponse = libServer.getMesToClient();
+						System.out.println(serverResponse.getContent());
+						break;
+					}
+					case ModuleType.Shop: {// 商店模块
+						ShopSever shop_sever=new ShopSever(message);
+						shop_sever.excute();
+						serverResponse=shop_sever.getMesToClient();
+						break;
+					}
+					case ModuleType.Dormitory: {// 宿舍模块
+						DormitoryAdminServer dormitoryServer = new DormitoryAdminServer(message);
+						dormitoryServer.execute();
+						serverResponse = dormitoryServer.getMesToClient();
+						System.out.println(serverResponse.getData());
+						break;
+					}
+					default:
+						break;
 				}
+					
+				System.out.println("执行回调语句");
+				serverResponse.setMessageType(MessageType.operFeedback);
+				serverResponse.setLastOperState(true);
+				ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+				response.writeObject(serverResponse); // 这里统一发回数据给客户端
+				response.flush();
 			}
 			
 			// run方法即将执行完毕，线程即将终止，关闭socket

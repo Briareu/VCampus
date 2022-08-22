@@ -172,7 +172,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         getContentPane().setLayout(null);
 
         lNewLabel = new JLabel("");
-        lNewLabel.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\java\\virtualSchoolClient\\src\\image\\SEULogo_2.png"));
+        lNewLabel.setIcon(new ImageIcon("/src/main/resources/image/SEULogo_2.png"));
         lNewLabel.setBounds(284, 158, 200, 200);
         getContentPane().add(lNewLabel);
 

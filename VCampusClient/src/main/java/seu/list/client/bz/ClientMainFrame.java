@@ -10,22 +10,26 @@ import seu.list.common.*;
 
 
 import java.net.Socket;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class ClientMainFrame {
 	public static Socket socket;
+	
+	public static boolean isClosed = false;
 
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		try {
-			socket =  new Socket(IConstant.SERVER_ADDRESS, IConstant.SERVER_PORT);
+			socket =  new Socket(IConstant.SERVER_ADDRESS, IConstant.SERVER_PORT);		
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 
 		// 启动各种窗口
-		//ClientLoginFrame c=new ClientLoginFrame(socket);
+		ClientLoginFrame c = new ClientLoginFrame(socket);
 		//ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
 		//ClientStuCourseFrame s=new ClientStuCourseFrame("2",socket);
 		///ClientLoginFrame c=new ClientLoginFrame(socket);
@@ -33,12 +37,18 @@ public class ClientMainFrame {
 
 		
 		// test
+		/*
 		String testPwd = "sadadsadq";
 		String testUserAdminID = "10001";
 		String testUserStuID = "00001";
 		MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
 		mainMenu.setVisible(true);
+		*/
 		// test
+		
+		
+		// 卡死主程序，防止资源释放
+		while(!isClosed);
 		
 		// 要关闭客户端时，给服务器发送下线通知
 		//goOffline();
