@@ -1,18 +1,13 @@
-//package view;
 package seu.list.client.view;
 
-import seu.list.common.*;
+import seu.list.common.Dormitory;
+import seu.list.common.IConstant;
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
-/*
-import common.Dormitory;
-import common.IConstant;
-import Message.MessageType;
-import Message.Message;
-import client.Client;
-import client.ClientMainFrame;
-import Message.ModuleType;
-*/
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -20,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
@@ -45,13 +41,15 @@ public class Dormmodify extends JDialog {
 	private JLabel lblNewLabel;
 	private JTextField userIDField;
 	private JTextField modifyField_1;
+	static Socket socket;
+	JComboBox modifyt = new JComboBox();
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			Dormmodify dialog = new Dormmodify();
+			Dormmodify dialog = new Dormmodify(socket);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -62,10 +60,11 @@ public class Dormmodify extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Dormmodify() {
+	public Dormmodify(Socket socket) {
+		this.socket=socket;
 		setTitle("修改信息");
+		setVisible(true);
 		setBounds(100, 100, 450, 300);
-		JComboBox modifyt = new JComboBox();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		{
 			buttonPane = new JPanel();
@@ -80,34 +79,8 @@ public class Dormmodify extends JDialog {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								// TODO Auto-generated method stub
+							    ModifyAct(e);
 								setVisible(false);
-								ArrayList<String> para = new ArrayList<String>();
-								para.add(userIDField.getText());
-								String usertype = (String) modifyt.getSelectedItem();
-								if ("卫生评分".equals(usertype)) para.add("卫生评分");
-								if ("水费".equals(usertype)) para.add("水费");
-								if ("电费".equals(usertype)) para.add("电费");
-								para.add(modifyField_1.getText());
-								Message mes =new Message();
-								Socket socket = null;
-								try {
-									socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
-								}catch (IOException e1) {
-									e1.printStackTrace();
-								}
-								Client client = new Client(socket);
-								mes.setModuleType(ModuleType.Dormitory);
-								mes.setMessageType(MessageType.DormModify); 
-								mes.setData(para);
-								
-								Message serverResponse=new Message();
-								
-								int res=0;
-								serverResponse=client.sendRequestToServer(mes);
-								res = (int)serverResponse.getData();
-								if(res > 0)
-									JOptionPane.showMessageDialog(null,"修改完成","提示",JOptionPane.WARNING_MESSAGE);
-
 							}
 					
 						});
@@ -222,6 +195,36 @@ public class Dormmodify extends JDialog {
 		);
 		buttonPane.setLayout(gl_buttonPane);
 		getContentPane().setLayout(groupLayout);
+	}
+
+	protected void ModifyAct(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Message mes = new Message();
+		mes.setUserType(1);
+		mes.setModuleType(ModuleType.Dormitory);
+		mes.setMessageType(MessageType.DormModify);
+		try {
+			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
+		}catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		Client client = new Client(socket);
+		ArrayList<String> para = new ArrayList<String>();
+		para.add(userIDField.getText());
+		String usertype = (String) modifyt.getSelectedItem();
+		if ("卫生评分".equals(usertype)) para.add("卫生评分");
+		if ("水费".equals(usertype)) para.add("水费");
+		if ("电费".equals(usertype)) para.add("电费");
+		para.add(modifyField_1.getText());
+		
+		mes.setData(para);
+		System.out.println(para);
+			Message serverResponse=new Message();
+			int res=0;
+			serverResponse=client.sendRequestToServer(mes);
+			res = (int)serverResponse.getData();
+			if(res > 0)
+				JOptionPane.showMessageDialog(null,"修改完成","提示",JOptionPane.WARNING_MESSAGE);
 	}
 
 }
