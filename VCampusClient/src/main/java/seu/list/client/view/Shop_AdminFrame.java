@@ -653,4 +653,8 @@ public class Shop_AdminFrame {
 	            return super.stopCellEditing();
 	        }
 	    }
+	 
+	 public void setVisible(boolean flag) {
+		 this.frame.setVisible(flag);
+	 }
 }

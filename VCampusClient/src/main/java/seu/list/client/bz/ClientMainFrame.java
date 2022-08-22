@@ -36,7 +36,7 @@ public class ClientMainFrame {
 		String testPwd = "sadadsadq";
 		String testUserAdminID = "10001";
 		String testUserStuID = "00001";
-		MainMenu mainMenu = new MainMenu(testUserAdminID, testPwd);
+		MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
 		mainMenu.setVisible(true);
 		// test
 		

@@ -42,10 +42,10 @@ public class LibraryUserServer extends Library_DbAccess {
 			this.mesToClient.setData(this.createList());
 			break;
 		case MessageType.LibraryBookAdd:
-			this.AddBook((String[]) this.mesFromClient.getData());
+			this.mesToClient.setData(this.AddBook((String[]) this.mesFromClient.getData()));
 			break;
 		case MessageType.LibraryBookDelete:
-			this.DeleteBook(this.mesFromClient.getData().toString());
+			this.mesToClient.setData(this.DeleteBook(this.mesFromClient.getData().toString()));
 			break;
 		case MessageType.LibraryBookFind:
 			this.mesToClient.setData(this.FindBook(this.mesFromClient.getData().toString()));
@@ -204,6 +204,7 @@ public class LibraryUserServer extends Library_DbAccess {
 	
 	//管理员
 	public int AddBook(String[] arr) {
+		//return 0:书号已存在
 		int bstate=0;
 		if(Integer.valueOf(arr[4])==0)
 			bstate=0;
@@ -211,10 +212,16 @@ public class LibraryUserServer extends Library_DbAccess {
 			bstate=1;
 		
 		int res=0;
+		
 		try {
 			int result=0;
 			con=getConnection();
-			s = con.createStatement();// 创建SQL语句对象					
+			s = con.createStatement();// 创建SQL语句对象		
+			
+			ResultSet rsr=s.executeQuery("select * from BookList where ID='"+arr[1]+"'");
+			if(rsr.next()) 
+				return 0;
+			
 			result=s.executeUpdate("insert into BookList values('"+arr[0]+"','"+arr[1]+"','"+arr[2]+
 					"','"+arr[3]+"','"+arr[4]+"','"+bstate+"')");
 			
@@ -232,11 +239,17 @@ public class LibraryUserServer extends Library_DbAccess {
 	
 	//管理员
 	public int DeleteBook(String bookid) { //用书号查找（唯一）
+		//return 0:书号不存在
 		int res=0;
 		try {
 			int result=0;
 			con=getConnection();
 			s = con.createStatement();// 创建SQL语句对象	
+			
+			ResultSet rsr=s.executeQuery("select * from BookList where ID='"+bookid+"'");
+			if(!rsr.next()) 
+				return 0;
+			
 			result=s.executeUpdate("delete from BookList where ID='"+bookid+"'");
 			if(result>0) {
 				res=result;

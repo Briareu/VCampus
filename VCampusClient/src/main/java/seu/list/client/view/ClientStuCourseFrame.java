@@ -1,17 +1,6 @@
-//package VCampusClient.src.main.java.seu.list.client.view;
 package seu.list.client.view;
 //学生选课界面
 
-
-
-
-
-
-
-/*
-import VCampusClient.src.main.java.seu.list.common.*;
-import main.java.seu.list.common.Course;
-*/
 import seu.list.common.*;
 import seu.list.client.bz.*;
 
@@ -318,51 +307,46 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			clientReq.setModuleType(ModuleType.Course);
 			clientReq.setMessageType("REQ_STU_ADD_LESSON");
 			Message rec=client.sendRequestToServer(clientReq);
-//			try {
-//				ClientStuCourseFrame csf = new ClientStuCourseFrame(userID,this.socket);
-//			} catch (ClassNotFoundException ex) {
-//				throw new RuntimeException(ex);
-//			} catch (SQLException ex) {
-//				throw new RuntimeException(ex);
-//			} catch (IOException ex) {
-//				throw new RuntimeException(ex);
-//			}
-//			clientReq.setModuleType(ModuleType.Course);
-			clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
-			rec=client.sendRequestToServer(clientReq);
+			if(rec.isSeccess()){
+				clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
+				rec=client.sendRequestToServer(clientReq);
 
-			Vector<String>	allCourseInfor = rec.getContent();
-			int rowNumber = allCourseInfor.size()/7;
-			String[][] allCourseTable = new String[rowNumber][7];
-			int storingPlace = 0;
-			for(int i=0;i<rowNumber;i++) {
-				for(int j=0;j<7;j++)
-					allCourseTable[i][j] = allCourseInfor.get(storingPlace++);
+				Vector<String>	allCourseInfor = rec.getContent();
+				int rowNumber = allCourseInfor.size()/7;
+				String[][] allCourseTable = new String[rowNumber][7];
+				int storingPlace = 0;
+				for(int i=0;i<rowNumber;i++) {
+					for(int j=0;j<7;j++)
+						allCourseTable[i][j] = allCourseInfor.get(storingPlace++);
+				}
+				jtb1 = new JTable();
+				jtb1.setModel(new DefaultTableModel(
+						allCourseTable,
+						new String[] {
+								"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+						}
+				));
+				jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
+				jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
+				jtb1.getColumnModel().getColumn(2).setPreferredWidth(161);
+				jtb1.getColumnModel().getColumn(3).setPreferredWidth(161);
+				jtb1.getColumnModel().getColumn(4).setPreferredWidth(161);
+				jtb1.getColumnModel().getColumn(5).setPreferredWidth(161);
+				jtb1.getColumnModel().getColumn(6).setPreferredWidth(161);
+				scrollPane.setViewportView(jtb1);
+				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				scrollPane.setPreferredSize(new Dimension(WIDTH-100,500));
+				jtb1.setPreferredSize(new Dimension(WIDTH-100,2000));
+				jtb1.setFont(new Font("微软雅黑",Font.BOLD,20));
+				jtb1.getTableHeader().setPreferredSize(new Dimension(1, 40));
+				jtb1.getTableHeader().setFont(new Font("宋体",Font.BOLD,25));
+				jtb1.setRowHeight(50);
+				//this.setVisible(false);
+				this.setLocationRelativeTo(null);
+			}else{
+				JOptionPane.showMessageDialog(null,"本课程已选，请重新选择","错误",JOptionPane.ERROR_MESSAGE);
 			}
-			jtb1 = new JTable();
-			jtb1.setModel(new DefaultTableModel(
-					allCourseTable,
-					new String[] {
-							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
-					}
-			));
-			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
-			jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
-			jtb1.getColumnModel().getColumn(2).setPreferredWidth(161);
-			jtb1.getColumnModel().getColumn(3).setPreferredWidth(161);
-			jtb1.getColumnModel().getColumn(4).setPreferredWidth(161);
-			jtb1.getColumnModel().getColumn(5).setPreferredWidth(161);
-			jtb1.getColumnModel().getColumn(6).setPreferredWidth(161);
-			scrollPane.setViewportView(jtb1);
-			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-			scrollPane.setPreferredSize(new Dimension(WIDTH-100,500));
-			jtb1.setPreferredSize(new Dimension(WIDTH-100,2000));
-			jtb1.setFont(new Font("微软雅黑",Font.BOLD,20));
-			jtb1.getTableHeader().setPreferredSize(new Dimension(1, 40));
-			jtb1.getTableHeader().setFont(new Font("宋体",Font.BOLD,25));
-			jtb1.setRowHeight(50);
-			//this.setVisible(false);
-			this.setLocationRelativeTo(null);
+
 		}
 		else if(e.getActionCommand() == "chozen") {
 			this.setVisible(false);
@@ -464,6 +448,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			clientReq.setMessageType("REQ_STU_REMOVE_LESSON");
 			Message rec=client.sendRequestToServer(clientReq);
 
+
 			clientReq.setModuleType(ModuleType.Course);
 			clientReq.setMessageType("REQ_STU_ALL_CHOOOSE");
 			User user =new User();
@@ -504,6 +489,8 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			jtb1.setRowHeight(50);
 			//this.setVisible(true);
 			this.setLocationRelativeTo(null);
+
+
 		}
 	}
 }

@@ -193,10 +193,11 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 		user.setGrade(jtf_grade.getText());
 		user.setMajor(jtf_major.getText());
 		user.setMoney(jtf_money.getText());
-		user.setName(jtf_name.getName());
+		user.setName(jtf_name.getText());
 		user.setPwd(jtf_pwd.getText());
 		user.setSex(jtf_sex.getText());
 		user.setRole(role);
+		System.out.println(user);
 		Message clientreq=new Message();
 		clientreq.setModuleType(ModuleType.User);
 		clientreq.setMessageType(MessageType.REQ_REGISTER);

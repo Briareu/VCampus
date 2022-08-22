@@ -360,7 +360,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
             {
                 if(sign==0||sign==1) {
                     this.setVisible(false);
-                    MainMenu csf = new MainMenu(u.getId(), u.getPwd());
+                    MainMenu csf = new MainMenu(sign, u.getId(), u.getPwd(), this.socket);
                     csf.setVisible(true);
                 }
                 else if(sign==2) {
