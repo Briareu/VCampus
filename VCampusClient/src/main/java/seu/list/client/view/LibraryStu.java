@@ -29,6 +29,8 @@ public class LibraryStu extends JFrame {
 	private JLayeredPane layerPane;
 	
 	private JTable table;	
+	private JLabel lendLabel;
+	private JLabel returnLabel;
 
 	/**
 	 * Launch the application.
@@ -78,13 +80,13 @@ public class LibraryStu extends JFrame {
 		layerPane.setLayer(lendPane, 200);
 		lendPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		lendPane.setBackground(UIManager.getColor("Panel.background"));	
-		layerPane.add(lendPane, BorderLayout.SOUTH);
+		layerPane.add(lendPane, BorderLayout.EAST);
 		
 		returnPane = new JPanel();		
 		layerPane.setLayer(returnPane, 300);
 		returnPane.setBackground(UIManager.getColor("Panel.background"));
 		returnPane.setBorder(new EmptyBorder(5, 5, 5, 5));	
-		layerPane.add(returnPane, BorderLayout.NORTH);
+		layerPane.add(returnPane, BorderLayout.WEST);
 		
 		contentPane = new JPanel();
 		layerPane.setLayer(contentPane, 2);
@@ -93,9 +95,9 @@ public class LibraryStu extends JFrame {
 		layerPane.add(contentPane);	
 		
 		findText = new JTextField();
-		findText.setForeground(UIManager.getColor("Button.shadow"));
+		findText.setText("(书号）");
+		findText.setForeground(SystemColor.textText);
 		findText.setFont(new Font("华文新魏", Font.PLAIN, 20));
-		findText.setText("书名/书号");
 		findText.setColumns(10);
 		
 		JButton findButton = new JButton("查询");
@@ -226,15 +228,13 @@ public class LibraryStu extends JFrame {
 		contentPane.setLayout(gl_contentPane);	
 		
 		lendIDText = new JTextField();
-		lendIDText.setForeground(UIManager.getColor("Button.shadow"));
+		lendIDText.setForeground(SystemColor.textText);
 		lendIDText.setFont(new Font("华文新魏", Font.PLAIN, 20));
-		lendIDText.setText("书号");
 		lendIDText.setColumns(10);		
 		
 		returnIDText = new JTextField();
-		returnIDText.setForeground(UIManager.getColor("Button.shadow"));
+		returnIDText.setForeground(SystemColor.textText);
 		returnIDText.setFont(new Font("华文新魏", Font.PLAIN, 20));
-		returnIDText.setText("书号");
 		returnIDText.setColumns(10);		
 		
 		qrLendButton = new JButton("确认");
@@ -276,58 +276,97 @@ public class LibraryStu extends JFrame {
 		qxReturnButton.setForeground(new Color(0, 0, 128));
 		qxReturnButton.setFont(new Font("楷体", Font.BOLD, 25));
 		qxReturnButton.setBackground(Color.LIGHT_GRAY);			
+        
+        JLabel lendIDLabel = new JLabel("书号");
+        lendIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        lendIDLabel.setFont(new Font("宋体", Font.BOLD, 27));
+        
+        lendLabel = new JLabel("借 书");
+        lendLabel.setForeground(Color.BLACK);
+        lendLabel.setFont(new Font("黑体", Font.PLAIN, 30));
 		
 		//lendPane
         GroupLayout gl_lendPane = new GroupLayout(lendPane);
-		gl_lendPane.setHorizontalGroup(
-				gl_lendPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_lendPane.createSequentialGroup()
-						.addGap(147)
-						.addGroup(gl_lendPane.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(gl_lendPane.createSequentialGroup()
-								.addComponent(qrLendButton, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(qxLendButton, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
-							.addComponent(lendIDText, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(179, Short.MAX_VALUE))
-			);
-			gl_lendPane.setVerticalGroup(
-				gl_lendPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_lendPane.createSequentialGroup()
-						.addGap(157)
-						.addComponent(lendIDText, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addGap(57)
-						.addGroup(gl_lendPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(qrLendButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-							.addComponent(qxLendButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(177, Short.MAX_VALUE))
-			);
+        gl_lendPane.setHorizontalGroup(
+        	gl_lendPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_lendPane.createSequentialGroup()
+        			.addGroup(gl_lendPane.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_lendPane.createSequentialGroup()
+        					.addGap(168)
+        					.addComponent(qrLendButton, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+        					.addGap(101)
+        					.addComponent(qxLendButton, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(gl_lendPane.createSequentialGroup()
+        					.addGap(122)
+        					.addComponent(lendIDLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+        					.addGap(18)
+        					.addComponent(lendIDText, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(gl_lendPane.createSequentialGroup()
+        					.addGap(316)
+        					.addComponent(lendLabel, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)))
+        			.addContainerGap(181, Short.MAX_VALUE))
+        );
+        gl_lendPane.setVerticalGroup(
+        	gl_lendPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_lendPane.createSequentialGroup()
+        			.addGap(69)
+        			.addComponent(lendLabel, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+        			.addGap(44)
+        			.addGroup(gl_lendPane.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(lendIDText, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(lendIDLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+        			.addGap(73)
+        			.addGroup(gl_lendPane.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(qrLendButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(qxLendButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(161, Short.MAX_VALUE))
+        );
 		lendPane.setLayout(gl_lendPane);
+        
+        JLabel returnIDLabel = new JLabel("书号");
+        returnIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        returnIDLabel.setFont(new Font("宋体", Font.BOLD, 27));
+        
+        returnLabel = new JLabel("还 书");
+        returnLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        returnLabel.setForeground(Color.BLACK);
+        returnLabel.setFont(new Font("黑体", Font.PLAIN, 30));
 		
 		//returnPane
         GroupLayout gl_returnPane = new GroupLayout(returnPane);
         gl_returnPane.setHorizontalGroup(
-        	gl_returnPane.createParallelGroup(Alignment.LEADING)
+        	gl_returnPane.createParallelGroup(Alignment.TRAILING)
         		.addGroup(gl_returnPane.createSequentialGroup()
-        			.addGap(184)
-        			.addGroup(gl_returnPane.createParallelGroup(Alignment.LEADING, false)
-        				.addGroup(Alignment.TRAILING, gl_returnPane.createSequentialGroup()
-        					.addComponent(qrReturnButton, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        					.addComponent(qxReturnButton, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
-        				.addComponent(returnIDText, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
-        			.addContainerGap(212, Short.MAX_VALUE))
+        			.addGap(195)
+        			.addComponent(qrReturnButton, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+        			.addGap(99)
+        			.addComponent(qxReturnButton, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(178, Short.MAX_VALUE))
+        		.addGroup(gl_returnPane.createSequentialGroup()
+        			.addContainerGap(159, Short.MAX_VALUE)
+        			.addComponent(returnIDLabel, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+        			.addGap(28)
+        			.addComponent(returnIDText, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+        			.addGap(140))
+        		.addGroup(gl_returnPane.createSequentialGroup()
+        			.addContainerGap(304, Short.MAX_VALUE)
+        			.addComponent(returnLabel, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+        			.addGap(292))
         );
         gl_returnPane.setVerticalGroup(
         	gl_returnPane.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_returnPane.createSequentialGroup()
-        			.addGap(157)
-        			.addComponent(returnIDText, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-        			.addGap(57)
+        			.addGap(75)
+        			.addComponent(returnLabel, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+        			.addGap(38)
+        			.addGroup(gl_returnPane.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(returnIDText, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(returnIDLabel, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+        			.addGap(80)
         			.addGroup(gl_returnPane.createParallelGroup(Alignment.BASELINE)
         				.addComponent(qxReturnButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
         				.addComponent(qrReturnButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-        			.addContainerGap(177, Short.MAX_VALUE))
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         returnPane.setLayout(gl_returnPane);
 		

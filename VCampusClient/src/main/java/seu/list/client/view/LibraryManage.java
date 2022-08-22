@@ -95,7 +95,7 @@ public class LibraryManage extends JFrame {
 		layerPane.setLayer(addPane, 300);
 		addPane.setBackground(UIManager.getColor("Panel.background"));
 		addPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		layerPane.add(addPane, BorderLayout.EAST);	
+		layerPane.add(addPane, BorderLayout.WEST);	
 		
 		deletePane = new JPanel();
 		layerPane.setLayer(deletePane, 400);
@@ -129,7 +129,7 @@ public class LibraryManage extends JFrame {
 		delqxButton.setFont(new Font("楷体", Font.BOLD, 29));
 		
 		JLabel lblNewLabel = new JLabel("删 除 书 籍");
-		lblNewLabel.setForeground(UIManager.getColor("Button.focus"));
+		lblNewLabel.setForeground(SystemColor.windowText);
 		lblNewLabel.setFont(new Font("黑体", Font.PLAIN, 30));
 		GroupLayout gl_deletePane = new GroupLayout(deletePane);
 		gl_deletePane.setHorizontalGroup(
@@ -450,8 +450,8 @@ public class LibraryManage extends JFrame {
 		
 		findText = new JTextField();
 		findText.setFont(new Font("华文新魏", Font.PLAIN, 20));
-		findText.setForeground(UIManager.getColor("Button.shadow"));
-		findText.setText("书名/书号");
+		findText.setForeground(SystemColor.textText);
+		findText.setText("（书名/书号）");
 		findText.setColumns(10);
 		
 		JButton findButton = new JButton("查询");
@@ -634,6 +634,13 @@ public class LibraryManage extends JFrame {
 		Message serverResponse=new Message();
 		serverResponse=client.sendRequestToServer(mes);
 		
+		int res=0;
+		res=(int) serverResponse.getData();
+		if(res==0) {
+			JOptionPane.showMessageDialog(null, "此书号不存在", "警告", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
 		JOptionPane.showMessageDialog(null,"完成");
 		
 		SetTableShow();
@@ -682,6 +689,11 @@ public class LibraryManage extends JFrame {
 
 	//增加书籍确认界面
 	protected void AddbookAvt(ActionEvent e) {
+		if((!this.isNumeric(addStockText.getText()))||(Integer.valueOf(addStockText.getText())<0)) {
+			JOptionPane.showMessageDialog(null, "库存请输入正整数！", "警告", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
 		String[]arr=new String[5];
 		arr[0]=addNameText.getText();
 		arr[1]=addIDText.getText();
@@ -696,6 +708,13 @@ public class LibraryManage extends JFrame {
 		mes.setData(arr);
 		Message serverResponse=new Message();
 		serverResponse=client.sendRequestToServer(mes);
+		
+		int res=0;
+		res=(int) serverResponse.getData();
+		if(res==0) {
+			JOptionPane.showMessageDialog(null, "此书号已存在！", "警告", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		
 		JOptionPane.showMessageDialog(null,"完成");
 		
