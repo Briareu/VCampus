@@ -1,4 +1,11 @@
-package Vshopclient;
+package seu.list.client.view;
+
+import seu.list.client.bz.Client;
+import seu.list.client.bz.ClientMainFrame;
+import seu.list.common.Goods;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
 import java.awt.EventQueue;
 
@@ -16,8 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import DAO.ModuleType;
-import Goods.Goods;
+
 
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
@@ -101,7 +107,7 @@ public class Shop_AdminFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		 ArrayList<Goods> Godoslist=new ArrayList<Goods>();		
+		 ArrayList<Goods> Godoslist=new ArrayList<Goods>();
 			Message mes =new Message();
 			mes.setMessageType(MessageType.Goodsgetall);
 			Message serverResponse=new Message();
@@ -507,10 +513,10 @@ public class Shop_AdminFrame {
 				}
 		};
 		String temp[]=new String[4];
-		temp[0]=res.getGoodsID()+"";
-		temp[1]=res.getGoodsName();
-		temp[2]=res.getGoodsPrice()+"";
-		temp[3]=res.getGoodsNumber()+"";
+		temp[0]=res.getGoodsid()+"";
+		temp[1]=res.getGoodsname();
+		temp[2]=res.getGoodsprice()+"";
+		temp[3]=res.getGoodsnumber()+"";
 		tablemodel.addRow(temp);
 		table.setModel(tablemodel);
 		//System.out.println("1");
@@ -542,10 +548,10 @@ public class Shop_AdminFrame {
 			};
 			for(int i=0;i<res.size();i++) {
 				String tempgoods[]=new String[4];
-				tempgoods[0]=res.get(i).getGoodsID()+"";
-				tempgoods[1]=res.get(i).getGoodsName();
-				tempgoods[2]=res.get(i).getGoodsPrice()+"";
-				tempgoods[3]=res.get(i).getGoodsNumber()+"";
+				tempgoods[0]=res.get(i).getGoodsid()+"";
+				tempgoods[1]=res.get(i).getGoodsname();
+				tempgoods[2]=res.get(i).getGoodsprice()+"";
+				tempgoods[3]=res.get(i).getGoodsnumber()+"";
 				tablemodel.addRow(tempgoods);
 			}
 			table.setModel(tablemodel);
@@ -581,10 +587,10 @@ public class Shop_AdminFrame {
 			};
 			for(int i=0;i<goodslist.size();i++) {
 				String tempgoods[]=new String[4];
-				tempgoods[0]=goodslist.get(i).getGoodsID()+"";
-				tempgoods[1]=goodslist.get(i).getGoodsName();
-				tempgoods[2]=goodslist.get(i).getGoodsPrice()+"";
-				tempgoods[3]=goodslist.get(i).getGoodsNumber()+"";
+				tempgoods[0]=goodslist.get(i).getGoodsid()+"";
+				tempgoods[1]=goodslist.get(i).getGoodsname();
+				tempgoods[2]=goodslist.get(i).getGoodsprice()+"";
+				tempgoods[3]=goodslist.get(i).getGoodsnumber()+"";
 				tablemodel.addRow(tempgoods);
 			}
 			table.setModel(tablemodel);

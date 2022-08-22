@@ -1,12 +1,10 @@
 //package view;
 package seu.list.client.view;
 
-import seu.list.common.Dormitory;
+import seu.list.common.*;
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
-import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.common.ModuleType;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 

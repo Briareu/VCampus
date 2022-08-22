@@ -1,4 +1,5 @@
 package seu.list.server.dao;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -10,6 +11,7 @@ import seu.list.server.db.*;
 import seu.list.common.*;
 
 public class DormitoryAdminServer extends Dormitory_DbAccess{
+
 	static Connection con = null;
 	static Statement s = null;
 	static ResultSet rs=null;
