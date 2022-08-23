@@ -43,10 +43,13 @@ public class Dormmodify extends JDialog {
 	private JTextField modifyField_1;
 	static Socket socket;
 	JComboBox modifyt = new JComboBox();
+	DormitoryAdminClient C;
+	public ArrayList<Dormitory> allDormitoryContents;
 
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		try {
 			Dormmodify dialog = new Dormmodify(socket);
@@ -56,11 +59,12 @@ public class Dormmodify extends JDialog {
 			e.printStackTrace();
 		}
 	}
-
+	*/
 	/**
 	 * Create the dialog.
 	 */
-	public Dormmodify(Socket socket) {
+	public Dormmodify(DormitoryAdminClient c,Socket socket) {
+		C=c;
 		this.socket=socket;
 		setTitle("修改信息");
 		setVisible(true);
@@ -219,12 +223,13 @@ public class Dormmodify extends JDialog {
 		
 		mes.setData(para);
 		System.out.println(para);
+		System.out.println("!!!!!!!!!!!!!!");
 			Message serverResponse=new Message();
-			int res=0;
 			serverResponse=client.sendRequestToServer(mes);
-			res = (int)serverResponse.getData();
-			if(res > 0)
-				JOptionPane.showMessageDialog(null,"修改完成","提示",JOptionPane.WARNING_MESSAGE);
+			allDormitoryContents = (ArrayList<Dormitory>) serverResponse.getData();
+			System.out.println(allDormitoryContents);
+			C.updateFrameM(para);
+			this.dispose();
 	}
 
 }
