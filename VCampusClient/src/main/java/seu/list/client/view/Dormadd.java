@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
@@ -47,6 +48,8 @@ public class Dormadd extends JDialog {
 	private Message mes =new Message();
 	private Client client;
 	private Dormitory temp;
+	public ArrayList<Dormitory> allDormitoryContents;
+	private DormitoryAdminClient c=null;
 
 	/**
 	 * Launch the application.
@@ -65,7 +68,8 @@ public class Dormadd extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Dormadd(Socket socket) {
+	public Dormadd(final DormitoryAdminClient C,Socket socket) {
+		c=C;
 		setVisible(true);
 		setTitle("添加宿舍");
 		setBounds(100, 100, 469, 496);
@@ -273,18 +277,11 @@ public class Dormadd extends JDialog {
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setLayout(groupLayout);
-		
-		
-		
-		
-		
-		
-		
-
-		
-
 	}
-
+	public ArrayList<Dormitory> getAll()
+	{
+		return allDormitoryContents;
+	}
 	protected void AddAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		temp = new Dormitory();
@@ -296,8 +293,7 @@ public class Dormadd extends JDialog {
 		temp.setDormitoryScore(Integer.parseInt(AexchangeField.getText()));
 		temp.setDormitoryMaintain(AmaintainField.getText());
 		temp.setStudentExchange(AscoreField.getText());
-		System.out.println("!!!!!!!!!!!!!!!!!!!!");
-		System.out.println(temp);
+		
 		Message mes =new Message();
 		mes.setUserType(1);
 		mes.setModuleType(ModuleType.Dormitory);
@@ -307,16 +303,23 @@ public class Dormadd extends JDialog {
 		}catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		System.out.println(temp);
 		client = new Client(socket);
 		mes.setData(temp);
-		Message serverResponse=new Message();
 		
+		Message rec = new Message();
+		rec = client.sendRequestToServer(mes);
 		
-		serverResponse=client.sendRequestToServer(mes);
+		allDormitoryContents = (ArrayList<Dormitory>) rec.getData();
+		System.out.println(allDormitoryContents);
+		c.setEnabled(true);
+		c.updateFrame(temp);
+		this.dispose();
+		
+		/*
 		int res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
+	*/
 	}
 
 }
