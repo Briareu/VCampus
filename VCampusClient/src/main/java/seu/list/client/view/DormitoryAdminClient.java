@@ -40,6 +40,8 @@ public class DormitoryAdminClient extends JFrame {
 	private JTextField searchField;
 	private JTable table;
 	static Socket socket;
+	public int k=0;
+	private ArrayList<Dormitory> Dorm=new ArrayList<Dormitory>();
 
 	/**
 	 * Launch the application.
@@ -226,8 +228,9 @@ public class DormitoryAdminClient extends JFrame {
 		Message rec=new Message();
 		rec=client.sendRequestToServer(mes);
 		ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) rec.getData();
-		System.out.println(allDormitoryContents);
-		System.out.println(allDormitoryContents.size());
+		Dorm=allDormitoryContents;
+		//System.out.println(allDormitoryContents);
+		//System.out.println(allDormitoryContents.size());
 		Object sigRow[] = new  String[8];
 		for(int i=0;i<allDormitoryContents.size();i++) {
 			String[] arr=new String[8];
@@ -248,71 +251,27 @@ public class DormitoryAdminClient extends JFrame {
 
 	protected void ModifyAct(ActionEvent e) {
 		// TODO Auto-generated method stub
-		Dormmodify Modify = new Dormmodify(socket);
+		Dormmodify Modify = new Dormmodify(this,socket);
 		Modify.setVisible(true);
 		SetTableShow();
 	}
 
 	protected void AddAct(ActionEvent e) {
 		// TODO Auto-generated method stub
-		Dormadd add = new Dormadd(socket);
+		Dormadd add = new Dormadd(this,socket);
 		add.setVisible(true);
-		SetTableShow();
 	}
 
 	protected void DeleteAct(ActionEvent e) {
 		// TODO Auto-generated method stub
-		Dormdelete delete = new Dormdelete(socket);
+		Dormdelete delete = new Dormdelete(this,socket);
 		delete.setVisible(true);
 		SetTableShow();
 	}
 
 	private void SetTableShow() {
 		// TODO Auto-generated method stub
-		ArrayList<Dormitory> dorm = new ArrayList<Dormitory>();
 
-		Message mes = new Message();
-		Client client = new Client(ClientMainFrame.socket);
-		mes.setModuleType(ModuleType.Dormitory);
-		mes.setMessageType(MessageType.DormAdShow);
-		mes.setData();
-		Message serverResponse = new Message();
-
-		serverResponse = client.sendRequestToServer(mes);
-
-		DefaultTableModel tablemodel;
-		tablemodel = new DefaultTableModel(new Object[][] {}, new String[] { "学号","宿舍","床位","卫生评分","水费","电费","调换申请","维修申请" }) {
-
-			private static final long serialVersionUID = 1L;
-
-			/*
-			 * overload the method to change the table's factor
-			 */
-			@Override
-			public boolean isCellEditable(int row, int column) {
-
-				return false;
-			}
-		};
-
-		for (int i = 0; i < dorm.size(); i++) {
-			String[] arr=new String[8];
-			arr[0]=dorm.get(i).getuserID();
-			arr[1]=dorm.get(i).getDormitoryID();
-			arr[2]=String.valueOf(dorm.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(dorm.get(i).getWater());
-			arr[4]=String.valueOf(dorm.get(i).getElectricity());
-			arr[5]=String.valueOf(dorm.get(i).getDormitoryScore());
-			arr[6]=dorm.get(i).getStudentExchange();
-			arr[7]=dorm.get(i).getDormitoryMaintain();
-		}
-
-		table.setModel(tablemodel);
-	}
-
-
-	protected void SearchAct(ActionEvent e) {
-		// TODO Auto-generated method stub
 		Object[][] dorminformation= {};
 		Object[] dormlist = {"学号","宿舍","床位","卫生评分","水费","电费","调换申请","维修申请"};
 		DefaultTableModel model;
@@ -321,12 +280,13 @@ public class DormitoryAdminClient extends JFrame {
 		Message mes = new Message();
 		mes.setUserType(1);
 		mes.setModuleType(ModuleType.Dormitory);
-		mes.setData(searchField.getText());
+		mes.setMessageType(MessageType.DormAdShow);
+		
 		
 		try {
 			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
-		}catch (IOException e1) {
-			e1.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
 		}
 		Client client = new Client(this.socket);
 		
@@ -346,6 +306,143 @@ public class DormitoryAdminClient extends JFrame {
 			arr[5]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
 			arr[6]=allDormitoryContents.get(i).getStudentExchange();
 			arr[7]=allDormitoryContents.get(i).getDormitoryMaintain();
+			
+			model.addRow(arr);
+			table.setModel(model);
+		}
+	}
+
+
+	protected void SearchAct(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Object[][] dorminformation = {};
+		Object[] dormlist = { "学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请" };
+		DefaultTableModel model;
+		model = new DefaultTableModel(dorminformation, dormlist);
+
+		Message mes = new Message();
+		mes.setUserType(1);
+		mes.setModuleType(ModuleType.Dormitory);
+		mes.setMessageType(MessageType.DormSearch);
+		mes.setData(searchField.getText().toString());
+		System.out.println(searchField.getText());
+		try {
+			socket = new Socket(IConstant.SERVER_ADDRESS, IConstant.SERVER_PORT);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		Client client = new Client(this.socket);
+
+		Message rec = new Message();
+		rec = client.sendRequestToServer(mes);
+		ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) rec.getData();
+		Dorm=allDormitoryContents;
+		System.out.println(allDormitoryContents);
+		System.out.println(allDormitoryContents.size());
+		Object sigRow[] = new  String[8];
+		for(int i=0;i<allDormitoryContents.size();i++) {
+			String[] arr=new String[8];
+			arr[0]=allDormitoryContents.get(i).getuserID();
+			arr[1]=allDormitoryContents.get(i).getDormitoryID();
+			arr[2]=String.valueOf(allDormitoryContents.get(i).getStudentBunkID());
+			arr[3]=String.valueOf(allDormitoryContents.get(i).getWater());
+			arr[4]=String.valueOf(allDormitoryContents.get(i).getElectricity());
+			arr[5]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
+			arr[6]=allDormitoryContents.get(i).getStudentExchange();
+			arr[7]=allDormitoryContents.get(i).getDormitoryMaintain();
+			
+			model.addRow(arr);
+			table.setModel(model);
+		}
+	}
+
+	public void updateFrame(Dormitory temp) {
+		// TODO Auto-generated method stub
+		Object[][] dorminformation = {};
+		Object[] dormlist = { "学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请" };
+		DefaultTableModel model;
+		Dorm.add(temp);
+		model = new DefaultTableModel(dorminformation, dormlist);
+		System.out.println(Dorm);
+		Object sigRow[] = new  String[8];
+		for(int i=0;i<Dorm.size();i++) {
+			String[] arr=new String[8];
+			arr[0]=Dorm.get(i).getuserID();
+			arr[1]=Dorm.get(i).getDormitoryID();
+			arr[2]=String.valueOf(Dorm.get(i).getStudentBunkID());
+			arr[3]=String.valueOf(Dorm.get(i).getWater());
+			arr[4]=String.valueOf(Dorm.get(i).getElectricity());
+			arr[5]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[6]=Dorm.get(i).getStudentExchange();
+			arr[7]=Dorm.get(i).getDormitoryMaintain();
+			
+			model.addRow(arr);
+			table.setModel(model);
+		}
+	}
+
+	public void updateFrameD(String userID) {
+		// TODO Auto-generated method stub
+		for (int i=0;i<Dorm.size();i++)
+		if (Dorm.get(i).getuserID().equals(userID))
+			Dorm.remove(i);
+		Object[][] dorminformation = {};
+		Object[] dormlist = { "学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请" };
+		DefaultTableModel model;
+		model = new DefaultTableModel(dorminformation, dormlist);
+		System.out.println(Dorm);
+		Object sigRow[] = new  String[8];
+		for(int i=0;i<Dorm.size();i++) {
+			String[] arr=new String[8];
+			arr[0]=Dorm.get(i).getuserID();
+			arr[1]=Dorm.get(i).getDormitoryID();
+			arr[2]=String.valueOf(Dorm.get(i).getStudentBunkID());
+			arr[3]=String.valueOf(Dorm.get(i).getWater());
+			arr[4]=String.valueOf(Dorm.get(i).getElectricity());
+			arr[5]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[6]=Dorm.get(i).getStudentExchange();
+			arr[7]=Dorm.get(i).getDormitoryMaintain();
+			
+			model.addRow(arr);
+			table.setModel(model);
+		}
+	}
+
+	public void updateFrameM(ArrayList<String> para) {
+		// TODO Auto-generated method stub
+		String userID = para.get(0);
+		String usertype = para.get(1);
+		int temp = Integer.parseInt(para.get(2));
+		for (int i = 0; i < Dorm.size(); i++)
+			if (Dorm.get(i).getuserID().equals(userID)) {
+				if ("卫生评分".equals(usertype)) {
+					Dorm.get(i).setDormitoryScore(temp);
+				}
+				if ("水费".equals(usertype)) {
+					Dorm.get(i).setWater(temp);
+				}
+				if ("电费".equals(usertype)) {
+					Dorm.get(i).setElectricity(temp);
+				}
+			}
+		System.out.println("!!!!!!!!!!!!!!");
+		System.out.println(Dorm);
+		Object[][] dorminformation = {};
+		Object[] dormlist = { "学号", "宿舍", "床位", "水费", "电费", "卫生评分", "调换申请", "维修申请" };
+		DefaultTableModel model;
+		model = new DefaultTableModel(dorminformation, dormlist);
+		System.out.println(Dorm);
+		Object sigRow[] = new  String[8];
+		for(int i=0;i<Dorm.size();i++) {
+			String[] arr=new String[8];
+			arr[0]=Dorm.get(i).getuserID();
+			arr[1]=Dorm.get(i).getDormitoryID();
+			arr[2]=String.valueOf(Dorm.get(i).getStudentBunkID());
+			arr[3]=String.valueOf(Dorm.get(i).getWater());
+			arr[4]=String.valueOf(Dorm.get(i).getElectricity());
+			arr[5]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[6]=Dorm.get(i).getStudentExchange();
+			arr[7]=Dorm.get(i).getDormitoryMaintain();
 			
 			model.addRow(arr);
 			table.setModel(model);
