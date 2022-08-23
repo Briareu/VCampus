@@ -34,6 +34,9 @@ public class DormitoryStudentClient extends JFrame {
 
 	private JPanel contentPane;
 	static Socket socket;
+	private ArrayList<Dormitory> Dorm=new ArrayList<Dormitory>();
+	JLabel UserIDLabel,DormIDLabel,BunkIDLabel_1,ScoreLabel_2,WaterLabel_3, ElectricityLabel_4,ExchangeLabel_5,MaintainLabel_6;
+	public Dormitory dorm=new Dormitory();
 	/**
 	 * Launch the application.
 	 */
@@ -55,6 +58,7 @@ public class DormitoryStudentClient extends JFrame {
 	 * Create the frame.
 	 */
 	public DormitoryStudentClient(String userID,Socket socket) {
+		this.socket=socket;
 		setFont(new Font("微软雅黑", Font.BOLD, 12));
 		setTitle("宿舍-学生");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -131,29 +135,29 @@ public class DormitoryStudentClient extends JFrame {
 			}
 		});
 		
-		JLabel UserIDLabel = new JLabel("");
+		UserIDLabel = new JLabel("");
 		UserIDLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
-		JLabel DormIDLabel = new JLabel("");
+		DormIDLabel = new JLabel("");
 		DormIDLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
-		JLabel BunkIDLabel_1 = new JLabel("");
+		BunkIDLabel_1 = new JLabel("");
 		BunkIDLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
-		JLabel ScoreLabel_2 = new JLabel("");
+		ScoreLabel_2 = new JLabel("");
 		ScoreLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
-		JLabel WaterLabel_3 = new JLabel("");
+		WaterLabel_3 = new JLabel("");
 		WaterLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
-		JLabel ElectricityLabel_4 = new JLabel("");
-		ElectricityLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
+		ElectricityLabel_4 = new JLabel("");
+		ElectricityLabel_4.setHorizontalAlignment(SwingConstants.LEFT);
 		ElectricityLabel_4.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
-		JLabel ExchangeLabel_5 = new JLabel("");
+		ExchangeLabel_5 = new JLabel("");
 		ExchangeLabel_5.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
-		JLabel MaintainLabel_6 = new JLabel("");
+		MaintainLabel_6 = new JLabel("");
 		MaintainLabel_6.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -180,11 +184,11 @@ public class DormitoryStudentClient extends JFrame {
 								.addComponent(scoreLabel))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(UserIDLabel, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-								.addComponent(ScoreLabel_2)
-								.addComponent(BunkIDLabel_1)
-								.addComponent(DormIDLabel))
-							.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(UserIDLabel)
+								.addComponent(DormIDLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+								.addComponent(BunkIDLabel_1, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+								.addComponent(ScoreLabel_2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+							.addGap(27)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(maintainLabel)
@@ -192,21 +196,14 @@ public class DormitoryStudentClient extends JFrame {
 									.addComponent(MaintainLabel_6))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_contentPane.createSequentialGroup()
-													.addComponent(exchangeLabel)
-													.addPreferredGap(ComponentPlacement.UNRELATED)
-													.addComponent(ExchangeLabel_5))
-												.addComponent(electricityLabel))
-											.addGap(18))
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(waterLabel, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-											.addGap(22)))
+										.addComponent(exchangeLabel)
+										.addComponent(electricityLabel)
+										.addComponent(waterLabel, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(WaterLabel_3)
-										.addComponent(ElectricityLabel_4))
-									.addGap(53)))))
+										.addComponent(WaterLabel_3, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+										.addComponent(ElectricityLabel_4, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+										.addComponent(ExchangeLabel_5))))))
 					.addGap(54))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -219,13 +216,13 @@ public class DormitoryStudentClient extends JFrame {
 						.addComponent(UserIDLabel)
 						.addComponent(userIDLabel_1, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 						.addComponent(waterLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(WaterLabel_3))
+						.addComponent(WaterLabel_3, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
 					.addGap(7)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(dormIDLabel_2, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-						.addComponent(DormIDLabel)
 						.addComponent(electricityLabel)
-						.addComponent(ElectricityLabel_4))
+						.addComponent(ElectricityLabel_4)
+						.addComponent(DormIDLabel))
 					.addGap(12)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(bunkIDLabel)
@@ -249,28 +246,52 @@ public class DormitoryStudentClient extends JFrame {
 		
 		setVisible(true);
 		validate();
-		
-		Object[][] dorminformation= {};
-		Object[] dormlist = {"学号","宿舍","床位","卫生评分","水费","电费","调换申请","维修申请"};
-		DefaultTableModel model;
-		model = new DefaultTableModel(dorminformation, dormlist);
 
 		Message mes = new Message();
-		mes.setUserType(1);
+		mes.setUserType(0);
 		mes.setModuleType(ModuleType.Dormitory);
 		mes.setMessageType(MessageType.DormStShow);
-		
+		mes.setData(userID);
 		
 		try {
 			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
-		Client client = new Client(this.socket);
+		Client client = new Client(socket);
 		
 		Message rec=new Message();
 		rec=client.sendRequestToServer(mes);
-		Dormitory dorm =(Dormitory) rec.getData();
+		dorm =(Dormitory) rec.getData();
+		System.out.println(dorm);
+		UserIDLabel.setText(dorm.getuserID());
+		DormIDLabel.setText(dorm.getDormitoryID());
+		BunkIDLabel_1.setText(String.valueOf(dorm.getStudentBunkID()));
+		ScoreLabel_2.setText(String.valueOf(dorm.getDormitoryScore()));
+		WaterLabel_3.setText(String.valueOf(dorm.getWater()));
+		ElectricityLabel_4.setText(String.valueOf(dorm.getElectricity()));
+		MaintainLabel_6.setText(dorm.getDormitoryMaintain());
+		ExchangeLabel_5.setText(dorm.getStudentExchange());
+		System.out.println(dorm);
+		setVisible(true);
+		validate();
+	}
+
+	protected void ExchangeAct(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Dormexchange Exchange = new Dormexchange(this,socket);
+		Exchange.setVisible(true);
+	}
+
+	protected void MaintainAct(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Dormmaintain Maintain = new Dormmaintain(this,socket);
+		Maintain.setVisible(true);
+	}
+
+	public void updateFrameE(ArrayList<String> para) {
+		// TODO Auto-generated method stub
+		dorm.setDormitoryMaintain(para.get(2));
 		System.out.println(dorm);
 		UserIDLabel.setText(dorm.getuserID());
 		DormIDLabel.setText(dorm.getDormitoryID());
@@ -282,15 +303,18 @@ public class DormitoryStudentClient extends JFrame {
 		ExchangeLabel_5.setText(dorm.getStudentExchange());
 	}
 
-	protected void ExchangeAct(ActionEvent e) {
+	public void updateFrameM(ArrayList<String> para) {
 		// TODO Auto-generated method stub
-		Dormexchange Exchange = new Dormexchange(socket);
-		Exchange.setVisible(true);
-	}
-
-	protected void MaintainAct(ActionEvent e) {
-		// TODO Auto-generated method stub
-		Dormmaintain Maintain = new Dormmaintain(socket);
-		Maintain.setVisible(true);
+		dorm.setStudentExchange(para.get(2));
+		System.out.println(dorm);
+		UserIDLabel.setText(dorm.getuserID());
+		DormIDLabel.setText(dorm.getDormitoryID());
+		BunkIDLabel_1.setText(String.valueOf(dorm.getStudentBunkID()));
+		ScoreLabel_2.setText(String.valueOf(dorm.getDormitoryScore()));
+		WaterLabel_3.setText(String.valueOf(dorm.getWater()));
+		ElectricityLabel_4.setText(String.valueOf(dorm.getElectricity()));
+		MaintainLabel_6.setText(dorm.getDormitoryMaintain());
+		ExchangeLabel_5.setText(dorm.getStudentExchange());
 	}
 }
+
