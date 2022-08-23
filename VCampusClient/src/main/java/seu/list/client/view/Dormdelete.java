@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
@@ -38,10 +39,13 @@ public class Dormdelete extends JDialog {
 	private JPanel buttonPane;
 	private JTextField DeuserIDField;
 	static Socket socket;
+	DormitoryAdminClient C;
+	public ArrayList<Dormitory> allDormitoryContents;
 
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		try {
 			Dormdelete dialog = new Dormdelete(socket);
@@ -51,11 +55,12 @@ public class Dormdelete extends JDialog {
 			e.printStackTrace();
 		}
 	}
-
+	*/
 	/**
 	 * Create the dialog.
 	 */
-	public Dormdelete(Socket socket) {
+	public Dormdelete(DormitoryAdminClient c,Socket socket) {
+		C=c;
 		setVisible(true);
 		setTitle("删除宿舍");
 		setBounds(100, 100, 391, 283);
@@ -181,6 +186,11 @@ public class Dormdelete extends JDialog {
 		
 		serverResponse=client.sendRequestToServer(mes);
 
+		allDormitoryContents = (ArrayList<Dormitory>) serverResponse.getData();
+		System.out.println(allDormitoryContents);
+		C.setEnabled(true);
+		C.updateFrameD(DeuserIDField.getText().toString());
+		this.dispose();
 		int res = (int)serverResponse.getData();
 		if(res > 0)
 			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
