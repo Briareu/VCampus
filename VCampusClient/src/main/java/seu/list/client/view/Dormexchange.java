@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import seu.list.client.bz.Client;
+import seu.list.common.Dormitory;
 import seu.list.common.IConstant;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
@@ -39,6 +40,8 @@ public class Dormexchange extends JDialog {
 	private JTextField dormIDtextField;
 	private JTextField exchangetextField_1;
 	static Socket socket;
+	public DormitoryStudentClient C;
+	public Dormitory dorm;
 
 	/**
 	 * Launch the application.
@@ -57,7 +60,8 @@ public class Dormexchange extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Dormexchange(Socket socket) {
+	public Dormexchange(DormitoryStudentClient c,Socket socket) {
+		C=c;
 		setVisible(true);
 		setTitle("宿舍调换");
 		setBounds(100, 100, 450, 300);
@@ -209,15 +213,14 @@ public class Dormexchange extends JDialog {
 		para.add(nametextField.getText());
 		para.add(dormIDtextField.getText());
 		para.add(exchangetextField_1.getText());
-		
+
 		mes.setData(para);
 		System.out.println(para);
-			Message serverResponse=new Message();
-			int res=0;
-			serverResponse=client.sendRequestToServer(mes);
-			res = (int)serverResponse.getData();
-			if(res > 0)
-				JOptionPane.showMessageDialog(null,"修改完成","提示",JOptionPane.WARNING_MESSAGE);
+		Message serverResponse = new Message();
+		serverResponse = client.sendRequestToServer(mes);
+		dorm = (Dormitory) serverResponse.getData();
+		C.updateFrameE(para);
+		this.dispose();
 	}
 
 }
