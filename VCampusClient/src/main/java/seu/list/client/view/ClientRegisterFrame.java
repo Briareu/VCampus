@@ -155,7 +155,7 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 
 		//JComboBox comboBox = new JComboBox();
 		comboBox.setForeground(Color.BLACK);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"\u5B66\u751F", "\u8001\u5E08", "\u5546\u5E97\u7BA1\u7406\u5458", "\u56FE\u4E66\u9986\u7BA1\u7406\u5458"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"学生", "管理员"}));
 		comboBox.setFont(new Font("华文楷体", Font.PLAIN, 20));
 		comboBox.setBounds(433, 242, 133, 33);
 		getContentPane().add(comboBox);
