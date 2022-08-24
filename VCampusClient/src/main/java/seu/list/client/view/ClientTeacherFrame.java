@@ -84,7 +84,7 @@ public class ClientTeacherFrame extends JFrame implements ActionListener {
 			}
 		} else if(arg0.getSource() == Quit)
 		{
-			System.exit(0);
+			this.dispose();
 		}
 
 	}

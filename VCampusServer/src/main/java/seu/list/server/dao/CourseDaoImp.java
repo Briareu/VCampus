@@ -74,9 +74,14 @@ public class CourseDaoImp implements CourseDao {
 					System.out.println("CourseID为"+courseID);
 					course=this.searchCourseByID(courseID);
 					//System.out.println(course.getContent());
-					this.mesToClient.setContent(course.getContent());
+					if(course==null)this.mesToClient.setSeccess(false);
+					else {
+						this.mesToClient.setContent(course.getContent());
+						this.mesToClient.setSeccess(true);
+					}
 
-					System.out.println(this.mesToClient.getContent());
+
+					//System.out.println(this.mesToClient.getContent());
 					System.out.println("REQ_SEARCH_LESSON finished");
 					break;
 				}
