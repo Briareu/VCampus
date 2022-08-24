@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class ClientMainFrame {
 	public static Socket socket;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		try {
 			socket =  new Socket(IConstant.SERVER_ADDRESS, IConstant.SERVER_PORT);		
@@ -27,7 +27,7 @@ public class ClientMainFrame {
 		}
 
 		// 启动各种窗口
-		//ClientLoginFrame c = new ClientLoginFrame(socket);
+		ClientLoginFrame c = new ClientLoginFrame(socket);
 
 		//ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
 
@@ -37,13 +37,13 @@ public class ClientMainFrame {
 
 		
 		// test
-		
-		String testPwd = "sadadsadq";
-		String testUserAdminID = "10001";
-		String testUserStuID = "00001";
-		//MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
-		MainMenu mainMenu = new MainMenu(0, testUserStuID, testPwd, socket);
-		mainMenu.setVisible(true);
+
+//		String testPwd = "sadadsadq";
+//		String testUserAdminID = "10001";
+//		String testUserStuID = "00001";
+//		//MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
+//		MainMenu mainMenu = new MainMenu(0, testUserStuID, testPwd, socket);
+//		mainMenu.setVisible(true);
 		
 		// test
 		
