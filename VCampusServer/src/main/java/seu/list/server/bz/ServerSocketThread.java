@@ -34,14 +34,11 @@ import java.net.Socket;
 import java.util.*;
 
 public class ServerSocketThread extends Thread {
-	private Socket clientSocket = null;
-	private ObjectOutputStream response;
-	private ObjectInputStream request;
-	
+	private Socket clientSocket = null;	
 	private String id = null;
 	private boolean isClosed = false;
 
-	ServerSocketThread(Socket socket, String id) {
+	public ServerSocketThread(Socket socket, String id) {
 		this.clientSocket = socket;
 		this.id = id;
 	}
@@ -52,27 +49,19 @@ public class ServerSocketThread extends Thread {
 			//start try
 			System.out.println("已与客户端建立连接，当前客户端ip为："+clientSocket.getInetAddress().getHostAddress());
 			
-			while(!this.isClosed) {
-				Message message = new Message();
-				Message serverResponse = new Message();
+			while(!this.isClosed && !this.clientSocket.isClosed()) {
+				Message message = new Message();						
+				ObjectInputStream request = new ObjectInputStream(clientSocket.getInputStream());
+				message = (Message)request.readObject();
 				
-				//ObjectInputStream request = new ObjectInputStream(clientSocket.getInputStream());
-				try {
-					ObjectInputStream request = new ObjectInputStream(clientSocket.getInputStream());
-					message = (Message)request.readObject();
-				}catch(EOFException e) {
-					e.printStackTrace();
-				}
-				
-				if(message.isOffline()) {
-					isClosed = true;
-					ServerClientThreadMgr.remove(this.id);
+				if(message.isOffline()) { // 收到客户端的下线通知
 					break;
 				}
+				
 				System.out.println(message.getModuleType());
 				System.out.println(message.getMessageType());
 				
-
+				Message serverResponse = new Message();
 				switch(message.getModuleType()) {
 					case ModuleType.User: {// 用户管理模块
 						UserDaoImpl iud=new UserDaoImpl(message,this.id);
@@ -121,36 +110,39 @@ public class ServerSocketThread extends Thread {
 						break;
 				}
 					
-				System.out.println("执行回调语句");
-				serverResponse.setMessageType(MessageType.operFeedback);
-				serverResponse.setLastOperState(true);
-				ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-				response.writeObject(serverResponse); // 这里统一发回数据给客户端
-				response.flush();
-			}
+				this.sendMesToClient(serverResponse); // 这里统一发回数据给客户端
+			} // end while
+			
 			
 			// run方法即将执行完毕，线程即将终止，关闭socket
-			try {
-				if(!this.clientSocket.isClosed()) {
-					this.clientSocket.close();
-				}
-			} catch(IOException e) {
-				e.printStackTrace();
+			if(!this.clientSocket.isClosed()) {
+				this.clientSocket.close();
 			}
-		}
-		catch(IOException e) {
+			
+			if(ServerClientThreadMgr.get(this.id) != null) {
+				ServerClientThreadMgr.remove(this.id);
+			}
+			
+			System.out.println("客户端线程: " + this.id + "已关闭");
+			
+		}catch(IOException e) {
 			e.printStackTrace();
 		}catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	public void sendMesToClient(Message mes) throws IOException{
+		System.out.println("向客户端发送信息");
+		mes.setMessageType(MessageType.operFeedback);
+		mes.setLastOperState(true);
+		ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+		response.writeObject(mes); // 这里统一发回数据给客户端
+		response.flush();
+	}
+	
 	public void close() {
 		System.out.println("关闭客户端线程：" + this.id);
 		this.isClosed = true;
-		
-		if(ServerClientThreadMgr.get(id) != null) {
-			ServerClientThreadMgr.remove(id);
-		}
 	}
 }

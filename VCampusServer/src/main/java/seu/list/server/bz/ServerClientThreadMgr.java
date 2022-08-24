@@ -20,19 +20,17 @@ public class ServerClientThreadMgr {
 		return ret;
 	}
 
-	public synchronized static Map<String, ServerSocketThread> getPool(){
+	public synchronized static Map<String, ServerSocketThread> getPool(){	
+		return clientThreadPool;
+	}
+	
+	public synchronized static void clear() {
 		Iterator<Map.Entry<String, ServerSocketThread>> entries = clientThreadPool.entrySet().iterator();
 		while(entries.hasNext()) {
 			Map.Entry<String, ServerSocketThread> entry = entries.next();
 			ServerSocketThread thd = entry.getValue();
 			thd.close();
 		}
-		
-		return clientThreadPool;
-	}
-	
-	public synchronized static void clear() {
-		
 		clientThreadPool.clear();		
 	}
 

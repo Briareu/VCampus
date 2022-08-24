@@ -290,9 +290,9 @@ public class Dormadd extends JDialog {
 		temp.setStudentBunkID(Integer.parseInt(AbunkIDField.getText()));
 		temp.setWater(Integer.parseInt(AwaterField.getText()));
 		temp.setElectricity(Integer.parseInt(AelectricityField.getText()));
-		temp.setDormitoryScore(Integer.parseInt(AexchangeField.getText()));
+		temp.setDormitoryScore(Integer.parseInt(AscoreField.getText()));
 		temp.setDormitoryMaintain(AmaintainField.getText());
-		temp.setStudentExchange(AscoreField.getText());
+		temp.setStudentExchange(AexchangeField.getText());
 		
 		Message mes =new Message();
 		mes.setUserType(1);

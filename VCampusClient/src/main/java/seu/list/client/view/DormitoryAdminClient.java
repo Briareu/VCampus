@@ -46,11 +46,12 @@ public class DormitoryAdminClient extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	/*public static void main(String[] args) {
+	/*
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DormitoryAdminClient frame = new DormitoryAdminClient();
+					DormitoryAdminClient frame = new DormitoryAdminClient(socket);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -196,9 +197,16 @@ public class DormitoryAdminClient extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"\u59D3\u540D", "\u5BBF\u820D", "\u5E8A\u4F4D", "\u7535\u8D39", "\u6C34\u8D39", "\u536B\u751F\u8BC4\u5206", "\u5BBF\u820D\u8C03\u6362\u7533\u8BF7", "\u7EF4\u4FEE\u7533\u8BF7"
+				"\u5B66\u53F7", "\u5BBF\u820D", "\u5E8A\u4F4D", "\u6C34\u8D39", "\u7535\u8D39", "\u536B\u751F\u8BC4\u5206", "\u5BBF\u820D\u8C03\u6362\u7533\u8BF7", "\u7EF4\u4FEE\u7533\u8BF7"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		table.getColumnModel().getColumn(2).setMaxWidth(2147483646);
 		table.getColumnModel().getColumn(6).setPreferredWidth(95);
 		scrollPane.setViewportView(table);
@@ -237,9 +245,9 @@ public class DormitoryAdminClient extends JFrame {
 			arr[0]=allDormitoryContents.get(i).getuserID();
 			arr[1]=allDormitoryContents.get(i).getDormitoryID();
 			arr[2]=String.valueOf(allDormitoryContents.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(allDormitoryContents.get(i).getWater());
-			arr[4]=String.valueOf(allDormitoryContents.get(i).getElectricity());
-			arr[5]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
+			arr[3]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
+			arr[4]=String.valueOf(allDormitoryContents.get(i).getWater());
+			arr[5]=String.valueOf(allDormitoryContents.get(i).getElectricity());
 			arr[6]=allDormitoryContents.get(i).getStudentExchange();
 			arr[7]=allDormitoryContents.get(i).getDormitoryMaintain();
 			
@@ -301,9 +309,9 @@ public class DormitoryAdminClient extends JFrame {
 			arr[0]=allDormitoryContents.get(i).getuserID();
 			arr[1]=allDormitoryContents.get(i).getDormitoryID();
 			arr[2]=String.valueOf(allDormitoryContents.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(allDormitoryContents.get(i).getWater());
-			arr[4]=String.valueOf(allDormitoryContents.get(i).getElectricity());
-			arr[5]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
+			arr[3]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
+			arr[4]=String.valueOf(allDormitoryContents.get(i).getWater());
+			arr[5]=String.valueOf(allDormitoryContents.get(i).getElectricity());
 			arr[6]=allDormitoryContents.get(i).getStudentExchange();
 			arr[7]=allDormitoryContents.get(i).getDormitoryMaintain();
 			
@@ -345,9 +353,9 @@ public class DormitoryAdminClient extends JFrame {
 			arr[0]=allDormitoryContents.get(i).getuserID();
 			arr[1]=allDormitoryContents.get(i).getDormitoryID();
 			arr[2]=String.valueOf(allDormitoryContents.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(allDormitoryContents.get(i).getWater());
-			arr[4]=String.valueOf(allDormitoryContents.get(i).getElectricity());
-			arr[5]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
+			arr[3]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
+			arr[4]=String.valueOf(allDormitoryContents.get(i).getWater());
+			arr[5]=String.valueOf(allDormitoryContents.get(i).getElectricity());
 			arr[6]=allDormitoryContents.get(i).getStudentExchange();
 			arr[7]=allDormitoryContents.get(i).getDormitoryMaintain();
 			
@@ -370,9 +378,9 @@ public class DormitoryAdminClient extends JFrame {
 			arr[0]=Dorm.get(i).getuserID();
 			arr[1]=Dorm.get(i).getDormitoryID();
 			arr[2]=String.valueOf(Dorm.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(Dorm.get(i).getWater());
-			arr[4]=String.valueOf(Dorm.get(i).getElectricity());
-			arr[5]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[3]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[4]=String.valueOf(Dorm.get(i).getWater());
+			arr[5]=String.valueOf(Dorm.get(i).getElectricity());
 			arr[6]=Dorm.get(i).getStudentExchange();
 			arr[7]=Dorm.get(i).getDormitoryMaintain();
 			
@@ -397,9 +405,9 @@ public class DormitoryAdminClient extends JFrame {
 			arr[0]=Dorm.get(i).getuserID();
 			arr[1]=Dorm.get(i).getDormitoryID();
 			arr[2]=String.valueOf(Dorm.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(Dorm.get(i).getWater());
-			arr[4]=String.valueOf(Dorm.get(i).getElectricity());
-			arr[5]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[3]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[4]=String.valueOf(Dorm.get(i).getWater());
+			arr[5]=String.valueOf(Dorm.get(i).getElectricity());
 			arr[6]=Dorm.get(i).getStudentExchange();
 			arr[7]=Dorm.get(i).getDormitoryMaintain();
 			
@@ -438,9 +446,9 @@ public class DormitoryAdminClient extends JFrame {
 			arr[0]=Dorm.get(i).getuserID();
 			arr[1]=Dorm.get(i).getDormitoryID();
 			arr[2]=String.valueOf(Dorm.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(Dorm.get(i).getWater());
-			arr[4]=String.valueOf(Dorm.get(i).getElectricity());
-			arr[5]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[3]=String.valueOf(Dorm.get(i).getDormitoryScore());
+			arr[4]=String.valueOf(Dorm.get(i).getWater());
+			arr[5]=String.valueOf(Dorm.get(i).getElectricity());
 			arr[6]=Dorm.get(i).getStudentExchange();
 			arr[7]=Dorm.get(i).getDormitoryMaintain();
 			
