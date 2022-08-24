@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
 
+import seu.list.client.bz.*;
+
 public class MainMenu extends JFrame implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
 	
@@ -22,6 +24,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 	private final String cmdCourse = "CMD_COURSE";
 	private final String cmdDorm = "CMD_DORM";
 	private final String cmdShop = "CMD_SHOP";
+	private final String cmdClose = "CMD_CLOSE";
 
 	private String uID;
 	private String pwd;
@@ -128,16 +131,11 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 		shopButton.setActionCommand(this.cmdShop);
 		
 		JButton exitButton = new JButton("\u9000\u51FA");//退出
-		exitButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) { // 退出按钮
-				//ClientMainFrame.goOffline();
-				System.exit(0);
-			}
-		});
 		exitButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		exitButton.setBounds(423, 345, 153, 39);
 		contentPane.add(exitButton);
+		exitButton.addActionListener(this);
+		exitButton.setActionCommand(this.cmdClose);
 	}
 
 	@Override
@@ -175,7 +173,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 					DormitoryAdminClient dormAdmin = new DormitoryAdminClient(this.socket);
 					dormAdmin.setVisible(true);
 				}
-			}else { //商店
+			}else if(e.getActionCommand().equals(this.cmdShop)) { //商店
 				if(userType == 0) {
 					Shop_StudentFrame shopStu = new Shop_StudentFrame();
 					shopStu.setVisible(true);
@@ -183,6 +181,8 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 					Shop_AdminFrame shopAdmin = new Shop_AdminFrame();
 					shopAdmin.setVisible(true);
 				}
+			}else { // 退出
+				ClientMainFrame.close();
 			}
 		} catch (ClassNotFoundException ex) {
 			throw new RuntimeException(ex);

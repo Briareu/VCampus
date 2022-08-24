@@ -22,10 +22,12 @@ public class Client {
 	
 	public Message sendRequestToServer (Message clientRequest) { // �����Ƿ��������������
         try{
+        	// 向服务端发送数据
             ObjectOutputStream request = new ObjectOutputStream(socket.getOutputStream());
             request.writeObject(clientRequest); 
             request.flush();
             
+            // 下线通知不需要等待回应
             if(clientRequest.isOffline()) {
             	return null;
             }

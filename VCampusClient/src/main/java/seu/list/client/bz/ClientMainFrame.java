@@ -17,10 +17,8 @@ import java.sql.SQLException;
 
 public class ClientMainFrame {
 	public static Socket socket;
-	
-	public static boolean isClosed = false;
 
-	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
 			socket =  new Socket(IConstant.SERVER_ADDRESS, IConstant.SERVER_PORT);		
@@ -49,10 +47,13 @@ public class ClientMainFrame {
 		
 		
 		// 卡死主程序，防止资源释放
-		while(!isClosed);
+		while(true);
 		
+	}
+	
+	public static void close() {
 		// 要关闭客户端时，给服务器发送下线通知
-		//goOffline();
+		goOffline();
 		// 客户端程序即将关闭，关闭socket
 		try {
 			if(!socket.isClosed()) {
