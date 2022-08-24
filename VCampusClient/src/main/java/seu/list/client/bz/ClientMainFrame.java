@@ -29,7 +29,7 @@ public class ClientMainFrame {
 		}
 
 		// 启动各种窗口
-		ClientLoginFrame c = new ClientLoginFrame(socket);
+		//ClientLoginFrame c = new ClientLoginFrame(socket);
 		//ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
 		//ClientStuCourseFrame s=new ClientStuCourseFrame("2",socket);
 		///ClientLoginFrame c=new ClientLoginFrame(socket);
@@ -37,13 +37,14 @@ public class ClientMainFrame {
 
 		
 		// test
-		/*
+		
 		String testPwd = "sadadsadq";
 		String testUserAdminID = "10001";
 		String testUserStuID = "00001";
-		MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
+		//MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
+		MainMenu mainMenu = new MainMenu(0, testUserStuID, testPwd, socket);
 		mainMenu.setVisible(true);
-		*/
+		
 		// test
 		
 		

@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
+import seu.list.client.view.Dormmaintain;
 import seu.list.common.Dormitory;
 import seu.list.common.IConstant;
 import seu.list.common.Message;

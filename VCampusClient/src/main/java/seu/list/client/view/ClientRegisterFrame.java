@@ -170,7 +170,7 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 	}
 
 	private void setBak() {
-		ImageIcon img = new ImageIcon("D:\\rep\\VCampus\\VCampusClient\\src\\main\\resources\\image\\registerback.jpg");
+		ImageIcon img = new ImageIcon("/src/main/resources/image/registerback.jpg");
 		JLabel background = new JLabel(img);
 		this.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
 		background.setBounds(0, 10, img.getIconWidth(), img.getIconHeight());

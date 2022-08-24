@@ -38,6 +38,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
     public ClientLoginFrame(Socket socket){
 
         this.socket=socket;
+        
         getContentPane().setBackground(Color.WHITE);
         setUndecorated(true);//去边框
 
@@ -117,6 +118,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         jb_login.setLocation(148, 18);
         buttonGroup.add(jb_login);
 
+       
         jb_login.setBackground(new Color(255, 255, 255));
         jb_login.setSize(78, 42);
         jb_login.setIcon(new ImageIcon("/src/main/resources/image/login3_1.png"));
@@ -163,7 +165,8 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         jPanel.setBounds(700,150,400,300);
         c.add(jPanel);
         jPanel.setBackground(Color.WHITE);
-        jPanel.add(boxH);
+        Box boxH_2 = Box.createVerticalBox();
+        jPanel.add(boxH_2);
 
 
 
