@@ -20,8 +20,8 @@ public class StudentAccessHelper{
 	public Connection getConnection(){
 		try {
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			String url = "jdbc:ucanaccess://D:\\javaprogram\\VCampusServer\\src\\main\\resources\\Student.mdb";
-			con = DriverManager.getConnection(url);
+			String url = "jdbc:ucanaccess://src/main/resources/vCampus.accdb";
+			con = DriverManager.getConnection(url, "", "");
 			System.out.println("connection success");
 		}catch(SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
