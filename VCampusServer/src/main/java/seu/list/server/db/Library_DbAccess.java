@@ -19,13 +19,6 @@ public class Library_DbAccess {
 				Class.forName("com.hxtt.sql.access.AccessDriver");
 				// 建立连接			 
 				String path = null;
-	/*			try {
-					path = this.getClass().getResource("test.mdb").toURI().getPath().substring(1);
-				} catch (URISyntaxException e1) {
-					e1.printStackTrace();
-				}   //定位数据库文件的位置		 
-				String url="jdbc:Access:///" + path;     //Access 驱动	
-				*/
 				path = "jdbc:Access:///E:\\VCampusCode'\\test.mdb";
 				conn = DriverManager.getConnection(path,"","");
 				//conn = DriverManager.getConnection(url);

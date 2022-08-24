@@ -68,6 +68,13 @@ public class LibraryStu extends JFrame {
 		setTitle("图书馆-学生");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		//设置背景图片
+		//把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
+		ImageIcon image=new ImageIcon("src/main/resources/image/P3.jpg"); 
+		JLabel backlabel=new JLabel(image);
+		backlabel.setSize(image.getIconWidth(),image.getIconHeight());
+		this.getLayeredPane().add(backlabel,new Integer(Integer.MIN_VALUE));
+		
 		setBounds(100, 100, 770, 520);
 		
 		layerPane=new JLayeredPane();
@@ -81,18 +88,21 @@ public class LibraryStu extends JFrame {
 		lendPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		lendPane.setBackground(UIManager.getColor("Panel.background"));	
 		layerPane.add(lendPane, BorderLayout.EAST);
+		lendPane.setOpaque(false);
 		
 		returnPane = new JPanel();		
 		layerPane.setLayer(returnPane, 300);
 		returnPane.setBackground(UIManager.getColor("Panel.background"));
 		returnPane.setBorder(new EmptyBorder(5, 5, 5, 5));	
 		layerPane.add(returnPane, BorderLayout.WEST);
+		returnPane.setOpaque(false);
 		
 		contentPane = new JPanel();
 		layerPane.setLayer(contentPane, 2);
 		contentPane.setBackground(UIManager.getColor("InternalFrame.borderColor"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		layerPane.add(contentPane);	
+		contentPane.setOpaque(false);
 		
 		findText = new JTextField();
 		findText.setText("(书号）");
@@ -100,14 +110,12 @@ public class LibraryStu extends JFrame {
 		findText.setFont(new Font("华文新魏", Font.PLAIN, 20));
 		findText.setColumns(10);
 		
-		JButton findButton = new JButton("查询");
+		JButton findButton = new JButton();
 		findButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FindAvt(e);
 			}
 		});
-		findButton.setBackground(SystemColor.activeCaption);
-		findButton.setFont(new Font("宋体", Font.BOLD, 25));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -219,7 +227,7 @@ public class LibraryStu extends JFrame {
 		}
 		
 		table = new JTable(tablemodel);
-		table.setBackground(SystemColor.info);
+		table.setBackground(Color.WHITE);
 		table.setFillsViewportHeight(true);
 		
 		table.setModel(tablemodel);
@@ -369,6 +377,12 @@ public class LibraryStu extends JFrame {
         			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         returnPane.setLayout(gl_returnPane);
+        
+        //设置图片
+		findButton.setIcon(new ImageIcon("src/main/resources/image/lib_button_search.png"));
+		findButton.setBorder(null);
+		findButton.setFocusPainted(false);//除去焦点的框 
+		findButton.setContentAreaFilled(false);//除去默认的背景填充 
 		
 		contentPane.setVisible(true);
 		lendPane.setVisible(false);

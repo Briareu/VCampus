@@ -74,7 +74,7 @@ public class LibraryUserServer extends Library_DbAccess {
 		try {
 			con=getConnection();
 			s = con.createStatement();// 创建SQL语句对象
-			rs=s.executeQuery("select * from BookList");	// 查询书籍信息
+			rs=s.executeQuery("select * from tb_BookList");	// 查询书籍信息
 						
 			//把数据库中的数据读入bookList
 			while(rs.next()) {
@@ -133,7 +133,7 @@ public class LibraryUserServer extends Library_DbAccess {
 			s = con.createStatement();// 创建SQL语句对象	
 			
 			int result=0;
-			ResultSet rsr=s.executeQuery("select * from BookList where ID='"+bookid+"'");
+			ResultSet rsr=s.executeQuery("select * from tb_BookList where ID='"+bookid+"'");
 			Integer stock=0;
 			Integer state=0;
 			if(rsr.next()) {
@@ -148,8 +148,8 @@ public class LibraryUserServer extends Library_DbAccess {
 		    		state=0;
 		    	else
 		    		state=1;	 
-		    	result = s.executeUpdate("update BookList set Stock='"+stock+"' where ID='"+bookid+"'");	
-		    	result = s.executeUpdate("update BookList set State='"+state+"' where ID='"+bookid+"'");
+		    	result = s.executeUpdate("update tb_BookList set Stock='"+stock+"' where ID='"+bookid+"'");	
+		    	result = s.executeUpdate("update tb_BookList set State='"+state+"' where ID='"+bookid+"'");
 		    }
 		    else {
 		    	return -1;
@@ -176,7 +176,7 @@ public class LibraryUserServer extends Library_DbAccess {
 			s = con.createStatement();// 创建SQL语句对象	
 			
 			int result=0;
-			ResultSet rsr=s.executeQuery("select * from BookList where ID='"+bookid+"'");
+			ResultSet rsr=s.executeQuery("select * from tb_BookList where ID='"+bookid+"'");
 			Integer stock=0;
 			Integer state=0;
 			if(rsr.next()) {
@@ -186,9 +186,9 @@ public class LibraryUserServer extends Library_DbAccess {
 				return 0;
 			stock=stock+1;
 			
-    	    result = s.executeUpdate("update BookList set Stock='"+stock+"' where ID='"+bookid+"'");	
+    	    result = s.executeUpdate("update tb_BookList set Stock='"+stock+"' where ID='"+bookid+"'");	
 		    if(state==0) {
-			    result = s.executeUpdate("update BookList set State=1 where ID='"+bookid+"'");
+			    result = s.executeUpdate("update tb_BookList set State=1 where ID='"+bookid+"'");
 		    }
 		    if(result>0) {
 				res=result;
@@ -218,11 +218,11 @@ public class LibraryUserServer extends Library_DbAccess {
 			con=getConnection();
 			s = con.createStatement();// 创建SQL语句对象		
 			
-			ResultSet rsr=s.executeQuery("select * from BookList where ID='"+arr[1]+"'");
+			ResultSet rsr=s.executeQuery("select * from tb_BookList where ID='"+arr[1]+"'");
 			if(rsr.next()) 
 				return 0;
 			
-			result=s.executeUpdate("insert into BookList values('"+arr[0]+"','"+arr[1]+"','"+arr[2]+
+			result=s.executeUpdate("insert into tb_BookList values('"+arr[0]+"','"+arr[1]+"','"+arr[2]+
 					"','"+arr[3]+"','"+arr[4]+"','"+bstate+"')");
 			
 			if(result>0) {
@@ -246,11 +246,11 @@ public class LibraryUserServer extends Library_DbAccess {
 			con=getConnection();
 			s = con.createStatement();// 创建SQL语句对象	
 			
-			ResultSet rsr=s.executeQuery("select * from BookList where ID='"+bookid+"'");
+			ResultSet rsr=s.executeQuery("select * from tb_BookList where ID='"+bookid+"'");
 			if(!rsr.next()) 
 				return 0;
 			
-			result=s.executeUpdate("delete from BookList where ID='"+bookid+"'");
+			result=s.executeUpdate("delete from tb_BookList where ID='"+bookid+"'");
 			if(result>0) {
 				res=result;
 				System.out.println("Delete completion\t");
@@ -276,15 +276,15 @@ public class LibraryUserServer extends Library_DbAccess {
 			s = con.createStatement();// 创建SQL语句对象	
 			
 			//检查书号是否存在
-			ResultSet res=s.executeQuery("select count(*)  from BookList where ID='"+bookid+"'");
+			ResultSet res=s.executeQuery("select count(*)  from tb_BookList where ID='"+bookid+"'");
 			if(res != null) {
-				result=s.executeUpdate("update BookList set "+attr+"='"+modattr+"' where ID='"+bookid+"'");
+				result=s.executeUpdate("update tb_BookList set "+attr+"='"+modattr+"' where ID='"+bookid+"'");
 				if(attr.equals("Stock")) {
 					int ms=Integer.valueOf(modattr);
 					if(ms==0)
-						result=s.executeUpdate("update BookList set State=0 where ID='"+bookid+"'");
+						result=s.executeUpdate("update tb_BookList set State=0 where ID='"+bookid+"'");
 					else
-						result=s.executeUpdate("update BookList set State=1 where ID='"+bookid+"'");
+						result=s.executeUpdate("update tb_BookList set State=1 where ID='"+bookid+"'");
 				}
 				
 				if(result>0) 
