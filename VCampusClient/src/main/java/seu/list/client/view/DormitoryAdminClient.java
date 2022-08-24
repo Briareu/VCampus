@@ -412,7 +412,7 @@ public class DormitoryAdminClient extends JFrame {
 		}
 		System.out.println(Dorm);
 		Object[][] dorminformation = {};
-		Object[] dormlist = { "学号", "宿舍", "床位", "水费", "电费", "卫生评分", "调换申请", "维修申请" };
+		Object[] dormlist = { "学号", "宿舍", "床位","卫生评分" ,"水费", "电费",  "调换申请", "维修申请" };
 		DefaultTableModel model;
 		model = new DefaultTableModel(dorminformation, dormlist);
 		System.out.println(Dorm);
