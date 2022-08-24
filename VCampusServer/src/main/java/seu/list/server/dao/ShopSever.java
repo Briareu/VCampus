@@ -2,6 +2,7 @@ package seu.list.server.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -10,22 +11,33 @@ import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.server.db.Shop_DbAccess;
 
-public class ShopSever extends Shop_DbAccess {
-	static Connection con = null;
+
+public class ShopSever extends Shop_DbAccess{
+	static Connection con = getConnection();
 	static Statement s = null;
+	
+	
+	
 	static ResultSet rs=null;
 	static double money=0;
 	private Message mesFromClient;
-	private Message mesToClient;
+	private Message mesToClient=new Message();
 	public ShopSever(Message mesFromClient) {
 		super();
 		this.mesFromClient = mesFromClient;
+		try {
+			s=con.createStatement();
+		} catch (SQLException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 	}
 
 	public void excute() {
 		switch(this.mesFromClient.getMessageType()){
 		    case MessageType.Goodsgetall:{
-		    	this.getGoodsList();
+		    	this.mesToClient.setData(this.getList());
+		    	
 		    	break;
 		    }
 		    
@@ -37,14 +49,16 @@ public class ShopSever extends Shop_DbAccess {
 			}
 			
 			case MessageType.GoodsDelete:{
-				String para=(String)this.mesFromClient.getData();
+				String para=this.mesFromClient.getData()+"";
 				int ID=Integer.parseInt(para);
 				this.Deletegoods(ID);
+				this.mesToClient.setData(1);
 				break;
 			}
 			
 			case MessageType.GoodsAdd:{
 				this.Addgoods((Goods)this.mesFromClient.getData());
+				this.mesToClient.setData(1);
 				break;
 			}
 			
@@ -76,23 +90,21 @@ public class ShopSever extends Shop_DbAccess {
 
 	private static ArrayList<Goods> GoodsList=new ArrayList<Goods>();
 	
-	/*
-	 public static void main(String[] args) {
-		//System.out.println(getList().get(1).getGoodsName());
-		  ArrayList<Integer> a=new ArrayList<Integer>();
+	/* public static void main(String[] args) {
+		//System.out.println(getList().get(1).getGoodsname());
+		 /* ArrayList<Integer> a=new ArrayList<Integer>();
 		 ArrayList<Integer> b=new ArrayList<Integer>();
 		 a.add(1);
 		 b.add(1);
 		 buy(a,b);
 		// System.out.println(SearchGoods_ID(1).getGoodsName());
-		Goods agoods=new Goods(5,"apple",3.0,100);
-		Addgoods(agoods);
+		//Goods agoods=new Goods(6,"apple",3.0,100);
+		//Addgoods(agoods);
 		//AddnumberofGoods(1,3);
 		//Deletegoods(5);
 		//ModifyGoodsPrice(1,5.5);
-	 }
-	 */
-	 
+	 }*/
+	
 	public static ArrayList<Goods> getGoodsList() {
 		return GoodsList;
 	}
@@ -105,7 +117,7 @@ public class ShopSever extends Shop_DbAccess {
 			
 			con = getConnection();
 			s = con.createStatement();// 创建SQL语句对象
-			rs = s.executeQuery("select * from Goods");	// 查询商品信息
+			rs = s.executeQuery("select * from tb_Goods");	// 查询商品信息
 						
 			
 			while(rs.next()) {
@@ -115,7 +127,7 @@ public class ShopSever extends Shop_DbAccess {
 				temp.setGoodsprice(rs.getDouble("GoodsPrice"));
 				temp.setGoodsnumber(rs.getInt("GoodsNumber"));
 				GoodsList.add(temp);
-				if(temp.getGoodsid()==1)
+				if(temp.getGoodsid()==-1)
 					money=rs.getDouble("TurnOver");
 			}
 		} catch (Exception e) {
@@ -130,7 +142,7 @@ public class ShopSever extends Shop_DbAccess {
 		ArrayList<Goods> result=new ArrayList<Goods>();	
 		for(int i=0;i<GoodsList.size();i++) {
 			Goods tempGoods=GoodsList.get(i);
-			if(tempGoods.getGoodsname().equals(temp))
+			if(tempGoods.getGoodsname().equals(temp)) 
 				result.add(tempGoods);
 		}
 		return result;
@@ -140,7 +152,7 @@ public class ShopSever extends Shop_DbAccess {
 		Goods result=new Goods();
 		for(int i=0;i<GoodsList.size();i++) {
 			Goods tempGoods=GoodsList.get(i);
-			if(tempGoods.getGoodsid()==temp)
+			if(tempGoods.getGoodsid()==temp) 
 				return tempGoods;
 		}
 		System.out.println("fail to find the Goods");
@@ -154,13 +166,13 @@ public class ShopSever extends Shop_DbAccess {
 			for(int i=0;i<args.size();i+=2) {
 				Goods temp=SearchGoods_ID(Integer.parseInt(args.get(i)));
 				temp.setGoodsnumber(temp.getGoodsnumber()-Integer.parseInt(args.get(i+1)));
-				result=s.executeUpdate("update Goods set GoodsNumber='"+temp.getGoodsnumber()+"'where GoodsID='"+temp.getGoodsid()+"'");
+				result=s.executeUpdate("update tb_Goods set GoodsNumber='"+temp.getGoodsnumber()+"'where GoodsID='"+temp.getGoodsid()+"'");
 				money+=temp.getGoodsprice()*Integer.parseInt(args.get(i+1));
 		}
-			result=s.executeUpdate("update Goods set TurnOver='"+money+"'where GoodsID='"+1+"'");//第一行放营收额
+			result=s.executeUpdate("update tb_Goods set TurnOver='"+money+"'where GoodsID='"+1+"'");//第一行放营收额
 			
 			// System.out.println(money);
-			 
+		
 		}
 		catch (Exception e) {
 			e.printStackTrace();}
@@ -170,7 +182,7 @@ public class ShopSever extends Shop_DbAccess {
 		try{
 			int result=0;
 			GoodsList.add(temp);
-			result=s.executeUpdate("insert into Goods values('"+temp.getGoodsid()+"','"+temp.getGoodsname()+"','"+temp.getGoodsprice()+
+			result=s.executeUpdate("insert into tb_Goods values('"+temp.getGoodsid()+"','"+temp.getGoodsname()+"','"+temp.getGoodsprice()+
 					"','"+temp.getGoodsnumber()+"','"+0+"')");
 			//System.out.println(result);
 			 
@@ -184,7 +196,7 @@ public class ShopSever extends Shop_DbAccess {
 			int result=0;
 			Goods temp=SearchGoods_ID(ID);
 			GoodsList.remove(temp);
-			result=s.executeUpdate("delete from Goods where GoodsID='"+ID+"'");
+			result=s.executeUpdate("delete from tb_Goods where GoodsID='"+ID+"'");
 			//System.out.println(result);
 			 
 		}
@@ -200,7 +212,7 @@ public class ShopSever extends Shop_DbAccess {
 			Goods temp=SearchGoods_ID(ID);
 			int sum=temp.getGoodsnumber()+number;
 			temp.setGoodsnumber(sum);
-			result=s.executeUpdate("update Goods set GoodsNumber='"+sum+"'where GoodsID='"+ID+"'");
+			result=s.executeUpdate("update tb_Goods set GoodsNumber='"+sum+"'where GoodsID='"+ID+"'");
 			//System.out.println(result);
 			 
 		}
@@ -216,7 +228,7 @@ public class ShopSever extends Shop_DbAccess {
 			double price=Double.parseDouble(args[1]);
 			Goods temp=SearchGoods_ID(ID);
 			temp.setGoodsprice(price);
-			result=s.executeUpdate("update Goods set GoodsPrice='"+price+"'where GoodsID='"+ID+"'");
+			result=s.executeUpdate("update tb_Goods set GoodsPrice='"+price+"'where GoodsID='"+ID+"'");
 			//System.out.println(result);
 			 
 		}
