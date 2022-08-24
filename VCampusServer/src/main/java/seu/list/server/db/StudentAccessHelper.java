@@ -46,7 +46,8 @@ public class StudentAccessHelper{
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from Student");
+//			rs = st.executeQuery("select * from Student");
+			rs = st.executeQuery("select * from tb_Student");
 			int i = 0;
 			while(rs.next()) {
 				Student temp = new Student(rs.getString(1), rs.getString(2), rs.getString(3) , rs.getString(4),rs.getString(5),rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getString(9) , rs.getDouble(10));
@@ -64,7 +65,8 @@ public class StudentAccessHelper{
 	}
 	
 	public int add(Connection connection, Student stu) throws Exception{
-		PreparedStatement ps = con.prepareStatement("insert into Student(StudentID,StudentName,TeacherID,ClassID,Major,StudentOrigion,StudentStatus,StudentGender,StudentPhone,StudentCredit) values('"+ stu.getStudentid() +"','"+ stu.getStudentName() +"','"+ stu.getTeacherid() +"','"+ stu.getClassid() +"','"+ stu.getMajor() +"','"+ stu.getStudentorigion() +"','"+ stu.getStudentstatus() +"','"+ stu.getStudentgender() +"','"+ stu.getStudentphone() +"','"+ stu.getStudentcredit() +"')");
+//		PreparedStatement ps = con.prepareStatement("insert into Student(StudentID,StudentName,TeacherID,ClassID,Major,StudentOrigion,StudentStatus,StudentGender,StudentPhone,StudentCredit) values('"+ stu.getStudentid() +"','"+ stu.getStudentName() +"','"+ stu.getTeacherid() +"','"+ stu.getClassid() +"','"+ stu.getMajor() +"','"+ stu.getStudentorigion() +"','"+ stu.getStudentstatus() +"','"+ stu.getStudentgender() +"','"+ stu.getStudentphone() +"','"+ stu.getStudentcredit() +"')");
+		PreparedStatement ps = con.prepareStatement("insert into tb_Student(StudentID,StudentName,TeacherID,ClassID,Major,StudentOrigion,StudentStatus,StudentGender,StudentPhone,StudentCredit) values('"+ stu.getStudentid() +"','"+ stu.getStudentName() +"','"+ stu.getTeacherid() +"','"+ stu.getClassid() +"','"+ stu.getMajor() +"','"+ stu.getStudentorigion() +"','"+ stu.getStudentstatus() +"','"+ stu.getStudentgender() +"','"+ stu.getStudentphone() +"','"+ stu.getStudentcredit() +"')");
 		int result = ps.executeUpdate();
 		System.out.println("add success");
 		ps.close();
@@ -78,12 +80,14 @@ public class StudentAccessHelper{
 		switch((int)data.get(0)) {
 		case 0:
 		{
-			res = statement.executeUpdate("delete from Student where StudentID='"+ data.get(1) +"'");
+//			res = statement.executeUpdate("delete from Student where StudentID='"+ data.get(1) +"'");
+			res = statement.executeUpdate("delete from tb_Student where StudentID='"+ data.get(1) +"'");
 		}
 		break;
 		case 1:
 		{
-			res = statement.executeUpdate("delete from Student where ClassID='"+ data.get(1) +"'");
+//			res = statement.executeUpdate("delete from Student where ClassID='"+ data.get(1) +"'");
+			res = statement.executeUpdate("delete from tb_Student where ClassID='"+ data.get(1) +"'");
 		}
 		break;
 		default:
@@ -105,7 +109,8 @@ public class StudentAccessHelper{
 		//11--wide update--update classid, teacher, major
 		case 0:
 		{//classid
-			res = statement.executeUpdate("update Student set ClassID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set ClassID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set ClassID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -113,7 +118,8 @@ public class StudentAccessHelper{
 		}
 		case 1:
 		{//teacher
-			res = statement.executeUpdate("update Student set TeacherID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set TeacherID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set TeacherID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -121,7 +127,8 @@ public class StudentAccessHelper{
 		}
 		case 2:
 		{//major
-			res = statement.executeUpdate("update Student set Major='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set Major='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set Major='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -129,7 +136,8 @@ public class StudentAccessHelper{
 		}
 		case 3:
 		{//studentname
-			res = statement.executeUpdate("update Student set StudentName='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set StudentName='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set StudentName='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -137,7 +145,8 @@ public class StudentAccessHelper{
 		}
 		case 4:
 		{//studentphone
-			res = statement.executeUpdate("update Student set StudentPhone='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set StudentPhone='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set StudentPhone='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -145,7 +154,8 @@ public class StudentAccessHelper{
 		}
 		case 5:
 		{//studentid
-			res = statement.executeUpdate("update Student set StudentID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set StudentID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set StudentID='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -153,7 +163,8 @@ public class StudentAccessHelper{
 		}
 		case 6:
 		{//studentgender
-			res = statement.executeUpdate("update Student set StudentGender='"+ (Boolean)data.get(1) +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set StudentGender='"+ (Boolean)data.get(1) +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set StudentGender='"+ (Boolean)data.get(1) +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -161,7 +172,8 @@ public class StudentAccessHelper{
 		}
 		case 7:
 		{//studentorigion
-			res = statement.executeUpdate("update Student set StudentOrigion='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set StudentOrigion='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set StudentOrigion='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -169,7 +181,8 @@ public class StudentAccessHelper{
 		}
 		case 8:
 		{//studentcredit
-			res = statement.executeUpdate("update Student set StudentCredit='"+ (Double)data.get(1) +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set StudentCredit='"+ (Double)data.get(1) +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set StudentCredit='"+ (Double)data.get(1) +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -177,7 +190,8 @@ public class StudentAccessHelper{
 		}
 		case 9:
 		{//studentstatus
-			res = statement.executeUpdate("update Student set StudentStatus='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set StudentStatus='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set StudentStatus='"+ data.get(1).toString() +"' where StudentID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -185,7 +199,8 @@ public class StudentAccessHelper{
 		}
 		case 10:
 		{//classid + studentid + studentname + studentphone
-			res = statement.executeUpdate("update Student set ClassID='"+ data.get(1).toString() +"', StudentID='"+ data.get(2).toString() +"', StudentName='"+ data.get(3).toString() +"', StudentPhone='"+ data.get(4).toString() +"' where StudentID='"+ data.get(5).toString() +"'");
+//			res = statement.executeUpdate("update Student set ClassID='"+ data.get(1).toString() +"', StudentID='"+ data.get(2).toString() +"', StudentName='"+ data.get(3).toString() +"', StudentPhone='"+ data.get(4).toString() +"' where StudentID='"+ data.get(5).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set ClassID='"+ data.get(1).toString() +"', StudentID='"+ data.get(2).toString() +"', StudentName='"+ data.get(3).toString() +"', StudentPhone='"+ data.get(4).toString() +"' where StudentID='"+ data.get(5).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -193,7 +208,8 @@ public class StudentAccessHelper{
 		}
 		case 11:
 		{//classid
-			res = statement.executeUpdate("update Student set ClassID='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set ClassID='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set ClassID='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -201,7 +217,8 @@ public class StudentAccessHelper{
 		}
 		case 12:
 		{//teacher
-			res = statement.executeUpdate("update Student set TeacherId='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set TeacherId='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set TeacherId='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -209,7 +226,8 @@ public class StudentAccessHelper{
 		}
 		case 13:
 		{// major
-			res = statement.executeUpdate("update Student set Major='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Student set Major='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set Major='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -217,7 +235,8 @@ public class StudentAccessHelper{
 		}
 		case 14:
 		{//teacher major
-			res = statement.executeUpdate("update Student set TeacherId='"+ data.get(1).toString() +"', Major='"+ data.get(2).toString() +"' where ClassID='"+ data.get(3).toString() +"'");
+//			res = statement.executeUpdate("update Student set TeacherId='"+ data.get(1).toString() +"', Major='"+ data.get(2).toString() +"' where ClassID='"+ data.get(3).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set TeacherId='"+ data.get(1).toString() +"', Major='"+ data.get(2).toString() +"' where ClassID='"+ data.get(3).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -225,7 +244,8 @@ public class StudentAccessHelper{
 		}
 		case 15:
 		{//name, origin, phone, status, gender ---- id
-			res = statement.executeUpdate("update Student set StudentName='"+ data.get(1).toString() +"', StudentOrigion='"+ data.get(2).toString() +"', StudentPhone='"+ data.get(3).toString() +"', StudentStatus='"+ data.get(4).toString() +"', StudentGender='"+ (Boolean)data.get(5) +"' where StudentID='"+ data.get(6).toString() +"'");
+			res = statement.executeUpdate("update tb_Student set StudentName='"+ data.get(1).toString() +"', StudentOrigion='"+ data.get(2).toString() +"', StudentPhone='"+ data.get(3).toString() +"', StudentStatus='"+ data.get(4).toString() +"', StudentGender='"+ (Boolean)data.get(5) +"' where StudentID='"+ data.get(6).toString() +"'");
+//			res = statement.executeUpdate("update Student set StudentName='"+ data.get(1).toString() +"', StudentOrigion='"+ data.get(2).toString() +"', StudentPhone='"+ data.get(3).toString() +"', StudentStatus='"+ data.get(4).toString() +"', StudentGender='"+ (Boolean)data.get(5) +"' where StudentID='"+ data.get(6).toString() +"'");
 			statement.close();
 			con.close();
 			System.out.println("update success");
@@ -243,7 +263,8 @@ public class StudentAccessHelper{
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from Student");
+//			rs = st.executeQuery("select * from Student");
+			rs = st.executeQuery("select * from tb_Student");
 			int i = 0;
 			while(rs.next()) {
 				Student temp = new Student(rs.getString(1), rs.getString(2), rs.getString(3) , rs.getString(4),rs.getString(5),rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getString(9) , rs.getDouble(10));
@@ -287,7 +308,8 @@ public class StudentAccessHelper{
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from Class");
+//			rs = st.executeQuery("select * from Class");
+			rs = st.executeQuery("select * from tb_StudentClass");
 			int i = 0;
 			while(rs.next()) {
 				ClassManage temp = new ClassManage(rs.getString(1), rs.getString(2), rs.getString(3) , rs.getInt(4));
@@ -305,7 +327,8 @@ public class StudentAccessHelper{
 	}
 	
 	public int addclass(Connection connection, ClassManage clss) throws Exception{
-		PreparedStatement ps = con.prepareStatement("insert into Class(ClassID,TeacherId,Major,ClassSize) values('"+ clss.getClassID() +"','"+ clss.getTeacherID() +"','"+ clss.getMajor() +"','"+ clss.getClassSize() +"')");
+//		PreparedStatement ps = con.prepareStatement("insert into Class(ClassID,TeacherId,Major,ClassSize) values('"+ clss.getClassID() +"','"+ clss.getTeacherID() +"','"+ clss.getMajor() +"','"+ clss.getClassSize() +"')");
+		PreparedStatement ps = con.prepareStatement("insert into tb_StudentClass(ClassID,TeacherId,Major,ClassSize) values('"+ clss.getClassID() +"','"+ clss.getTeacherID() +"','"+ clss.getMajor() +"','"+ clss.getClassSize() +"')");
 		int result = ps.executeUpdate();
 		ps.close();
 		con.close();
@@ -314,7 +337,8 @@ public class StudentAccessHelper{
 	
 	public int deleteclass(Connection con, String id) throws Exception{
 		Statement statement = con.createStatement();
-		int res = statement.executeUpdate("delete from Class where ClassID='"+ id +"'");
+//		int res = statement.executeUpdate("delete from Class where ClassID='"+ id +"'");
+		int res = statement.executeUpdate("delete from tb_StudentClass where ClassID='"+ id +"'");
 		statement.close();
 		con.close();
 		return res;
@@ -327,22 +351,26 @@ public class StudentAccessHelper{
 		//0---update classid, 1---update teacher, 2----update major，3--all 
 		case 0:
 		{
-			res = statement.executeUpdate("update Class set ClassID='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Class set ClassID='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_sStudentClass set ClassID='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
 		}
 		break;
 		case 1:
 		{
-			res = statement.executeUpdate("update Class set TeacherId='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Class set TeacherId='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_StudentClass set TeacherId='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
 		}
 		break;
 		case 2:
 		{
-			res = statement.executeUpdate("update Class set Major='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+//			res = statement.executeUpdate("update Class set Major='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
+			res = statement.executeUpdate("update tb_StudentClass set Major='"+ data.get(1).toString() +"' where ClassID='"+ data.get(2).toString() +"'");
 		}
 		break;
 		case 3:
 		{//all
-			res = statement.executeUpdate("update Class set TeacherId='"+ data.get(1).toString() +"', Major='"+ data.get(2).toString() +"', ClassID='"+ data.get(3).toString() +"' where ClassID='"+ data.get(4).toString() +"'");
+//			res = statement.executeUpdate("update Class set TeacherId='"+ data.get(1).toString() +"', Major='"+ data.get(2).toString() +"', ClassID='"+ data.get(3).toString() +"' where ClassID='"+ data.get(4).toString() +"'");
+			res = statement.executeUpdate("update tb_StudentClass set TeacherId='"+ data.get(1).toString() +"', Major='"+ data.get(2).toString() +"', ClassID='"+ data.get(3).toString() +"' where ClassID='"+ data.get(4).toString() +"'");
 		}
 		break;
 		default:
@@ -359,7 +387,8 @@ public class StudentAccessHelper{
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from Class");
+//			rs = st.executeQuery("select * from Class");
+			rs = st.executeQuery("select * from tb_StudentClass");
 			int i = 0;
 			while(rs.next()) {
 				ClassManage temp = new ClassManage(rs.getString(1), rs.getString(2), rs.getString(3) , rs.getInt(4));
