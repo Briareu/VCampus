@@ -15,14 +15,14 @@ public class DAOUtil {
 		{	//String courseID, String semester, String courseName,
 			// String courseMajor, String teacherID, String courseState, String courseType
 			Course c=new Course();
-			c.setSemester(rs.getString(1));
-			c.setCourseID(rs.getString(2));
-			c.setCourseMajor(rs.getString(3));
-			c.setTeacherID(rs.getString(4));
-			c.setCourseState(rs.getString(5));
-			c.setCourseName(rs.getString(6));
+			c.setSemester(rs.getString(2));
+			c.setCourseID(rs.getString(1));
+			c.setCourseMajor(rs.getString(4));
+			c.setTeacherID(rs.getString(5));
+			c.setCourseState(rs.getString(6));
+			c.setCourseName(rs.getString(3));
 			c.setCourseType(rs.getString(7));
-			//for(int i=1;i<=7;i++)System.out.print(rs.getString(i)+"\t");
+			for(int i=1;i<=7;i++)System.out.print(rs.getString(i)+"\t");
 			//System.out.print(rs.getString(6)+"\t");
 			System.out.println(c);
 			courses.add(c);

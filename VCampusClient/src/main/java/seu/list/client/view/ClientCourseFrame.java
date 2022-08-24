@@ -99,7 +99,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		jco_Delete.addActionListener(this);
 		jco_Delete.setActionCommand("delete");
 		Object[][] courseinformation= {};
-		Object[] courselist = {"课程编号","学年学期","课程","专业","授课教师","状态","类型"};
+		Object[] courselist = {"学年学期","课程编号","专业","课程","授课教师","状态","类型"};
 		DefaultTableModel model;
 		model = new DefaultTableModel(courseinformation, courselist);
 
@@ -201,7 +201,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 				jtb1.setModel(new DefaultTableModel(
 						allCourseTable,
 						new String[] {
-								"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+								"学年学期","课程编号","专业","课程","授课教师","状态","类型"
 						}
 				));
 				jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
@@ -246,7 +246,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 				jtb1.setModel(new DefaultTableModel(
 						allCourseTable,
 						new String[] {
-								"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+								"学年学期","课程编号","专业","课程","授课教师","状态","类型"
 						}
 				));
 				jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
@@ -299,7 +299,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 			jtb1.setModel(new DefaultTableModel(
 					allCourseTable,
 					new String[] {
-							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+							"学年学期","课程编号","专业","课程","授课教师","状态","类型"
 					}
 			));
 			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);

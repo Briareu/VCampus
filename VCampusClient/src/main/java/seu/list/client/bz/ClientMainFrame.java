@@ -29,8 +29,8 @@ public class ClientMainFrame {
 		}
 
 		// 启动各种窗口
-		ClientLoginFrame c = new ClientLoginFrame(socket);
-		//ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
+		//ClientLoginFrame c = new ClientLoginFrame(socket);
+		ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
 		//ClientStuCourseFrame s=new ClientStuCourseFrame("2",socket);
 		///ClientLoginFrame c=new ClientLoginFrame(socket);
 

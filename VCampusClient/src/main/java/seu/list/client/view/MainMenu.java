@@ -182,7 +182,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 					shopStu.setVisible(true);
 				}else {
 					Shop_AdminFrame shopAdmin = new Shop_AdminFrame();
-					shopAdmin.setVisible(true);
+					//shopAdmin.setVisible(true);
 				}
 			}
 		} catch (ClassNotFoundException ex) {
