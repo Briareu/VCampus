@@ -170,7 +170,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 			}else if(e.getActionCommand().equals(this.cmdDorm)) { // 宿舍
 				String title = "宿舍管理";
 				if(userType == 0) {
-					DormitoryStudentClient dormStu = new DormitoryStudentClient(title);
+					DormitoryStudentClient dormStu = new DormitoryStudentClient(uID,this.socket);
 					dormStu.setVisible(true);
 				}else {
 					DormitoryAdminClient dormAdmin = new DormitoryAdminClient(this.socket);
