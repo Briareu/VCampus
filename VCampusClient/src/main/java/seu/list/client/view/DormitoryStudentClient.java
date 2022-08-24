@@ -292,6 +292,10 @@ public class DormitoryStudentClient extends JFrame {
 
 	public void updateFrameE(ArrayList<String> para) {
 		// TODO Auto-generated method stub
+		if(!para.get(0).equals(dorm.getuserID())||!para.get(1).equals(dorm.getDormitoryID())) {
+			JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		dorm.setDormitoryMaintain(para.get(2));
 		System.out.println(dorm);
 		UserIDLabel.setText(dorm.getuserID());
@@ -306,6 +310,10 @@ public class DormitoryStudentClient extends JFrame {
 
 	public void updateFrameM(ArrayList<String> para) {
 		// TODO Auto-generated method stub
+		if(!para.get(0).equals(dorm.getuserID())||!para.get(1).equals(dorm.getDormitoryID())) {
+			JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		dorm.setStudentExchange(para.get(2));
 		System.out.println(dorm);
 		UserIDLabel.setText(dorm.getuserID());
