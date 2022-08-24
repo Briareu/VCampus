@@ -1,6 +1,7 @@
 package seu.list.client.view;
 
 import seu.list.client.bz.Client;
+import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.*;
 
 import javax.swing.*;
@@ -138,8 +139,8 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         jb_register.addActionListener(this);
         jb_register.setActionCommand("jb_register");
 
-        JLabel lblNewLabel = new JLabel("VCampus\u8EAB\u4EFD\u8BA4\u8BC1");
-        lblNewLabel.setFont(new Font("黑体", Font.BOLD, 30));
+        JLabel lblNewLabel = new JLabel("VCampus登录");
+        lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 30));
         //lblNewLabel.setBounds(738, 132, 142, 31);
         //getContentPane().add(lblNewLabel);
         //jp4.add(jb_register);
@@ -318,6 +319,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         //最大化最小化以及关闭操作
         if (arg0.getActionCommand().equals("Closed")) {
             this.dispose();
+            ClientMainFrame.isClosed=true;
         }
         else if (arg0.getActionCommand().equals("Minimized")) {
             this.setExtendedState(ICONIFIED);

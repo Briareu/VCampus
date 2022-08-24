@@ -1,12 +1,5 @@
 package seu.list.client.view;
 
-import seu.list.client.bz.Client;
-import seu.list.client.bz.ClientMainFrame;
-import seu.list.common.Goods;
-import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.common.ModuleType;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -23,7 +16,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-
+import seu.list.client.bz.Client;
+import seu.list.client.bz.ClientMainFrame;
+import seu.list.common.Goods;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
@@ -83,46 +81,48 @@ public class Shop_AdminFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Shop_AdminFrame window = new Shop_AdminFrame();
-					window.frame.setVisible(true);
+					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
 	 */
 	public Shop_AdminFrame() {
 		initialize();
+		frame.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		 ArrayList<Goods> Godoslist=new ArrayList<Goods>();
-			Message mes =new Message();
-			mes.setMessageType(MessageType.Goodsgetall);
-			Message serverResponse=new Message();
-			ArrayList<Goods> goodslist = (ArrayList<Goods>)serverResponse.getData();
+		
+		ArrayList<Goods> Godoslist=new ArrayList<Goods>();		
+	    Message mes =new Message();
+		mes.setMessageType(MessageType.Goodsgetall);
+		Message serverResponse=new Message();
+		ArrayList<Goods> goodslist = (ArrayList<Goods>)serverResponse.getData();
 			
 			
 			
-		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\admin\\Desktop\\登录背景.jpg"));
-		frame.setFont(new Font("微软雅黑", Font.BOLD, 17));
-		frame.setTitle("管理员视图商店");
-		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 577, 449);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setFrame(new JFrame());
+		getFrame().setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/image/shop_manager_bg.jpg"));
+		getFrame().setFont(new Font("微软雅黑", Font.BOLD, 17));
+		getFrame().setTitle("管理员视图商店");
+		getFrame().getContentPane().setBackground(Color.WHITE);
+		getFrame().setBackground(Color.WHITE);
+		getFrame().setBounds(100, 100, 577, 449);
+		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		double total=0.0;
 		
@@ -131,7 +131,7 @@ public class Shop_AdminFrame {
 		
 		JPanel delpanel = new JPanel();
 		delpanel.setBounds(67, 19, 260, 116);
-		frame.getContentPane().add(delpanel);
+		getFrame().getContentPane().add(delpanel);
 		delpanel.setVisible(false);
 		
 		GoodsIDdeltext = new JTextField();
@@ -144,6 +144,8 @@ public class Shop_AdminFrame {
 		btnNewButton_4_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DelGoods(e);
+				GoodsIDdeltext.setText(null);
+				delpanel.setVisible(false);
 			}
 
 		});
@@ -190,7 +192,7 @@ public class Shop_AdminFrame {
 		addpanel = new JPanel();
 		addpanel.setBounds(10, 19, 334, 245);
 		addpanel.setVisible(false);
-		frame.getContentPane().add(addpanel);
+		getFrame().getContentPane().add(addpanel);
 		
 		
 		GoodsIDtext = new JTextField();
@@ -223,6 +225,11 @@ public class Shop_AdminFrame {
 			public void actionPerformed(ActionEvent e) {
 				//
 				AddGoods(e);
+				GoodsIDtext.setText(null);
+				GoodsNametext.setText(null);
+				Goodspricetext.setText(null);
+				GoodsNumebrtext.setText(null);
+				addpanel.setVisible(false);
 			}
 		});
 		
@@ -304,7 +311,7 @@ public class Shop_AdminFrame {
 		
 		btnNewButton = new JButton("");
 		btnNewButton.setBounds(10, 123, 60, 25);
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\admin\\Desktop\\Goods_delete.jpg"));
+		btnNewButton.setIcon(new ImageIcon("src/main/resources/image/Goods_delete.jpg"));
 		btnNewButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -321,7 +328,7 @@ public class Shop_AdminFrame {
 		btnNewButton_1 = new JButton("");
 		btnNewButton_1.setBounds(10, 274, 60, 25);
 		btnNewButton_1.setBackground(Color.WHITE);
-		btnNewButton_1.setIcon(new ImageIcon("res/2.jpg"));
+		btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -337,7 +344,7 @@ public class Shop_AdminFrame {
 			}
 		});
 		
-		btnNewButton_2.setIcon(new ImageIcon("res/Goods_addgoods.jpg"));
+		btnNewButton_2.setIcon(new ImageIcon("src/main/resources/image/Goods_addgoods.jpg"));
 		btnNewButton_2.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton_2.setBounds(10, 199, 60, 25);
 		
@@ -347,13 +354,13 @@ public class Shop_AdminFrame {
 				SearchGood(e);
 			}
 		});
-		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\admin\\Desktop\\search_Goods.jpg"));
+		btnNewButton_3.setIcon(new ImageIcon("src/main/resources/image/search_Goods.jpg"));
 		btnNewButton_3.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton_3.setBounds(20, 19, 37, 30);
 		
-		frame.getContentPane().add(btnNewButton_3);
+		getFrame().getContentPane().add(btnNewButton_3);
 		
-		frame.getContentPane().add(btnNewButton_2);
+		getFrame().getContentPane().add(btnNewButton_2);
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -367,8 +374,8 @@ public class Shop_AdminFrame {
 		scrollPane.setViewportView(table);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setRowHeight(25);
-		//show();
-		table.setModel(new DefaultTableModel(
+		show();
+		/*table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null},
 			},
@@ -382,7 +389,7 @@ public class Shop_AdminFrame {
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
-		});
+		});*/
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
 		
 		
@@ -426,25 +433,24 @@ public class Shop_AdminFrame {
 		        }
 		    }
 		});
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(lblNewLabel);
-		frame.getContentPane().add(textField);
-		frame.getContentPane().add(btnNewButton);
-		frame.getContentPane().add(btnNewButton_1);
-		frame.getContentPane().add(scrollPane);
+		getFrame().getContentPane().setLayout(null);
+		getFrame().getContentPane().add(lblNewLabel);
+		getFrame().getContentPane().add(textField);
+		getFrame().getContentPane().add(btnNewButton);
+		getFrame().getContentPane().add(btnNewButton_1);
+		getFrame().getContentPane().add(scrollPane);
 		
 		Searchtext = new JTextField();
 		Searchtext.setBounds(65, 19, 105, 30);
-		frame.getContentPane().add(Searchtext);
+		getFrame().getContentPane().add(Searchtext);
 		Searchtext.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\github仓库\\VCampus\\VCampusClient\\src\\main\\resources\\image\\shop_manager_bg.jpg"));
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/shop_manager_bg.jpg"));
 		lblNewLabel_1.setBounds(0, 0, 561, 406);
-		frame.getContentPane().add(lblNewLabel_1);
+		getFrame().getContentPane().add(lblNewLabel_1);
 		
 	
-		
 		
 		
 		
@@ -465,6 +471,7 @@ public class Shop_AdminFrame {
 		Message serverResponse = client.sendRequestToServer(mes); 
 		int res=(int)serverResponse.getData();
 		show();
+		
 	}
 	
 	private void AddGoods(ActionEvent e) {
@@ -480,6 +487,8 @@ public class Shop_AdminFrame {
 
 		Message serverResponse = client.sendRequestToServer(mes); 
 		int res=(int)serverResponse.getData();
+	    
+		
 		show();
 	}
 	
@@ -597,7 +606,15 @@ public class Shop_AdminFrame {
 			
 	}
 	 
-	 public static class MyCellEditor_int extends DefaultCellEditor {
+	 public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public static class MyCellEditor_int extends DefaultCellEditor {
 
 	        public MyCellEditor_int(JTextField textField) {
 	            super(textField);
@@ -653,8 +670,4 @@ public class Shop_AdminFrame {
 	            return super.stopCellEditing();
 	        }
 	    }
-	 
-	 public void setVisible(boolean flag) {
-		 this.frame.setVisible(flag);
-	 }
 }

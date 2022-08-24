@@ -29,7 +29,7 @@ public class SqlHelperImp implements SqlHelper {
 	private static final String ACCESS_DRIVER = HXTT_ACCESS_JDBC_DRIVER;
 	private static String url;
 	static {
-		String dbpath = new File("").getAbsolutePath().replace('\\', '/') + "/db_vCampus.accdb";
+		String dbpath = "src\\main\\resources\\vCampus.accdb";
 		url = "jdbc:ucanaccess://" + dbpath;
 	}
 	String user="";
