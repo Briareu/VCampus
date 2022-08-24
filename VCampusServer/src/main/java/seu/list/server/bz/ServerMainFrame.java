@@ -29,21 +29,44 @@ import java.util.*;
 
 public class ServerMainFrame 
 {
+	public static final String ServerCmdHelp = "help";
+	public static final String ServerCmdClose = "close";
+	
 	public static void main(String[] args)
 	{
 		Server srvThd = new Server(IConstant.SERVER_PORT);
 		srvThd.start();
+		boolean isClosed = false;
 		
-		System.out.println("输入close关闭服务器：");
+		System.out.println("输入" + ServerCmdHelp + "以获取服务端使用帮助");
 		Scanner scan = new Scanner(System.in);
-		while(scan.hasNext()) {
+		while(!isClosed && scan.hasNext()) {
 			String input = scan.next();
-			if(input.equals("close")) {
-				srvThd.close();
-				break;
+			switch(input) {
+				case ServerCmdHelp: {
+					printHelp();
+					break;
+				}
+				case ServerCmdClose: {
+					srvThd.close();
+					isClosed = true;
+					break;
+				}
+				default: {
+					System.out.println("错误的指令！");
+					System.out.println("输入" + ServerCmdHelp + "以获取服务端使用帮助");
+					break;
+				}
 			}
-		}
+		} // end while
 		scan.close();
 		System.exit(0);
+	}
+	
+	public static void printHelp() {
+		System.out.println("-------------------------------------------------");
+		System.out.println("服务端使用帮助");
+		System.out.println("输入" + ServerCmdClose + "以关闭服务器");
+		System.out.println("-------------------------------------------------");
 	}
 }

@@ -132,13 +132,17 @@ public class ServerSocketThread extends Thread {
 		}
 	}
 	
-	public void sendMesToClient(Message mes) throws IOException{
+	public void sendMesToClient(Message mes) {
 		System.out.println("向客户端发送信息");
 		mes.setMessageType(MessageType.operFeedback);
 		mes.setLastOperState(true);
-		ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
-		response.writeObject(mes); // 这里统一发回数据给客户端
-		response.flush();
+		try {
+			ObjectOutputStream response = new ObjectOutputStream(clientSocket.getOutputStream());
+			response.writeObject(mes); // 这里统一发回数据给客户端
+			response.flush();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void close() {

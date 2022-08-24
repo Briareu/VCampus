@@ -21,8 +21,7 @@ public class Server extends Thread{
     @Override
     public void run() {
         // TODO Auto-generated method stub
-        try
-        {
+        try {
             System.out.println("服务端已启动，等待客户端连接..");
             
             while(!isClosed)
@@ -34,25 +33,22 @@ public class Server extends Thread{
                 thd.start();
                 ServerClientThreadMgr.add(this.thdNum.toString(), thd);
                 ++this.thdNum;
-            }
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        
-        try {
-    		if(!this.serverSocket.isClosed()) {
+            } // end while
+            
+            if(!this.serverSocket.isClosed()) {
     			this.serverSocket.close();
     		}
-    	} catch(IOException e) {
-    		e.printStackTrace();
-    	}
+            
+            ServerClientThreadMgr.clear();
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
     
     public void close() {
     	System.out.println("服务器关闭！");
     	this.isClosed = true;
-    	ServerClientThreadMgr.clear();
     }
 
 }

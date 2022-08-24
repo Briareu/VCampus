@@ -3,6 +3,8 @@ package seu.list.server.bz;
 
 import java.util.*;
 
+import seu.list.common.*;
+
 
 public class ServerClientThreadMgr {
 	private static Map<String, ServerSocketThread> clientThreadPool = new LinkedHashMap<String, ServerSocketThread>();
@@ -33,5 +35,13 @@ public class ServerClientThreadMgr {
 		}
 		clientThreadPool.clear();		
 	}
-
+	
+	public synchronized static void sendMesToAll(Message mes) {
+		Iterator<Map.Entry<String, ServerSocketThread>> entries = clientThreadPool.entrySet().iterator();
+		while(entries.hasNext()) {
+			Map.Entry<String, ServerSocketThread> entry = entries.next();
+			ServerSocketThread thd = entry.getValue();
+			thd.sendMesToClient(mes);
+		}
+	}
 }

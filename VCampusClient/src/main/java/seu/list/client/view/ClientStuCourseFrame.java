@@ -88,9 +88,9 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		jp2.setLayout(new FlowLayout(FlowLayout.RIGHT,50,10));
 		jp2.setBounds(0,HEIGHT-700,WIDTH,600);
 
-
+//		"课程编号","学年学期","课程","专业","授课教师","状态","类型"
 		Object[][] courseinformation= {};
-		Object[] courselist = {"课程编号","学年学期","课程","专业","授课教师","状态","类型"};
+		Object[] courselist = {"学年学期","课程编号","专业","课程","授课教师","状态","类型"};
 		DefaultTableModel model;
 		model = new DefaultTableModel(courseinformation, courselist);
 
@@ -104,6 +104,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		mes.setMessageType(MessageType.REQ_SHOW_ALL_LESSON);
 		Message rec=new Message();
 		rec=client.sendRequestToServer(mes);
+		System.out.println(rec.getContent());
 		Vector<String> allCourseContents =  rec.getContent();
 		System.out.println(allCourseContents.size());
 		Object sigRow[] = new  String[7];
@@ -323,7 +324,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 				jtb1.setModel(new DefaultTableModel(
 						allCourseTable,
 						new String[] {
-								"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+								"学年学期","课程编号","专业","课程","授课教师","状态","类型"
 						}
 				));
 				jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
@@ -370,7 +371,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			jtb1.setModel(new DefaultTableModel(
 					allCourseTable,
 					new String[] {
-							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+							"学年学期","课程编号","专业","课程","授课教师","状态","类型"
 					}
 			));
 			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
@@ -416,7 +417,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			jtb1.setModel(new DefaultTableModel(
 					allCourseTable,
 					new String[] {
-							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+							"学年学期","课程编号","专业","课程","授课教师","状态","类型"
 					}
 			));
 			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
@@ -468,7 +469,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			jtb1.setModel(new DefaultTableModel(
 					allCourseTable,
 					new String[] {
-							"课程编号","学年学期","课程","专业","授课教师","状态","类型"
+							"学年学期","课程编号","专业","课程","授课教师","状态","类型"
 					}
 			));
 			jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
