@@ -41,7 +41,7 @@ public class DormitoryAdminClient extends JFrame {
 	private JTable table;
 	static Socket socket;
 	public int k=0;
-	private ArrayList<Dormitory> Dorm=new ArrayList<Dormitory>();
+	public ArrayList<Dormitory> Dorm=new ArrayList<Dormitory>();
 
 	/**
 	 * Launch the application.
@@ -261,7 +261,6 @@ public class DormitoryAdminClient extends JFrame {
 		// TODO Auto-generated method stub
 		Dormmodify Modify = new Dormmodify(this,socket);
 		Modify.setVisible(true);
-		SetTableShow();
 	}
 
 	protected void AddAct(ActionEvent e) {
@@ -274,52 +273,7 @@ public class DormitoryAdminClient extends JFrame {
 		// TODO Auto-generated method stub
 		Dormdelete delete = new Dormdelete(this,socket);
 		delete.setVisible(true);
-		SetTableShow();
 	}
-
-	private void SetTableShow() {
-		// TODO Auto-generated method stub
-
-		Object[][] dorminformation= {};
-		Object[] dormlist = {"学号","宿舍","床位","卫生评分","水费","电费","调换申请","维修申请"};
-		DefaultTableModel model;
-		model = new DefaultTableModel(dorminformation, dormlist);
-
-		Message mes = new Message();
-		mes.setUserType(1);
-		mes.setModuleType(ModuleType.Dormitory);
-		mes.setMessageType(MessageType.DormAdShow);
-		
-		
-		try {
-			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
-		}catch (IOException e) {
-			e.printStackTrace();
-		}
-		Client client = new Client(this.socket);
-		
-		Message rec=new Message();
-		rec=client.sendRequestToServer(mes);
-		ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) rec.getData();
-		System.out.println(allDormitoryContents);
-		System.out.println(allDormitoryContents.size());
-		Object sigRow[] = new  String[8];
-		for(int i=0;i<allDormitoryContents.size();i++) {
-			String[] arr=new String[8];
-			arr[0]=allDormitoryContents.get(i).getuserID();
-			arr[1]=allDormitoryContents.get(i).getDormitoryID();
-			arr[2]=String.valueOf(allDormitoryContents.get(i).getStudentBunkID());
-			arr[3]=String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
-			arr[4]=String.valueOf(allDormitoryContents.get(i).getWater());
-			arr[5]=String.valueOf(allDormitoryContents.get(i).getElectricity());
-			arr[6]=allDormitoryContents.get(i).getStudentExchange();
-			arr[7]=allDormitoryContents.get(i).getDormitoryMaintain();
-			
-			model.addRow(arr);
-			table.setModel(model);
-		}
-	}
-
 
 	protected void SearchAct(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -344,6 +298,10 @@ public class DormitoryAdminClient extends JFrame {
 		Message rec = new Message();
 		rec = client.sendRequestToServer(mes);
 		ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) rec.getData();
+		if(allDormitoryContents.size()==0) {
+			JOptionPane.showMessageDialog(null, "非法查询！", "提示", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		Dorm=allDormitoryContents;
 		System.out.println(allDormitoryContents);
 		System.out.println(allDormitoryContents.size());
@@ -369,6 +327,11 @@ public class DormitoryAdminClient extends JFrame {
 		Object[][] dorminformation = {};
 		Object[] dormlist = { "学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请" };
 		DefaultTableModel model;
+		for (int i=0;i<Dorm.size();i++)
+			if(Dorm.get(i).getuserID().equals(temp.getuserID())) {
+				JOptionPane.showMessageDialog(null, "非法添加！", "提示", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 		Dorm.add(temp);
 		model = new DefaultTableModel(dorminformation, dormlist);
 		System.out.println(Dorm);
@@ -391,9 +354,17 @@ public class DormitoryAdminClient extends JFrame {
 
 	public void updateFrameD(String userID) {
 		// TODO Auto-generated method stub
+		boolean flag=false;
 		for (int i=0;i<Dorm.size();i++)
 		if (Dorm.get(i).getuserID().equals(userID))
+		{
 			Dorm.remove(i);
+			flag=true;
+		}
+		if(!flag) {
+			JOptionPane.showMessageDialog(null, "非法删除！", "提示", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		Object[][] dorminformation = {};
 		Object[] dormlist = { "学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请" };
 		DefaultTableModel model;
@@ -418,11 +389,13 @@ public class DormitoryAdminClient extends JFrame {
 
 	public void updateFrameM(ArrayList<String> para) {
 		// TODO Auto-generated method stub
+		boolean flag=false;
 		String userID = para.get(0);
 		String usertype = para.get(1);
 		int temp = Integer.parseInt(para.get(2));
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
+				flag=true;
 				if ("卫生评分".equals(usertype)) {
 					Dorm.get(i).setDormitoryScore(temp);
 				}
@@ -433,7 +406,10 @@ public class DormitoryAdminClient extends JFrame {
 					Dorm.get(i).setElectricity(temp);
 				}
 			}
-		System.out.println("!!!!!!!!!!!!!!");
+		if(!flag) {
+			JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		System.out.println(Dorm);
 		Object[][] dorminformation = {};
 		Object[] dormlist = { "学号", "宿舍", "床位", "水费", "电费", "卫生评分", "调换申请", "维修申请" };
@@ -457,4 +433,5 @@ public class DormitoryAdminClient extends JFrame {
 		}
 	}
 }
+
 
