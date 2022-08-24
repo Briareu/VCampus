@@ -73,6 +73,14 @@ public class LibraryManage extends JFrame {
 		
 		setBounds(100, 100, 770, 520);
 		
+		//设置背景图片
+		//把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
+		ImageIcon image=new ImageIcon("src/main/resources/image/P3.jpg"); 
+		JLabel backlabel=new JLabel(image);
+		backlabel.setSize(image.getIconWidth(),image.getIconHeight());
+		this.getLayeredPane().add(backlabel,new Integer(Integer.MIN_VALUE));
+
+		
 		layerPane=new JLayeredPane();
 		layerPane.setInheritsPopupMenu(true);
 		layerPane.setIgnoreRepaint(true);
@@ -84,24 +92,28 @@ public class LibraryManage extends JFrame {
 		layerPane.setLayer(contentPane, 2);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		layerPane.add(contentPane);
+		contentPane.setOpaque(false);  //把窗口面板设为内容面板并设为透明
 		
 		modifyPane = new JPanel();
 		modifyPane.setBackground(UIManager.getColor("Panel.background"));
 		layerPane.setLayer(modifyPane, 200);
 		modifyPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		layerPane.add(modifyPane, BorderLayout.NORTH);		
+		layerPane.add(modifyPane, BorderLayout.NORTH);	
+		modifyPane.setOpaque(false);
 		
 		addPane = new JPanel();
 		layerPane.setLayer(addPane, 300);
 		addPane.setBackground(UIManager.getColor("Panel.background"));
 		addPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		layerPane.add(addPane, BorderLayout.WEST);	
+		addPane.setOpaque(false);
 		
 		deletePane = new JPanel();
 		layerPane.setLayer(deletePane, 400);
 		deletePane.setBackground(UIManager.getColor("Panel.background"));
 		deletePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		layerPane.add(deletePane, BorderLayout.EAST);
+		deletePane.setOpaque(false);
 		
 		delIDLabel = new JLabel("书号");
 		delIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -311,8 +323,16 @@ public class LibraryManage extends JFrame {
 		buttonGroup.add(stockRadioButton);
 		stockRadioButton.setFont(new Font("宋体", Font.BOLD, 25));
 		
+		nameRadioButton.setOpaque(false);
+		idRadioButton.setOpaque(false);
+		authorRadioButton.setOpaque(false);
+		pressRadioButton.setOpaque(false);
+		stockRadioButton.setOpaque(false);
+		
 		panel = new JPanel();
 		panel.setForeground(UIManager.getColor("Panel.background"));
+		panel.setOpaque(false);
+		
 		GroupLayout gl_modifyPane = new GroupLayout(modifyPane);
 		gl_modifyPane.setHorizontalGroup(
 			gl_modifyPane.createParallelGroup(Alignment.LEADING)
@@ -454,14 +474,13 @@ public class LibraryManage extends JFrame {
 		findText.setText("（书名/书号）");
 		findText.setColumns(10);
 		
-		JButton findButton = new JButton("查询");
+	
+		JButton findButton = new JButton();
 		findButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FindAvt(e);
 			}
 		});
-		findButton.setFont(new Font("宋体", Font.BOLD, 25));
-		findButton.setBackground(SystemColor.activeCaption);
 		
 		deleteButton = new JButton("删除");
 		deleteButton.addActionListener(new ActionListener() {
@@ -556,13 +575,19 @@ public class LibraryManage extends JFrame {
 		}
 		
 		table = new JTable(tablemodel);
-		table.setBackground(SystemColor.info);
+		table.setBackground(Color.WHITE);
 		table.setFillsViewportHeight(true);
 		
 		table.setModel(tablemodel);
 		
 		scrollPane.setViewportView(table);
 		contentPane.setLayout(gl_contentPane);
+		
+		
+		//设置图片
+		findButton.setIcon(new ImageIcon("src/main/resources/image/lib_button_search.png"));
+		findButton.setBorder(BorderFactory.createEmptyBorder());
+		findButton.setContentAreaFilled(false);//除去默认的背景填充 
 		
 		contentPane.setVisible(true);
 		modifyPane.setVisible(false);
@@ -876,4 +901,23 @@ public class LibraryManage extends JFrame {
 			}
 		     return true;
 		  }
+	
+	public class BackgroundPanel extends JPanel {         
+		     /** 
+		      *  
+		      */  
+		     private static final long serialVersionUID = -6352788025440244338L;  
+		       
+		     private Image image = null;  
+		   
+		     public BackgroundPanel(Image image) {  
+		         this.image = image;  
+		     }  
+		   
+		     // 固定背景图片，允许这个JPanel可以在图片上添加其他组件  
+		     protected void paintComponent(Graphics g) {  
+		         g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);  
+		     }  
+		 } 
+
 }
