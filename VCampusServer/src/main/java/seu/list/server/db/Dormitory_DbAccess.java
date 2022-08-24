@@ -1,4 +1,3 @@
-
 package seu.list.server.db;
 
 import java.sql.*;
@@ -15,10 +14,12 @@ public class Dormitory_DbAccess {
 			// 装载驱动
 			
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			
+			String dbpath = "src\\main\\resources\\vCampus.accdb";
+			String user="";
+			String passwd="";
 			// 建立连接
-			String url = "jdbc:ucanaccess://C:\\Users\\BUG\\Desktop\\Dormitory.mdb";
-			conn = DriverManager.getConnection(url);
+			String url = "jdbc:ucanaccess://"+dbpath;
+			conn = DriverManager.getConnection(url,user,passwd);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -42,4 +43,6 @@ public class Dormitory_DbAccess {
 		}
 	}
 }
+
+
 
