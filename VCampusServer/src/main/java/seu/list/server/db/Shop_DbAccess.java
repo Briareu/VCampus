@@ -27,8 +27,10 @@ public class Shop_DbAccess {
 		}// 这个驱动的地址不要改
 		
 		try {
+			//con = DriverManager
+					//.getConnection("jdbc:ucanaccess://src/main/resources/db_vCampus.accdb");
 			con = DriverManager
-					.getConnection("jdbc:ucanaccess://src/main/resources/db_vCampus.accdb");
+					.getConnection("jdbc:ucanaccess://src/main/resources/vCampus.accdb");
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();

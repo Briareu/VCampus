@@ -4,6 +4,7 @@ package seu.list.client.view;
 
 
 import seu.list.client.bz.Client;
+import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
@@ -295,7 +296,8 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 								}else {
 									//empty body
 								}
-								temp.setStudentcredit(Double.parseDouble(jtf_money.getText()));
+								//temp.setStudentcredit(Double.parseDouble(jtf_money.getText()));
+								temp.setStudentcredit(Integer.parseInt(jtf_money.getText()));
 								temp.setStudentName(jtf_name.getText());
 								
 								Message mes = new Message();

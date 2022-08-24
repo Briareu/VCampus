@@ -37,24 +37,14 @@ public class ClientMainFrame {
 
 		
 		// test
-<<<<<<< HEAD
-		
+		/*
 		String testPwd = "sadadsadq";
 		String testUserAdminID = "10001";
 		String testUserStuID = "00001";
 		MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
 		//MainMenu mainMenu = new MainMenu(0, testUserStuID, testPwd, socket);
 		mainMenu.setVisible(true);
-=======
-
-//		String testPwd = "sadadsadq";
-//		String testUserAdminID = "10001";
-//		String testUserStuID = "00001";
-//		//MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
-//		MainMenu mainMenu = new MainMenu(0, testUserStuID, testPwd, socket);
-//		mainMenu.setVisible(true);
->>>>>>> e95367aa3911d1a4ad94c40f716e12b43fd7737f
-		
+		*/
 		// test
 		
 		

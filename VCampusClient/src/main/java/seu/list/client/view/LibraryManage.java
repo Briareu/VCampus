@@ -69,7 +69,8 @@ public class LibraryManage extends JFrame {
 		booklist=(ArrayList<Book>)serverResponse.getData();
 
 		setTitle("图书馆-管理员");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		setBounds(100, 100, 770, 520);
 		
