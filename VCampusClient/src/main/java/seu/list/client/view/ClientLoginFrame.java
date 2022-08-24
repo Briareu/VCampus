@@ -41,7 +41,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         getContentPane().setBackground(Color.WHITE);
         setUndecorated(true);//去边框
 
-        ImageIcon background = new ImageIcon("D:\\seu\\vcampus\\src\\main\\resources\\WindowsIcon\\images\\21.jpg");//背景
+        ImageIcon background = new ImageIcon("/src/main/resources/image/21.jpg");//背景
         JLabel backgroundCon = new JLabel(background);//将背景图放在JLbel中
         backgroundCon.setBounds(0, 0, background.getIconWidth(),background.getIconHeight());
         getLayeredPane().add(backgroundCon, new Integer(Integer.MIN_VALUE));//放入LayeredPanel
@@ -119,12 +119,12 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
 
         jb_login.setBackground(new Color(255, 255, 255));
         jb_login.setSize(78, 42);
-        jb_login.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\java\\virtualSchoolClient\\src\\image\\login3_1.png"));
+        jb_login.setIcon(new ImageIcon("/src/main/resources/image/login3_1.png"));
         jb_login.setContentAreaFilled(false);
         jb_login.setBorder(null);//去边框
 
         jb_register= new JButton();
-        jb_register.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\java\\virtualSchoolClient\\src\\image\\login4_1.png"));
+        jb_register.setIcon(new ImageIcon("/src/main/resources/image/login4_1.png"));
         jb_register.setBounds(242, 18, 78, 42);
         jb_register.setBorder(null);
 
@@ -207,7 +207,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
 
 
         Maximized = new JButton("");
-        Maximized.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\java\\virtualSchoolClient\\src\\image\\login5_1.png"));
+        Maximized.setIcon(new ImageIcon("/src/main/resources/image/login5_1.png"));
         Maximized.setBounds(1149, 5, 18, 18);
         Maximized.setContentAreaFilled(false);
         Maximized.setBorder(null);
@@ -216,7 +216,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         border.add(Maximized);
 
         Closed = new JButton("");
-        Closed.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\java\\virtualSchoolClient\\src\\image\\login6_1.png"));
+        Closed.setIcon(new ImageIcon("/src/main/resources/image/login6_1.png"));
         Closed.setContentAreaFilled(false);
         Closed.setBorder(null);
         Closed.setBounds(1175, 5, 18, 18);
@@ -227,7 +227,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
 
         Minimized = new JButton("");
 
-        Minimized.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\java\\virtualSchoolClient\\src\\image\\login7_1.png"));
+        Minimized.setIcon(new ImageIcon("/src/main/resources/image/login7_1.png"));
         Minimized.setContentAreaFilled(false);
         Minimized.setBorder(null);
         Minimized.setBounds(1121, 5, 18, 18);
@@ -239,7 +239,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         JLabel Jlb_photo = new JLabel("");
         Jlb_photo.setBounds(150, 100, 550, 400);
         getContentPane().add(Jlb_photo);
-        Jlb_photo.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\resources\\WindowsIcon\\images\\20.jpg"));
+        Jlb_photo.setIcon(new ImageIcon("/src/main/resources/image/20.jpg"));
 //		c.add(jp1);
 //		c.add(jp2);
 //		c.add(jp3);
@@ -252,14 +252,14 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
 //		getContentPane().add(lblNewLabel);
 
         JLabel backicon1 = new JLabel("");
-        backicon1.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\java\\virtualSchoolClient\\src\\image\\white.png"));
+        backicon1.setIcon(new ImageIcon("/src/main/resources/image/white.png"));
         backicon1.setForeground(Color.BLACK);
         backicon1.setBackground(Color.WHITE);
         backicon1.setBounds(509, 111, 268, 300);
         getContentPane().add(backicon1);
 
         JLabel back = new JLabel("");
-        back.setIcon(new ImageIcon("D:\\seu\\vcampus\\src\\main\\resources\\WindowsIcon\\images\\21.jpg"));
+        back.setIcon(new ImageIcon("/src/main/resources/image/21.jpg"));
         back.setBounds(0, 0, 1200, 700);
         getContentPane().add(back);
 
