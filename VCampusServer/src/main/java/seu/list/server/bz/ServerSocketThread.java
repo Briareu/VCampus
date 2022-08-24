@@ -90,7 +90,7 @@ public class ServerSocketThread extends Thread {
 						LibraryUserServer libServer = new LibraryUserServer(message);
 						libServer.execute();
 						serverResponse = libServer.getMesToClient();
-						System.out.println(serverResponse.getContent());
+						//System.out.println(serverResponse.getContent());
 						break;
 					}
 					case ModuleType.Shop: {// 商店模块

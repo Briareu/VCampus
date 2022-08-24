@@ -319,7 +319,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         //最大化最小化以及关闭操作
         if (arg0.getActionCommand().equals("Closed")) {
             this.dispose();
-            ClientMainFrame.isClosed=true;
+            ClientMainFrame.close();
         }
         else if (arg0.getActionCommand().equals("Minimized")) {
             this.setExtendedState(ICONIFIED);
