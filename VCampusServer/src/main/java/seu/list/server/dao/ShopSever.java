@@ -52,11 +52,13 @@ public class ShopSever extends Shop_DbAccess{
 				String para=this.mesFromClient.getData()+"";
 				int ID=Integer.parseInt(para);
 				this.Deletegoods(ID);
+				this.mesToClient.setData(1);
 				break;
 			}
 			
 			case MessageType.GoodsAdd:{
 				this.Addgoods((Goods)this.mesFromClient.getData());
+				this.mesToClient.setData(1);
 				break;
 			}
 			
