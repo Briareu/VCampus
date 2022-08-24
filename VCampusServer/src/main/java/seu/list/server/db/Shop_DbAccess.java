@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-
 /**  
  * 
  *
@@ -17,7 +15,9 @@ public class Shop_DbAccess {
     static Connection con = null;
 	Statement stmt = null;
 	ResultSet rs=null;
-	
+	/*public static void main(String[] args) {
+	   getConnection();
+	}*/
 	public static  Connection getConnection() {
 		try {
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
@@ -28,7 +28,7 @@ public class Shop_DbAccess {
 		
 		try {
 			con = DriverManager
-					.getConnection("jdbc:ucanaccess://db/Databaseshop.accdb");
+					.getConnection("jdbc:ucanaccess://src/main/resources/db_vCampus.accdb");
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
