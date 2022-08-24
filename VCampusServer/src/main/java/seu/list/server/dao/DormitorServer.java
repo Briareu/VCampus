@@ -1,6 +1,7 @@
 package seu.list.server.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Vector;
@@ -36,10 +37,6 @@ public class DormitorServer extends Dormitory_DbAccess{
 			this.mesToClient.setData(this.Maintain((ArrayList<String>)this.mesFromClient.getData()));
 			break;
 		case MessageType.DormExcange:
-				/*
-				con = getConnection();
-				s = con.createStatement();// 创建SQL语句对象
-				rs = s.executeQuery("select * from Dormitory");	// 查询商品信息*/
 			this.mesToClient.setData(this.Exchange((ArrayList<String>)this.mesFromClient.getData()));
 			break;
 		case MessageType.DormStShow:
@@ -47,11 +44,6 @@ public class DormitorServer extends Dormitory_DbAccess{
 			break;
 		case MessageType.DormAdd:
 			try {
-				//数据库添加？？？？
-				/*int result=0;
-				result=s.executeUpdate("insert into Dormitory values('"+temp.getuserID()+"','"+temp.getDormitoryID()+"','"+temp.getStudentBunkID()+
-						"','"+temp.getDormitoryScore()+"','"+temp.getWater()+"','"+temp.getElectricity()+"','"+temp.getDormitoryMaintain()+"','"+
-						temp.getStudentExchange()+"','"+0+"')");*/
 				this.mesToClient.setData(this.Add((Dormitory)this.mesFromClient.getData()));
 			} catch (Exception e2) {
 				// TODO Auto-generated catch block
@@ -63,12 +55,6 @@ public class DormitorServer extends Dormitory_DbAccess{
 			break;
 		case MessageType.DormModify:
 			this.mesToClient.setData(this.Modify((ArrayList<String>)this.mesFromClient.getData()));
-				//int result=0;
-				/*
-				con = getConnection();
-				s = con.createStatement();// 创建SQL语句对象
-				rs = s.executeQuery("select * from Dormitory");	// 查询商品信息
-				this.mesToClient.setData(tdorm);*/
 			break;
 		case MessageType.DormAdShow:		
 			this.mesToClient.setData(this.AllDormitory());
@@ -93,6 +79,12 @@ public class DormitorServer extends Dormitory_DbAccess{
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				Dorm.get(i).setStudentExchange(maintain);
 				temp=Dorm.get(i);
+				try {
+					int result=s.executeUpdate("update tb_Dormitory set DormitoryMaintain='"+maintain+"'where userID='"+userID+"'");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		return temp;
 	}
@@ -108,6 +100,12 @@ public class DormitorServer extends Dormitory_DbAccess{
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				Dorm.get(i).setStudentExchange(exchange);
 				temp=Dorm.get(i);
+				try {
+					int result=s.executeUpdate("update tb_Dormitory set StudentExchange='"+exchange+"'where userID='"+userID+"'");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		return temp;
 	}
@@ -137,12 +135,30 @@ public class DormitorServer extends Dormitory_DbAccess{
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				if ("卫生评分".equals(usertype)) {
 					Dorm.get(i).setDormitoryScore(temp);
+					try {
+						int result=s.executeUpdate("update tb_Dormitory set DormitoryScore='"+temp+"'where userID='"+userID+"'");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if ("水费".equals(usertype)) {
 					Dorm.get(i).setWater(temp);
+					try {
+						int result=s.executeUpdate("update tb_Dormitory set Water='"+temp+"'where userID='"+userID+"'");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if ("电费".equals(usertype)) {
 					Dorm.get(i).setElectricity(temp);
+					try {
+						int result=s.executeUpdate("update tb_Dormitory set Electricity='"+temp+"'where userID='"+userID+"'");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		return Dorm;
@@ -151,14 +167,28 @@ public class DormitorServer extends Dormitory_DbAccess{
 	private ArrayList<Dormitory> Add(Dormitory data) {
 		ArrayList<Dormitory> dorm=AllDormitory();
 		dorm.add(data);
+		try {
+			int result=s.executeUpdate("insert into tb_Dormitory values('"+data.getuserID()+"','"+data.getDormitoryID()+"','"+data.getStudentBunkID()+
+					"','"+data.getWater()+"','"+data.getElectricity()+"','"+data.getDormitoryScore()
+					+"','"+data.getDormitoryMaintain()+"','"+data.getStudentExchange()+"','"+0+"')");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return dorm;
 	}
 
-	private ArrayList<Dormitory> Delete(String string) {
+	private ArrayList<Dormitory> Delete(String string){
 		// TODO Auto-generated method stub
 		ArrayList<Dormitory> dorm=AllDormitory();
 		for (int i=0;i<dorm.size();i++)
 			if (dorm.get(i).getuserID().equals(string)) dorm.remove(i);
+		try {
+			int result=s.executeUpdate("delete from tb_Dormitory where userID='"+string+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return dorm;
 	}
 
@@ -169,7 +199,7 @@ public class DormitorServer extends Dormitory_DbAccess{
 		try {
 			con = getConnection();
 			s = con.createStatement();// 创建SQL语句对象
-			rs = s.executeQuery("select * from Dormitory"); // 查询商品信息
+			rs = s.executeQuery("select * from tb_Dormitory"); // 查询商品信息
 			// 把数据库中的数据读入
 			
 			while (rs.next()) {
