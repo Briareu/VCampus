@@ -153,9 +153,13 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 			}else if(e.getActionCommand().equals(this.cmdClass)) { // 学籍
 				if(userType == 0) {
 					ClassStudentClient classStu = new ClassStudentClient(this.uID, this.pwd, temp);
+					temp.setVisible(false);
+					temp.setEnabled(false);
 					classStu.setVisible(true);
 				}else {
-					ClassAdminClient classAdmin = new ClassAdminClient();
+					ClassAdminClient classAdmin = new ClassAdminClient(temp);
+					temp.setVisible(false);
+					temp.setEnabled(false);
 					classAdmin.setVisible(true);
 				}
 			}else if(e.getActionCommand().equals(this.cmdLib)) { //图书馆
