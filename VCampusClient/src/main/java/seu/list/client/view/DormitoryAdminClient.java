@@ -254,7 +254,10 @@ public class DormitoryAdminClient extends JFrame {
 			model.addRow(arr);
 			table.setModel(model);
 		}
+
 		
+		//居中显示
+		this.setLocationRelativeTo(null);
 	}
 
 	protected void ModifyAct(ActionEvent e) {

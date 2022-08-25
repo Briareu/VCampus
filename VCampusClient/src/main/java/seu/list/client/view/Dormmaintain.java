@@ -200,6 +200,9 @@ public class Dormmaintain extends JDialog {
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setLayout(groupLayout);
+		
+		//居中显示
+		this.setLocationRelativeTo(null);
 	}
 
 	protected void MaintainAct(ActionEvent e) {

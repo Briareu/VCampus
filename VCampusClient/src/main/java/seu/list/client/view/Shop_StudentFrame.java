@@ -450,7 +450,10 @@ public class Shop_StudentFrame {
 		
 		
 		
+
 		
+		//居中显示
+		frame.setLocationRelativeTo(null);
 	}
 	
 	private void DelGoods(ActionEvent e) {

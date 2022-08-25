@@ -1,5 +1,6 @@
 package seu.list.client.view;
 
+import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 

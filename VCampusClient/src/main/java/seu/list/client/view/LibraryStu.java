@@ -387,6 +387,11 @@ public class LibraryStu extends JFrame {
 		contentPane.setVisible(true);
 		lendPane.setVisible(false);
 		returnPane.setVisible(false);
+		
+
+		
+		//居中显示
+		this.setLocationRelativeTo(null);
 	}
 
 	

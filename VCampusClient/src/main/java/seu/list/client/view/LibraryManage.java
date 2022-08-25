@@ -595,6 +595,11 @@ public class LibraryManage extends JFrame {
 		panel.setVisible(false);
 		addPane.setVisible(false);
 		deletePane.setVisible(false);
+		
+
+		
+		//居中显示
+		this.setLocationRelativeTo(null);
 	}
 
 	//修改页面取消

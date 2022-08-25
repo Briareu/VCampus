@@ -199,6 +199,9 @@ public class Dormmodify extends JDialog {
 		);
 		buttonPane.setLayout(gl_buttonPane);
 		getContentPane().setLayout(groupLayout);
+		
+		//居中显示
+		this.setLocationRelativeTo(null);
 	}
 
 	protected void ModifyAct(ActionEvent e) {

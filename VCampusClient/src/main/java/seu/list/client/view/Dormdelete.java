@@ -166,6 +166,9 @@ public class Dormdelete extends JDialog {
 					.addGap(12))
 		);
 		getContentPane().setLayout(groupLayout);
+		
+		//居中显示
+		this.setLocationRelativeTo(null);
 	}
 
 	protected void DeleteAct(ActionEvent e) {

@@ -324,7 +324,7 @@ public class Shop_AdminFrame {
 		btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				frame.setVisible(false);
 			}
 		});
 		
@@ -432,9 +432,8 @@ public class Shop_AdminFrame {
 		
 		
 		
-		
-		
-		
+		// 居中显示
+		frame.setLocationRelativeTo(null);
 	}
 	
 	private void DelGoods(ActionEvent e) {
