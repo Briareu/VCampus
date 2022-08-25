@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -39,6 +40,7 @@ import seu.list.common.Student;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class ClassAdminForModify extends JFrame {
 
@@ -54,6 +56,7 @@ public class ClassAdminForModify extends JFrame {
 	private Vector<ClassManage> ClassTemp = null;
 	private Vector<Integer> StudentIndex = null;
 	private Vector<Integer> ClassIndex = null;
+	private JLabel lblNewLabel_1;
 
 	private enum MODEL {
 		ClASSMODIFY, STUDENTMODIFY, CLASSTEMP, STUDENTTEMP
@@ -1010,6 +1013,15 @@ public class ClassAdminForModify extends JFrame {
 				close();
 			}
 		});
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 800, 100);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
 	}
 	
 	private void UpdateTable() {
@@ -1101,6 +1113,9 @@ public class ClassAdminForModify extends JFrame {
 		List<Object> sendData = new ArrayList<Object>() ;
 		sendData.add(14);//teacher, major, class
 		sendData.add(classtemp.getTeacherID());
+		//System.out.println(classtemp.getTeacherID());
+		//System.out.println(classtemp.getMajor());
+		//System.out.println(classtemp.getClassID());
 		sendData.add(classtemp.getMajor());
 		sendData.add(classtemp.getClassID());
 		mes.setData(sendData);

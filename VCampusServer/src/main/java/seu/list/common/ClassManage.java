@@ -31,7 +31,7 @@ public class ClassManage implements Serializable{
 		super();
 	}
 	
-	public ClassManage(String classid, String major, String teacherID, int classsize)
+	public ClassManage(String classid, String teacherID, String major, int classsize)
 	{
 		ClassID = classid;
 		Major = major;

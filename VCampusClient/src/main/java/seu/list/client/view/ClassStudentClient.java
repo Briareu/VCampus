@@ -618,6 +618,8 @@ public class ClassStudentClient extends JFrame {
 		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
 		lblNewLabel_1.setBounds(0, 0, 900, 100);
 		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
 	}
 	void save(Student temp) {
 		Message mes = new Message();

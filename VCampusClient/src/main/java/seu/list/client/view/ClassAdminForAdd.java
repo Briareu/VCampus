@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -24,6 +25,7 @@ import java.util.Vector;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import seu.list.client.bz.Client;
@@ -51,6 +53,7 @@ public class ClassAdminForAdd extends JFrame {
 	};
 	private MODEL now = MODEL.STUDENTADD;
 	private ClassAdminClient CAC = null;
+	private JLabel lblNewLabel_1;
 	/**
 	 * Launch the application.
 	 */
@@ -390,6 +393,15 @@ public class ClassAdminForAdd extends JFrame {
 				close();
 			}
 		});
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 800, 80);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
 	}
 	void clear() {
 		if(now == MODEL.STUDENTADD) {

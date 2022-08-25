@@ -185,6 +185,7 @@ public class ClassStudentForInvest extends JFrame {
 					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
+		this.setLocationRelativeTo(null);
 	}
 	void close() {
 		CSC.update(Credit);

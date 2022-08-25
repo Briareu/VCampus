@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -38,6 +39,7 @@ import seu.list.common.Student;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class ClassAdminForDelete extends JFrame {
 
@@ -53,6 +55,7 @@ public class ClassAdminForDelete extends JFrame {
 	private Vector<ClassManage> ClassTemp = null;
 	private Vector<Integer> StudentIndex = null;
 	private Vector<Integer> ClassIndex = null;
+	private JLabel lblNewLabel_1;
 
 	private enum MODEL {
 		CLASSDELETE, STUDENTDELTE, CLASSTEMP, STUDENTTEMP
@@ -668,6 +671,15 @@ public class ClassAdminForDelete extends JFrame {
 				close();
 			}
 		});
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 800, 100);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
 	}
 	
 	private void UpdateTable() {
