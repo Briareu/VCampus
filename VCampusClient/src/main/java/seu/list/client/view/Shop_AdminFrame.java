@@ -55,7 +55,7 @@ import javax.swing.JTextPane;
 import javax.swing.JPanel;
 
 public class Shop_AdminFrame {
-
+    ArrayList<Goods>GoodsList;
 	private JFrame frame;
 	private JTextField textField;
 	private JTable table;
@@ -99,22 +99,16 @@ public class Shop_AdminFrame {
 	 */
 	public Shop_AdminFrame() {
 		initialize();
+		GoodsList=new ArrayList<Goods>();
 		frame.setVisible(true);
+		
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		ArrayList<Goods> Godoslist=new ArrayList<Goods>();		
-	    Message mes =new Message();
-		mes.setMessageType(MessageType.Goodsgetall);
-		Message serverResponse=new Message();
-		ArrayList<Goods> goodslist = (ArrayList<Goods>)serverResponse.getData();
-			
-			
-			
+						
 		setFrame(new JFrame());
 		getFrame().setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/image/shop_manager_bg.jpg"));
 		getFrame().setFont(new Font("微软雅黑", Font.BOLD, 17));
@@ -323,7 +317,6 @@ public class Shop_AdminFrame {
 			}
 		});
 		
-		// JScrollPane scrollPane = new JScrollPane(table);
 		
 		btnNewButton_1 = new JButton("");
 		btnNewButton_1.setBounds(10, 274, 60, 25);
@@ -375,21 +368,6 @@ public class Shop_AdminFrame {
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setRowHeight(25);
 		show();
-		/*table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-			},
-			new String[] {
-				"\u5546\u54C1\u7F16\u53F7", "\u5546\u54C1\u540D\u79F0", "\u5355\u4EF7", "\u5E93\u5B58"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, true, true
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});*/
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
 		
 		
@@ -568,17 +546,17 @@ public class Shop_AdminFrame {
 		}
 	}
 	
-	public void show() {
-		 ArrayList<Goods> Godoslist=new ArrayList<Goods>();		
-			Message mes =new Message();
-			mes.setMessageType(MessageType.Goodsgetall);
-			mes.setModuleType(ModuleType.Shop);
-			Client client=new Client(ClientMainFrame.socket);
-			Message serverResponse= client.sendRequestToServer(mes); 
-			ArrayList<Goods> goodslist = (ArrayList<Goods>)serverResponse.getData();
-			
-			DefaultTableModel tablemodel;
-			tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
+	public void show() {	
+		Message mes =new Message();
+		mes.setMessageType(MessageType.Goodsgetall);
+		mes.setModuleType(ModuleType.Shop);
+		Client client=new Client(ClientMainFrame.socket);
+		Message serverResponse= client.sendRequestToServer(mes); 
+		GoodsList = (ArrayList<Goods>)serverResponse.getData();
+		
+		
+		DefaultTableModel tablemodel;
+		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 					"商品编号", "商品名称", "单价", "库存"}) {
 
 					
@@ -594,12 +572,12 @@ public class Shop_AdminFrame {
 						return columnEditables[column];
 					}
 			};
-			for(int i=0;i<goodslist.size();i++) {
+		for(int i=0;i<GoodsList.size();i++) {
 				String tempgoods[]=new String[4];
-				tempgoods[0]=goodslist.get(i).getGoodsid()+"";
-				tempgoods[1]=goodslist.get(i).getGoodsname();
-				tempgoods[2]=goodslist.get(i).getGoodsprice()+"";
-				tempgoods[3]=goodslist.get(i).getGoodsnumber()+"";
+				tempgoods[0]=GoodsList.get(i).getGoodsid()+"";
+				tempgoods[1]=GoodsList.get(i).getGoodsname();
+				tempgoods[2]=GoodsList.get(i).getGoodsprice()+"";
+				tempgoods[3]=GoodsList.get(i).getGoodsnumber()+"";
 				tablemodel.addRow(tempgoods);
 			}
 			table.setModel(tablemodel);
