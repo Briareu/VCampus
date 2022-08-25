@@ -140,7 +140,6 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MainMenu temp = this;
 		try {
 			if(e.getActionCommand().equals(this.cmdCourse)){ // 选课
 				if(userType==0){
@@ -152,14 +151,10 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 				}
 			}else if(e.getActionCommand().equals(this.cmdClass)) { // 学籍
 				if(userType == 0) {
-					ClassStudentClient classStu = new ClassStudentClient(this.uID, this.pwd, temp);
-					temp.setVisible(false);
-					temp.setEnabled(false);
+					ClassStudentClient classStu = new ClassStudentClient(this.uID, this.pwd);
 					classStu.setVisible(true);
 				}else {
-					ClassAdminClient classAdmin = new ClassAdminClient(temp);
-					temp.setVisible(false);
-					temp.setEnabled(false);
+					ClassAdminClient classAdmin = new ClassAdminClient();
 					classAdmin.setVisible(true);
 				}
 			}else if(e.getActionCommand().equals(this.cmdLib)) { //图书馆

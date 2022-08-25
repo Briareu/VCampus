@@ -434,6 +434,7 @@ public class Shop_AdminFrame {
 		
 		// 居中显示
 		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(2);
 	}
 	
 	private void DelGoods(ActionEvent e) {

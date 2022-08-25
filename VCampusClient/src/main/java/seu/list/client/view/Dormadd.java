@@ -280,6 +280,7 @@ public class Dormadd extends JDialog {
 		
 		//居中显示
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 	public ArrayList<Dormitory> getAll()
 	{

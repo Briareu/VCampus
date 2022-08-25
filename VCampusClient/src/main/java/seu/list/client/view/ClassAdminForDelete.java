@@ -680,6 +680,8 @@ public class ClassAdminForDelete extends JFrame {
 		this.getContentPane().add(lblNewLabel_1);
 		
 		this.setLocationRelativeTo(null);
+
+		this.setDefaultCloseOperation(2);
 	}
 	
 	private void UpdateTable() {

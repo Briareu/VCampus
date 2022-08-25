@@ -402,6 +402,7 @@ public class ClassAdminForAdd extends JFrame {
 		this.getContentPane().add(lblNewLabel_1);
 		
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 	void clear() {
 		if(now == MODEL.STUDENTADD) {

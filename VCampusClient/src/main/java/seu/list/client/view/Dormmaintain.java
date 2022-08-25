@@ -203,6 +203,7 @@ public class Dormmaintain extends JDialog {
 		
 		//居中显示
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 
 	protected void MaintainAct(ActionEvent e) {

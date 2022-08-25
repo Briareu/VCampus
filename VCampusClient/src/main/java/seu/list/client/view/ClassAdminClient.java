@@ -60,7 +60,6 @@ public class ClassAdminClient extends JFrame {
 	private Vector<ClassManage> Clss = null;
 	private JScrollPane scrollPane;
 	private Vector<Student> StuTemp = null;
-	private MainMenu menu = null;
 	private JLabel lblNewLabel_1;
 
 	private enum MODEL {
@@ -90,8 +89,7 @@ public class ClassAdminClient extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
-	public ClassAdminClient(MainMenu menu) {
-		this.menu = menu;
+	public ClassAdminClient() {
 		nowmodel = MODEL.WATCHING;
 		num = 0;
 		setTitle("学生管理界面");
@@ -373,6 +371,7 @@ public class ClassAdminClient extends JFrame {
 		this.getContentPane().add(lblNewLabel_1);
 		
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -463,8 +462,6 @@ public class ClassAdminClient extends JFrame {
 	}
 
 	void close() {
-		menu.setEnabled(true);
-		menu.setVisible(true);
 		//menu.repaint();
 		this.dispose();
 		//MainTest frame = new MainTest();

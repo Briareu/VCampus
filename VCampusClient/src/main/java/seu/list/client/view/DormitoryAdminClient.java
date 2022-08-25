@@ -258,6 +258,7 @@ public class DormitoryAdminClient extends JFrame {
 		
 		//居中显示
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 
 	protected void ModifyAct(ActionEvent e) {
