@@ -66,7 +66,7 @@ public class LibraryStu extends JFrame {
 		System.out.print(serverResponse.getData());
 		
 		setTitle("图书馆-学生");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(2);
 		
 		//设置背景图片
 		//把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
