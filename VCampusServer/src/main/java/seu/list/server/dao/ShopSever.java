@@ -118,7 +118,7 @@ public class ShopSever extends Shop_DbAccess{
 			con = getConnection();
 			s = con.createStatement();// 创建SQL语句对象
 			rs = s.executeQuery("select * from tb_Goods");	// 查询商品信息
-						
+			GoodsList.clear();
 			
 			while(rs.next()) {
 				Goods temp=new Goods();
