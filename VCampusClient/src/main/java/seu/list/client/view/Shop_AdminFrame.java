@@ -396,18 +396,34 @@ public class Shop_AdminFrame {
 		        int type = e.getType();
 		        if (type == TableModelEvent.UPDATE) {
 		        	double t=0.0;
-		        	if(column==3&&column==2) {
-		        		 for (int row = firstRow; row <= lastRow; row++) {
-		        			 Object tempnumber=tableModel.getValueAt(row, 4);
-		        			 Object tempprice=tableModel.getValueAt(row, 2);
-		        			 double tem=Double.parseDouble((String)tempprice);
-		        			int tem1=Integer.parseInt((String)tempnumber);
-		        			t+=tem*tem1;
-		        			//t+=1;
-		        		 }
-		        		 textField.setText(t+"");
+		        	if(column==3) {
+		        		
+		        		Message mes =new Message();
+		        		mes.setMessageType(MessageType.AddNumberofGoods);
+		        		mes.setModuleType(ModuleType.Shop);
+		        		Client client=new Client(ClientMainFrame.socket);
+		        		String[] temp=new String[2];
+		        		System.out.println(firstRow);
+		        		System.out.println(table.getValueAt(firstRow,0));
+		        		temp[0]=table.getValueAt(firstRow,0)+"";
+		        		temp[1]=table.getValueAt(firstRow,3)+"";
+		        		mes.setData(temp);
+		        		Message serverResponse= client.sendRequestToServer(mes);
 		        	}
-		        	else return;
+		        	else if(column==2) {
+		        		Message mes =new Message();
+		        		mes.setMessageType(MessageType.ModifyGoodsPrice);
+		        		mes.setModuleType(ModuleType.Shop);
+		        		Client client=new Client(ClientMainFrame.socket);
+		        		String[] temp=new String[2];
+		        		System.out.println(firstRow);
+		        		System.out.println(table.getValueAt(firstRow,0));
+		        		temp[0]=table.getValueAt(firstRow,0)+"";
+		        		temp[1]=table.getValueAt(firstRow,2)+"";
+		        		mes.setData(temp);
+		        		Message serverResponse= client.sendRequestToServer(mes);
+		        	}
+		        	//else return;
 		        }
 		    }
 		});
