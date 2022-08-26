@@ -68,7 +68,7 @@ public class ShopSever extends Shop_DbAccess{
 			}
 			
 			case MessageType.AddNumberofGoods:{
-				this.AddnumberofGoods((String[])this.mesFromClient.getData());
+				this.Modifynumberofgoods((String[])this.mesFromClient.getData());
 				break;
 			}
 			
@@ -93,8 +93,12 @@ public class ShopSever extends Shop_DbAccess{
 
 	private static ArrayList<Goods> GoodsList=new ArrayList<Goods>();
 	
-/*	 public static void main(String[] args) {
+	 public static void main(String[] args) {
 		System.out.println(getList().get(1).getGoodsname());
+		/*String[] temp=new String[2];
+		temp[0]="4";
+		temp[1]="100";
+		Modifynumberofgoods(temp);
 		 /* ArrayList<Integer> a=new ArrayList<Integer>();
 		 ArrayList<Integer> b=new ArrayList<Integer>();
 		 a.add(1);
@@ -102,14 +106,14 @@ public class ShopSever extends Shop_DbAccess{
 		 ArrayList<String> temp=new ArrayList<String>();
 		 temp.add("3");
 		 temp.add("1");
-		 buy(temp);
+		 buy(temp);*/
 		// System.out.println(SearchGoods_ID(1).getGoodsName());
 		//Goods agoods=new Goods(6,"apple",3.0,100);
 		//Addgoods(agoods);
 		//AddnumberofGoods(1,3);
 		//Deletegoods(5);
 		//ModifyGoodsPrice(1,5.5);
-	 }*/
+	 }
 	
 	public static ArrayList<Goods> getGoodsList() {
 		return GoodsList;
@@ -210,15 +214,14 @@ public class ShopSever extends Shop_DbAccess{
 			e.printStackTrace();}
 	}
 	
-	public static void AddnumberofGoods(String[] args) {//进货（管理员）
+	public static void Modifynumberofgoods(String[] args) {//进货（管理员）
 		try{
 			int result=0;
 			int ID=Integer.parseInt(args[0]);
 			int number=Integer.parseInt(args[1]);
 			Goods temp=SearchGoods_ID(ID);
-			int sum=temp.getGoodsnumber()+number;
-			temp.setGoodsnumber(sum);
-			result=s.executeUpdate("update tb_Goods set GoodsNumber='"+sum+"'where GoodsID='"+ID+"'");
+			temp.setGoodsnumber(number);
+			result=s.executeUpdate("update tb_Goods set GoodsNumber='"+number+"'where GoodsID='"+ID+"'");
 			//System.out.println(result);
 			 
 		}
