@@ -277,6 +277,10 @@ public class Dormadd extends JDialog {
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setLayout(groupLayout);
+		
+		//居中显示
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 	public ArrayList<Dormitory> getAll()
 	{

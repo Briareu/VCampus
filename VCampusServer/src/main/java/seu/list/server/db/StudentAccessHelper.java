@@ -50,8 +50,13 @@ public class StudentAccessHelper{
 			rs = st.executeQuery("select * from tb_Student");
 			int i = 0;
 			while(rs.next()) {
+				//System.out.println(rs.getString(1));
+				//System.out.println(rs.getString(2));
+				//System.out.println(rs.getString(3));
+				//System.out.println(rs.getString(4));
 				Student temp = new Student(rs.getString(1), rs.getString(2), rs.getString(3) , rs.getString(4),rs.getString(5),rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getString(9) , rs.getDouble(10));
 				stu.addElement(temp);
+				//System.out.println(temp.getMajor());
 			}
 			System.out.println("Student getall success");
 		}catch(Exception e) {

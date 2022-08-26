@@ -56,7 +56,6 @@ public class ClassStudentClient extends JFrame {
 	private String PWD;
 	private String ID;
 	private Student thisStu = null;
-	private MainMenu menu = null;
 	private String statusmy = null;
 	private JLabel lblNewLabel_1;
 
@@ -80,17 +79,16 @@ public class ClassStudentClient extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
-	public ClassStudentClient(String id, String pwd, MainMenu menu) {
+	public ClassStudentClient(String id, String pwd) {
 		
 		this.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		this.setBounds(100, 100, 566, 441);
 		
 		PWD = pwd;
 		ID = id;
-		this.menu = menu;
 
 		setTitle("学生个人信息管理界面");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(2);
 		setBounds(100, 100, 550, 441);
 		contentPane = new JPanel();
 		contentPane.setVisible(true);
@@ -618,6 +616,9 @@ public class ClassStudentClient extends JFrame {
 		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
 		lblNewLabel_1.setBounds(0, 0, 900, 100);
 		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 	void save(Student temp) {
 		Message mes = new Message();
@@ -652,7 +653,5 @@ public class ClassStudentClient extends JFrame {
 		this.dispose();
 		//MainTest frame = new MainTest();
 		//frame.setVisible(true);
-		menu.setVisible(true);
-		menu.setEnabled(true);
 	}
 }

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -24,6 +25,7 @@ import java.util.Vector;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import seu.list.client.bz.Client;
@@ -51,6 +53,7 @@ public class ClassAdminForAdd extends JFrame {
 	};
 	private MODEL now = MODEL.STUDENTADD;
 	private ClassAdminClient CAC = null;
+	private JLabel lblNewLabel_1;
 	/**
 	 * Launch the application.
 	 */
@@ -244,6 +247,8 @@ public class ClassAdminForAdd extends JFrame {
 											j++;
 										}
 									}*/
+									
+									//add student here
 									Modified = true;
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
@@ -259,8 +264,8 @@ public class ClassAdminForAdd extends JFrame {
 									int res = (int)serverResponse.getData();
 									System.out.println("Add Student Confirmed!");
 									
-									StuAll.add(stu);
-									
+									StuAll.add(stu);	
+//add dormitory student here(id = stu.getStudentid())
 									clear();
 									/*
 									if(flag) {
@@ -390,13 +395,30 @@ public class ClassAdminForAdd extends JFrame {
 				close();
 			}
 		});
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 800, 80);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 	void clear() {
 		if(now == MODEL.STUDENTADD) {
 			table.setModel(model1);
+			table.setValueAt("", 0, 0);
+			table.setValueAt("", 0, 1);
+			table.setValueAt("", 0, 2);
+			table.setValueAt("", 0, 3);
 		}
 		else {
 			table.setModel(model2);
+			table.setValueAt("", 0, 0);
+			table.setValueAt("", 0, 1);
+			table.setValueAt("", 0, 2);
 		}
 	}
 	

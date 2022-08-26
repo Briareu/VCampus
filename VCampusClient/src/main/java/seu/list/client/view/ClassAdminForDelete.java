@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -38,6 +39,7 @@ import seu.list.common.Student;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class ClassAdminForDelete extends JFrame {
 
@@ -53,6 +55,7 @@ public class ClassAdminForDelete extends JFrame {
 	private Vector<ClassManage> ClassTemp = null;
 	private Vector<Integer> StudentIndex = null;
 	private Vector<Integer> ClassIndex = null;
+	private JLabel lblNewLabel_1;
 
 	private enum MODEL {
 		CLASSDELETE, STUDENTDELTE, CLASSTEMP, STUDENTTEMP
@@ -218,7 +221,7 @@ public class ClassAdminForDelete extends JFrame {
 							}
 							classtempforadd++;
 						}
-						
+						//delete studentmanage student here(studentid == StuAll.get(target).getStudentid())					
 						Message mes = new Message();
 						mes.setModuleType(ModuleType.Student);
 						mes.setMessageType(MessageType.ClassAdminDelete);
@@ -232,6 +235,9 @@ public class ClassAdminForDelete extends JFrame {
 						Message serverResponse = new Message();
 						serverResponse = client.sendRequestToServer(mes);
 						int res = (int) serverResponse.getData();
+//delete dormitory student here	(studentid == StuAll.get(target).getStudentid())							
+//delete user(id == StuAll.get(target).getStudentid())
+						
 						if(res > 0) {
 							JOptionPane.showMessageDialog(null, "完成删除！", "提示", JOptionPane.WARNING_MESSAGE);
 							model1.removeRow(target);
@@ -265,8 +271,9 @@ public class ClassAdminForDelete extends JFrame {
 							}
 						}else {
 							//size != 0
-							int input = JOptionPane.showConfirmDialog(null, "该操作同时会删除该班的学生信息，请您确认执行该操作", "提示",JOptionPane.YES_NO_OPTION);
-							if(input == 0) {
+//							int input = JOptionPane.showConfirmDialog(null, "该操作同时会删除该班的学生信息，请您确认执行该操作", "提示",JOptionPane.YES_NO_OPTION);
+							JOptionPane.showMessageDialog(null, "请先处理仍在该班内的学生，确认学生为空后再次进行删除操作！", "提示",JOptionPane.WARNING_MESSAGE);
+/*							if(input == 0) {
 								Message mes = new Message();
 								mes.setModuleType(ModuleType.Student);
 								mes.setMessageType(MessageType.ClassAdminDelete);
@@ -303,6 +310,7 @@ public class ClassAdminForDelete extends JFrame {
 									table.setModel(model2);
 								}
 							}
+*/
 						}
 					}
 				}else if(now == MODEL.STUDENTTEMP) {
@@ -313,19 +321,20 @@ public class ClassAdminForDelete extends JFrame {
 						int classtempforadd = 0;
 						Boolean newclass = false;
 						while(classtempforadd < ClssAll.size() && !newclass) {
-							if(ClssAll.get(classtempforadd).getClassID().equals(table.getValueAt(target, 0))) {
+							if(ClssAll.get(classtempforadd).getClassID().equals(model1.getValueAt(target, 0))) {
+								System.out.println("delete student from class");
 								newclass = true;
 								ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() - 1);
 							}
 							classtempforadd++;
 						}
-						
+						//delete studentmanage student here						
 						Message mes = new Message();
 						mes.setModuleType(ModuleType.Student);
 						mes.setMessageType(MessageType.ClassAdminDelete);
 						List<Object> sendData = new ArrayList<Object>();
 						sendData.add(0);
-						sendData.add(StuAll.get(target).getStudentid());
+						sendData.add(StudentTemp.get(target).getStudentid());
 						mes.setData(sendData);
 
 						Client client = new Client(ClientMainFrame.socket);
@@ -340,7 +349,8 @@ public class ClassAdminForDelete extends JFrame {
 							StuAll.remove(StudentIndex.get(target));
 							table.setModel(model1);
 						}
-					
+//delete dormitory student here	(studentid == StudentTemp.get(target).getStudentid())							
+//delete user(id == StudentTemp.get(target).getStudentid())					
 					}
 				}else if(now == MODEL.CLASSTEMP) {
 					int target = table.getSelectedRow();
@@ -352,7 +362,7 @@ public class ClassAdminForDelete extends JFrame {
 							mes.setModuleType(ModuleType.Student);
 							mes.setMessageType(MessageType.ClassDelete);
 							String sendData = null;
-							sendData = ClssAll.get(target).getClassID();
+							sendData = ClassTemp.get(target).getClassID();
 							mes.setData(sendData);
 
 							Client client = new Client(ClientMainFrame.socket);
@@ -369,8 +379,9 @@ public class ClassAdminForDelete extends JFrame {
 							}
 						}else {
 							//size != 0
-							int input = JOptionPane.showConfirmDialog(null, "该操作同时会删除该班的学生信息，请您确认执行该操作", "提示",JOptionPane.YES_NO_OPTION);
-							if(input == 0) {
+//							int input = JOptionPane.showConfirmDialog(null, "该操作同时会删除该班的学生信息，请您确认执行该操作", "提示",JOptionPane.YES_NO_OPTION);
+							JOptionPane.showMessageDialog(null, "请先处理仍在该班内的学生，确认学生为空后再次进行删除操作！", "提示",JOptionPane.WARNING_MESSAGE);
+/*							if(input == 0) {
 								Message mes = new Message();
 								mes.setModuleType(ModuleType.Student);
 								mes.setMessageType(MessageType.ClassAdminDelete);
@@ -408,6 +419,7 @@ public class ClassAdminForDelete extends JFrame {
 									table.setModel(model2);
 								}
 							}
+*/
 						}
 					
 					}
@@ -423,7 +435,6 @@ public class ClassAdminForDelete extends JFrame {
 		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 18));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				table.getCellEditor().stopCellEditing();
 				table.setEnabled(false);
 				if(now == MODEL.STUDENTDELTE || now == MODEL.STUDENTTEMP) {
 					//search student
@@ -668,6 +679,17 @@ public class ClassAdminForDelete extends JFrame {
 				close();
 			}
 		});
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 800, 100);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
+
+		this.setDefaultCloseOperation(2);
 	}
 	
 	private void UpdateTable() {

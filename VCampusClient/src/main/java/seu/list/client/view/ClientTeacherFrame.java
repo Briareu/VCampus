@@ -57,9 +57,14 @@ public class ClientTeacherFrame extends JFrame implements ActionListener {
 
 		this.setSize(461, 286);
 		this.setTitle("教师系统");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
+		
+
+		
+		//重写关闭事件
+		this.setDefaultCloseOperation(2);
 	}
 
 	private void setBak() {
