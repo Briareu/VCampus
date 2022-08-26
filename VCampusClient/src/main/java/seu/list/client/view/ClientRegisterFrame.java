@@ -39,7 +39,7 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 		setForeground(SystemColor.inactiveCaption);
 		setBackground(Color.WHITE);
 		setFont(new Font("Dialog", Font.PLAIN, 12));
-		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\rep\\VCampus\\VCampusClient\\src\\main\\resources\\image\\xiaobiao.jpg"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/image/xiaobiao.jpg"));
 		setBak();
 
 		this.setSize(711,496);
@@ -197,141 +197,161 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 		int i = 0;
 		Boolean flag = true;
 		Boolean flagall = true;
-		while(i<jtf_money.getText().length()) {
-			if(jtf_money.getText().charAt(i) > '9' || jtf_money.getText().charAt(i) < '0') {
-				if(jtf_money.getText().charAt(i) == '.'&&i != 0) {
-					//empty
-				}else if(jtf_money.getText().charAt(i) == '.'&&i == 0) {
-					JOptionPane.showMessageDialog(null, "请正确填写充值金额(非小数点开头)！", "提示", JOptionPane.WARNING_MESSAGE);
-					flagall = false;
-					break;
-				}else {
-					JOptionPane.showMessageDialog(null, "请正确填写充值金额(数值)！", "提示", JOptionPane.WARNING_MESSAGE);
-					flagall = false;
-					break;
-				}
-			}
-			if(jtf_money.getText().charAt(i) == '0' && i == 0) {
-				JOptionPane.showMessageDialog(null, "请正确填写充值金额(非零开头)！", "提示", JOptionPane.WARNING_MESSAGE);
-				flagall = false;
-				break;
-			}
-			i++;
-		}
-		if(flagall) {
-			Student temp = new Student();
-			if(role.equals("0")) {//check the student
-				flag = false;
-				Vector<Student> StuAll = new Vector<Student>();
-				Message mes = new Message();
-				mes.setModuleType(ModuleType.Student);
-				mes.setMessageType(MessageType.ClassAdminGetAll);
-				List<Object> sendData = new ArrayList<Object>();
-				mes.setData(sendData);
 
-				Client client = new Client(ClientMainFrame.socket);
+		System.out.println(jtf_id.getText() == null);
+		if (jtf_id.getText().trim().equals("")
+				|| jtf_age.getText().trim().equals("")
+				|| jtf_grade.getText().trim().equals("")
+				|| jtf_major.getText().trim().equals("")
+				|| jtf_money.getText().trim().equals("")
+				|| jtf_name.getText().trim().equals("")
+				|| jtf_pwd.getText().trim().equals("")
+				|| jtf_sex.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "请完成基本信息填写！", "提示", JOptionPane.WARNING_MESSAGE);
+			System.out.println("11111111");
+		}else {
+			i = 0;
+			while(i < jtf_money.getText().length()) {
 
-				Message serverResponse = new Message();
-				serverResponse = client.sendRequestToServer(mes);
-				StuAll = (Vector<Student>) serverResponse.getData();
-				String targetid = jtf_id.getText();
-				targetid.replaceAll("\\p{C}", "");
-				int studenttemp = 0;
-				while(studenttemp < StuAll.size()) {
-					String tempid = StuAll.get(studenttemp).getStudentid();
-					tempid.replaceAll("\\p{C}", "");
-					if(tempid.equals(targetid)) {
-						flag = true;
-						temp = StuAll.get(studenttemp);
+				if(jtf_money.getText().charAt(i) > '9' || jtf_money.getText().charAt(i) < '0') {
+					if(jtf_money.getText().charAt(i) == '.'&&i != 0) {
+						//empty
+					}else if(jtf_money.getText().charAt(i) == '.'&&i == 0) {
+						JOptionPane.showMessageDialog(null, "请正确填写金额(非小数点开头)！", "提示", JOptionPane.WARNING_MESSAGE);
+						flagall = false;
+						break;
+					}else {
+						JOptionPane.showMessageDialog(null, "请正确填写金额(数值)！", "提示", JOptionPane.WARNING_MESSAGE);
+						flagall = false;
 						break;
 					}
-					studenttemp++;
 				}
+				if(jtf_money.getText().charAt(i) == '0' && i == 0) {
+					JOptionPane.showMessageDialog(null, "请正确填写金额(非零开头)！", "提示", JOptionPane.WARNING_MESSAGE);
+					flagall = false;
+					break;
+				}
+				i++;
+			
 			}
 			
-			
-			if(flag) {
-				if(temp.getMajor() != null && !jtf_major.getText().replaceAll("\\p{C}", "").equals(temp.getMajor())) {
-					JOptionPane.showMessageDialog(null,"请正确输入您的所属专业","错误",JOptionPane.ERROR_MESSAGE);
-				}else {
-					//exists
-					User user=new User();
-					user.setId(jtf_id.getText());
-					user.setAge(jtf_age.getText());
-					user.setGrade(jtf_grade.getText());
-					user.setMajor(jtf_major.getText());
-					user.setMoney(jtf_money.getText());
-					user.setName(jtf_name.getText());
-					user.setPwd(jtf_pwd.getText());
-					user.setSex(jtf_sex.getText());
-					user.setRole(role);
-					System.out.println(user);
-					Message clientreq=new Message();
-					clientreq.setModuleType(ModuleType.User);
-					clientreq.setMessageType(MessageType.REQ_REGISTER);
-					clientreq.setContent(user.getContent());
-					Client client=new Client(this.socket);
-					Message rec=client.sendRequestToServer(clientreq);
-					int sign=rec.getUserType();
+			if(flagall) {
+				Student temp = new Student();
+				if(role.equals("0")) {//check the student
+					flag = false;
+					Vector<Student> StuAll = new Vector<Student>();
+					Message mes = new Message();
+					mes.setModuleType(ModuleType.Student);
+					mes.setMessageType(MessageType.ClassAdminGetAll);
+					List<Object> sendData = new ArrayList<Object>();
+					mes.setData(sendData);
 
-					if(e.getActionCommand().equals("register"))
-					{
-						//System.out.print(ccs.sign);
-						//返回的权限
+					Client client = new Client(ClientMainFrame.socket);
 
-						if(sign==3)
-						{
-							JOptionPane.showMessageDialog(null,"您已经注册，请不要重复","错误",JOptionPane.ERROR_MESSAGE);
+					Message serverResponse = new Message();
+					serverResponse = client.sendRequestToServer(mes);
+					StuAll = (Vector<Student>) serverResponse.getData();
+					String targetid = jtf_id.getText();
+					targetid.replaceAll("\\p{C}", "");
+					int studenttemp = 0;
+					while(studenttemp < StuAll.size()) {
+						String tempid = StuAll.get(studenttemp).getStudentid();
+						tempid.replaceAll("\\p{C}", "");
+						if(tempid.equals(targetid)) {
+							flag = true;
+							temp = StuAll.get(studenttemp);
+							break;
 						}
-						else if(sign==0||sign==1)
-						{
-							JOptionPane.showMessageDialog(null,"同学，恭喜注册成功","提示",JOptionPane.INFORMATION_MESSAGE);
-							
-							//update student message
-							if(role.equals("0")) {
-								if(jtf_sex.getText().equals("男")) {
-									temp.setStudentgender(true);
-								}else if(jtf_sex.getText().equals("女")) {
-									temp.setStudentgender(false);
-								}else {
-									//empty body
-								}
-								//temp.setStudentcredit(Double.parseDouble(jtf_money.getText()));
-								temp.setStudentcredit(Integer.parseInt(jtf_money.getText()));
-								temp.setStudentName(jtf_name.getText());
-								
-								Message mes = new Message();
-								mes.setModuleType(ModuleType.Student);
-								mes.setMessageType(MessageType.ClassAdminUpdate);
-								List<Object> sendData = new ArrayList();
-								sendData.add(15);//name, origin, phone, status, gender ---- id
-								sendData.add(temp.getStudentName());
-								sendData.add(temp.getStudentorigion());
-								sendData.add(temp.getStudentphone());
-								sendData.add(temp.getStudentstatus());
-								sendData.add(temp.getStudentgender());
-								sendData.add(temp.getStudentid());
-								mes.setData(sendData);
-								client = null;
-								client = new Client(ClientMainFrame.socket);
-
-								Message serverResponse = new Message();
-								serverResponse = client.sendRequestToServer(mes);
-								int res = (int) serverResponse.getData();
-							}
-							this.dispose();
-						}
-						else
-						{
-							JOptionPane.showMessageDialog(null,"注册失败","错误",JOptionPane.ERROR_MESSAGE);
-						}
+						studenttemp++;
 					}
 				}
-			}else {
-				JOptionPane.showMessageDialog(null,"注册失败,请先在管理员处登记","错误",JOptionPane.ERROR_MESSAGE);
+				
+				
+				if(flag) {
+					if(temp.getMajor() != null && !jtf_major.getText().replaceAll("\\p{C}", "").equals(temp.getMajor())) {
+						JOptionPane.showMessageDialog(null,"请正确输入您的所属专业","错误",JOptionPane.ERROR_MESSAGE);
+					}else {
+						//exists
+						User user=new User();
+						user.setId(jtf_id.getText());
+						user.setAge(jtf_age.getText());
+						user.setGrade(jtf_grade.getText());
+						user.setMajor(jtf_major.getText());
+						user.setMoney(jtf_money.getText());
+						user.setName(jtf_name.getText());
+						user.setPwd(jtf_pwd.getText());
+						user.setSex(jtf_sex.getText());
+						user.setRole(role);
+						System.out.println(user);
+						Message clientreq=new Message();
+						clientreq.setModuleType(ModuleType.User);
+						clientreq.setMessageType(MessageType.REQ_REGISTER);
+						clientreq.setContent(user.getContent());
+						Client client=new Client(this.socket);
+						Message rec=client.sendRequestToServer(clientreq);
+						int sign=rec.getUserType();
+
+						if(e.getActionCommand().equals("register"))
+						{
+							//System.out.print(ccs.sign);
+							//返回的权限
+
+							if(sign==3)
+							{
+								JOptionPane.showMessageDialog(null,"您已经注册，请不要重复","错误",JOptionPane.ERROR_MESSAGE);
+							}
+							else if(sign==0||sign==1)
+							{
+								JOptionPane.showMessageDialog(null,"同学，恭喜注册成功","提示",JOptionPane.INFORMATION_MESSAGE);
+								
+								//update student message
+								if(role.equals("0")) {
+									if(jtf_sex.getText().equals("男")) {
+										temp.setStudentgender(true);
+									}else if(jtf_sex.getText().equals("女")) {
+										temp.setStudentgender(false);
+									}else {
+										//empty body
+									}
+									//temp.setStudentcredit(Double.parseDouble(jtf_money.getText()));
+									temp.setStudentcredit(Integer.parseInt(jtf_money.getText()));
+									temp.setStudentName(jtf_name.getText());
+									
+									Message mes = new Message();
+									mes.setModuleType(ModuleType.Student);
+									mes.setMessageType(MessageType.ClassAdminUpdate);
+									List<Object> sendData = new ArrayList();
+									sendData.add(15);//name, origin, phone, status, gender ---- id
+									sendData.add(temp.getStudentName());
+									sendData.add(temp.getStudentorigion());
+									sendData.add(temp.getStudentphone());
+									sendData.add(temp.getStudentstatus());
+									sendData.add(temp.getStudentgender());
+									sendData.add(temp.getStudentid());
+									mes.setData(sendData);
+									client = null;
+									client = new Client(ClientMainFrame.socket);
+
+									Message serverResponse = new Message();
+									serverResponse = client.sendRequestToServer(mes);
+									int res = (int) serverResponse.getData();
+								}
+								this.dispose();
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null,"注册失败","错误",JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
+				}else {
+					System.out.println(jtf_id.getText().trim().equals(""));
+					JOptionPane.showMessageDialog(null,"注册失败,请先在管理员处登记","错误",JOptionPane.ERROR_MESSAGE);
+				}
+			
+				
 			}
 		}
-	
 	}
 
 
