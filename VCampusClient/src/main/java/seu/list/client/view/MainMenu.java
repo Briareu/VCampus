@@ -144,10 +144,10 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 			if(e.getActionCommand().equals(this.cmdCourse)){ // 选课
 				if(userType==0){
 					ClientStuCourseFrame s=new ClientStuCourseFrame(uID,socket);
-					s.setVisible(true);
+					//s.setVisible(true);
 				}else{
 					ClientTeacherFrame s=new ClientTeacherFrame(uID,socket);
-					s.setVisible(true);
+					//s.setVisible(true);
 				}
 			}else if(e.getActionCommand().equals(this.cmdClass)) { // 学籍
 				if(userType == 0) {
@@ -176,7 +176,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 			}else if(e.getActionCommand().equals(this.cmdShop)) { //商店
 				if(userType == 0) {
 					Shop_StudentFrame shopStu = new Shop_StudentFrame();
-					shopStu.setVisible(true);
+					//shopStu.setVisible(true);
 				}else {
 					Shop_AdminFrame shopAdmin = new Shop_AdminFrame();
 					//shopAdmin.setVisible(true);
