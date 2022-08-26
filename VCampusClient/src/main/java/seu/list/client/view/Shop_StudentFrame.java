@@ -48,6 +48,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Toolkit;
+import java.awt.Dialog.ModalExclusionType;
 
 public class Shop_StudentFrame {
 
@@ -59,6 +60,11 @@ public class Shop_StudentFrame {
 	private JLabel lblNewLabel_1;
 	private JTextField SearchText;
 	private JButton btnNewButton_2;
+	
+	//总价
+	private double sum = 0.0;
+	private String id = null;
+	private String PWD = null;
 
 	/**
 	 * Launch the application.
@@ -67,7 +73,9 @@ public class Shop_StudentFrame {
 	/**
 	 * Create the application.
 	 */
-	public Shop_StudentFrame() {
+	public Shop_StudentFrame(String id, String PWD) {
+		this.id = id;
+		this.PWD = PWD;
 		initialize();
 		frame.setVisible(true);
 	}
@@ -76,6 +84,8 @@ public class Shop_StudentFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		sum = 0.0;
+		
 		frame = new JFrame();
 		frame.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		frame.setTitle("学生视图商店");
@@ -84,7 +94,7 @@ public class Shop_StudentFrame {
 		frame.setBounds(100, 100, 577, 449);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		double total=0.0;
+//		double total=0.0;
 		
 		JLabel lblNewLabel = new JLabel("总计：");
 		lblNewLabel.setBounds(205, 19, 60, 28);
@@ -95,7 +105,8 @@ public class Shop_StudentFrame {
 		textField.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		textField.setEnabled(false);
 		textField.setColumns(10);
-		textField.setText(total+"");
+//		textField.setText(total+"");
+		textField.setText(sum + "");
 		
 		btnNewButton = new JButton("");
 		btnNewButton.setBounds(10, 123, 60, 25);
@@ -103,7 +114,8 @@ public class Shop_StudentFrame {
 		btnNewButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buy();
+//				buy();
+				setPayFrame();
 			}
 		});
 		
@@ -160,17 +172,20 @@ public class Shop_StudentFrame {
 		        //     TableModelEvent.DELETE   有行或列被移除
 		        int type = e.getType();
 		        if (type == TableModelEvent.UPDATE) {
-		        	double t=0.0;
+//		        	double t=0.0;
+		        	sum = 0.0;
 		        	if(column==4) {
 		        		 for (int row = firstRow; row <= lastRow; row++) {
 		        			 Object tempnumber=tableModel.getValueAt(row, 4);
 		        			 Object tempprice=tableModel.getValueAt(row, 2);
 		        			 double tem=Double.parseDouble((String)tempprice);
 		        			int tem1=Integer.parseInt((String)tempnumber);
-		        			t+=tem*tem1;
+//		        			t+=tem*tem1;
+		        			sum += tem*tem1;
 		        			//t+=1;
 		        		 }
-		        		 textField.setText(t+"");
+//		        		 textField.setText(t+"");
+		        		 textField.setText(sum + "");
 		        	}
 		        	else return;
 		        }
@@ -375,4 +390,12 @@ public class Shop_StudentFrame {
 	            return super.stopCellEditing();
 	        }
 	    }
+	
+	void setPayFrame() {
+		frame.setEnabled(false);
+		frame.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
+
+		Shop_StudentForPay newframe = new Shop_StudentForPay(this, frame, sum, id, PWD);
+		newframe.setVisible(true);
+	}
 }

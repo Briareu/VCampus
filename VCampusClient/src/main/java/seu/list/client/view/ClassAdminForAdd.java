@@ -247,6 +247,8 @@ public class ClassAdminForAdd extends JFrame {
 											j++;
 										}
 									}*/
+									
+									//add student here
 									Modified = true;
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
@@ -262,8 +264,8 @@ public class ClassAdminForAdd extends JFrame {
 									int res = (int)serverResponse.getData();
 									System.out.println("Add Student Confirmed!");
 									
-									StuAll.add(stu);
-									
+									StuAll.add(stu);	
+//add dormitory student here(id = stu.getStudentid())
 									clear();
 									/*
 									if(flag) {
@@ -407,9 +409,16 @@ public class ClassAdminForAdd extends JFrame {
 	void clear() {
 		if(now == MODEL.STUDENTADD) {
 			table.setModel(model1);
+			table.setValueAt("", 0, 0);
+			table.setValueAt("", 0, 1);
+			table.setValueAt("", 0, 2);
+			table.setValueAt("", 0, 3);
 		}
 		else {
 			table.setModel(model2);
+			table.setValueAt("", 0, 0);
+			table.setValueAt("", 0, 1);
+			table.setValueAt("", 0, 2);
 		}
 	}
 	

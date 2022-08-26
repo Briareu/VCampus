@@ -274,7 +274,7 @@ public class ClassAdminForModify extends JFrame {
 								|| !newphone.equals(oldphone)
 								|| !newid.equals(oldid)) {
 							Modified = true;
-							
+//modify studentmanage student							
 							Message mes = new Message();
 							mes.setModuleType(ModuleType.Student);
 							mes.setMessageType(MessageType.ClassAdminUpdate);
@@ -306,6 +306,11 @@ public class ClassAdminForModify extends JFrame {
 							StuAll.get(i_row).setStudentName(newname);
 							StuAll.get(i_row).setStudentphone(newphone);
 							System.out.println("Student information is updated at Client!");
+							
+							if(!newid.equals(oldid)) {
+//update dormitory student here(update oldid with newid)
+//update user here(update oldid with newid)					
+							}//end of update of other table
 						}
 						i_row++;
 					}//end of while
@@ -588,6 +593,11 @@ public class ClassAdminForModify extends JFrame {
 							StuAll.get(StudentIndex.get(i_row)).setStudentName(newname);
 							StuAll.get(StudentIndex.get(i_row)).setStudentphone(newphone);
 							System.out.println("Student information is updated at Client!");
+
+							if (!newid.equals(oldid)) {
+//update dormitory student here(update oldid with newid)
+//update user here(update oldid with newid)					
+							}//end of update of other table
 						}
 						i_row++;
 					}//end of while
