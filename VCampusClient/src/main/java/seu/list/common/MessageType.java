@@ -58,6 +58,7 @@ public final class MessageType {
     
     //Shop
     public static final String Goodsgetall="GETALL_GOODS";  
+    public static final String Goodsgetturnover="GET_TURNOVER"; //获得营收值
     public static final String GoodsAdd="ADD_GOODS";  //管理员添加商品
     public static final String GoodsDelete="REMOVE_GOODS";  //管理员删除商品
     public static final String GoodsSearch_ID="SEARCH_GOODS_ID";  //ID查找商品
