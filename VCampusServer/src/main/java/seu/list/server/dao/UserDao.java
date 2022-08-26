@@ -14,5 +14,5 @@ public interface UserDao {
 	//public boolean updUser(User user);
 	public User searchUser(String id);		
 	public List<User> getAllUsers();
-
+	public boolean updateUser(String userID,String newID);
 }

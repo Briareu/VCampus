@@ -100,6 +100,21 @@ public class UserDaoImpl implements UserDao {
 			} else
 				return null;
 		}
+	@Override
+	public boolean updateUser(String userID, String newID) {
+		String sql = "select * from tb_User where uID= ?";
+		String []paras=new String[1];
+		paras[0]= userID;
+		List<User>users=new SqlHelperImp().sqlUserQuery(sql,paras);
+		User u=users.get(0);
+		boolean flag1=this.delUser(userID);
+		u.setId(newID);
+		u=this.addUser(u);
+		boolean flag2=false;
+		if(u!=null)flag2=true;
+		return flag1&&flag2;
+
+	}
 
 		@Override
 		public User addUser(User user) {
@@ -150,7 +165,9 @@ public class UserDaoImpl implements UserDao {
 			return new SqlHelperImp().sqlUserQuery(sql, new String[] {});
 		}
 
-		@Override
+
+
+	@Override
 		public User getUserByPwd(Vector<String> content) {
 			String sql = "select * from tb_User where uID= ? and uPwd=?";
 			String[] paras = new String[2];

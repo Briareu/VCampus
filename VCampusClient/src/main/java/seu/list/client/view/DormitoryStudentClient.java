@@ -3,8 +3,7 @@ package seu.list.client.view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,12 +23,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
 
 public class DormitoryStudentClient extends JFrame {
 

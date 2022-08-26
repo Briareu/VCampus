@@ -3,15 +3,7 @@ package seu.list.common;
 
 
 
-//=======
-///*
-//import main.java.seu.list.server.dao.CourseDaoImp;
-//import main.java.seu.list.server.db.SqlHelperImp;
-//*/
-//import seu.list.server.dao.CourseDaoImp;
-//import seu.list.server.db.SqlHelperImp;
-//
-//>>>>>>> 27e89bf9ba1d83dbc5221972383f137fcce3b463
+
 
 import seu.list.server.dao.CourseDaoImp;
 import seu.list.server.db.SqlHelperImp;
