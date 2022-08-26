@@ -116,6 +116,9 @@ public class Shop_StudentFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//退出
+				
+				//增加了退出事件
+				frame.dispose();
 			}
 		});
 		btnNewButton_1.setFont(new Font("微软雅黑", Font.BOLD, 20));
@@ -202,7 +205,10 @@ public class Shop_StudentFrame {
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		
-	
+
+		//重写关闭事件和窗口居中
+		frame.setDefaultCloseOperation(2);
+		frame.setLocationRelativeTo(null);
 	}
 	
 	private void show() {
