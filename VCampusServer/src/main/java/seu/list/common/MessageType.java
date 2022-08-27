@@ -9,6 +9,8 @@ public final class MessageType {
     public static final String REQ_LOGIN="REQ_LOGIN";
     public static final String REQ_LOGOUT="REQ_LOGOUT";
     public static final String REQ_REGISTER="REQ_REGISTER";
+    public static final String REQ_USERDEL="REQ_USERDEL";
+    public static final String REQ_USERUPDATE="REQ_USERUPDATE";
     //Message-Type
     public static final String operFeedback = "OPER_FEEDBACK";
 
