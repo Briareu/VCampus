@@ -1,5 +1,6 @@
 package seu.list.server.dao;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,7 +27,7 @@ public class DormitorServer extends Dormitory_DbAccess{
 	}
 
 	@SuppressWarnings("unchecked")
-	public void execute() {
+	public void execute(){
 		// 根据类型去执行不同的DAO层操作，不同模块的DAO类需要修改这个函数
 		// 如果操作需要的参数，请在mesFromClient内取出
 		// 如果操作需要返回数据给客户端，请存入dataToClient，如果没有返回值，则默认为null
@@ -51,7 +52,12 @@ public class DormitorServer extends Dormitory_DbAccess{
 			}
 			break;
 		case MessageType.DormDelete:
-			this.mesToClient.setData(this.Delete(this.mesFromClient.getData().toString()));
+			try {
+				this.mesToClient.setData(this.Delete(this.mesFromClient.getData().toString()));
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		case MessageType.DormModify:
 			this.mesToClient.setData(this.Modify((ArrayList<String>)this.mesFromClient.getData()));
@@ -62,6 +68,13 @@ public class DormitorServer extends Dormitory_DbAccess{
 		case MessageType.DormSearch:
 			this.mesToClient.setData(this.SearchuserID(this.mesFromClient.getData().toString()));
 			break;
+		case MessageType.DormUpdate:
+			try {
+				this.mesToClient.setData(this.Update(this.mesFromClient.getContent().get(0), this.mesFromClient.getContent().get(1)));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		default:
 			break;
 		}
@@ -164,25 +177,53 @@ public class DormitorServer extends Dormitory_DbAccess{
 		return Dorm;
 	}
 
-	private ArrayList<Dormitory> Add(Dormitory data) {
+	private ArrayList<Dormitory> Add(Dormitory data) throws SQLException {
 		ArrayList<Dormitory> dorm=AllDormitory();
 		dorm.add(data);
-		try {
-			int result=s.executeUpdate("insert into tb_Dormitory values('"+data.getuserID()+"','"+data.getDormitoryID()+"','"+data.getStudentBunkID()+
+/*		try {
+			int result=s.executeUpdate("insert into tb_Dormitory(userID, DormitoryID, StudentBunkID, Water, Electricity, DormitoryScore, DormitoryMaintain, StudentExchange) values('"+data.getuserID()+"','"+data.getDormitoryID()+"','"+data.getStudentBunkID()+
 					"','"+data.getWater()+"','"+data.getElectricity()+"','"+data.getDormitoryScore()
 					+"','"+data.getDormitoryMaintain()+"','"+data.getStudentExchange()+"','"+0+"')");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return dorm;*/
+		con = this.getConnection();
+		PreparedStatement ps = con.prepareStatement("insert into tb_Dormitory(userID, DormitoryID, StudentBunkID, Water, Electricity, DormitoryScore, DormitoryMaintain, StudentExchange) values('"+ data.getuserID() +"','"+ data.getDormitoryID() +"','"+ data.getStudentBunkID() +"','"+ data.getWater() +"','"+ data.getElectricity() +"','"+ data.getDormitoryScore() +"','"+ data.getDormitoryMaintain() +"','"+ data.getStudentExchange() +"')");
+		int result = ps.executeUpdate();
+		System.out.println("add success");
+		ps.close();
+		con.close();
 		return dorm;
 	}
+	
+	private int Update(String oldid, String newid) throws SQLException {
+		Statement statement = con.createStatement();
+		ArrayList<Dormitory> dorm=AllDormitory();
+		for (int i=0;i<dorm.size();i++){
+			if (dorm.get(i).getuserID().equals(oldid)) {
+				dorm.get(i).setuserID(newid);
+				break;
+			}
+		}
+		con = this.getConnection();
+		statement = con.createStatement();
+		int res = -1;
+		res = statement.executeUpdate("update tb_Dormitory set userID='"+ newid +"' where userID='"+ oldid +"'");
+		statement.close();
+		con.close();
+		System.out.println("update dorm success");
+		return res;
+	}
 
-	private ArrayList<Dormitory> Delete(String string){
+	private ArrayList<Dormitory> Delete(String string) throws SQLException{
 		// TODO Auto-generated method stub
 		ArrayList<Dormitory> dorm=AllDormitory();
 		for (int i=0;i<dorm.size();i++)
 			if (dorm.get(i).getuserID().equals(string)) dorm.remove(i);
+		con = this.getConnection();
+		s = con.createStatement();
 		try {
 			int result=s.executeUpdate("delete from tb_Dormitory where userID='"+string+"'");
 		} catch (SQLException e) {

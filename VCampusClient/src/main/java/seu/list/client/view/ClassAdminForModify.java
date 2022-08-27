@@ -32,6 +32,7 @@ import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
 //import seu.list.client.test.MainTest;
 import seu.list.common.ClassManage;
+import seu.list.common.Dormitory;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
@@ -357,8 +358,11 @@ public class ClassAdminForModify extends JFrame {
 								mes = null;
 								mes = new Message();
 								mes.setModuleType(ModuleType.Dormitory);
-								mes.setMessageType(MessageType.DormAdd);
-								mes.setData(c);
+								mes.setMessageType(MessageType.DormUpdate);
+								Vector<String> tempdata = new Vector<String>();
+								tempdata.add(oldid);
+								tempdata.add(newid);
+								mes.setContent(tempdata);
 								
 								client = null;
 								client = new Client(ClientMainFrame.socket);
@@ -383,7 +387,8 @@ public class ClassAdminForModify extends JFrame {
 								user.setRole("0");
 								user.setSex("男");
 								mes.setContent(user.getContent());
-								Vector<String> tempdata = new Vector<String>();
+								tempdata = null;
+								tempdata = new Vector<String>();
 								tempdata.add(oldid);
 								tempdata.add(newid);
 								mes.setData(tempdata);
@@ -716,6 +721,31 @@ public class ClassAdminForModify extends JFrame {
 
 							if (!newid.equals(oldid)) {
 //update dormitory student here(update oldid with newid)
+								Dormitory c=new Dormitory();
+								c.setuserID(newid);
+								c.setDormitoryID("");
+								c.setStudentBunkID(0);
+								c.setDormitoryScore(0);
+								c.setWater(0);
+								c.setElectricity(0);
+								c.setDormitoryMaintain("");
+								c.setStudentExchange("");
+								mes = null;
+								mes = new Message();
+								mes.setModuleType(ModuleType.Dormitory);
+								mes.setMessageType(MessageType.DormUpdate);
+								Vector<String> tempdata = new Vector<String>();
+								tempdata.add(oldid);
+								tempdata.add(newid);
+								mes.setContent(tempdata);
+								
+								client = null;
+								client = new Client(ClientMainFrame.socket);
+
+								serverResponse = null;
+								serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								System.out.println("update user dormitory confirmed!");
 //update user here(update oldid with newid)				
 								User user = new User();
 								mes = null;
@@ -732,7 +762,8 @@ public class ClassAdminForModify extends JFrame {
 								user.setRole("0");
 								user.setSex("男");
 								mes.setContent(user.getContent());
-								Vector<String> tempdata = new Vector<String>();
+								tempdata = null;
+								tempdata = new Vector<String>();
 								tempdata.add(oldid);
 								tempdata.add(newid);
 								mes.setData(tempdata);
@@ -915,7 +946,7 @@ public class ClassAdminForModify extends JFrame {
 					serverResponse = client.sendRequestToServer(mes);
 					StuAll = (Vector<Student>) serverResponse.getData();
 				}
-				UpdateTable();
+//				UpdateTable();
 				table.setEnabled(true);
 			}
 		});
@@ -1183,7 +1214,7 @@ public class ClassAdminForModify extends JFrame {
 	}
 	
 	private void UpdateTable() {
-		if(now == MODEL.STUDENTMODIFY) {
+		if(now == MODEL.STUDENTMODIFY ) {
 			// student
 			while(model1.getRowCount() > 0) {
 				//System.out.println(table.getRowCount() - 1);

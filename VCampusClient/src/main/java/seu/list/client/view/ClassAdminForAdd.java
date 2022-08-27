@@ -32,6 +32,7 @@ import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
 //import seu.list.client.test.MainTest;
 import seu.list.common.ClassManage;
+import seu.list.common.Dormitory;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
@@ -307,7 +308,6 @@ public class ClassAdminForAdd extends JFrame {
 									serverResponse = null;
 									serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
-									res = (int)serverResponse.getData();
 									System.out.println("Add Student Dormitory Confirmed!");
 									clear();
 									/*

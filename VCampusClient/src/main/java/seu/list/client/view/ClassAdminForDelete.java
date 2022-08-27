@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import java.awt.ScrollPane;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -31,6 +33,8 @@ import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
 //import seu.list.client.test.MainTest;
 import seu.list.common.ClassManage;
+import seu.list.common.Dormitory;
+import seu.list.common.IConstant;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
@@ -250,6 +254,10 @@ public class ClassAdminForDelete extends JFrame {
 						sendData = new ArrayList<Object>();
 						sendData.add(0);
 						sendData.add(StuAll.get(target).getStudentid());
+						
+						Student tempstudent = new Student();
+						tempstudent = StuAll.get(target);
+						
 						mes.setData(sendData);
 
 						client = null;
@@ -265,22 +273,36 @@ public class ClassAdminForDelete extends JFrame {
 							StuAll.remove(target);
 							table.setModel(model1);
 						}
-//delete dormitory student here	(studentid == StuAll.get(target).getStudentid())							
+//delete dormitory student here	(studentid == StuAll.get(target).getStudentid())	
+						mes = null;
+						mes = new Message();
+						mes.setUserType(1);
+						mes.setModuleType(ModuleType.Dormitory);
+						mes.setMessageType(MessageType.DormDelete);
+						
+						client = null;
+						client = new Client(ClientMainFrame.socket);
+						mes.setData(tempstudent.getStudentid());
+						serverResponse = null;
+						serverResponse = new Message();
+						serverResponse=client.sendRequestToServer(mes);
+						ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) serverResponse.getData();
+						System.out.println("dormitory delete confirmed!");
 //delete user(id == StuAll.get(target).getStudentid())
 						User user = new User();
 						mes = null;
 						mes = new Message();
 						mes.setModuleType(ModuleType.User);
 						mes.setMessageType(MessageType.REQ_USERDEL);
-						user.setId(StuAll.get(target).getStudentid());
+						user.setId(tempstudent.getStudentid());
 						user.setAge("");
 						user.setGrade("");
-						user.setMajor(StuAll.get(target).getMajor());
+						user.setMajor(tempstudent.getMajor());
 						user.setMoney("");
-						user.setName(StuAll.get(target).getStudentName());
+						user.setName(tempstudent.getStudentName());
 						user.setPwd("");
 						user.setRole("0");
-						if(StuAll.get(target).getStudentgender()) {
+						if(tempstudent.getStudentgender()) {
 							user.setSex("男");
 						}else {
 							user.setSex("女");
@@ -405,6 +427,10 @@ public class ClassAdminForDelete extends JFrame {
 						sendData = new ArrayList<Object>();
 						sendData.add(0);
 						sendData.add(StudentTemp.get(target).getStudentid());
+						
+						Student tempstudent = new Student();
+						tempstudent = StudentTemp.get(target);
+						
 						mes.setData(sendData);
 
 						client = null;
@@ -421,22 +447,36 @@ public class ClassAdminForDelete extends JFrame {
 							StuAll.remove(StudentIndex.get(target));
 							table.setModel(model1);
 						}
-//delete dormitory student here	(studentid == StudentTemp.get(target).getStudentid())							
+//delete dormitory student here	(studentid == StudentTemp.get(target).getStudentid())	
+						mes = null;
+						mes = new Message();
+						mes.setUserType(1);
+						mes.setModuleType(ModuleType.Dormitory);
+						mes.setMessageType(MessageType.DormDelete);
+						
+						client = null;
+						client = new Client(ClientMainFrame.socket);
+						mes.setData(tempstudent.getStudentid());
+						serverResponse = null;
+						serverResponse = new Message();
+						serverResponse=client.sendRequestToServer(mes);
+						ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) serverResponse.getData();
+						System.out.println("dormitory delete confirmed!");
 //delete user(id == StudentTemp.get(target).getStudentid())		
 						User user = new User();
 						mes = null;
 						mes = new Message();
 						mes.setModuleType(ModuleType.User);
 						mes.setMessageType(MessageType.REQ_USERDEL);
-						user.setId(StudentTemp.get(target).getStudentid());
+						user.setId(tempstudent.getStudentid());
 						user.setAge("");
 						user.setGrade("");
-						user.setMajor(StudentTemp.get(target).getMajor());
+						user.setMajor(tempstudent.getMajor());
 						user.setMoney("");
-						user.setName(StudentTemp.get(target).getStudentName());
+						user.setName(tempstudent.getStudentName());
 						user.setPwd("");
 						user.setRole("0");
-						if(StudentTemp.get(target).getStudentgender()) {
+						if(tempstudent.getStudentgender()) {
 							user.setSex("男");
 						}else {
 							user.setSex("女");
