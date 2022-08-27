@@ -345,6 +345,28 @@ public class ClassAdminForModify extends JFrame {
 							
 							if(!newid.equals(oldid)) {
 //update dormitory student here(update oldid with newid)
+								Dormitory c=new Dormitory();
+								c.setuserID(newid);
+								c.setDormitoryID("");
+								c.setStudentBunkID(0);
+								c.setDormitoryScore(0);
+								c.setWater(0);
+								c.setElectricity(0);
+								c.setDormitoryMaintain("");
+								c.setStudentExchange("");
+								mes = null;
+								mes = new Message();
+								mes.setModuleType(ModuleType.Dormitory);
+								mes.setMessageType(MessageType.DormAdd);
+								mes.setData(c);
+								
+								client = null;
+								client = new Client(ClientMainFrame.socket);
+
+								serverResponse = null;
+								serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								System.out.println("update user dormitory confirmed!");
 //update user here(update oldid with newid)	
 								User user = new User();
 								mes = null;
