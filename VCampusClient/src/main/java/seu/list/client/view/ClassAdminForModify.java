@@ -36,6 +36,7 @@ import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 import seu.list.common.Student;
+import seu.list.common.User;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -238,13 +239,15 @@ public class ClassAdminForModify extends JFrame {
 						}
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
+							int newclasssize = 0;
 							Boolean newclass = false;
 							while(classtempforadd < ClssAll.size() && !newclass) {
 								String tempclss = ClssAll.get(classtempforadd).getClassID();
 								tempclss.replaceAll("\\p{C}", "");
 								if(tempclss.equals(newclssid)) {
 									newclass = true;
-									ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() + 1);
+									newclasssize = ClssAll.get(classtempforadd).getClassSize() + 1;
+									ClssAll.get(classtempforadd).setClassSize(newclasssize);
 								}
 								classtempforadd++;
 							}
@@ -252,21 +255,54 @@ public class ClassAdminForModify extends JFrame {
 								CommitFlag = false;
 								JOptionPane.showMessageDialog(null, "不存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
 								break;
+							}else {
+								Message mes = new Message();
+								mes.setModuleType(ModuleType.Student);
+								mes.setMessageType(MessageType.ClassUpdate);
+								List<Object> sendData = new ArrayList<Object>();
+								sendData.add(4);
+								sendData.add(newclasssize);
+								sendData.add(oldclssid);
+								mes.setData(sendData);
+
+								Client client = new Client(ClientMainFrame.socket);
+
+								Message serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								int res = (int) serverResponse.getData();
+								System.out.println("update class size");
 							}
 						}
 						
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
+							int oldclasssize = 0;
 							Boolean oldclass = false;
 							while(classtempforadd < ClssAll.size() &&!oldclass) {
 								String tempclss = ClssAll.get(classtempforadd).getClassID();
 								tempclss.replaceAll("\\p{C}", "");
 								if(tempclss.equals(newclssid)) {
 									oldclass = true;
-									ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() - 1);
+									oldclasssize = ClssAll.get(classtempforadd).getClassSize() - 1;
+									ClssAll.get(classtempforadd).setClassSize(oldclasssize);
 								}
 								classtempforadd++;
 							}
+							Message mes = new Message();
+							mes.setModuleType(ModuleType.Student);
+							mes.setMessageType(MessageType.ClassUpdate);
+							List<Object> sendData = new ArrayList<Object>();
+							sendData.add(4);
+							sendData.add(oldclasssize);
+							sendData.add(oldclssid);
+							mes.setData(sendData);
+
+							Client client = new Client(ClientMainFrame.socket);
+
+							Message serverResponse = new Message();
+							serverResponse = client.sendRequestToServer(mes);
+							int res = (int) serverResponse.getData();
+							System.out.println("update class size");
 						}
 
 						if (!newclssid.equals(oldclssid)
@@ -309,7 +345,34 @@ public class ClassAdminForModify extends JFrame {
 							
 							if(!newid.equals(oldid)) {
 //update dormitory student here(update oldid with newid)
-//update user here(update oldid with newid)					
+//update user here(update oldid with newid)	
+								User user = new User();
+								mes = null;
+								mes = new Message();
+								mes.setModuleType(ModuleType.User);
+								mes.setMessageType(MessageType.REQ_USERUPDATE);
+								user.setId(oldid);
+								user.setAge("");
+								user.setGrade("");
+								user.setMajor("");
+								user.setMoney("");
+								user.setName(oldname);
+								user.setPwd("");
+								user.setRole("0");
+								user.setSex("男");
+								mes.setContent(user.getContent());
+								Vector<String> tempdata = new Vector<String>();
+								tempdata.add(oldid);
+								tempdata.add(newid);
+								mes.setData(tempdata);
+
+								client = null;
+								client = new Client(ClientMainFrame.socket);
+
+								serverResponse = null;
+								serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								System.out.println("update user confirmed!");
 							}//end of update of other table
 						}
 						i_row++;
@@ -521,13 +584,15 @@ public class ClassAdminForModify extends JFrame {
 						}
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
+							int newclasssize = 0;
 							Boolean newclass = false;
 							while(classtempforadd < ClssAll.size() && !newclass) {
 								String tempclss = ClssAll.get(classtempforadd).getClassID();
 								tempclss.replaceAll("\\p{C}", "");
 								if(tempclss.equals(newclssid)) {
 									newclass = true;
-									ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() + 1);
+									newclasssize = ClssAll.get(classtempforadd).getClassSize() + 1;
+									ClssAll.get(classtempforadd).setClassSize(newclasssize);
 								}
 								classtempforadd++;
 							}
@@ -535,21 +600,54 @@ public class ClassAdminForModify extends JFrame {
 								CommitFlag = false;
 								JOptionPane.showMessageDialog(null, "不存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
 								break;
+							}else {
+								Message mes = new Message();
+								mes.setModuleType(ModuleType.Student);
+								mes.setMessageType(MessageType.ClassUpdate);
+								List<Object> sendData = new ArrayList<Object>();
+								sendData.add(4);
+								sendData.add(newclasssize);
+								sendData.add(oldclssid);
+								mes.setData(sendData);
+
+								Client client = new Client(ClientMainFrame.socket);
+
+								Message serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								int res = (int) serverResponse.getData();
+								System.out.println("update class size");
 							}
 						}
 						
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
+							int oldclasssize = 0;
 							Boolean oldclass = false;
 							while(classtempforadd < ClssAll.size() &&!oldclass) {
 								String tempclss = ClssAll.get(classtempforadd).getClassID();
 								tempclss.replaceAll("\\p{C}", "");
 								if(tempclss.equals(newclssid)) {
 									oldclass = true;
-									ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() - 1);
+									oldclasssize = ClssAll.get(classtempforadd).getClassSize() - 1;
+									ClssAll.get(classtempforadd).setClassSize(oldclasssize);
 								}
 								classtempforadd++;
 							}
+							Message mes = new Message();
+							mes.setModuleType(ModuleType.Student);
+							mes.setMessageType(MessageType.ClassUpdate);
+							List<Object> sendData = new ArrayList<Object>();
+							sendData.add(4);
+							sendData.add(oldclasssize);
+							sendData.add(oldclssid);
+							mes.setData(sendData);
+
+							Client client = new Client(ClientMainFrame.socket);
+
+							Message serverResponse = new Message();
+							serverResponse = client.sendRequestToServer(mes);
+							int res = (int) serverResponse.getData();
+							System.out.println("update class size");
 						}
 
 						if (!newclssid.equals(oldclssid)
@@ -596,7 +694,34 @@ public class ClassAdminForModify extends JFrame {
 
 							if (!newid.equals(oldid)) {
 //update dormitory student here(update oldid with newid)
-//update user here(update oldid with newid)					
+//update user here(update oldid with newid)				
+								User user = new User();
+								mes = null;
+								mes = new Message();
+								mes.setModuleType(ModuleType.User);
+								mes.setMessageType(MessageType.REQ_USERUPDATE);
+								user.setId(oldid);
+								user.setAge("");
+								user.setGrade("");
+								user.setMajor("");
+								user.setMoney("");
+								user.setName(oldname);
+								user.setPwd("");
+								user.setRole("0");
+								user.setSex("男");
+								mes.setContent(user.getContent());
+								Vector<String> tempdata = new Vector<String>();
+								tempdata.add(oldid);
+								tempdata.add(newid);
+								mes.setData(tempdata);
+
+								client = null;
+								client = new Client(ClientMainFrame.socket);
+
+								serverResponse = null;
+								serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								System.out.println("update user confirmed!");
 							}//end of update of other table
 						}
 						i_row++;

@@ -217,13 +217,14 @@ public class ClassAdminForAdd extends JFrame {
 							if(flag) {
 								flag = false;
 								i = 0;
-								
+								int oldclasssize = 0;
 								//check the class exist
 								while(i < ClssAll.size()) {
 									String tempclss = ClssAll.get(i).getClassID();
 									tempclss.replaceAll("\\p{C}", "");
 									if(tempclss.equals(newclssid)) {
-										ClssAll.get(i).setClassSize(ClssAll.get(i).getClassSize() + 1);
+										oldclasssize= ClssAll.get(i).getClassSize() + 1;
+										ClssAll.get(i).setClassSize(oldclasssize);
 										flag = true;
 										clssid = i;
 										break;
@@ -247,21 +248,40 @@ public class ClassAdminForAdd extends JFrame {
 											j++;
 										}
 									}*/
+									Message mes = new Message();
+									mes.setModuleType(ModuleType.Student);
+									mes.setMessageType(MessageType.ClassUpdate);
+									List<Object> sendData = new ArrayList<Object>();
+									sendData.add(4);
+									sendData.add(oldclasssize);
+									sendData.add(stu.getClassid());
+									mes.setData(sendData);
+
+									Client client = new Client(ClientMainFrame.socket);
+
+									Message serverResponse = new Message();
+									serverResponse = client.sendRequestToServer(mes);
+									int res = (int) serverResponse.getData();
+									System.out.println("update class size");
+									
 									
 									//add student here
 									Modified = true;
-									Message mes = new Message();
+									mes = null;
+									mes = new Message();
 									mes.setModuleType(ModuleType.Student);
 									mes.setMessageType(MessageType.ClassAdminAdd);
 									stu.setMajor(ClssAll.get(clssid).getMajor());
 									stu.setTeacherid(ClssAll.get(clssid).getTeacherID());
 									mes.setData(stu);
 									
-									Client client = new Client(ClientMainFrame.socket);
+									client = null;
+									client = new Client(ClientMainFrame.socket);
 									
-									Message serverResponse = new Message();
+									serverResponse = null;
+									serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
-									int res = (int)serverResponse.getData();
+									res = (int)serverResponse.getData();
 									System.out.println("Add Student Confirmed!");
 									
 									StuAll.add(stu);	

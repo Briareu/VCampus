@@ -35,6 +35,7 @@ import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 import seu.list.common.Student;
+import seu.list.common.User;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -213,21 +214,24 @@ public class ClassAdminForDelete extends JFrame {
 						JOptionPane.showMessageDialog(null, "请先选择要进行删除的学生！", "提示", JOptionPane.WARNING_MESSAGE);
 					}else {
 						int classtempforadd = 0;
+						int oldclasssize = 0;
 						Boolean newclass = false;
 						while(classtempforadd < ClssAll.size() && !newclass) {
 							if(ClssAll.get(classtempforadd).getClassID().equals(table.getValueAt(target, 0))) {
 								newclass = true;
-								ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() - 1);
+								oldclasssize = ClssAll.get(classtempforadd).getClassSize() - 1;
+								ClssAll.get(classtempforadd).setClassSize(oldclasssize);
 							}
 							classtempforadd++;
 						}
-						//delete studentmanage student here(studentid == StuAll.get(target).getStudentid())					
+						
 						Message mes = new Message();
 						mes.setModuleType(ModuleType.Student);
-						mes.setMessageType(MessageType.ClassAdminDelete);
+						mes.setMessageType(MessageType.ClassUpdate);
 						List<Object> sendData = new ArrayList<Object>();
-						sendData.add(0);
-						sendData.add(StuAll.get(target).getStudentid());
+						sendData.add(4);
+						sendData.add(oldclasssize);
+						sendData.add(StuAll.get(target).getClassid());
 						mes.setData(sendData);
 
 						Client client = new Client(ClientMainFrame.socket);
@@ -235,15 +239,61 @@ public class ClassAdminForDelete extends JFrame {
 						Message serverResponse = new Message();
 						serverResponse = client.sendRequestToServer(mes);
 						int res = (int) serverResponse.getData();
-//delete dormitory student here	(studentid == StuAll.get(target).getStudentid())							
-//delete user(id == StuAll.get(target).getStudentid())
+						System.out.println("update class size");
 						
+						//delete studentmanage student here(studentid == StuAll.get(target).getStudentid())					
+						mes = null;
+						mes = new Message();
+						mes.setModuleType(ModuleType.Student);
+						mes.setMessageType(MessageType.ClassAdminDelete);
+						sendData = null;
+						sendData = new ArrayList<Object>();
+						sendData.add(0);
+						sendData.add(StuAll.get(target).getStudentid());
+						mes.setData(sendData);
+
+						client = null;
+						client = new Client(ClientMainFrame.socket);
+
+						serverResponse = null;
+						serverResponse = new Message();
+						serverResponse = client.sendRequestToServer(mes);
+						res = (int) serverResponse.getData();
 						if(res > 0) {
 							JOptionPane.showMessageDialog(null, "完成删除！", "提示", JOptionPane.WARNING_MESSAGE);
 							model1.removeRow(target);
 							StuAll.remove(target);
 							table.setModel(model1);
 						}
+//delete dormitory student here	(studentid == StuAll.get(target).getStudentid())							
+//delete user(id == StuAll.get(target).getStudentid())
+						User user = new User();
+						mes = null;
+						mes = new Message();
+						mes.setModuleType(ModuleType.User);
+						mes.setMessageType(MessageType.REQ_USERDEL);
+						user.setId(StuAll.get(target).getStudentid());
+						user.setAge("");
+						user.setGrade("");
+						user.setMajor(StuAll.get(target).getMajor());
+						user.setMoney("");
+						user.setName(StuAll.get(target).getStudentName());
+						user.setPwd("");
+						user.setRole("0");
+						if(StuAll.get(target).getStudentgender()) {
+							user.setSex("男");
+						}else {
+							user.setSex("女");
+						}
+						mes.setContent(user.getContent());
+
+						client = null;
+						client = new Client(ClientMainFrame.socket);
+
+						serverResponse = null;
+						serverResponse = new Message();
+						serverResponse = client.sendRequestToServer(mes);
+						serverResponse.getData();
 					}
 				}else if(now == MODEL.CLASSDELETE) {
 					int target = table.getSelectedRow();
@@ -319,22 +369,24 @@ public class ClassAdminForDelete extends JFrame {
 						JOptionPane.showMessageDialog(null, "请先选择要进行删除的学生！", "提示", JOptionPane.WARNING_MESSAGE);
 					}else {
 						int classtempforadd = 0;
+						int oldclasssize = 0;
 						Boolean newclass = false;
 						while(classtempforadd < ClssAll.size() && !newclass) {
 							if(ClssAll.get(classtempforadd).getClassID().equals(model1.getValueAt(target, 0))) {
+								oldclasssize = ClssAll.get(classtempforadd).getClassSize() - 1;
 								System.out.println("delete student from class");
 								newclass = true;
-								ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() - 1);
+								ClssAll.get(classtempforadd).setClassSize(oldclasssize);
 							}
 							classtempforadd++;
 						}
-						//delete studentmanage student here						
 						Message mes = new Message();
 						mes.setModuleType(ModuleType.Student);
-						mes.setMessageType(MessageType.ClassAdminDelete);
+						mes.setMessageType(MessageType.ClassUpdate);
 						List<Object> sendData = new ArrayList<Object>();
-						sendData.add(0);
-						sendData.add(StudentTemp.get(target).getStudentid());
+						sendData.add(4);
+						sendData.add(oldclasssize);
+						sendData.add(StudentTemp.get(target).getClassid());
 						mes.setData(sendData);
 
 						Client client = new Client(ClientMainFrame.socket);
@@ -342,6 +394,26 @@ public class ClassAdminForDelete extends JFrame {
 						Message serverResponse = new Message();
 						serverResponse = client.sendRequestToServer(mes);
 						int res = (int) serverResponse.getData();
+						System.out.println("update class size");
+						
+						//delete studentmanage student here					
+						mes = null;
+						mes = new Message();
+						mes.setModuleType(ModuleType.Student);
+						mes.setMessageType(MessageType.ClassAdminDelete);
+						sendData = null;
+						sendData = new ArrayList<Object>();
+						sendData.add(0);
+						sendData.add(StudentTemp.get(target).getStudentid());
+						mes.setData(sendData);
+
+						client = null;
+						client = new Client(ClientMainFrame.socket);
+
+						serverResponse = null;
+						serverResponse = new Message();
+						serverResponse = client.sendRequestToServer(mes);
+						res = (int) serverResponse.getData();
 						if(res > 0) {
 							JOptionPane.showMessageDialog(null, "完成删除！", "提示", JOptionPane.WARNING_MESSAGE);
 							model1.removeRow(target);
@@ -350,7 +422,34 @@ public class ClassAdminForDelete extends JFrame {
 							table.setModel(model1);
 						}
 //delete dormitory student here	(studentid == StudentTemp.get(target).getStudentid())							
-//delete user(id == StudentTemp.get(target).getStudentid())					
+//delete user(id == StudentTemp.get(target).getStudentid())		
+						User user = new User();
+						mes = null;
+						mes = new Message();
+						mes.setModuleType(ModuleType.User);
+						mes.setMessageType(MessageType.REQ_USERDEL);
+						user.setId(StudentTemp.get(target).getStudentid());
+						user.setAge("");
+						user.setGrade("");
+						user.setMajor(StudentTemp.get(target).getMajor());
+						user.setMoney("");
+						user.setName(StudentTemp.get(target).getStudentName());
+						user.setPwd("");
+						user.setRole("0");
+						if(StudentTemp.get(target).getStudentgender()) {
+							user.setSex("男");
+						}else {
+							user.setSex("女");
+						}
+						mes.setContent(user.getContent());
+
+						client = null;
+						client = new Client(ClientMainFrame.socket);
+
+						serverResponse = null;
+						serverResponse = new Message();
+						serverResponse = client.sendRequestToServer(mes);
+						serverResponse.getData();
 					}
 				}else if(now == MODEL.CLASSTEMP) {
 					int target = table.getSelectedRow();

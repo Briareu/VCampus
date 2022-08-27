@@ -83,6 +83,40 @@ public class UserDaoImpl implements UserDao {
 					}
 					break;
 				}
+				case MessageType.REQ_USERDEL:
+				{
+					String userID = this.mesFromClient.getContent().get(0);
+					User user=this.searchUser(userID);
+					if(user == null) {
+						System.out.println("不存在该用户");
+					}else {
+						Boolean flag = this.delUser(userID);
+						if(flag) {
+							System.out.println("成功删除该用户");
+						}else {
+							System.out.println("无法执行删除操作");
+						}
+					}
+					break;
+				}
+				case MessageType.REQ_USERUPDATE:
+				{
+					Vector<String> tempdata = (Vector<String>)this.mesFromClient.getData();
+					String userID = tempdata.get(0);
+					String newID = tempdata.get(1);
+					User user=this.searchUser(userID);
+					if(user == null) {
+						System.out.println("不存在该用户");
+					}else {
+						Boolean flag = this.updateUser(userID, newID);
+						if(flag) {
+							System.out.println("成功更新用户");
+						}else {
+							System.out.println("未完成更新操作");
+						}
+					}
+					break;
+				}
 				default:break;
 			}
 		}
@@ -112,6 +146,7 @@ public class UserDaoImpl implements UserDao {
 		u=this.addUser(u);
 		boolean flag2=false;
 		if(u!=null)flag2=true;
+		System.out.println("update success!");
 		return flag1&&flag2;
 
 	}

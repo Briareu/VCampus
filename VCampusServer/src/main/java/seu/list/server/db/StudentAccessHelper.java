@@ -378,6 +378,10 @@ public class StudentAccessHelper{
 			res = statement.executeUpdate("update tb_StudentClass set TeacherId='"+ data.get(1).toString() +"', Major='"+ data.get(2).toString() +"', ClassID='"+ data.get(3).toString() +"' where ClassID='"+ data.get(4).toString() +"'");
 		}
 		break;
+		case 4:
+		{
+			res = statement.executeUpdate("update tb_StudentClass set ClassSize='"+ Integer.parseInt(data.get(1).toString()) +"' where ClassID='"+ data.get(2).toString() +"'");
+		}
 		default:
 			break;
 		}
