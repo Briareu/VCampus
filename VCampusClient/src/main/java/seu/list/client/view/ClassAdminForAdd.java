@@ -286,6 +286,29 @@ public class ClassAdminForAdd extends JFrame {
 									
 									StuAll.add(stu);	
 //add dormitory student here(id = stu.getStudentid())
+									mes = null;
+									mes = new Message();
+									mes.setModuleType(ModuleType.Dormitory);
+									mes.setMessageType(MessageType.DormAdd);
+									Dormitory c=new Dormitory();
+									c.setuserID(stu.getStudentid());
+									c.setDormitoryID("");
+									c.setStudentBunkID(0);
+									c.setDormitoryScore(0);
+									c.setWater(0);
+									c.setElectricity(0);
+									c.setDormitoryMaintain("");
+									c.setStudentExchange("");
+									mes.setData(c);
+									
+									client = null;
+									client = new Client(ClientMainFrame.socket);
+									
+									serverResponse = null;
+									serverResponse = new Message();
+									serverResponse = client.sendRequestToServer(mes);
+									res = (int)serverResponse.getData();
+									System.out.println("Add Student Dormitory Confirmed!");
 									clear();
 									/*
 									if(flag) {
