@@ -35,13 +35,28 @@ public class DormitorServer extends Dormitory_DbAccess{
 		mesToClient = new Message();
 		switch (this.mesFromClient.getMessageType()) {
 		case MessageType.DormMaintain:
-			this.mesToClient.setData(this.Maintain((ArrayList<String>)this.mesFromClient.getData()));
+			try {
+				this.mesToClient.setData(this.Maintain((ArrayList<String>)this.mesFromClient.getData()));
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 		case MessageType.DormExcange:
-			this.mesToClient.setData(this.Exchange((ArrayList<String>)this.mesFromClient.getData()));
+			try {
+				this.mesToClient.setData(this.Exchange((ArrayList<String>)this.mesFromClient.getData()));
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 		case MessageType.DormStShow:
-			this.mesToClient.setData(this.Show(this.mesFromClient.getData().toString()));
+			try {
+				this.mesToClient.setData(this.Show(this.mesFromClient.getData().toString()));
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 		case MessageType.DormAdd:
 			try {
@@ -60,7 +75,12 @@ public class DormitorServer extends Dormitory_DbAccess{
 			}
 			break;
 		case MessageType.DormModify:
-			this.mesToClient.setData(this.Modify((ArrayList<String>)this.mesFromClient.getData()));
+			try {
+				this.mesToClient.setData(this.Modify((ArrayList<String>)this.mesFromClient.getData()));
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		case MessageType.DormAdShow:		
 			this.mesToClient.setData(this.AllDormitory());
@@ -80,7 +100,7 @@ public class DormitorServer extends Dormitory_DbAccess{
 		}
 	}
 
-	private Dormitory Maintain(ArrayList<String> para) {
+	private Dormitory Maintain(ArrayList<String> para) throws SQLException {
 		// TODO Auto-generated method stub
 		System.out.println(para);
 		String userID = para.get(0);
@@ -88,6 +108,8 @@ public class DormitorServer extends Dormitory_DbAccess{
 		String maintain = para.get(2);
 		Dormitory temp=new Dormitory();
 		Dorm = AllDormitory();
+		con = this.getConnection();
+		s = con.createStatement();
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				Dorm.get(i).setStudentExchange(maintain);
@@ -102,13 +124,15 @@ public class DormitorServer extends Dormitory_DbAccess{
 		return temp;
 	}
 
-	private Dormitory Exchange(ArrayList<String> para) {
+	private Dormitory Exchange(ArrayList<String> para) throws SQLException {
 		System.out.println(para);
 		String userID = para.get(0);
 		String dormID = para.get(1);
 		String exchange = para.get(2);
 		Dormitory temp=new Dormitory();
 		Dorm = AllDormitory();
+		con = this.getConnection();
+		s = con.createStatement();
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				Dorm.get(i).setStudentExchange(exchange);
@@ -123,27 +147,31 @@ public class DormitorServer extends Dormitory_DbAccess{
 		return temp;
 	}
 
-	private Dormitory Show(String userID) {
+	private Dormitory Show(String userID) throws SQLException {
 		// TODO Auto-generated method stub
 		Dorm = AllDormitory();
 		Dormitory temp=new Dormitory();
-		for (int i = 0; i < Dorm.size(); i++)
-			if (Dorm.get(i).getuserID().equals(userID)) 
-				{
-				temp=Dorm.get(i);
+		con = this.getConnection();
+		s = con.createStatement();
+		for (int i = 0; i < Dorm.size(); i++) {
+			if (Dorm.get(i).getuserID().equals(userID)) {
+				temp = Dorm.get(i);
 				break;
-				}
+			}
+		}
 		System.out.println("!!!!!!");
 		System.out.println(temp);
 		return temp;
 	}
 
-	private ArrayList<Dormitory> Modify(ArrayList<String> para) {
+	private ArrayList<Dormitory> Modify(ArrayList<String> para) throws SQLException {
 		System.out.println(para);
 		String userID = para.get(0);
 		String usertype = para.get(1);
 		int temp = Integer.parseInt(para.get(2));
 		Dorm = AllDormitory();
+		con = this.getConnection();
+		s = con.createStatement();
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				if ("卫生评分".equals(usertype)) {
