@@ -287,7 +287,7 @@ public class ClassAdminForAdd extends JFrame {
 									
 									StuAll.add(stu);	
 //add dormitory student here(id = stu.getStudentid())
-									mes = null;
+/*									mes = null;
 									mes = new Message();
 									mes.setModuleType(ModuleType.Dormitory);
 									mes.setMessageType(MessageType.DormAdd);
@@ -309,6 +309,7 @@ public class ClassAdminForAdd extends JFrame {
 									serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
 									System.out.println("Add Student Dormitory Confirmed!");
+*/
 									clear();
 									/*
 									if(flag) {
