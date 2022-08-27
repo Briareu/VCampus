@@ -53,6 +53,8 @@ import javax.swing.JInternalFrame;
 import java.awt.Button;
 import javax.swing.JTextPane;
 import javax.swing.JPanel;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class Shop_AdminFrame {
     ArrayList<Goods>GoodsList;
@@ -77,6 +79,8 @@ public class Shop_AdminFrame {
 	private JButton btnNewButton_5;
 	private JTextField GoodsIDdeltext;
 	private JLabel lblNewLabel_6;
+	private JButton btnNewButton_6;
+	
 
 	/**
 	 * Launch the application.
@@ -444,6 +448,15 @@ public class Shop_AdminFrame {
 		lblNewLabel_1.setBounds(0, 0, 561, 406);
 		getFrame().getContentPane().add(lblNewLabel_1);
 		
+		btnNewButton_6 = new JButton("");
+		btnNewButton_6.setIcon(new ImageIcon("src/main/resources/image/Goods_refresh.png"));
+		btnNewButton_6.setBounds(459, 0, 50, 50);
+		frame.getContentPane().add(btnNewButton_6);
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				show();
+			}
+		});
 	
 		
 		
@@ -562,6 +575,16 @@ public class Shop_AdminFrame {
 		}
 	}
 	
+	private void get_turnover() {
+		Message mes =new Message();
+		mes.setMessageType(MessageType.Goodsgetturnover);
+		mes.setModuleType(ModuleType.Shop);
+		Client client=new Client(ClientMainFrame.socket);
+		Message serverResponse= client.sendRequestToServer(mes); 
+		Double total = (Double)serverResponse.getData();
+		textField.setText(total+"");
+	}
+	
 	public void show() {	
 		Message mes =new Message();
 		mes.setMessageType(MessageType.Goodsgetall);
@@ -598,6 +621,8 @@ public class Shop_AdminFrame {
 			}
 			table.setModel(tablemodel);
 			
+			table.setModel(tablemodel);
+			get_turnover();
 	}
 	 
 	 public JFrame getFrame() {
@@ -659,9 +684,17 @@ public class Shop_AdminFrame {
 
 	            // 数据合法时，设置编辑器组件内的内容颜色为黑色
 	            comp.setForeground(Color.BLACK);
-
+    
 	            // 合法数据交给父类处理
 	            return super.stopCellEditing();
 	        }
 	    }
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }
