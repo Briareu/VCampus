@@ -39,7 +39,8 @@ public class DormitoryAdminClient extends JFrame {
 	private JPanel contentPane;
 	private JTextField searchField;
 	private JTable table;
-	static Socket socket;
+	//static Socket socket;
+	private Socket socket;
 	public int k=0;
 	public ArrayList<Dormitory> Dorm=new ArrayList<Dormitory>();
 
