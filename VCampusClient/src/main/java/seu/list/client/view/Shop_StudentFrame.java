@@ -155,7 +155,7 @@ public class Shop_StudentFrame {
 
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
 		
-		TableModel tableModel = table.getModel();
+		final TableModel tableModel = table.getModel();
 		tableModel.addTableModelListener(new TableModelListener() {
 		    @Override
 		    public void tableChanged(TableModelEvent e) {
