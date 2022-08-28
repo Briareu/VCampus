@@ -186,7 +186,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         border.setLayout(null);
         border.setOpaque(false);//将上边框设为透明
 
-        JFrame that = this;
+        final JFrame that = this;
 
         border.addMouseListener((MouseListener) new MouseAdapter(){
 
