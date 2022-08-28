@@ -58,7 +58,7 @@ public class Shop_StudentForPay extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Shop_StudentForPay(Shop_StudentFrame ssf, JFrame oldframe, Double sum, String id, String PWD) {
+	public Shop_StudentForPay(final Shop_StudentFrame ssf, JFrame oldframe, final Double sum, final String id, final String PWD) {
 		SSF = ssf;
 		shop = oldframe;
 		setBounds(100, 100, 489, 300);

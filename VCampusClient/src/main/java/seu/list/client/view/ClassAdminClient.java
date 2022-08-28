@@ -204,7 +204,7 @@ public class ClassAdminClient extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JComboBox<String> select = new JComboBox<String>();
+		final JComboBox<String> select = new JComboBox<String>();
 		select.setFont(new Font("宋体", Font.PLAIN, 18));
 		select.addItem("全部");
 		select.addItem("班级");

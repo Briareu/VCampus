@@ -81,7 +81,7 @@ public class ClassAdminForDelete extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ClassAdminForDelete(final ClassAdminClient cac, Vector<Student> Stu, Vector<ClassManage> Clss) {
+	public ClassAdminForDelete(final ClassAdminClient cac, Vector<Student> Stu, final Vector<ClassManage> Clss) {
 		CAC = cac;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 790, 480);
@@ -99,12 +99,12 @@ public class ClassAdminForDelete extends JFrame {
 
 		exitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
-		JComboBox selectmode = new JComboBox();
+		final JComboBox selectmode = new JComboBox();
 		selectmode.setFont(new Font("宋体", Font.PLAIN, 18));
 		selectmode.addItem("学生");
 		selectmode.addItem("班级");
 		
-		JComboBox searchbtn = new JComboBox();
+		final JComboBox searchbtn = new JComboBox();
 		searchbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
 		JLabel lblNewLabel = new JLabel("模式");

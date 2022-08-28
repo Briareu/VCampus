@@ -55,7 +55,7 @@ public class ClassStudentForInvest extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ClassStudentForInvest(ClassStudentClient csc, Double credit, String id, String PWD) {
+	public ClassStudentForInvest(ClassStudentClient csc, final Double credit, final String id, final String PWD) {
 		CSC=csc;
 		setBounds(100, 100, 489, 300);
 		contentPane = new JPanel();

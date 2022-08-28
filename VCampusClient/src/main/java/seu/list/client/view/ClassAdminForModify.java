@@ -97,12 +97,12 @@ public class ClassAdminForModify extends JFrame {
 
 		exitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
-		JComboBox selectmode = new JComboBox();
+		final JComboBox selectmode = new JComboBox();
 		selectmode.setFont(new Font("宋体", Font.PLAIN, 18));
 		selectmode.addItem("学生");
 		selectmode.addItem("班级");
 		
-		JComboBox searchbtn = new JComboBox();
+		final JComboBox searchbtn = new JComboBox();
 		searchbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
 		JLabel lblNewLabel = new JLabel("模式");

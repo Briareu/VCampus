@@ -94,7 +94,7 @@ public class ClassAdminForAdd extends JFrame {
 		
 		exitbtn.setFont(new Font("宋体", Font.PLAIN, 15));
 		
-		JComboBox selectmode = new JComboBox();
+		final JComboBox selectmode = new JComboBox();
 		selectmode.addItem("学生");
 		selectmode.addItem("班级");
 		
