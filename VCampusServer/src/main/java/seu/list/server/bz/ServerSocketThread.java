@@ -55,6 +55,7 @@ public class ServerSocketThread extends Thread {
 				message = (Message)request.readObject();
 				
 				if(message.isOffline()) { // 收到客户端的下线通知
+					this.isClosed = true;
 					break;
 				}
 				
@@ -148,5 +149,13 @@ public class ServerSocketThread extends Thread {
 	public void close() {
 		System.out.println("关闭客户端线程：" + this.id);
 		this.isClosed = true;
+	}
+	
+	public String getCliThdID() {
+		return this.id;
+	}
+	
+	public String getIP() {
+		return this.clientSocket.getInetAddress().getHostAddress();
 	}
 }

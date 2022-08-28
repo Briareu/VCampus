@@ -44,4 +44,14 @@ public class ServerClientThreadMgr {
 			thd.sendMesToClient(mes);
 		}
 	}
+	
+	public synchronized static void printAllClient() {
+		Iterator<Map.Entry<String, ServerSocketThread>> entries = clientThreadPool.entrySet().iterator();
+		System.out.println("目前连接到服务器上的客户端: ");
+		while(entries.hasNext()) {
+			Map.Entry<String, ServerSocketThread> entry = entries.next();
+			ServerSocketThread thd = entry.getValue();
+			System.out.println("客户端线程ID: " + thd.getCliThdID() + ", ip地址: " + thd.getIP());
+		}
+	}
 }

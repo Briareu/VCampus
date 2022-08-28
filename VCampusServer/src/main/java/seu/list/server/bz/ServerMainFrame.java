@@ -31,6 +31,7 @@ public class ServerMainFrame
 {
 	public static final String ServerCmdHelp = "help";
 	public static final String ServerCmdClose = "close";
+	public static final String ServerCmdPrintAll = "print all";
 	
 	public static void main(String[] args)
 	{
@@ -41,7 +42,8 @@ public class ServerMainFrame
 		System.out.println("输入" + ServerCmdHelp + "以获取服务端使用帮助");
 		Scanner scan = new Scanner(System.in);
 		while(!isClosed && scan.hasNext()) {
-			String input = scan.next();
+			//String input = scan.next();
+			String input = scan.nextLine();
 			switch(input) {
 				case ServerCmdHelp: {
 					printHelp();
@@ -50,6 +52,10 @@ public class ServerMainFrame
 				case ServerCmdClose: {
 					srvThd.close();
 					isClosed = true;
+					break;
+				}
+				case ServerCmdPrintAll: {
+					ServerClientThreadMgr.printAllClient();
 					break;
 				}
 				default: {
@@ -67,6 +73,7 @@ public class ServerMainFrame
 		System.out.println("-------------------------------------------------");
 		System.out.println("服务端使用帮助");
 		System.out.println("输入" + ServerCmdClose + "以关闭服务器");
+		System.out.println("输入" + ServerCmdPrintAll + "以打印所有已连接的客户端信息");
 		System.out.println("-------------------------------------------------");
 	}
 }

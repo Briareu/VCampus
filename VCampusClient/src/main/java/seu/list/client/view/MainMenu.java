@@ -34,29 +34,6 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			String uID=this.uID;
-			int userType=this.userType;
-			Socket socket=this.socket;
-			public void run() {
-				try {
-
-					MainMenu frame = new MainMenu(userType,uID,socket);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	*/
-
-	/**
 	 * Create the frame.
 	 */
 

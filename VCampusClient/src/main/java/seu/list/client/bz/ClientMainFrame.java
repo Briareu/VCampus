@@ -26,27 +26,9 @@ public class ClientMainFrame {
 			e.printStackTrace();
 		}
 
-		// 启动各种窗口
+		// 启动登录窗口
 		ClientLoginFrame c = new ClientLoginFrame(socket);
-
-		//ClientTeacherFrame c=new ClientTeacherFrame("3",socket);
-
-		//ClientStuCourseFrame s=new ClientStuCourseFrame("2",socket);
-		///ClientLoginFrame c=new ClientLoginFrame(socket);
-
-
-		
-		// test
-		/*
-		String testPwd = "sadadsadq";
-		String testUserAdminID = "10001";
-		String testUserStuID = "00001";
-		MainMenu mainMenu = new MainMenu(1, testUserAdminID, testPwd, socket);
-		//MainMenu mainMenu = new MainMenu(0, testUserStuID, testPwd, socket);
-		mainMenu.setVisible(true);
-		*/
-		// test
-		
+		c.setVisible(true);
 		
 		// 卡死主程序，防止资源释放
 		while(true);

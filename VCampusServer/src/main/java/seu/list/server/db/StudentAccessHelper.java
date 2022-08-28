@@ -46,7 +46,7 @@ public class StudentAccessHelper{
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-//			rs = st.executeQuery("select * from Student");
+			//rs = st.executeQuery("select * from Student");
 			rs = st.executeQuery("select * from tb_Student");
 			int i = 0;
 			while(rs.next()) {
