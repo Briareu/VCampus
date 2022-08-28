@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
@@ -81,11 +83,12 @@ public class ClassStudentForInvest extends JFrame {
 					while(i<money.getText().length()) {
 						if(money.getText().charAt(i) == '.'&&i != 0) {
 							//empty
+							i++;
 						}else if(money.getText().charAt(i) == '.'&&i == 0) {
 							JOptionPane.showMessageDialog(null, "请正确填写充值金额(非小数点开头)！", "提示", JOptionPane.WARNING_MESSAGE);
 							flag = false;
 							break;
-						}else if(money.getText().charAt(i) == '0' && i == 0) {
+						}else if(money.getText().charAt(i) == '0' && i == 0 && 1 < money.getText().length() && money.getText().charAt(1) != '.') {
 							JOptionPane.showMessageDialog(null, "请正确填写充值金额(非零开头)！", "提示", JOptionPane.WARNING_MESSAGE);
 							flag = false;
 							break;
@@ -192,6 +195,7 @@ public class ClassStudentForInvest extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/image/xiaobiao.jpg"));
 	}
 	void close() {
 		CSC.update(Credit);
