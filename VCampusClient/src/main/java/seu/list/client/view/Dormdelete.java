@@ -195,10 +195,11 @@ public class Dormdelete extends JDialog {
 		C.setEnabled(true);
 		C.updateFrameD(DeuserIDField.getText().toString());
 		this.dispose();
-		int res = (int)serverResponse.getData();
-		if(res > 0)
+//		int res = (int)serverResponse.getData();
+/*		if(res > 0)
 			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
-		
+*/
+		JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
 	}
 
 }
