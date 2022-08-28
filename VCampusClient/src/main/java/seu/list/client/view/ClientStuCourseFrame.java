@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClientStuCourseFrame extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
-	
+
 	final int WIDTH=1200;
 	final int HEIGHT=800;
 	JFrame jframe=new JFrame();
@@ -43,6 +43,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 
 	public ClientStuCourseFrame(String number, Socket socket) throws ClassNotFoundException, SQLException,IOException, ClassNotFoundException
 	{
+		//this.setVisible(true);
 		Tools.setWindowspos(WIDTH,HEIGHT,jframe);
 		this.socket=socket;
 		Client client =new Client(socket);
@@ -201,105 +202,13 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		jframe.validate();
 
 
-		/*jbackground=new JPanel();
 
-
-		jb1=new JButton("选择");
-	    jb1.setFont(f1);
-	    jb1.setBounds(10, 300, 70, 30);
-
-	    jl1=new JLabel("课程号:");
-	    jl1.setFont(f1);
-
-		jb2=new JButton("已选课程查询");
-		jb2.setFont(f1);
-
-		jb3=new JButton("课程查询");
-		jb3.setFont(f1);
-
-		jtf1=new JTextField(10);
-
-		jtf2=new JTextField(10);
-
-
-
-		jb4=new JButton("退课");
-		jb4.setFont(f1);
-
-		Object[][] courseinformation= {};
-        Object[] courselist = {"学年学期","专业","课程编号","课程","授课人数","状态","类型"};
-        DefaultTableModel model;
-        model = new DefaultTableModel(courseinformation, courselist);
-
-        ClientReq clientReq = new ClientReq();
-		clientReq.setType("REQ_SHOW_ALL_LESSON");
-		//传数据
-		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-		oos.writeObject(clientReq);
-		oos.flush();
-		//接受数据
-		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-		clientReq = (ClientReq) ois.readObject();
-		Vector<String> allCourseContents = clientReq.getContent();
-		System.out.println(allCourseContents.size());
-		Object sigRow[] = new  String[7];
-		for(int i=0;i<allCourseContents.size();) {
-			for(int j=0;j<7;j++) {
-				sigRow[j]=allCourseContents.get(i);
-				i++;
-			}
-			model.addRow(sigRow);
-		}
-
-        jtb1=new JTable();
-		jtb1.setModel(model);
-		scrollPane = new JScrollPane(jtb1);
-
-		jb1.addActionListener(this);
-		jb1.setActionCommand("choose");
-		jb2.addActionListener(this);
-		jb2.setActionCommand("chozen");
-		jb3.addActionListener(this);
-		jb3.setActionCommand("check");
-		jb4.addActionListener(this);
-		jb4.setActionCommand("cancel");
-
-		jp1=new JPanel();
-		jp3=new JPanel();
-		jp4=new JPanel();
-		jp5=new JPanel();
-
-	    jp1.add(jl1);
-		jp1.add(jtf2);
-		jp1.add(jb1);
-		jp1.add(jb4);
-		jp1.add(jb2);
-		jp5.add(jb3);
-		jp4.add(jtf1);
-		jp3.add(jp4);
-		jp3.add(jp5);
-
-
-		//cm=new CouTableModel(0);
-		//jt = new JTable(cm);
-
-
-		int w=Toolkit.getDefaultToolkit().getScreenSize().width;
-		int h=Toolkit.getDefaultToolkit().getScreenSize().height;
-		getContentPane().add(jp3,BorderLayout.EAST);
-		getContentPane().add(jp1,BorderLayout.SOUTH);
-		getContentPane().add(scrollPane,BorderLayout.WEST);
-
-		this.setTitle("学生选课");
-		this.setSize(w/2,(h-25)/2);
-
-		this.setLocationRelativeTo(null);*/
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Client client =new Client(this.socket);
 		if(e.getActionCommand() == "choose") {
-			this.setVisible(false);
+			//this.setVisible(false);
 			Message clientReq = new Message();//新建申请用于交换
 			Vector<String> reqContent = new Vector<String>();
 			reqContent.add(jtf2.getText());
@@ -350,7 +259,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 
 		}
 		else if(e.getActionCommand() == "chozen") {
-			this.setVisible(false);
+			//this.setVisible(false);
 			Message clientReq = new Message();//新建申请用于交换
 			User user = new User();
 			user.setId(userID);
@@ -439,7 +348,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			this.setLocationRelativeTo(null);
 		}
 		else if(e.getActionCommand() == "cancel") {
-			this.setVisible(false);
+			//this.setVisible(false);
 			Message clientReq = new Message();
 			Vector<String> content = new Vector<String>();
 			content.add(jtf2.getText());//课ID

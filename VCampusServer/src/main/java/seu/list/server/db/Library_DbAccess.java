@@ -19,7 +19,7 @@ public class Library_DbAccess {
 				Class.forName("com.hxtt.sql.access.AccessDriver");
 				// 建立连接			 
 				String path = null;
-				path = "jdbc:Access:///E:\\VCampusCode'\\test.mdb";
+				path = "jdbc:Access://src/main/resources/vCampus.mdb";
 				conn = DriverManager.getConnection(path,"","");
 				//conn = DriverManager.getConnection(url);
 			}catch (ClassNotFoundException e) {

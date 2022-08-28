@@ -69,8 +69,7 @@ public class LibraryManage extends JFrame {
 		booklist=(ArrayList<Book>)serverResponse.getData();
 
 		setTitle("图书馆-管理员");
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(2);
 		
 		setBounds(100, 100, 770, 520);
 		
@@ -595,6 +594,11 @@ public class LibraryManage extends JFrame {
 		panel.setVisible(false);
 		addPane.setVisible(false);
 		deletePane.setVisible(false);
+		
+
+		
+		//居中显示
+		this.setLocationRelativeTo(null);
 	}
 
 	//修改页面取消

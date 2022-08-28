@@ -17,7 +17,7 @@ public class ShopSever extends Shop_DbAccess{
 	static Statement s = null;
 	
 	
-	
+
 	static ResultSet rs=null;
 	static double money=0;
 	private Message mesFromClient;
@@ -68,7 +68,7 @@ public class ShopSever extends Shop_DbAccess{
 			}
 			
 			case MessageType.AddNumberofGoods:{
-				this.AddnumberofGoods((String[])this.mesFromClient.getData());
+				this.Modifynumberofgoods((String[])this.mesFromClient.getData());
 				break;
 			}
 			
@@ -81,7 +81,10 @@ public class ShopSever extends Shop_DbAccess{
 				this.buy((ArrayList<String>)this.mesFromClient.getData());
 				break;
 			}
-			
+			case MessageType.Goodsgetturnover:{
+				this.mesToClient.setData(this.GetTurnOver());
+				break;
+			}
 			default: break;
 			}
 	}
@@ -90,20 +93,27 @@ public class ShopSever extends Shop_DbAccess{
 
 	private static ArrayList<Goods> GoodsList=new ArrayList<Goods>();
 	
-	/* public static void main(String[] args) {
-		//System.out.println(getList().get(1).getGoodsname());
+	 public static void main(String[] args) {
+		System.out.println(getList().get(1).getGoodsname());
+		/*String[] temp=new String[2];
+		temp[0]="4";
+		temp[1]="100";
+		Modifynumberofgoods(temp);
 		 /* ArrayList<Integer> a=new ArrayList<Integer>();
 		 ArrayList<Integer> b=new ArrayList<Integer>();
 		 a.add(1);
 		 b.add(1);
-		 buy(a,b);
+		 ArrayList<String> temp=new ArrayList<String>();
+		 temp.add("3");
+		 temp.add("1");
+		 buy(temp);*/
 		// System.out.println(SearchGoods_ID(1).getGoodsName());
 		//Goods agoods=new Goods(6,"apple",3.0,100);
 		//Addgoods(agoods);
 		//AddnumberofGoods(1,3);
 		//Deletegoods(5);
 		//ModifyGoodsPrice(1,5.5);
-	 }*/
+	 }
 	
 	public static ArrayList<Goods> getGoodsList() {
 		return GoodsList;
@@ -118,17 +128,18 @@ public class ShopSever extends Shop_DbAccess{
 			con = getConnection();
 			s = con.createStatement();// 创建SQL语句对象
 			rs = s.executeQuery("select * from tb_Goods");	// 查询商品信息
-						
+			GoodsList.clear();
 			
 			while(rs.next()) {
+				if(rs.getInt("GoodsID")!=-1) {
 				Goods temp=new Goods();
 				temp.setGoodsid(rs.getInt("GoodsID"));
 				temp.setGoodsname(rs.getString("GoodsName"));
 				temp.setGoodsprice(rs.getDouble("GoodsPrice"));
 				temp.setGoodsnumber(rs.getInt("GoodsNumber"));
-				GoodsList.add(temp);
-				if(temp.getGoodsid()==-1)
-					money=rs.getDouble("TurnOver");
+				GoodsList.add(temp);}
+				else
+				money=rs.getDouble("TurnOver");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,8 +152,9 @@ public class ShopSever extends Shop_DbAccess{
 	public static ArrayList<Goods> SearchGoods_Name(String temp){//按商品名称查找（所有符合）
 		ArrayList<Goods> result=new ArrayList<Goods>();	
 		for(int i=0;i<GoodsList.size();i++) {
-			Goods tempGoods=GoodsList.get(i);
-			if(tempGoods.getGoodsname().equals(temp)) 
+			Goods tempGoods= GoodsList.get(i);
+	
+			if(temp.equals(tempGoods.getGoodsname())) 
 				result.add(tempGoods);
 		}
 		return result;
@@ -169,10 +181,8 @@ public class ShopSever extends Shop_DbAccess{
 				result=s.executeUpdate("update tb_Goods set GoodsNumber='"+temp.getGoodsnumber()+"'where GoodsID='"+temp.getGoodsid()+"'");
 				money+=temp.getGoodsprice()*Integer.parseInt(args.get(i+1));
 		}
-			result=s.executeUpdate("update tb_Goods set TurnOver='"+money+"'where GoodsID='"+1+"'");//第一行放营收额
-			
-			// System.out.println(money);
-		
+			result=s.executeUpdate("update tb_Goods set TurnOver='"+money+"'where GoodsID='"+(-1)+"'");//第一行放营收额
+			 System.out.println(money);
 		}
 		catch (Exception e) {
 			e.printStackTrace();}
@@ -204,15 +214,14 @@ public class ShopSever extends Shop_DbAccess{
 			e.printStackTrace();}
 	}
 	
-	public static void AddnumberofGoods(String[] args) {//进货（管理员）
+	public static void Modifynumberofgoods(String[] args) {//进货（管理员）
 		try{
 			int result=0;
 			int ID=Integer.parseInt(args[0]);
 			int number=Integer.parseInt(args[1]);
 			Goods temp=SearchGoods_ID(ID);
-			int sum=temp.getGoodsnumber()+number;
-			temp.setGoodsnumber(sum);
-			result=s.executeUpdate("update tb_Goods set GoodsNumber='"+sum+"'where GoodsID='"+ID+"'");
+			temp.setGoodsnumber(number);
+			result=s.executeUpdate("update tb_Goods set GoodsNumber='"+number+"'where GoodsID='"+ID+"'");
 			//System.out.println(result);
 			 
 		}
@@ -235,6 +244,23 @@ public class ShopSever extends Shop_DbAccess{
 		catch (Exception e) {
 			e.printStackTrace();}
 		
+	}
+	
+	public static double GetTurnOver() {
+		try{
+			
+			rs=s.executeQuery("select * from tb_Goods where GoodsID=-1");
+			//double res= s.exe;
+			rs.next();
+			rs.getDouble("TurnOver");
+			return rs.getDouble("TurnOver");
+			//result=s.executeUpdate("update tb_Goods set GoodsPrice='"+price+"'where GoodsID='"+ID+"'");
+			//System.out.println(result);
+			 
+		}
+		catch (Exception e) {
+			e.printStackTrace();}
+		return 0.0;
 	}
 	
 	public Message getMesToClient() {

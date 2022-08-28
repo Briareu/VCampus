@@ -53,9 +53,11 @@ import javax.swing.JInternalFrame;
 import java.awt.Button;
 import javax.swing.JTextPane;
 import javax.swing.JPanel;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class Shop_AdminFrame {
-
+    ArrayList<Goods>GoodsList;
 	private JFrame frame;
 	private JTextField textField;
 	private JTable table;
@@ -77,6 +79,8 @@ public class Shop_AdminFrame {
 	private JButton btnNewButton_5;
 	private JTextField GoodsIDdeltext;
 	private JLabel lblNewLabel_6;
+	private JButton btnNewButton_6;
+	
 
 	/**
 	 * Launch the application.
@@ -99,22 +103,16 @@ public class Shop_AdminFrame {
 	 */
 	public Shop_AdminFrame() {
 		initialize();
+		GoodsList=new ArrayList<Goods>();
 		frame.setVisible(true);
+		
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		ArrayList<Goods> Godoslist=new ArrayList<Goods>();		
-	    Message mes =new Message();
-		mes.setMessageType(MessageType.Goodsgetall);
-		Message serverResponse=new Message();
-		ArrayList<Goods> goodslist = (ArrayList<Goods>)serverResponse.getData();
-			
-			
-			
+						
 		setFrame(new JFrame());
 		getFrame().setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/image/shop_manager_bg.jpg"));
 		getFrame().setFont(new Font("微软雅黑", Font.BOLD, 17));
@@ -323,7 +321,6 @@ public class Shop_AdminFrame {
 			}
 		});
 		
-		// JScrollPane scrollPane = new JScrollPane(table);
 		
 		btnNewButton_1 = new JButton("");
 		btnNewButton_1.setBounds(10, 274, 60, 25);
@@ -331,7 +328,7 @@ public class Shop_AdminFrame {
 		btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				frame.setVisible(false);
 			}
 		});
 		
@@ -375,21 +372,6 @@ public class Shop_AdminFrame {
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setRowHeight(25);
 		show();
-		/*table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-			},
-			new String[] {
-				"\u5546\u54C1\u7F16\u53F7", "\u5546\u54C1\u540D\u79F0", "\u5355\u4EF7", "\u5E93\u5B58"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, true, true
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});*/
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
 		
 		
@@ -418,18 +400,34 @@ public class Shop_AdminFrame {
 		        int type = e.getType();
 		        if (type == TableModelEvent.UPDATE) {
 		        	double t=0.0;
-		        	if(column==3&&column==2) {
-		        		 for (int row = firstRow; row <= lastRow; row++) {
-		        			 Object tempnumber=tableModel.getValueAt(row, 4);
-		        			 Object tempprice=tableModel.getValueAt(row, 2);
-		        			 double tem=Double.parseDouble((String)tempprice);
-		        			int tem1=Integer.parseInt((String)tempnumber);
-		        			t+=tem*tem1;
-		        			//t+=1;
-		        		 }
-		        		 textField.setText(t+"");
+		        	if(column==3) {
+		        		
+		        		Message mes =new Message();
+		        		mes.setMessageType(MessageType.AddNumberofGoods);
+		        		mes.setModuleType(ModuleType.Shop);
+		        		Client client=new Client(ClientMainFrame.socket);
+		        		String[] temp=new String[2];
+		        		System.out.println(firstRow);
+		        		System.out.println(table.getValueAt(firstRow,0));
+		        		temp[0]=table.getValueAt(firstRow,0)+"";
+		        		temp[1]=table.getValueAt(firstRow,3)+"";
+		        		mes.setData(temp);
+		        		Message serverResponse= client.sendRequestToServer(mes);
 		        	}
-		        	else return;
+		        	else if(column==2) {
+		        		Message mes =new Message();
+		        		mes.setMessageType(MessageType.ModifyGoodsPrice);
+		        		mes.setModuleType(ModuleType.Shop);
+		        		Client client=new Client(ClientMainFrame.socket);
+		        		String[] temp=new String[2];
+		        		System.out.println(firstRow);
+		        		System.out.println(table.getValueAt(firstRow,0));
+		        		temp[0]=table.getValueAt(firstRow,0)+"";
+		        		temp[1]=table.getValueAt(firstRow,2)+"";
+		        		mes.setData(temp);
+		        		Message serverResponse= client.sendRequestToServer(mes);
+		        	}
+		        	//else return;
 		        }
 		    }
 		});
@@ -450,13 +448,22 @@ public class Shop_AdminFrame {
 		lblNewLabel_1.setBounds(0, 0, 561, 406);
 		getFrame().getContentPane().add(lblNewLabel_1);
 		
+		btnNewButton_6 = new JButton("");
+		btnNewButton_6.setIcon(new ImageIcon("src/main/resources/image/Goods_refresh.png"));
+		btnNewButton_6.setBounds(459, 0, 50, 50);
+		frame.getContentPane().add(btnNewButton_6);
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				show();
+			}
+		});
 	
 		
 		
 		
-		
-		
-		
+		// 居中显示
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(2);
 	}
 	
 	private void DelGoods(ActionEvent e) {
@@ -568,17 +575,27 @@ public class Shop_AdminFrame {
 		}
 	}
 	
-	public void show() {
-		 ArrayList<Goods> Godoslist=new ArrayList<Goods>();		
-			Message mes =new Message();
-			mes.setMessageType(MessageType.Goodsgetall);
-			mes.setModuleType(ModuleType.Shop);
-			Client client=new Client(ClientMainFrame.socket);
-			Message serverResponse= client.sendRequestToServer(mes); 
-			ArrayList<Goods> goodslist = (ArrayList<Goods>)serverResponse.getData();
-			
-			DefaultTableModel tablemodel;
-			tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
+	private void get_turnover() {
+		Message mes =new Message();
+		mes.setMessageType(MessageType.Goodsgetturnover);
+		mes.setModuleType(ModuleType.Shop);
+		Client client=new Client(ClientMainFrame.socket);
+		Message serverResponse= client.sendRequestToServer(mes); 
+		Double total = (Double)serverResponse.getData();
+		textField.setText(total+"");
+	}
+	
+	public void show() {	
+		Message mes =new Message();
+		mes.setMessageType(MessageType.Goodsgetall);
+		mes.setModuleType(ModuleType.Shop);
+		Client client=new Client(ClientMainFrame.socket);
+		Message serverResponse= client.sendRequestToServer(mes); 
+		GoodsList = (ArrayList<Goods>)serverResponse.getData();
+		
+		
+		DefaultTableModel tablemodel;
+		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
 					"商品编号", "商品名称", "单价", "库存"}) {
 
 					
@@ -594,16 +611,18 @@ public class Shop_AdminFrame {
 						return columnEditables[column];
 					}
 			};
-			for(int i=0;i<goodslist.size();i++) {
+		for(int i=0;i<GoodsList.size();i++) {
 				String tempgoods[]=new String[4];
-				tempgoods[0]=goodslist.get(i).getGoodsid()+"";
-				tempgoods[1]=goodslist.get(i).getGoodsname();
-				tempgoods[2]=goodslist.get(i).getGoodsprice()+"";
-				tempgoods[3]=goodslist.get(i).getGoodsnumber()+"";
+				tempgoods[0]=GoodsList.get(i).getGoodsid()+"";
+				tempgoods[1]=GoodsList.get(i).getGoodsname();
+				tempgoods[2]=GoodsList.get(i).getGoodsprice()+"";
+				tempgoods[3]=GoodsList.get(i).getGoodsnumber()+"";
 				tablemodel.addRow(tempgoods);
 			}
 			table.setModel(tablemodel);
 			
+			table.setModel(tablemodel);
+			get_turnover();
 	}
 	 
 	 public JFrame getFrame() {
@@ -665,9 +684,17 @@ public class Shop_AdminFrame {
 
 	            // 数据合法时，设置编辑器组件内的内容颜色为黑色
 	            comp.setForeground(Color.BLACK);
-
+    
 	            // 合法数据交给父类处理
 	            return super.stopCellEditing();
 	        }
 	    }
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }

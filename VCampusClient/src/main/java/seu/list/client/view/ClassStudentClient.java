@@ -1,6 +1,7 @@
 package seu.list.client.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,9 +17,13 @@ import seu.list.common.ModuleType;
 import seu.list.common.Student;
 
 import javax.swing.JLabel;
+import javax.print.DocFlavor.URL;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.Dialog.ModalExclusionType;
 
 import javax.swing.SwingConstants;
@@ -32,8 +37,11 @@ import java.util.List;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class ClassStudentClient extends JFrame {
+
 
 	private JPanel contentPane;
 	private JTextField name;
@@ -48,6 +56,8 @@ public class ClassStudentClient extends JFrame {
 	private String PWD;
 	private String ID;
 	private Student thisStu = null;
+	private String statusmy = null;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -70,15 +80,21 @@ public class ClassStudentClient extends JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	public ClassStudentClient(String id, String pwd) {
+		
+		this.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
+		this.setBounds(100, 100, 566, 441);
+		
 		PWD = pwd;
 		ID = id;
 
 		setTitle("学生个人信息管理界面");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(2);
 		setBounds(100, 100, 550, 441);
 		contentPane = new JPanel();
+		contentPane.setVisible(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		
 		
 		Vector<Student> StuAll = new Vector<Student>();
 		Message mes = new Message();
@@ -108,7 +124,8 @@ public class ClassStudentClient extends JFrame {
 		}
 		
 		JLabel lblNewLabel = new JLabel("个人信息管理");
-		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 23));
+		lblNewLabel.setForeground(Color.BLACK);
+		lblNewLabel.setFont(new Font("宋体", Font.BOLD, 27));
 		
 		JLabel lblNewLabel_1 = new JLabel("姓名");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -208,6 +225,10 @@ public class ClassStudentClient extends JFrame {
 		gender.addItem("男");
 		gender.addItem("女");
 		
+		if(thisStu.getStudentgender() == false) {
+			gender.setSelectedIndex(1);
+		}
+		
 		gender.setToolTipText("");
 		
 		final JComboBox status = new JComboBox();
@@ -227,78 +248,82 @@ public class ClassStudentClient extends JFrame {
 		status.addItem("台盟盟员");
 		status.addItem("无党派人士");
 		
-		String statusmy = thisStu.getStudentstatus().replaceAll("\\p{C}", "");
-		if(statusmy.length() != 0) {
-			switch(statusmy) {
-			case "群众":
-			{
-				status.setSelectedIndex(0);
-			}
-			break;
-			case "共青团员":
-			{
-				status.setSelectedIndex(1);
-			}
-			break;
-			case "中共预备党员":
-			{
-				status.setSelectedIndex(2);
-			}
-			break;
-			case "中共党员":
-			{
-				status.setSelectedIndex(3);
-			}
-			break;
-			case "民革党员":
-			{
-				status.setSelectedIndex(4);
-			}
-			break;
-			case "民盟盟员":
-			{
-				status.setSelectedIndex(5);
-			}
-			break;
-			case "民建会员":
-			{
-				status.setSelectedIndex(6);
-			}
-			break;
-			case "民进会员":
-			{
-				status.setSelectedIndex(7);
-			}
-			break;
-			case "农工党党员":
-			{
-				status.setSelectedIndex(8);
-			}
-			break;
-			case "致公党党员":
-			{
-				status.setSelectedIndex(9);
-			}
-			break;
-			case "九三学社社员":
-			{
-				status.setSelectedIndex(10);
-			}
-			break;
-			case "台盟盟员":
-			{
-				status.setSelectedIndex(11);
-			}
-			break;
-			case "无党派人士":
-			{
-				status.setSelectedIndex(12);
-			}
-			break;
-			default:
+		
+		if(thisStu.getStudentstatus() != null) {
+			statusmy = thisStu.getStudentstatus().replaceAll("\\p{C}", "");
+			if(statusmy.length() != 0) {
+				switch(statusmy) {
+				case "群众":
+				{
+					status.setSelectedIndex(0);
+				}
 				break;
+				case "共青团员":
+				{
+					status.setSelectedIndex(1);
+				}
+				break;
+				case "中共预备党员":
+				{
+					status.setSelectedIndex(2);
+				}
+				break;
+				case "中共党员":
+				{
+					status.setSelectedIndex(3);
+				}
+				break;
+				case "民革党员":
+				{
+					status.setSelectedIndex(4);
+				}
+				break;
+				case "民盟盟员":
+				{
+					status.setSelectedIndex(5);
+				}
+				break;
+				case "民建会员":
+				{
+					status.setSelectedIndex(6);
+				}
+				break;
+				case "民进会员":
+				{
+					status.setSelectedIndex(7);
+				}
+				break;
+				case "农工党党员":
+				{
+					status.setSelectedIndex(8);
+				}
+				break;
+				case "致公党党员":
+				{
+					status.setSelectedIndex(9);
+				}
+				break;
+				case "九三学社社员":
+				{
+					status.setSelectedIndex(10);
+				}
+				break;
+				case "台盟盟员":
+				{
+					status.setSelectedIndex(11);
+				}
+				break;
+				case "无党派人士":
+				{
+					status.setSelectedIndex(12);
+				}
+				break;
+				default:
+					break;
+				}
 			}
 		}
+		
 		
 		JLabel lblNewLabel_11 = new JLabel("元");
 		lblNewLabel_11.setFont(new Font("宋体", Font.PLAIN, 20));
@@ -355,6 +380,16 @@ public class ClassStudentClient extends JFrame {
 						temp.setStudentorigion(origion.getText());
 						temp.setStudentphone(phone.getText());//remember to check
 						temp.setTeacherid(teacherid.getText());
+						switch (gender.getSelectedIndex()) {
+						case 0:
+							temp.setStudentgender(true);
+							break;
+						case 1:
+							temp.setStudentgender(false);
+							break;
+						default:
+							break;
+						}
 						switch(status.getSelectedIndex()) {
 						case 0:
 							temp.setStudentstatus("群众");
@@ -574,6 +609,16 @@ public class ClassStudentClient extends JFrame {
 					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 900, 100);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 	void save(Student temp) {
 		Message mes = new Message();

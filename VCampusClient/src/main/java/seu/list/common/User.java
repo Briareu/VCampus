@@ -8,7 +8,7 @@ public class User implements java.io.Serializable {
 	private String id;//0
 	private String name;//1
 	private String age;//2
-	private String sex;//3z
+	private String sex;//3
 	private String major;//4
 	private String grade;//5
 	private String pwd;//6

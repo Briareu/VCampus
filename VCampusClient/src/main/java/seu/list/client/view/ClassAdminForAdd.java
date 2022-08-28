@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -24,12 +25,14 @@ import java.util.Vector;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
 //import seu.list.client.test.MainTest;
 import seu.list.common.ClassManage;
+import seu.list.common.Dormitory;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
@@ -51,6 +54,7 @@ public class ClassAdminForAdd extends JFrame {
 	};
 	private MODEL now = MODEL.STUDENTADD;
 	private ClassAdminClient CAC = null;
+	private JLabel lblNewLabel_1;
 	/**
 	 * Launch the application.
 	 */
@@ -90,7 +94,7 @@ public class ClassAdminForAdd extends JFrame {
 		
 		exitbtn.setFont(new Font("宋体", Font.PLAIN, 15));
 		
-		JComboBox selectmode = new JComboBox();
+		final JComboBox selectmode = new JComboBox();
 		selectmode.addItem("学生");
 		selectmode.addItem("班级");
 		
@@ -214,13 +218,14 @@ public class ClassAdminForAdd extends JFrame {
 							if(flag) {
 								flag = false;
 								i = 0;
-								
+								int oldclasssize = 0;
 								//check the class exist
 								while(i < ClssAll.size()) {
 									String tempclss = ClssAll.get(i).getClassID();
 									tempclss.replaceAll("\\p{C}", "");
 									if(tempclss.equals(newclssid)) {
-										ClssAll.get(i).setClassSize(ClssAll.get(i).getClassSize() + 1);
+										oldclasssize= ClssAll.get(i).getClassSize() + 1;
+										ClssAll.get(i).setClassSize(oldclasssize);
 										flag = true;
 										clssid = i;
 										break;
@@ -244,23 +249,67 @@ public class ClassAdminForAdd extends JFrame {
 											j++;
 										}
 									}*/
-									Modified = true;
 									Message mes = new Message();
+									mes.setModuleType(ModuleType.Student);
+									mes.setMessageType(MessageType.ClassUpdate);
+									List<Object> sendData = new ArrayList<Object>();
+									sendData.add(4);
+									sendData.add(oldclasssize);
+									sendData.add(stu.getClassid());
+									mes.setData(sendData);
+
+									Client client = new Client(ClientMainFrame.socket);
+
+									Message serverResponse = new Message();
+									serverResponse = client.sendRequestToServer(mes);
+									int res = (int) serverResponse.getData();
+									System.out.println("update class size");
+									
+									
+									//add student here
+									Modified = true;
+									mes = null;
+									mes = new Message();
 									mes.setModuleType(ModuleType.Student);
 									mes.setMessageType(MessageType.ClassAdminAdd);
 									stu.setMajor(ClssAll.get(clssid).getMajor());
 									stu.setTeacherid(ClssAll.get(clssid).getTeacherID());
 									mes.setData(stu);
 									
-									Client client = new Client(ClientMainFrame.socket);
+									client = null;
+									client = new Client(ClientMainFrame.socket);
 									
-									Message serverResponse = new Message();
+									serverResponse = null;
+									serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
-									int res = (int)serverResponse.getData();
+									res = (int)serverResponse.getData();
 									System.out.println("Add Student Confirmed!");
 									
-									StuAll.add(stu);
+									StuAll.add(stu);	
+//add dormitory student here(id = stu.getStudentid())
+/*									mes = null;
+									mes = new Message();
+									mes.setModuleType(ModuleType.Dormitory);
+									mes.setMessageType(MessageType.DormAdd);
+									Dormitory c=new Dormitory();
+									c.setuserID(stu.getStudentid());
+									c.setDormitoryID("");
+									c.setStudentBunkID(0);
+									c.setDormitoryScore(0);
+									c.setWater(0);
+									c.setElectricity(0);
+									c.setDormitoryMaintain("");
+									c.setStudentExchange("");
+									mes.setData(c);
 									
+									client = null;
+									client = new Client(ClientMainFrame.socket);
+									
+									serverResponse = null;
+									serverResponse = new Message();
+									serverResponse = client.sendRequestToServer(mes);
+									System.out.println("Add Student Dormitory Confirmed!");
+*/
 									clear();
 									/*
 									if(flag) {
@@ -390,13 +439,30 @@ public class ClassAdminForAdd extends JFrame {
 				close();
 			}
 		});
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 800, 80);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 	void clear() {
 		if(now == MODEL.STUDENTADD) {
 			table.setModel(model1);
+			table.setValueAt("", 0, 0);
+			table.setValueAt("", 0, 1);
+			table.setValueAt("", 0, 2);
+			table.setValueAt("", 0, 3);
 		}
 		else {
 			table.setModel(model2);
+			table.setValueAt("", 0, 0);
+			table.setValueAt("", 0, 1);
+			table.setValueAt("", 0, 2);
 		}
 	}
 	

@@ -1,5 +1,6 @@
 package seu.list.server.dao;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,7 +27,7 @@ public class DormitorServer extends Dormitory_DbAccess{
 	}
 
 	@SuppressWarnings("unchecked")
-	public void execute() {
+	public void execute(){
 		// 根据类型去执行不同的DAO层操作，不同模块的DAO类需要修改这个函数
 		// 如果操作需要的参数，请在mesFromClient内取出
 		// 如果操作需要返回数据给客户端，请存入dataToClient，如果没有返回值，则默认为null
@@ -34,13 +35,28 @@ public class DormitorServer extends Dormitory_DbAccess{
 		mesToClient = new Message();
 		switch (this.mesFromClient.getMessageType()) {
 		case MessageType.DormMaintain:
-			this.mesToClient.setData(this.Maintain((ArrayList<String>)this.mesFromClient.getData()));
+			try {
+				this.mesToClient.setData(this.Maintain((ArrayList<String>)this.mesFromClient.getData()));
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 		case MessageType.DormExcange:
-			this.mesToClient.setData(this.Exchange((ArrayList<String>)this.mesFromClient.getData()));
+			try {
+				this.mesToClient.setData(this.Exchange((ArrayList<String>)this.mesFromClient.getData()));
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 		case MessageType.DormStShow:
-			this.mesToClient.setData(this.Show(this.mesFromClient.getData().toString()));
+			try {
+				this.mesToClient.setData(this.Show(this.mesFromClient.getData().toString()));
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			break;
 		case MessageType.DormAdd:
 			try {
@@ -51,10 +67,20 @@ public class DormitorServer extends Dormitory_DbAccess{
 			}
 			break;
 		case MessageType.DormDelete:
-			this.mesToClient.setData(this.Delete(this.mesFromClient.getData().toString()));
+			try {
+				this.mesToClient.setData(this.Delete(this.mesFromClient.getData().toString()));
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		case MessageType.DormModify:
-			this.mesToClient.setData(this.Modify((ArrayList<String>)this.mesFromClient.getData()));
+			try {
+				this.mesToClient.setData(this.Modify((ArrayList<String>)this.mesFromClient.getData()));
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		case MessageType.DormAdShow:		
 			this.mesToClient.setData(this.AllDormitory());
@@ -62,12 +88,19 @@ public class DormitorServer extends Dormitory_DbAccess{
 		case MessageType.DormSearch:
 			this.mesToClient.setData(this.SearchuserID(this.mesFromClient.getData().toString()));
 			break;
+		case MessageType.DormUpdate:
+			try {
+				this.mesToClient.setData(this.Update(this.mesFromClient.getContent().get(0), this.mesFromClient.getContent().get(1)));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		default:
 			break;
 		}
 	}
 
-	private Dormitory Maintain(ArrayList<String> para) {
+	private Dormitory Maintain(ArrayList<String> para) throws SQLException {
 		// TODO Auto-generated method stub
 		System.out.println(para);
 		String userID = para.get(0);
@@ -75,6 +108,8 @@ public class DormitorServer extends Dormitory_DbAccess{
 		String maintain = para.get(2);
 		Dormitory temp=new Dormitory();
 		Dorm = AllDormitory();
+		con = this.getConnection();
+		s = con.createStatement();
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				Dorm.get(i).setStudentExchange(maintain);
@@ -89,13 +124,15 @@ public class DormitorServer extends Dormitory_DbAccess{
 		return temp;
 	}
 
-	private Dormitory Exchange(ArrayList<String> para) {
+	private Dormitory Exchange(ArrayList<String> para) throws SQLException {
 		System.out.println(para);
 		String userID = para.get(0);
 		String dormID = para.get(1);
 		String exchange = para.get(2);
 		Dormitory temp=new Dormitory();
 		Dorm = AllDormitory();
+		con = this.getConnection();
+		s = con.createStatement();
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				Dorm.get(i).setStudentExchange(exchange);
@@ -110,27 +147,31 @@ public class DormitorServer extends Dormitory_DbAccess{
 		return temp;
 	}
 
-	private Dormitory Show(String userID) {
+	private Dormitory Show(String userID) throws SQLException {
 		// TODO Auto-generated method stub
 		Dorm = AllDormitory();
 		Dormitory temp=new Dormitory();
-		for (int i = 0; i < Dorm.size(); i++)
-			if (Dorm.get(i).getuserID().equals(userID)) 
-				{
-				temp=Dorm.get(i);
+		con = this.getConnection();
+		s = con.createStatement();
+		for (int i = 0; i < Dorm.size(); i++) {
+			if (Dorm.get(i).getuserID().equals(userID)) {
+				temp = Dorm.get(i);
 				break;
-				}
+			}
+		}
 		System.out.println("!!!!!!");
 		System.out.println(temp);
 		return temp;
 	}
 
-	private ArrayList<Dormitory> Modify(ArrayList<String> para) {
+	private ArrayList<Dormitory> Modify(ArrayList<String> para) throws SQLException {
 		System.out.println(para);
 		String userID = para.get(0);
 		String usertype = para.get(1);
 		int temp = Integer.parseInt(para.get(2));
 		Dorm = AllDormitory();
+		con = this.getConnection();
+		s = con.createStatement();
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				if ("卫生评分".equals(usertype)) {
@@ -164,25 +205,53 @@ public class DormitorServer extends Dormitory_DbAccess{
 		return Dorm;
 	}
 
-	private ArrayList<Dormitory> Add(Dormitory data) {
+	private ArrayList<Dormitory> Add(Dormitory data) throws SQLException {
 		ArrayList<Dormitory> dorm=AllDormitory();
 		dorm.add(data);
-		try {
-			int result=s.executeUpdate("insert into tb_Dormitory values('"+data.getuserID()+"','"+data.getDormitoryID()+"','"+data.getStudentBunkID()+
+/*		try {
+			int result=s.executeUpdate("insert into tb_Dormitory(userID, DormitoryID, StudentBunkID, Water, Electricity, DormitoryScore, DormitoryMaintain, StudentExchange) values('"+data.getuserID()+"','"+data.getDormitoryID()+"','"+data.getStudentBunkID()+
 					"','"+data.getWater()+"','"+data.getElectricity()+"','"+data.getDormitoryScore()
 					+"','"+data.getDormitoryMaintain()+"','"+data.getStudentExchange()+"','"+0+"')");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return dorm;*/
+		con = this.getConnection();
+		PreparedStatement ps = con.prepareStatement("insert into tb_Dormitory(userID, DormitoryID, StudentBunkID, Water, Electricity, DormitoryScore, DormitoryMaintain, StudentExchange) values('"+ data.getuserID() +"','"+ data.getDormitoryID() +"','"+ data.getStudentBunkID() +"','"+ data.getWater() +"','"+ data.getElectricity() +"','"+ data.getDormitoryScore() +"','"+ data.getDormitoryMaintain() +"','"+ data.getStudentExchange() +"')");
+		int result = ps.executeUpdate();
+		System.out.println("add success");
+		ps.close();
+		con.close();
 		return dorm;
 	}
+	
+	private int Update(String oldid, String newid) throws SQLException {
+		Statement statement = con.createStatement();
+		ArrayList<Dormitory> dorm=AllDormitory();
+		for (int i=0;i<dorm.size();i++){
+			if (dorm.get(i).getuserID().equals(oldid)) {
+				dorm.get(i).setuserID(newid);
+				break;
+			}
+		}
+		con = this.getConnection();
+		statement = con.createStatement();
+		int res = -1;
+		res = statement.executeUpdate("update tb_Dormitory set userID='"+ newid +"' where userID='"+ oldid +"'");
+		statement.close();
+		con.close();
+		System.out.println("update dorm success");
+		return res;
+	}
 
-	private ArrayList<Dormitory> Delete(String string){
+	private ArrayList<Dormitory> Delete(String string) throws SQLException{
 		// TODO Auto-generated method stub
 		ArrayList<Dormitory> dorm=AllDormitory();
 		for (int i=0;i<dorm.size();i++)
 			if (dorm.get(i).getuserID().equals(string)) dorm.remove(i);
+		con = this.getConnection();
+		s = con.createStatement();
 		try {
 			int result=s.executeUpdate("delete from tb_Dormitory where userID='"+string+"'");
 		} catch (SQLException e) {

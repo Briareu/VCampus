@@ -30,7 +30,7 @@ public class Shop_DbAccess {
 			//con = DriverManager
 					//.getConnection("jdbc:ucanaccess://src/main/resources/db_vCampus.accdb");
 			con = DriverManager
-					.getConnection("jdbc:ucanaccess://src/main/resources/vCampus.accdb");
+					.getConnection("jdbc:ucanaccess://src/main/resources/vCampus.accdb", "", "");
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();

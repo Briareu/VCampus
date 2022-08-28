@@ -152,7 +152,7 @@ public class SqlHelperImp implements SqlHelper {
 
 	@Override
 	public List<String> sqlRelationQuery(String sql, String[] paras) {
-		// 鐢ㄦ潵鑾峰彇瀵瑰簲鍏崇郴
+
 		PreparedStatement ps = null;
 		Connection ct = null;
 		ResultSet rs=null;

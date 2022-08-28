@@ -1,5 +1,6 @@
 package seu.list.client.view;
 
+import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -12,8 +13,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Button;
 import java.awt.Dialog.ModalExclusionType;
@@ -57,6 +60,7 @@ public class ClassAdminClient extends JFrame {
 	private Vector<ClassManage> Clss = null;
 	private JScrollPane scrollPane;
 	private Vector<Student> StuTemp = null;
+	private JLabel lblNewLabel_1;
 
 	private enum MODEL {
 		WATCHING, MODIFY, ADD, DELETE
@@ -67,6 +71,7 @@ public class ClassAdminClient extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -79,7 +84,7 @@ public class ClassAdminClient extends JFrame {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the frame.
 	 */
@@ -131,7 +136,7 @@ public class ClassAdminClient extends JFrame {
 			}
 		};
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 809, 494);
+		setBounds(100, 100, 809, 516);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -199,7 +204,7 @@ public class ClassAdminClient extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JComboBox<String> select = new JComboBox<String>();
+		final JComboBox<String> select = new JComboBox<String>();
 		select.setFont(new Font("宋体", Font.PLAIN, 18));
 		select.addItem("全部");
 		select.addItem("班级");
@@ -256,7 +261,7 @@ public class ClassAdminClient extends JFrame {
 						iforsearch++;
 					}
 					System.out.println("update Student vector success!");
-					System.out.println(StuTemp.size());
+					//System.out.println(StuTemp.size());
 					updateStudent(StuTemp);
 				}
 					break;
@@ -288,8 +293,8 @@ public class ClassAdminClient extends JFrame {
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap(454, Short.MAX_VALUE)
 					.addComponent(select, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -305,7 +310,7 @@ public class ClassAdminClient extends JFrame {
 					.addGap(53)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 688, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(44, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 					.addGap(340)
 					.addComponent(exitbutton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(348, Short.MAX_VALUE))
@@ -317,14 +322,14 @@ public class ClassAdminClient extends JFrame {
 					.addComponent(lblNewLabel)
 					.addGap(40)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(search, Alignment.TRAILING)
+						.addComponent(search, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(select, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(serachbutton))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(exitbutton)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(17, Short.MAX_VALUE))
 		);
 
 		table = new JTable();
@@ -357,6 +362,16 @@ public class ClassAdminClient extends JFrame {
 				close();
 			}
 		});
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 800, 100);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -374,6 +389,7 @@ public class ClassAdminClient extends JFrame {
 		// System.out.println(get);
 		String[] arr = new String[6];
 		for (int i = 0; i < stu.size(); i++) {
+			//System.out.println(stu.get(i).getMajor());
 			arr[0] = stu.get(i).getClassid();
 			arr[1] = stu.get(i).getTeacherid();
 			arr[2] = stu.get(i).getStudentid();
@@ -446,6 +462,7 @@ public class ClassAdminClient extends JFrame {
 	}
 
 	void close() {
+		//menu.repaint();
 		this.dispose();
 		//MainTest frame = new MainTest();
 		//frame.setVisible(true);
@@ -465,7 +482,7 @@ public class ClassAdminClient extends JFrame {
 			arr[3] = tempforstu.get(i).getStudentName();
 			arr[4] = tempforstu.get(i).getMajor();
 			arr[5] = tempforstu.get(i).getStudentphone();
-			System.out.println("111111");
+			//System.out.println("111111");
 
 			model.addRow(arr);
 			table.setModel(model);

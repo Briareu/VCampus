@@ -195,6 +195,10 @@ public class Dormexchange extends JDialog {
 					.addContainerGap())
 		);
 		getContentPane().setLayout(groupLayout);
+		
+		//居中显示
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 
 	protected void ExchangeAct(ActionEvent e) {

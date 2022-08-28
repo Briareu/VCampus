@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -31,14 +32,17 @@ import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
 //import seu.list.client.test.MainTest;
 import seu.list.common.ClassManage;
+import seu.list.common.Dormitory;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 import seu.list.common.Student;
+import seu.list.common.User;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class ClassAdminForModify extends JFrame {
 
@@ -54,6 +58,7 @@ public class ClassAdminForModify extends JFrame {
 	private Vector<ClassManage> ClassTemp = null;
 	private Vector<Integer> StudentIndex = null;
 	private Vector<Integer> ClassIndex = null;
+	private JLabel lblNewLabel_1;
 
 	private enum MODEL {
 		ClASSMODIFY, STUDENTMODIFY, CLASSTEMP, STUDENTTEMP
@@ -92,12 +97,12 @@ public class ClassAdminForModify extends JFrame {
 
 		exitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
-		JComboBox selectmode = new JComboBox();
+		final JComboBox selectmode = new JComboBox();
 		selectmode.setFont(new Font("宋体", Font.PLAIN, 18));
 		selectmode.addItem("学生");
 		selectmode.addItem("班级");
 		
-		JComboBox searchbtn = new JComboBox();
+		final JComboBox searchbtn = new JComboBox();
 		searchbtn.setFont(new Font("宋体", Font.PLAIN, 18));
 
 		JLabel lblNewLabel = new JLabel("模式");
@@ -235,13 +240,15 @@ public class ClassAdminForModify extends JFrame {
 						}
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
+							int newclasssize = 0;
 							Boolean newclass = false;
 							while(classtempforadd < ClssAll.size() && !newclass) {
 								String tempclss = ClssAll.get(classtempforadd).getClassID();
 								tempclss.replaceAll("\\p{C}", "");
 								if(tempclss.equals(newclssid)) {
 									newclass = true;
-									ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() + 1);
+									newclasssize = ClssAll.get(classtempforadd).getClassSize() + 1;
+									ClssAll.get(classtempforadd).setClassSize(newclasssize);
 								}
 								classtempforadd++;
 							}
@@ -249,21 +256,54 @@ public class ClassAdminForModify extends JFrame {
 								CommitFlag = false;
 								JOptionPane.showMessageDialog(null, "不存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
 								break;
+							}else {
+								Message mes = new Message();
+								mes.setModuleType(ModuleType.Student);
+								mes.setMessageType(MessageType.ClassUpdate);
+								List<Object> sendData = new ArrayList<Object>();
+								sendData.add(4);
+								sendData.add(newclasssize);
+								sendData.add(oldclssid);
+								mes.setData(sendData);
+
+								Client client = new Client(ClientMainFrame.socket);
+
+								Message serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								int res = (int) serverResponse.getData();
+								System.out.println("update class size");
 							}
 						}
 						
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
+							int oldclasssize = 0;
 							Boolean oldclass = false;
 							while(classtempforadd < ClssAll.size() &&!oldclass) {
 								String tempclss = ClssAll.get(classtempforadd).getClassID();
 								tempclss.replaceAll("\\p{C}", "");
 								if(tempclss.equals(newclssid)) {
 									oldclass = true;
-									ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() - 1);
+									oldclasssize = ClssAll.get(classtempforadd).getClassSize() - 1;
+									ClssAll.get(classtempforadd).setClassSize(oldclasssize);
 								}
 								classtempforadd++;
 							}
+							Message mes = new Message();
+							mes.setModuleType(ModuleType.Student);
+							mes.setMessageType(MessageType.ClassUpdate);
+							List<Object> sendData = new ArrayList<Object>();
+							sendData.add(4);
+							sendData.add(oldclasssize);
+							sendData.add(oldclssid);
+							mes.setData(sendData);
+
+							Client client = new Client(ClientMainFrame.socket);
+
+							Message serverResponse = new Message();
+							serverResponse = client.sendRequestToServer(mes);
+							int res = (int) serverResponse.getData();
+							System.out.println("update class size");
 						}
 
 						if (!newclssid.equals(oldclssid)
@@ -271,7 +311,7 @@ public class ClassAdminForModify extends JFrame {
 								|| !newphone.equals(oldphone)
 								|| !newid.equals(oldid)) {
 							Modified = true;
-							
+//modify studentmanage student							
 							Message mes = new Message();
 							mes.setModuleType(ModuleType.Student);
 							mes.setMessageType(MessageType.ClassAdminUpdate);
@@ -303,6 +343,64 @@ public class ClassAdminForModify extends JFrame {
 							StuAll.get(i_row).setStudentName(newname);
 							StuAll.get(i_row).setStudentphone(newphone);
 							System.out.println("Student information is updated at Client!");
+							
+							if(!newid.equals(oldid)) {
+//update dormitory student here(update oldid with newid)
+								Dormitory c=new Dormitory();
+								c.setuserID(newid);
+								c.setDormitoryID("");
+								c.setStudentBunkID(0);
+								c.setDormitoryScore(0);
+								c.setWater(0);
+								c.setElectricity(0);
+								c.setDormitoryMaintain("");
+								c.setStudentExchange("");
+								mes = null;
+								mes = new Message();
+								mes.setModuleType(ModuleType.Dormitory);
+								mes.setMessageType(MessageType.DormUpdate);
+								Vector<String> tempdata = new Vector<String>();
+								tempdata.add(oldid);
+								tempdata.add(newid);
+								mes.setContent(tempdata);
+								
+								client = null;
+								client = new Client(ClientMainFrame.socket);
+
+								serverResponse = null;
+								serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								System.out.println("update user dormitory confirmed!");
+//update user here(update oldid with newid)	
+								User user = new User();
+								mes = null;
+								mes = new Message();
+								mes.setModuleType(ModuleType.User);
+								mes.setMessageType(MessageType.REQ_USERUPDATE);
+								user.setId(oldid);
+								user.setAge("");
+								user.setGrade("");
+								user.setMajor("");
+								user.setMoney("");
+								user.setName(oldname);
+								user.setPwd("");
+								user.setRole("0");
+								user.setSex("男");
+								mes.setContent(user.getContent());
+								tempdata = null;
+								tempdata = new Vector<String>();
+								tempdata.add(oldid);
+								tempdata.add(newid);
+								mes.setData(tempdata);
+
+								client = null;
+								client = new Client(ClientMainFrame.socket);
+
+								serverResponse = null;
+								serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								System.out.println("update user confirmed!");
+							}//end of update of other table
 						}
 						i_row++;
 					}//end of while
@@ -513,13 +611,15 @@ public class ClassAdminForModify extends JFrame {
 						}
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
+							int newclasssize = 0;
 							Boolean newclass = false;
 							while(classtempforadd < ClssAll.size() && !newclass) {
 								String tempclss = ClssAll.get(classtempforadd).getClassID();
 								tempclss.replaceAll("\\p{C}", "");
 								if(tempclss.equals(newclssid)) {
 									newclass = true;
-									ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() + 1);
+									newclasssize = ClssAll.get(classtempforadd).getClassSize() + 1;
+									ClssAll.get(classtempforadd).setClassSize(newclasssize);
 								}
 								classtempforadd++;
 							}
@@ -527,21 +627,54 @@ public class ClassAdminForModify extends JFrame {
 								CommitFlag = false;
 								JOptionPane.showMessageDialog(null, "不存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
 								break;
+							}else {
+								Message mes = new Message();
+								mes.setModuleType(ModuleType.Student);
+								mes.setMessageType(MessageType.ClassUpdate);
+								List<Object> sendData = new ArrayList<Object>();
+								sendData.add(4);
+								sendData.add(newclasssize);
+								sendData.add(oldclssid);
+								mes.setData(sendData);
+
+								Client client = new Client(ClientMainFrame.socket);
+
+								Message serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								int res = (int) serverResponse.getData();
+								System.out.println("update class size");
 							}
 						}
 						
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
+							int oldclasssize = 0;
 							Boolean oldclass = false;
 							while(classtempforadd < ClssAll.size() &&!oldclass) {
 								String tempclss = ClssAll.get(classtempforadd).getClassID();
 								tempclss.replaceAll("\\p{C}", "");
 								if(tempclss.equals(newclssid)) {
 									oldclass = true;
-									ClssAll.get(classtempforadd).setClassSize(ClssAll.get(classtempforadd).getClassSize() - 1);
+									oldclasssize = ClssAll.get(classtempforadd).getClassSize() - 1;
+									ClssAll.get(classtempforadd).setClassSize(oldclasssize);
 								}
 								classtempforadd++;
 							}
+							Message mes = new Message();
+							mes.setModuleType(ModuleType.Student);
+							mes.setMessageType(MessageType.ClassUpdate);
+							List<Object> sendData = new ArrayList<Object>();
+							sendData.add(4);
+							sendData.add(oldclasssize);
+							sendData.add(oldclssid);
+							mes.setData(sendData);
+
+							Client client = new Client(ClientMainFrame.socket);
+
+							Message serverResponse = new Message();
+							serverResponse = client.sendRequestToServer(mes);
+							int res = (int) serverResponse.getData();
+							System.out.println("update class size");
 						}
 
 						if (!newclssid.equals(oldclssid)
@@ -585,6 +718,64 @@ public class ClassAdminForModify extends JFrame {
 							StuAll.get(StudentIndex.get(i_row)).setStudentName(newname);
 							StuAll.get(StudentIndex.get(i_row)).setStudentphone(newphone);
 							System.out.println("Student information is updated at Client!");
+
+							if (!newid.equals(oldid)) {
+//update dormitory student here(update oldid with newid)
+								Dormitory c=new Dormitory();
+								c.setuserID(newid);
+								c.setDormitoryID("");
+								c.setStudentBunkID(0);
+								c.setDormitoryScore(0);
+								c.setWater(0);
+								c.setElectricity(0);
+								c.setDormitoryMaintain("");
+								c.setStudentExchange("");
+								mes = null;
+								mes = new Message();
+								mes.setModuleType(ModuleType.Dormitory);
+								mes.setMessageType(MessageType.DormUpdate);
+								Vector<String> tempdata = new Vector<String>();
+								tempdata.add(oldid);
+								tempdata.add(newid);
+								mes.setContent(tempdata);
+								
+								client = null;
+								client = new Client(ClientMainFrame.socket);
+
+								serverResponse = null;
+								serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								System.out.println("update user dormitory confirmed!");
+//update user here(update oldid with newid)				
+								User user = new User();
+								mes = null;
+								mes = new Message();
+								mes.setModuleType(ModuleType.User);
+								mes.setMessageType(MessageType.REQ_USERUPDATE);
+								user.setId(oldid);
+								user.setAge("");
+								user.setGrade("");
+								user.setMajor("");
+								user.setMoney("");
+								user.setName(oldname);
+								user.setPwd("");
+								user.setRole("0");
+								user.setSex("男");
+								mes.setContent(user.getContent());
+								tempdata = null;
+								tempdata = new Vector<String>();
+								tempdata.add(oldid);
+								tempdata.add(newid);
+								mes.setData(tempdata);
+
+								client = null;
+								client = new Client(ClientMainFrame.socket);
+
+								serverResponse = null;
+								serverResponse = new Message();
+								serverResponse = client.sendRequestToServer(mes);
+								System.out.println("update user confirmed!");
+							}//end of update of other table
 						}
 						i_row++;
 					}//end of while
@@ -755,7 +946,7 @@ public class ClassAdminForModify extends JFrame {
 					serverResponse = client.sendRequestToServer(mes);
 					StuAll = (Vector<Student>) serverResponse.getData();
 				}
-				UpdateTable();
+//				UpdateTable();
 				table.setEnabled(true);
 			}
 		});
@@ -1010,10 +1201,20 @@ public class ClassAdminForModify extends JFrame {
 				close();
 			}
 		});
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
+		lblNewLabel_1.setBounds(0, 0, 800, 100);
+		this.getContentPane().add(lblNewLabel_1);
+		
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 	
 	private void UpdateTable() {
-		if(now == MODEL.STUDENTMODIFY) {
+		if(now == MODEL.STUDENTMODIFY ) {
 			// student
 			while(model1.getRowCount() > 0) {
 				//System.out.println(table.getRowCount() - 1);
@@ -1101,6 +1302,9 @@ public class ClassAdminForModify extends JFrame {
 		List<Object> sendData = new ArrayList<Object>() ;
 		sendData.add(14);//teacher, major, class
 		sendData.add(classtemp.getTeacherID());
+		//System.out.println(classtemp.getTeacherID());
+		//System.out.println(classtemp.getMajor());
+		//System.out.println(classtemp.getClassID());
 		sendData.add(classtemp.getMajor());
 		sendData.add(classtemp.getClassID());
 		mes.setData(sendData);
