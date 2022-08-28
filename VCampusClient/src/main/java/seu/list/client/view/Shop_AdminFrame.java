@@ -127,7 +127,7 @@ public class Shop_AdminFrame {
 		MyCellEditor_double cellEditor_db = new MyCellEditor_double(new JTextField());
 		MyCellEditor_int cellEditor = new MyCellEditor_int(new JTextField());
 		
-		JPanel delpanel = new JPanel();
+		final JPanel delpanel = new JPanel();
 		delpanel.setBounds(67, 19, 260, 116);
 		getFrame().getContentPane().add(delpanel);
 		delpanel.setVisible(false);
