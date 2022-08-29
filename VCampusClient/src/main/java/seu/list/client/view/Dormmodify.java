@@ -1,3 +1,7 @@
+/**
+ * @author 周楚翘
+ * @version jdk1.8.0
+ */
 package seu.list.client.view;
 
 import seu.list.common.Dormitory;
@@ -17,8 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -69,6 +75,10 @@ public class Dormmodify extends JDialog {
 		setTitle("修改信息");
 		setVisible(true);
 		setBounds(100, 100, 450, 300);
+		//添加图标
+		Image image=new ImageIcon("src/main/resources/image/xiaobiao.jpg").getImage();
+		setIconImage(image);
+		
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		{
 			buttonPane = new JPanel();
@@ -204,7 +214,10 @@ public class Dormmodify extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
-
+/**
+ * 宿舍信息修改
+ * @param e
+ */
 	protected void ModifyAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Message mes = new Message();
