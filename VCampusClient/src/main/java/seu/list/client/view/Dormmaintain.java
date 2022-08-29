@@ -1,3 +1,7 @@
+/**
+ * @author 周楚翘
+ * @version jdk1.8.0
+ */
 package seu.list.client.view;
 
 import java.awt.BorderLayout;
@@ -17,8 +21,10 @@ import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -68,6 +74,10 @@ public class Dormmaintain extends JDialog {
 		setVisible(true);
 		setTitle("维修登记");
 		setBounds(100, 100, 450, 300);
+		//添加图标
+		Image image=new ImageIcon("src/main/resources/image/xiaobiao.jpg").getImage();
+		setIconImage(image);
+		
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		{
 			buttonPane = new JPanel();
@@ -205,7 +215,10 @@ public class Dormmaintain extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
-
+/**
+ * 宿舍维修申请登记
+ * @param e
+ */
 	protected void MaintainAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Message mes = new Message();
