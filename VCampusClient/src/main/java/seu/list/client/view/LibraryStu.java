@@ -1,3 +1,8 @@
+/**
+ * @author 王映方
+ * @version jdk1.8.0
+ */
+
 package seu.list.client.view;
 
 import javax.swing.*;
@@ -31,23 +36,6 @@ public class LibraryStu extends JFrame {
 	private JTable table;	
 	private JLabel lendLabel;
 	private JLabel returnLabel;
-
-	/**
-	 * Launch the application.
-	 */
-/*	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibraryStu frame = new LibraryStu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	*/
 
 	/**
 	 * Create the frame.
@@ -394,34 +382,50 @@ public class LibraryStu extends JFrame {
 		this.setLocationRelativeTo(null);
 	}
 
-	
+	/**
+	 * 显示借书界面
+	 * @param e 点击事件
+	 */
 	protected void LendShow(ActionEvent e) {
 		contentPane.setVisible(false);
 		lendPane.setVisible(true);
 		returnPane.setVisible(false);
 	}
 
-
+	/**
+	 * 显示还书界面
+	 * @param e 点击事件
+	 */
 	protected void ReturnShow(ActionEvent e) {
 		contentPane.setVisible(false);
 		lendPane.setVisible(false);
 		returnPane.setVisible(true);	
 	}
 
-
+	/**
+	 * 还书界面取消键的响应
+	 * @param e 点击事件
+	 */
 	protected void qxReturnAvt(ActionEvent e) {
 		contentPane.setVisible(true);
 		lendPane.setVisible(false);
 		returnPane.setVisible(false);			
 	}
 
+	/**
+	 * 借书界面取消键的响应
+	 * @param e 点击事件
+	 */
 	protected void qxLendAvt(ActionEvent e) {
 		contentPane.setVisible(true);
 		lendPane.setVisible(false);
 		returnPane.setVisible(false);
 	}
 
-	//还书
+	/**
+	 * 还书界面确认键的响应
+	 * @param e
+	 */
 	protected void ReturnAvt(ActionEvent e) {
 		contentPane.setVisible(false);
 		lendPane.setVisible(false);
@@ -451,7 +455,10 @@ public class LibraryStu extends JFrame {
 		returnIDText.setText("");
 	}
 
-	//借书
+	/**
+	 * 借书界面确认键的响应
+	 * @param e
+	 */
 	protected void LendAvt(ActionEvent e) {
 		contentPane.setVisible(false);
 		returnPane.setVisible(false);
@@ -485,7 +492,10 @@ public class LibraryStu extends JFrame {
 		lendIDText.setText("");
 	}
 
-	//查询
+	/**
+	 * 搜索键响应
+	 * @param e 点击事件
+	 */
 	protected void FindAvt(ActionEvent e) {
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
@@ -531,6 +541,9 @@ public class LibraryStu extends JFrame {
 		table.setModel(tablemodel);
 	}
 
+	/**
+	 * 重新读取服务端传来的数据，显示在界面table中
+	 */
 	public void SetTableShow() {
 		ArrayList<Book> booklist=new ArrayList<Book>();		
 		
@@ -575,7 +588,10 @@ public class LibraryStu extends JFrame {
 		table.setModel(tablemodel);
 	}
 	
-	//退出
+	/**
+	 * 图书馆管理员界面退出响应
+	 * @param e 点击事件
+	 */
 	protected void ExitAvt(ActionEvent e) {
 		 //登录界面LibraryLogin
 		

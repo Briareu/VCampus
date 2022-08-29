@@ -1,5 +1,10 @@
 package seu.list.client.view;
 
+/**
+ * @author 王映方
+ * @version jdk1.8.0
+ */
+
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -34,25 +39,7 @@ public class LibraryManage extends JFrame {
 	
 	private JTable table;
 	private JButton modqxButton;
-	
 
-
-	/**
-	 * Launch the application.
-	 */
-/*	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibraryManage frame = new LibraryManage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-*/
 
 	/**
 	 * Create the frame.
@@ -601,7 +588,10 @@ public class LibraryManage extends JFrame {
 		this.setLocationRelativeTo(null);
 	}
 
-	//修改页面取消
+	/**
+	 * 修改书籍信息页面取消键的响应
+	 * @param e 点击事件
+	 */
 	protected void modqxAvt(ActionEvent e) {
 		contentPane.setVisible(true);
 		modifyPane.setVisible(false);
@@ -610,6 +600,10 @@ public class LibraryManage extends JFrame {
 		deletePane.setVisible(false);	
 	}
 
+	/**
+	 * 搜索键响应
+	 * @param e 点击事件
+	 */
 	protected void FindAvt(ActionEvent e) {
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
@@ -655,6 +649,10 @@ public class LibraryManage extends JFrame {
 		table.setModel(tablemodel);
 	}
 
+	/**
+	 * 删除书籍界面确认键的响应
+	 * @param e 点击事件
+	 */
 	protected void DelqrAvt(ActionEvent e) {	
 		Message mes =new Message();
 		Client client=new Client(ClientMainFrame.socket);
@@ -683,6 +681,10 @@ public class LibraryManage extends JFrame {
 		delIDText.setText("");
 	}
 
+	/**
+	 * 显示修改书籍信息界面
+	 * @param e 点击事件
+	 */
 	protected void ModifyAvtshow(ActionEvent e) {
 		contentPane.setVisible(false);
 		modifyPane.setVisible(true);
@@ -691,6 +693,10 @@ public class LibraryManage extends JFrame {
 		deletePane.setVisible(false);
 	}
 
+	/**
+	 * 删除书籍界面取消键的响应
+	 * @param e 点击事件
+	 */
 	protected void DelqxAvt(ActionEvent e) {
 		contentPane.setVisible(true);
 		modifyPane.setVisible(false);
@@ -699,6 +705,10 @@ public class LibraryManage extends JFrame {
 		deletePane.setVisible(false);	
 	}
 
+	/**
+	 * 显示删除书籍界面
+	 * @param e 点击事件
+	 */
 	protected void DeleteAvtshow(ActionEvent e) {
 		contentPane.setVisible(false);
 		modifyPane.setVisible(false);
@@ -708,7 +718,10 @@ public class LibraryManage extends JFrame {
 		
 	}
 
-	//增加书籍界面取消
+	/**
+	 * 增加书籍界面取消键的响应
+	 * @param e 点击事件
+	 */
 	protected void AddqxAvt(ActionEvent e) {
 		contentPane.setVisible(true);
 		modifyPane.setVisible(false);
@@ -717,7 +730,10 @@ public class LibraryManage extends JFrame {
 		deletePane.setVisible(false);		
 	}
 
-	//增加书籍确认界面
+	/**
+	 * 增加书籍界面确认键的响应
+	 * @param e 点击事件
+	 */
 	protected void AddbookAvt(ActionEvent e) {
 		if((!this.isNumeric(addStockText.getText()))||(Integer.valueOf(addStockText.getText())<0)) {
 			JOptionPane.showMessageDialog(null, "库存请输入正整数！", "警告", JOptionPane.WARNING_MESSAGE);
@@ -762,7 +778,10 @@ public class LibraryManage extends JFrame {
 		addStockText.setText("");
 	}
 
-	//增加书籍
+	/**
+	 * 显示增加书籍界面
+	 * @param e 点击事件
+	 */
 	protected void AddAvtshow(ActionEvent e) {
 		contentPane.setVisible(false);
 		modifyPane.setVisible(false);
@@ -771,7 +790,10 @@ public class LibraryManage extends JFrame {
 		deletePane.setVisible(false);
 	}
 
-	//修改信息确认
+	/**
+	 * 修改书籍信息确认界面
+	 * @param e 点击事件
+	 */
 	protected void ModiInfo(ActionEvent e) {
 		if((nameRadioButton.isSelected()==false)&&(idRadioButton.isSelected()==false)&&(authorRadioButton.isSelected()==false)&&
 				(pressRadioButton.isSelected()==false)&&(stockRadioButton.isSelected()==false)) {
@@ -849,6 +871,9 @@ public class LibraryManage extends JFrame {
 		modifiedText.setText("");
 	}
 
+	/**
+	 * 重新读取服务端传来的数据，显示在界面table中
+	 */
 	public void SetTableShow() {
 		ArrayList<Book> booklist=new ArrayList<Book>();		
 		
@@ -892,13 +917,23 @@ public class LibraryManage extends JFrame {
 		table.setModel(tablemodel);
 	}
 	
-	//退出到登录界面
+	/**
+	 * 图书馆管理员界面退出响应
+	 * @param e 点击事件
+	 */
 	protected void ExitAvt(ActionEvent e) {
 
 		this.setVisible(false);//关闭本界面
 		
 	}
 	
+	/**
+	 * 判断String类型是否可以转换为Integer类型
+	 * @param str 被判断的Sting类型数据
+	 * @return 判断结果<br>
+	 * true:String类型可以转换为Integer类型<br>
+	 * false:String类型不可以转换为Integer类型
+	 */
 	public boolean isNumeric(String str){
 		for (int i = str.length();--i>=0;){ 
 			if (!Character.isDigit(str.charAt(i)))
@@ -907,10 +942,10 @@ public class LibraryManage extends JFrame {
 		     return true;
 		  }
 	
+	/**
+	 * 用于界面背景设置的内部类
+	 */
 	public class BackgroundPanel extends JPanel {         
-		     /** 
-		      *  
-		      */  
 		     private static final long serialVersionUID = -6352788025440244338L;  
 		       
 		     private Image image = null;  
@@ -918,8 +953,10 @@ public class LibraryManage extends JFrame {
 		     public BackgroundPanel(Image image) {  
 		         this.image = image;  
 		     }  
-		   
-		     // 固定背景图片，允许这个JPanel可以在图片上添加其他组件  
+		      
+		     /**
+		      * 固定背景图片，允许这个JPanel可以在图片上添加其他组件
+		      */
 		     protected void paintComponent(Graphics g) {  
 		         g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);  
 		     }  

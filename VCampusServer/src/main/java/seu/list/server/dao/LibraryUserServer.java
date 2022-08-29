@@ -15,6 +15,10 @@ import seu.list.common.MessageType;
 import seu.list.common.Book;
 import seu.list.server.db.Library_DbAccess;
 
+/**
+ * @author 王映方
+ * @version jdk1.8.0
+ */
 
 public class LibraryUserServer extends Library_DbAccess {
 	Connection con = null;
@@ -24,16 +28,18 @@ public class LibraryUserServer extends Library_DbAccess {
 	private Message mesFromClient; //从客户端发来的数据
 	private Message mesToClient;  //送回给客户端的信息
 	
+	/**
+	 * 构造函数
+	 * @param mesfromclient 从客户端发来的数据
+	 */
 	public LibraryUserServer(Message mesfromclient) { 
 		this.mesFromClient=new Message();
 		this.mesFromClient=mesfromclient;
 	}
 	
-/*	public LibraryUserServer() { 
-		bookList=new ArrayList<Book>();
-	}
-	*/
-	
+	/**
+	 * 进行不同种类的操作
+	 */
 	public void execute() {
 		mesToClient=new Message();
 		switch(this.mesFromClient.getMessageType())
@@ -64,11 +70,18 @@ public class LibraryUserServer extends Library_DbAccess {
 		}
 	}
 
-	
+	/**
+	 * 
+	 * @return 送回给客户端的信息
+	 */
 	public Message getMesToClient() {
 		return this.mesToClient;
 	}
 	
+	/**
+	 * 从数据库读取书籍信息
+	 * @return 书的列表
+	 */
 	public ArrayList<Book> createList() {
 		ArrayList<Book> bookList=new ArrayList<Book>();
 		try {
@@ -98,12 +111,11 @@ public class LibraryUserServer extends Library_DbAccess {
 		return bookList;
 	}
 
-	public Integer Login() {  //return 0-正确；1-一卡通号错误；2-密码错误
-		return 0;
-		
-	}
-
-	//书名或书号查找
+	/**
+	 * 通过书名或书号查找书籍
+	 * @param fbookid 书名或书号
+	 * @return 搜索到的书名或书号符合条件的书籍列表
+	 */
 	public ArrayList<Book> FindBook(String fbookid) {
 		ArrayList<Book> bookList=new ArrayList<Book>();
 		bookList=createList();
@@ -123,7 +135,14 @@ public class LibraryUserServer extends Library_DbAccess {
 		return resbook;
 	}
 	
-	//学生
+	/**
+	 * 学生操作：借书
+	 * @param bookid 书号
+	 * @return 操作结果<br>
+	 * return 0:书号不存在<br>
+	 * return {@code -}1:库存为0不可借<br>
+	 * return 正整数：操作正常
+	 */
 	public int LendBook(String bookid) { //用书号查找（唯一）
 		//return 0:书号不存在  return -1:库存为0不可借
 		
@@ -167,7 +186,13 @@ public class LibraryUserServer extends Library_DbAccess {
 		return res;
 	}
 	
-	//学生
+	/**
+	 *  学生操作：还书
+	 * @param bookid 书号
+	 * @return 操作结果<br>
+	 * return 0:书号不存在<br>
+	 * return 正整数：操作正常
+	 */
 	public int ReturnBook(String bookid) {
 		//return 0:书号不存在
 		int res=0;
@@ -202,7 +227,13 @@ public class LibraryUserServer extends Library_DbAccess {
 		return res;
 	}
 	
-	//管理员
+	/**
+	 * 管理员操作：增加书籍
+	 * @param arr String[]类型的书籍信息：书号，所要修改的书籍属性（书名/书号/作者/出版社/库存），修改后内容
+	 * @return 操作结果<br>
+	 * return 0:书号已存在<br>
+	 * return 正整数：操作正常
+	 */
 	public int AddBook(String[] arr) {
 		//return 0:书号已存在
 		int bstate=0;
@@ -237,7 +268,13 @@ public class LibraryUserServer extends Library_DbAccess {
 		return res;
 	}
 	
-	//管理员
+	/**
+	 * 管理员操作：删除书籍
+	 * @param bookid 所要删除书籍的书号
+	 * @return 操作结果<br>
+	 * return 0:书号已存在<br>
+	 * return 正整数：操作正常
+	 */
 	public int DeleteBook(String bookid) { //用书号查找（唯一）
 		//return 0:书号不存在
 		int res=0;
@@ -263,7 +300,13 @@ public class LibraryUserServer extends Library_DbAccess {
 		return res;
 	}
 	
-	//管理员
+	/**
+	 * 修改书籍信息
+	 * @param arr ArrayList<String>类型的书籍信息：[书号，所要修改的书籍属性（书名/书号/作者/出版社/库存），修改后内容]
+	 * @return 操作结果<br>
+	 * return 0:书号不存在<br>
+	 * return 正整数：操作正常
+	 */
 	public int ModifyBook(ArrayList<String> arr) { //用书号查找（唯一）
 		//return 0:书号不存在 
 		
@@ -301,11 +344,4 @@ public class LibraryUserServer extends Library_DbAccess {
 		return result;
 	}
 	
-/*
-	public static void main(String[] args) {
-		LibraryUserServer u=new LibraryUserServer();
-		ArrayList<Book> bl=u.createList();
-		Integer a=1;
-	}
-*/
 }
