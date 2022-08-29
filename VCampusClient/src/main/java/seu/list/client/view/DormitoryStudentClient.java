@@ -1,3 +1,7 @@
+/**
+ * @author 周楚翘
+ * @version jdk1.8.0
+ */
 package seu.list.client.view;
 
 import java.awt.BorderLayout;
@@ -17,6 +21,7 @@ import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -24,11 +29,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout.Alignment;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class DormitoryStudentClient extends JFrame {
@@ -67,6 +67,10 @@ public class DormitoryStudentClient extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		
+		//添加图标
+		Image image=new ImageIcon("src/main/resources/image/xiaobiao.jpg").getImage();
+		setIconImage(image);
 		
 		JLabel dormLabel = new JLabel("宿舍信息");
 		dormLabel.setFont(new Font("微软雅黑", Font.BOLD, 25));
@@ -281,19 +285,28 @@ public class DormitoryStudentClient extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
-
+/**
+ * 显示宿舍调换申请界面
+ * @param e
+ */
 	protected void ExchangeAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Dormexchange Exchange = new Dormexchange(this,socket);
 		Exchange.setVisible(true);
 	}
-
+/**
+ * 显示宿舍维修申请界面
+ * @param e
+ */
 	protected void MaintainAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Dormmaintain Maintain = new Dormmaintain(this,socket);
 		Maintain.setVisible(true);
 	}
-
+/**
+ * 更新宿舍调换后界面
+ * @param para
+ */
 	public void updateFrameE(ArrayList<String> para) {
 		// TODO Auto-generated method stub
 		if(!para.get(0).equals(dorm.getuserID())||!para.get(1).equals(dorm.getDormitoryID())) {
@@ -311,7 +324,10 @@ public class DormitoryStudentClient extends JFrame {
 		MaintainLabel_6.setText(dorm.getDormitoryMaintain());
 		ExchangeLabel_5.setText(dorm.getStudentExchange());
 	}
-
+/**
+ * 更新维修申请后信息
+ * @param para
+ */
 	public void updateFrameM(ArrayList<String> para) {
 		// TODO Auto-generated method stub
 		if(!para.get(0).equals(dorm.getuserID())||!para.get(1).equals(dorm.getDormitoryID())) {

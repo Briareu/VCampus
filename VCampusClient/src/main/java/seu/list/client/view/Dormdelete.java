@@ -1,3 +1,7 @@
+/**
+ * @author 周楚翘
+ * @version jdk1.8.0
+ */
 package seu.list.client.view;
 
 import seu.list.common.Dormitory;
@@ -17,12 +21,14 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -43,20 +49,6 @@ public class Dormdelete extends JDialog {
 	public ArrayList<Dormitory> allDormitoryContents;
 
 	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		try {
-			Dormdelete dialog = new Dormdelete(socket);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
-	/**
 	 * Create the dialog.
 	 */
 	public Dormdelete(DormitoryAdminClient c,Socket socket) {
@@ -64,6 +56,10 @@ public class Dormdelete extends JDialog {
 		setVisible(true);
 		setTitle("删除宿舍");
 		setBounds(100, 100, 391, 283);
+		//添加图标
+		Image image=new ImageIcon("src/main/resources/image/xiaobiao.jpg").getImage();
+		setIconImage(image);
+		
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		JLabel lblNewLabel = new JLabel("删除宿舍");
 		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 25));
@@ -171,7 +167,10 @@ public class Dormdelete extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
-
+/**
+ * 完成删除宿舍
+ * @param e点击事件
+ */
 	protected void DeleteAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Message mes = new Message();
@@ -195,11 +194,8 @@ public class Dormdelete extends JDialog {
 		C.setEnabled(true);
 		C.updateFrameD(DeuserIDField.getText().toString());
 		this.dispose();
-//		int res = (int)serverResponse.getData();
-/*		if(res > 0)
-			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
-*/
 		JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
 	}
 
 }
+

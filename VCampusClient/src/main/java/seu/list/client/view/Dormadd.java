@@ -1,3 +1,7 @@
+/**
+ * @author 周楚翘
+ * @version jdk1.8.0
+ */
 package seu.list.client.view;
 
 import seu.list.common.Dormitory;
@@ -15,12 +19,14 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -50,21 +56,6 @@ public class Dormadd extends JDialog {
 	private Dormitory temp;
 	public ArrayList<Dormitory> allDormitoryContents;
 	private DormitoryAdminClient c=null;
-
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		try {
-			Dormadd dialog = new Dormadd(socket);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 	/**
 	 * Create the dialog.
 	 */
@@ -73,6 +64,11 @@ public class Dormadd extends JDialog {
 		setVisible(true);
 		setTitle("添加宿舍");
 		setBounds(100, 100, 469, 496);
+		
+		//添加图标
+		Image image=new ImageIcon("src/main/resources/image/xiaobiao.jpg").getImage();
+		setIconImage(image);
+				
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		{
 			buttonPane = new JPanel();
@@ -282,10 +278,10 @@ public class Dormadd extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
-	public ArrayList<Dormitory> getAll()
-	{
-		return allDormitoryContents;
-	}
+	/**
+	 * 完成添加宿舍
+	 * @param e 点击事件
+	 */
 	protected void AddAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		temp = new Dormitory();
@@ -318,12 +314,7 @@ public class Dormadd extends JDialog {
 		c.setEnabled(true);
 		c.updateFrame(temp);
 		this.dispose();
-		
-		/*
-		int res = (int)serverResponse.getData();
-		if(res > 0)
-			JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
-	*/
+
 	}
 
 }
