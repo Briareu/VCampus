@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
@@ -31,15 +32,26 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ClassStudentClient extends JFrame {
 
@@ -59,6 +71,7 @@ public class ClassStudentClient extends JFrame {
 	private Student thisStu = null;
 	private String statusmy = null;
 	private JLabel lblNewLabel_1;
+	private JLabel userimage = null;
 
 	/**
 	 * Launch the application.
@@ -83,14 +96,14 @@ public class ClassStudentClient extends JFrame {
 	public ClassStudentClient(String id, String pwd) {
 		
 		this.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
-		this.setBounds(100, 100, 566, 441);
+		this.setBounds(100, 100, 719, 570);
 		
 		PWD = pwd;
 		ID = id;
 
 		setTitle("学生个人信息管理界面");
 		this.setDefaultCloseOperation(2);
-		setBounds(100, 100, 550, 441);
+		setBounds(100, 100, 719, 570);
 		contentPane = new JPanel();
 		contentPane.setVisible(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -130,50 +143,47 @@ public class ClassStudentClient extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("姓名");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JLabel lblNewLabel_2 = new JLabel("学号");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JLabel lblNewLabel_3 = new JLabel("专业");
-		lblNewLabel_3.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_3.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JLabel lblNewLabel_4 = new JLabel("班级");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_4.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_4.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JLabel lblNewLabel_5 = new JLabel("老师");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_5.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_5.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JLabel lblNewLabel_6 = new JLabel("性别");
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_6.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JLabel lblNewLabel_7 = new JLabel("籍贯");
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_7.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_7.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JLabel lblNewLabel_8 = new JLabel("政治面貌");
-		lblNewLabel_8.setFont(new Font("宋体", Font.PLAIN, 20));
-		
-		JLabel lblNewLabel_9 = new JLabel("联系电话");
-		lblNewLabel_9.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_8.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JLabel lblNewLabel_10 = new JLabel("账户余额");
-		lblNewLabel_10.setFont(new Font("宋体", Font.PLAIN, 20));
+		lblNewLabel_10.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		name = new JTextField();
 		name.setText("null");
 		name.setEditable(false);
-		name.setFont(new Font("宋体", Font.PLAIN, 15));
+		name.setFont(new Font("宋体", Font.PLAIN, 18));
 		name.setColumns(10);
 		name.setText(thisStu.getStudentName());
 		
 		studentid = new JTextField();
 		studentid.setEditable(false);
-		studentid.setFont(new Font("宋体", Font.PLAIN, 15));
+		studentid.setFont(new Font("宋体", Font.PLAIN, 18));
 		studentid.setColumns(10);
 		studentid.setText("null");
 		studentid.setText(id);
@@ -188,28 +198,28 @@ public class ClassStudentClient extends JFrame {
 		classid = new JTextField();
 		classid.setText("null");
 		classid.setEditable(false);
-		classid.setFont(new Font("宋体", Font.PLAIN, 15));
+		classid.setFont(new Font("宋体", Font.PLAIN, 18));
 		classid.setColumns(10);
 		classid.setText(thisStu.getClassid());
 		
 		teacherid = new JTextField();
 		teacherid.setText("null");
 		teacherid.setEditable(false);
-		teacherid.setFont(new Font("宋体", Font.PLAIN, 15));
+		teacherid.setFont(new Font("宋体", Font.PLAIN, 18));
 		teacherid.setColumns(10);
 		teacherid.setText(thisStu.getTeacherid());
 		
 		phone = new JTextField();
 		phone.setText("null");
 		phone.setEditable(false);
-		phone.setFont(new Font("宋体", Font.PLAIN, 15));
+		phone.setFont(new Font("宋体", Font.PLAIN, 18));
 		phone.setColumns(10);
 		phone.setText(thisStu.getStudentphone());
 		
 		DecimalFormat df = new DecimalFormat("0.00");
 		credit = new JTextField();
 		credit.setEditable(false);
-		credit.setFont(new Font("宋体", Font.PLAIN, 15));
+		credit.setFont(new Font("宋体", Font.PLAIN, 18));
 		credit.setColumns(10);
 		credit.setText("" + df.format(thisStu.getStudentcredit()));
 		Money = thisStu.getStudentcredit();
@@ -223,7 +233,7 @@ public class ClassStudentClient extends JFrame {
 		
 		final JComboBox gender = new JComboBox();
 		gender.setEnabled(false);
-		gender.setFont(new Font("宋体", Font.PLAIN, 15));
+		gender.setFont(new Font("宋体", Font.PLAIN, 16));
 		gender.addItem("男");
 		gender.addItem("女");
 		
@@ -235,7 +245,7 @@ public class ClassStudentClient extends JFrame {
 		
 		final JComboBox status = new JComboBox();
 		status.setEnabled(false);
-		status.setFont(new Font("宋体", Font.PLAIN, 15));
+		status.setFont(new Font("宋体", Font.PLAIN, 16));
 		status.addItem("群众");
 		status.addItem("共青团员");
 		status.addItem("中共预备党员");
@@ -331,9 +341,9 @@ public class ClassStudentClient extends JFrame {
 		lblNewLabel_11.setFont(new Font("宋体", Font.PLAIN, 20));
 		
 		final JButton modifybutton = new JButton("修改");
-		modifybutton.setFont(new Font("新宋体", Font.PLAIN, 15));
+		modifybutton.setFont(new Font("新宋体", Font.PLAIN, 20));
 		JButton investbutton = new JButton("充值");
-		investbutton.setFont(new Font("宋体", Font.PLAIN, 15));
+		investbutton.setFont(new Font("宋体", Font.PLAIN, 20));
 		
 		modifybutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -488,135 +498,150 @@ public class ClassStudentClient extends JFrame {
 				}
 			}
 		});
-		exitbutton.setFont(new Font("新宋体", Font.PLAIN, 15));
+		exitbutton.setFont(new Font("新宋体", Font.PLAIN, 20));
 		
+		JLabel lblNewLabel_9 = new JLabel("联系电话");
+		lblNewLabel_9.setFont(new Font("宋体", Font.PLAIN, 22));
+		
+		userimage = new JLabel("User Image");
+/*		userimage.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				updateimage();
+			}
+		});*/
+		userimage.setVerticalAlignment(SwingConstants.TOP);
+		userimage.setIcon(new ImageIcon("src/main/resources/image/WindowsIcon/images/Stuinfo.png"));//\resources\image\WindowsIcon\images
+		userimage.setBounds(0, 0, 150, 150);
+		this.getContentPane().add(userimage);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(168)
+							.addGap(248)
 							.addComponent(lblNewLabel))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-											.addGroup(gl_contentPane.createSequentialGroup()
-												.addGap(10)
-												.addComponent(lblNewLabel_1))
-											.addGroup(gl_contentPane.createSequentialGroup()
-												.addContainerGap()
-												.addComponent(lblNewLabel_2))
-											.addGroup(gl_contentPane.createSequentialGroup()
-												.addContainerGap()
-												.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-													.addComponent(lblNewLabel_4, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-													.addComponent(lblNewLabel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-										.addGap(18)
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(name, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-											.addComponent(studentid)
-											.addComponent(major)
-											.addComponent(classid)))
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(lblNewLabel_5)
-										.addGap(18)
-										.addComponent(teacherid)))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(54)
-									.addComponent(modifybutton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)))
-							.addGap(31)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(investbutton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-									.addComponent(lblNewLabel_8, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-									.addComponent(lblNewLabel_9, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-									.addComponent(lblNewLabel_10, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-											.addComponent(lblNewLabel_7, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addComponent(lblNewLabel_6, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
-										.addPreferredGap(ComponentPlacement.RELATED))))))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addContainerGap(77, Short.MAX_VALUE)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(credit, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addComponent(lblNewLabel_5)
+											.addGap(38)
+											.addComponent(teacherid, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addComponent(lblNewLabel_4)
+											.addGap(38)
+											.addComponent(classid, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)))
+									.addGap(37))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(userimage, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+									.addGap(74)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_8)
+								.addComponent(lblNewLabel_9)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblNewLabel_10, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblNewLabel_11, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-									.addGap(14))
-								.addComponent(gender, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-								.addGroup(Alignment.LEADING, gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(phone, Alignment.LEADING)
-									.addComponent(status, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(origion, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))))
+									.addComponent(credit, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(lblNewLabel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblNewLabel_6, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblNewLabel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblNewLabel_7, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addGap(59)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(studentid)
+										.addComponent(gender, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+										.addComponent(name, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
+										.addComponent(origion, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addGap(4)
+													.addComponent(phone, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+												.addComponent(major)
+												.addComponent(lblNewLabel_11, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+												.addGroup(gl_contentPane.createSequentialGroup()
+													.addGap(4)
+													.addComponent(status, 0, 171, Short.MAX_VALUE)))
+											.addPreferredGap(ComponentPlacement.RELATED))))))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(27)
+							.addGap(42)
+							.addComponent(modifybutton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+							.addGap(155)
+							.addComponent(investbutton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+							.addGap(159)
 							.addComponent(exitbutton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+					.addGap(44))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(40)
+					.addGap(33)
+					.addComponent(lblNewLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_2)
+						.addComponent(studentid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel)
-							.addGap(31)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblNewLabel_1)
-								.addComponent(lblNewLabel_6)
 								.addComponent(name, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNewLabel_2)
+								.addComponent(lblNewLabel_6)
+								.addComponent(gender, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblNewLabel_7)
-								.addComponent(studentid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(gender, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(origion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
-							.addComponent(origion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblNewLabel_3)
-							.addComponent(major, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblNewLabel_8)
-							.addComponent(status, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_3)
+								.addComponent(major, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(14)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNewLabel_8)
+								.addComponent(status, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(userimage, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+							.addGap(44)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNewLabel_4)
-						.addComponent(lblNewLabel_9)
-						.addComponent(classid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(phone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(classid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblNewLabel_9)
+							.addComponent(phone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_10)
-						.addComponent(teacherid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(credit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNewLabel_5)
-						.addComponent(lblNewLabel_11))
-					.addGap(32)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(teacherid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNewLabel_10)
+							.addComponent(credit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblNewLabel_11)))
+					.addGap(24)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(modifybutton)
-						.addComponent(exitbutton)
-						.addComponent(investbutton))
-					.addContainerGap())
+						.addComponent(investbutton)
+						.addComponent(exitbutton))
+					.addGap(43))
 		);
 		contentPane.setLayout(gl_contentPane);
-		
+
 		lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/bgStudent1.png"));
-		lblNewLabel_1.setBounds(0, 0, 900, 100);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/学生信息管理.png"));
+		lblNewLabel_1.setBounds(0, 0, 700, 523);
 		this.getContentPane().add(lblNewLabel_1);
 		
 		this.setLocationRelativeTo(null);
@@ -651,6 +676,100 @@ public class ClassStudentClient extends JFrame {
 	public void update(Double temp) {
 		credit.setText("" + temp);
 	}
+	
+	
+	/*
+	public void updateimage() {
+		this.setEnabled(false);
+		this.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
+		ClassStudentImage frame = new ClassStudentImage(this);
+		frame.setVisible(true);
+	}*/
+	
+	
+/*	public void setImage(JButton btn) {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setMultiSelectionEnabled(true);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "png");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(btn);
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+			File[] arrfiles = chooser.getSelectedFiles();
+			if(arrfiles == null || arrfiles.length == 0) {
+				return;
+			}
+			
+			File ff = chooser.getSelectedFile();
+			String fileName = ff.getName();
+			
+			String prefix = fileName.substring(fileName.lastIndexOf(".") + 1);
+			
+			if(!(prefix.equals("jpg") || prefix.equals("png"))) {
+				JOptionPane.showMessageDialog(null, "请选择.jpg或.png格式的图片！", "提示", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			FileInputStream input = null;
+			FileOutputStream output = null;
+			
+			String path = "src/main/resources/image/user";
+			try {
+				for (File f : arrfiles) {
+				     File dir = new File(path);
+				     //目标文件夹 
+				     File[] fs = dir.listFiles();
+				     HashSet<String> set = new HashSet<String>();
+				     for (File file : fs) {
+				      set.add(file.getName());
+				     }
+				     //判断是否已有该文件
+				     if (set.contains(f.getName())) {
+				      JOptionPane.showMessageDialog(new JDialog(), f.getName() + ":该文件已存在！");
+				      return;
+				     }
+				     
+				     String absolutePath = chooser.getSelectedFile().getAbsolutePath();
+				     
+				     ImageIcon imageIcon = new ImageIcon(absolutePath);
+				     
+				     userimage.setIcon(imageIcon);
+				     userimage.getIcon();
+				     input = new FileInputStream(f);
+				     byte[] buffer = new byte[1024];
+				     File des = new File(path, f.getName());
+				     output = new FileOutputStream(des);
+				     int len = 0;
+				     while(-1 != (len = input.read(buffer))) {
+				    	 output.write(buffer, 0, len);
+				     }
+				     output.close();
+				     input.close();
+				}
+				JOptionPane.showMessageDialog(null, "上传成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+				
+				Message mes = new Message();
+				mes.setModuleType(ModuleType.Student);
+				mes.setMessageType(MessageType.ClassAdminUpdate);
+				List<Object> sendData = new ArrayList();
+				sendData.add(16);
+				sendData.add(prefix);
+				sendData.add(ID);
+				mes.setData(sendData);
+				Client client = new Client(ClientMainFrame.socket);
+				Message serverResponse = new Message();
+				serverResponse = client.sendRequestToServer(mes);
+				int res = (int) serverResponse.getData();
+				
+			}catch(FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "上传失败", "提示", JOptionPane.WARNING_MESSAGE);
+				e.printStackTrace();
+			}catch(IOException e) {
+				JOptionPane.showMessageDialog(null, "上传失败", "提示", JOptionPane.INFORMATION_MESSAGE);
+				e.printStackTrace();
+			}
+		}
+	}*/
+	
 	void close() {
 		this.dispose();
 		//MainTest frame = new MainTest();
