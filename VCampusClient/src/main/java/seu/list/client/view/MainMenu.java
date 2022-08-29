@@ -17,8 +17,14 @@ import java.net.Socket;
 import java.sql.SQLException;
 import java.text.*;
 import java.util.*;
+import java.util.List;
 
 import seu.list.client.bz.*;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
+import seu.list.common.Student;
+
 import javax.swing.JTextField;
 
 public class MainMenu extends JFrame implements ActionListener {
@@ -60,7 +66,40 @@ public class MainMenu extends JFrame implements ActionListener {
 		this.name = name;
 		this.money = money;
 		this.socket=socket;
-
+		
+		
+		//学生端用户读取student列表进行name\money的设置
+		if(this.userType == 0) {
+			Vector<Student> StuAll = new Vector<Student>();
+			Message mes = new Message();
+			mes.setModuleType(ModuleType.Student);
+			mes.setMessageType(MessageType.ClassAdminGetAll);
+			List<Object> sendData = new ArrayList<Object>();
+			mes.setData(sendData);
+			Client client = new Client(ClientMainFrame.socket);
+			Message serverResponse = new Message();
+			serverResponse = client.sendRequestToServer(mes);
+			StuAll = (Vector<Student>) serverResponse.getData();		
+			Student thisStu = new Student();
+			int studenttemp = 0;
+			
+			while(studenttemp < StuAll.size()) {
+				String tempid = StuAll.get(studenttemp).getStudentid();
+				uID.replaceAll("\\p{C}", "");
+				tempid.replaceAll("\\p{C}", "");
+				if(tempid.equals(uID)) {
+					thisStu = StuAll.get(studenttemp);
+					break;
+				}
+				studenttemp++;
+			}
+			this.name = thisStu.getStudentName();
+			//设置余额的小数点显示
+			DecimalFormat df = new DecimalFormat("0.00");
+			this.money = "" + df.format(thisStu.getStudentcredit());
+		}
+		//结束有关学生列表的操作
+		
 		
 		setTitle("\u865A\u62DF\u6821\u56ED\u7CFB\u7EDF-\u4E3B\u83DC\u5355");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,7 +128,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
 		JLabel userNameLabel = new JLabel("\u7528\u6237\u540D\uFF1A" + this.uID);
 		userNameLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		userNameLabel.setBounds(10, 109, 164, 39);
+		userNameLabel.setBounds(10, 109, 227, 39);
 		contentPane.add(userNameLabel);
 
 		JButton classButton = new JButton("\u5B66\u7C4D\u7BA1\u7406");//学籍管理
@@ -149,6 +188,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		typeLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		typeLabel.setBounds(10, 204, 164, 39);
 		contentPane.add(typeLabel);
+		
 		
 		JLabel moneyLabel = new JLabel("余额：" + this.money);
 		moneyLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
