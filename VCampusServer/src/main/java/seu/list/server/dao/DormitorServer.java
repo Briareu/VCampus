@@ -371,10 +371,11 @@ public class DormitorServer extends Dormitory_DbAccess{
 		}
 		return temp;
 	}
-/**
- * 
- * @return
- */
+	
+	/**
+	 * 
+	 * @return 发送给客户端的消息
+	 */
 	public Message getMesToClient() { // 无需修改，网络层需要调用这个函数
 		return this.mesToClient;
 	}

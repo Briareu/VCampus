@@ -47,7 +47,7 @@ public class Dormmodify extends JDialog {
 	private JLabel lblNewLabel;
 	private JTextField userIDField;
 	private JTextField modifyField_1;
-	static Socket socket;
+	//static Socket socket;
 	JComboBox modifyt = new JComboBox();
 	DormitoryAdminClient C;
 	public ArrayList<Dormitory> allDormitoryContents;
@@ -71,7 +71,7 @@ public class Dormmodify extends JDialog {
 	 */
 	public Dormmodify(DormitoryAdminClient c,Socket socket) {
 		C=c;
-		this.socket=socket;
+		//this.socket=socket;
 		setTitle("修改信息");
 		setVisible(true);
 		setBounds(100, 100, 450, 300);
@@ -224,12 +224,14 @@ public class Dormmodify extends JDialog {
 		mes.setUserType(1);
 		mes.setModuleType(ModuleType.Dormitory);
 		mes.setMessageType(MessageType.DormModify);
+		/*
 		try {
 			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
 		}catch (IOException e1) {
 			e1.printStackTrace();
-		}
-		Client client = new Client(socket);
+		}*/
+		
+		Client client = new Client(ClientMainFrame.socket); // 不需要新建socket，客户端一启动就建立好了
 		ArrayList<String> para = new ArrayList<String>();
 		para.add(userIDField.getText());
 		String usertype = (String) modifyt.getSelectedItem();

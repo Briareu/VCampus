@@ -47,7 +47,8 @@ public class DormitoryAdminClient extends JFrame {
 	private JTextField searchField;
 	private JTable table;
 	//static Socket socket;
-	private static Socket socket;
+	//private static Socket socket;
+	private Socket socket;
 	public int k=0;
 	public ArrayList<Dormitory> Dorm=new ArrayList<Dormitory>();
 
@@ -59,7 +60,7 @@ public class DormitoryAdminClient extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DormitoryAdminClient frame = new DormitoryAdminClient(socket);
+					DormitoryAdminClient frame = new DormitoryAdminClient(ClientMainFrame.socket);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -235,12 +236,13 @@ public class DormitoryAdminClient extends JFrame {
 		mes.setModuleType(ModuleType.Dormitory);
 		mes.setMessageType(MessageType.DormAdShow);
 		
-		
+		/*
 		try {
 			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+		*/
 		Client client = new Client(this.socket);
 		
 		Message rec=new Message();

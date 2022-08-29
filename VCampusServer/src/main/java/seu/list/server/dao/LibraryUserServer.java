@@ -302,7 +302,7 @@ public class LibraryUserServer extends Library_DbAccess {
 	
 	/**
 	 * 修改书籍信息
-	 * @param arr ArrayList<String>类型的书籍信息：[书号，所要修改的书籍属性（书名/书号/作者/出版社/库存），修改后内容]
+	 * @param arr {@code ArrayList<String>}类型的书籍信息：[书号，所要修改的书籍属性（书名/书号/作者/出版社/库存），修改后内容]
 	 * @return 操作结果<br>
 	 * return 0:书号不存在<br>
 	 * return 正整数：操作正常
