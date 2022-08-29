@@ -66,18 +66,13 @@ public class Shop_AdminFrame {
 	private JLabel lblNewLabel_1;
 	private JButton btnNewButton_3;
 	private JTextField Searchtext;
-	private JPanel addpanel;
-	private JTextField GoodsIDtext;
-	private JTextField GoodsNametext;
-	private JTextField Goodspricetext;
-	private JTextField GoodsNumebrtext;
+	
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JLabel lblNewLabel_5;
 	private JButton btnNewButton_4;
 	private JButton btnNewButton_5;
-	private JTextField GoodsIDdeltext;
 	private JLabel lblNewLabel_6;
 	private JButton btnNewButton_6;
 	
@@ -123,179 +118,9 @@ public class Shop_AdminFrame {
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		double total=0.0;
-		
+			
 		MyCellEditor_double cellEditor_db = new MyCellEditor_double(new JTextField());
 		MyCellEditor_int cellEditor = new MyCellEditor_int(new JTextField());
-		
-		final JPanel delpanel = new JPanel();
-		delpanel.setBounds(67, 19, 260, 116);
-		getFrame().getContentPane().add(delpanel);
-		delpanel.setVisible(false);
-		
-		GoodsIDdeltext = new JTextField();
-		GoodsIDdeltext.setColumns(10);
-		
-		lblNewLabel_6 = new JLabel("商品编号");
-		lblNewLabel_6.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
-		JButton btnNewButton_4_1 = new JButton("确定");
-		btnNewButton_4_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DelGoods(e);
-				GoodsIDdeltext.setText(null);
-				delpanel.setVisible(false);
-			}
-
-		});
-		
-		JButton btnNewButton_5_1 = new JButton("取消");
-		btnNewButton_5_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GoodsIDdeltext.setText(null);
-				delpanel.setVisible(false);
-			}
-		});
-		GroupLayout gl_delpanel = new GroupLayout(delpanel);
-		gl_delpanel.setHorizontalGroup(
-			gl_delpanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_delpanel.createSequentialGroup()
-					.addGap(35)
-					.addComponent(lblNewLabel_6)
-					.addGap(18)
-					.addComponent(GoodsIDdeltext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(37, Short.MAX_VALUE))
-				.addGroup(gl_delpanel.createSequentialGroup()
-					.addContainerGap(49, Short.MAX_VALUE)
-					.addComponent(btnNewButton_4_1, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
-					.addGap(54)
-					.addComponent(btnNewButton_5_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		gl_delpanel.setVerticalGroup(
-			gl_delpanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_delpanel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_delpanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_6)
-						.addComponent(GoodsIDdeltext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-					.addGroup(gl_delpanel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(btnNewButton_5_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnNewButton_4_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(19))
-		);
-		delpanel.setLayout(gl_delpanel);
-		
-		
-		addpanel = new JPanel();
-		addpanel.setBounds(10, 19, 334, 245);
-		addpanel.setVisible(false);
-		getFrame().getContentPane().add(addpanel);
-		
-		
-		GoodsIDtext = new JTextField();
-		GoodsIDtext.setColumns(10);
-		
-		GoodsNametext = new JTextField();
-		GoodsNametext.setColumns(10);
-		
-		Goodspricetext = new JTextField();
-		Goodspricetext.setColumns(10);
-		
-		
-		GoodsNumebrtext = new JTextField();
-		GoodsNumebrtext.setColumns(10);
-		
-		lblNewLabel_2 = new JLabel("商品名称");
-		lblNewLabel_2.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
-		lblNewLabel_3 = new JLabel("商品编号");
-		lblNewLabel_3.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
-		lblNewLabel_4 = new JLabel("单价");
-		lblNewLabel_4.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
-		lblNewLabel_5 = new JLabel("库存");
-		lblNewLabel_5.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
-		btnNewButton_4 = new JButton("确定");
-		btnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//
-				AddGoods(e);
-				GoodsIDtext.setText(null);
-				GoodsNametext.setText(null);
-				Goodspricetext.setText(null);
-				GoodsNumebrtext.setText(null);
-				addpanel.setVisible(false);
-			}
-		});
-		
-		btnNewButton_5 = new JButton("取消");
-		btnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GoodsIDtext.setText(null);
-				GoodsNametext.setText(null);
-				Goodspricetext.setText(null);
-				GoodsNumebrtext.setText(null);
-				addpanel.setVisible(false);
-			}
-		});
-		GroupLayout gl_panel = new GroupLayout(addpanel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(50)
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblNewLabel_4)
-								.addComponent(lblNewLabel_5)
-								.addComponent(btnNewButton_4))
-							.addGap(18))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNewLabel_3)
-							.addGap(8))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNewLabel_2)
-							.addPreferredGap(ComponentPlacement.UNRELATED)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(GoodsIDtext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Goodspricetext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(GoodsNumebrtext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(GoodsNametext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(56)
-							.addComponent(btnNewButton_5)))
-					.addContainerGap(80, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(36)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(GoodsIDtext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_3))
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(GoodsNametext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_2))
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Goodspricetext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_4))
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(GoodsNumebrtext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_5))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton_4)
-						.addComponent(btnNewButton_5))
-					.addContainerGap(208, Short.MAX_VALUE))
-		);
-		addpanel.setLayout(gl_panel);
-		
 		JLabel lblNewLabel = new JLabel("营业额：");
 		lblNewLabel.setBounds(185, 19, 80, 30);
 		lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
@@ -314,10 +139,7 @@ public class Shop_AdminFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//
-				delpanel.setVisible(true);
-				if(!GoodsIDdeltext.getText().matches("[0-9]*")) {
-					System.out.println("请输入正确的ID");
-				}
+				DelGoods(e);
 			}
 		});
 		
@@ -328,7 +150,7 @@ public class Shop_AdminFrame {
 		btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		
@@ -337,7 +159,7 @@ public class Shop_AdminFrame {
 		JButton btnNewButton_2 = new JButton("");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addpanel.setVisible(true);
+				AddGoods(e);
 			}
 		});
 		
@@ -366,23 +188,22 @@ public class Shop_AdminFrame {
 		scrollPane.setBounds(80, 55, 452, 351);
 		scrollPane.setBackground(new Color(0,0,0,0));
 		
-		table = new JTable();
-		table.setBackground(new Color(0,0,0,0));
-		scrollPane.setViewportView(table);
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setRowHeight(25);
+		setTable(new JTable());
+		getTable().setBackground(Color.WHITE);
+		scrollPane.setViewportView(getTable());
+		getTable().setBorder(new LineBorder(new Color(0, 0, 0)));
+		getTable().setRowHeight(25);
+		getTable().getTableHeader().setReorderingAllowed(false);
 		show();
-		table.getColumnModel().getColumn(3).setPreferredWidth(79);
-		
-		
-		TableColumn tableColumn = table.getColumn("库存");
+		getTable().getColumnModel().getColumn(3).setPreferredWidth(79);
+		TableColumn tableColumn = getTable().getColumn("库存");
 		tableColumn.setCellEditor(cellEditor);
 		
 		
-		TableColumn tableColumnd = table.getColumn("单价");
+		TableColumn tableColumnd = getTable().getColumn("单价");
 		tableColumnd.setCellEditor(cellEditor_db);
 		
-		TableModel tableModel = table.getModel();
+		TableModel tableModel = getTable().getModel();
 		tableModel.addTableModelListener(new TableModelListener() {
 		    @Override
 		    public void tableChanged(TableModelEvent e) {
@@ -399,35 +220,7 @@ public class Shop_AdminFrame {
 		        //     TableModelEvent.DELETE   有行或列被移除
 		        int type = e.getType();
 		        if (type == TableModelEvent.UPDATE) {
-		        	double t=0.0;
-		        	if(column==3) {
-		        		
-		        		Message mes =new Message();
-		        		mes.setMessageType(MessageType.AddNumberofGoods);
-		        		mes.setModuleType(ModuleType.Shop);
-		        		Client client=new Client(ClientMainFrame.socket);
-		        		String[] temp=new String[2];
-		        		System.out.println(firstRow);
-		        		System.out.println(table.getValueAt(firstRow,0));
-		        		temp[0]=table.getValueAt(firstRow,0)+"";
-		        		temp[1]=table.getValueAt(firstRow,3)+"";
-		        		mes.setData(temp);
-		        		Message serverResponse= client.sendRequestToServer(mes);
-		        	}
-		        	else if(column==2) {
-		        		Message mes =new Message();
-		        		mes.setMessageType(MessageType.ModifyGoodsPrice);
-		        		mes.setModuleType(ModuleType.Shop);
-		        		Client client=new Client(ClientMainFrame.socket);
-		        		String[] temp=new String[2];
-		        		System.out.println(firstRow);
-		        		System.out.println(table.getValueAt(firstRow,0));
-		        		temp[0]=table.getValueAt(firstRow,0)+"";
-		        		temp[1]=table.getValueAt(firstRow,2)+"";
-		        		mes.setData(temp);
-		        		Message serverResponse= client.sendRequestToServer(mes);
-		        	}
-		        	//else return;
+		        	modify();
 		        }
 		    }
 		});
@@ -457,46 +250,24 @@ public class Shop_AdminFrame {
 				show();
 			}
 		});
-	
-		
-		
-		
 		// 居中显示
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(2);
 	}
 	
+	protected void modify() {
+		// TODO 自动生成的方法存根
+		Goods_modifyprice a=new Goods_modifyprice(this);
+	}
+
 	private void DelGoods(ActionEvent e) {
 		// TODO 自动生成的方法存根
-		
-		Message mes =new Message();
-		mes.setData(Integer.parseInt(GoodsIDdeltext.getText()));
-		mes.setMessageType(MessageType.GoodsDelete);
-		mes.setModuleType(ModuleType.Shop);
-		Client client=new Client(ClientMainFrame.socket);
-		
-		Message serverResponse = client.sendRequestToServer(mes); 
-		int res=(int)serverResponse.getData();
-		show();
-		
+        Shop_DeleteGoods a=new Shop_DeleteGoods(this);		
 	}
 	
 	private void AddGoods(ActionEvent e) {
 		// TODO 自动生成的方法存根
-		Goods temp=new Goods(Integer.parseInt(GoodsIDtext.getText()),GoodsNametext.getText(),
-				Double.parseDouble(Goodspricetext.getText()),Integer.parseInt(GoodsNumebrtext.getText()));
-		
-		Message mes =new Message();
-		mes.setData(temp);
-		mes.setModuleType(ModuleType.Shop);
-		mes.setMessageType(MessageType.GoodsAdd);
-		Client client=new Client(ClientMainFrame.socket);
-
-		Message serverResponse = client.sendRequestToServer(mes); 
-		int res=(int)serverResponse.getData();
-	    
-		
-		show();
+		Goods_Addframe a=new Goods_Addframe(this);
 	}
 	
 	private void SearchGood(ActionEvent e) {
@@ -504,12 +275,16 @@ public class Shop_AdminFrame {
 		Message mes =new Message();
 		mes.setData(Searchtext.getText());
 		mes.setModuleType(ModuleType.Shop);
-		if(Searchtext.getText()==null)return;
+		if(((String)Searchtext.getText()).equals("")) {
+			show();
+			return;
+			}
 		if(Searchtext.getText().matches("[0-9]*")) {//商品ID查找
 		mes.setMessageType(MessageType.GoodsSearch_ID);
+		
 		Client client=new Client(ClientMainFrame.socket);
 		Message serverResponse = client.sendRequestToServer(mes); 
-		Goods res=(Goods)serverResponse.getData();
+		ArrayList<Goods> res=(ArrayList<Goods>)serverResponse.getData();
 		
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
@@ -528,13 +303,16 @@ public class Shop_AdminFrame {
 					return columnEditables[column];
 				}
 		};
-		String temp[]=new String[4];
-		temp[0]=res.getGoodsid()+"";
-		temp[1]=res.getGoodsname();
-		temp[2]=res.getGoodsprice()+"";
-		temp[3]=res.getGoodsnumber()+"";
-		tablemodel.addRow(temp);
-		table.setModel(tablemodel);
+		
+		for(int i=0;i<res.size();i++) {
+			String tempgoods[]=new String[4];
+			tempgoods[0]=res.get(i).getGoodsid()+"";
+			tempgoods[1]=res.get(i).getGoodsname();
+			tempgoods[2]=res.get(i).getGoodsprice()+"";
+			tempgoods[3]=res.get(i).getGoodsnumber()+"";
+			tablemodel.addRow(tempgoods);
+		}
+		getTable().setModel(tablemodel);
 		//System.out.println("1");
 		
 		}
@@ -570,7 +348,7 @@ public class Shop_AdminFrame {
 				tempgoods[3]=res.get(i).getGoodsnumber()+"";
 				tablemodel.addRow(tempgoods);
 			}
-			table.setModel(tablemodel);
+			getTable().setModel(tablemodel);
 			//System.out.println("2");
 		}
 	}
@@ -586,6 +364,9 @@ public class Shop_AdminFrame {
 	}
 	
 	public void show() {	
+		MyCellEditor_double cellEditor_db = new MyCellEditor_double(new JTextField());
+		MyCellEditor_int cellEditor = new MyCellEditor_int(new JTextField());
+		
 		Message mes =new Message();
 		mes.setMessageType(MessageType.Goodsgetall);
 		mes.setModuleType(ModuleType.Shop);
@@ -619,9 +400,34 @@ public class Shop_AdminFrame {
 				tempgoods[3]=GoodsList.get(i).getGoodsnumber()+"";
 				tablemodel.addRow(tempgoods);
 			}
-			table.setModel(tablemodel);
+			getTable().setModel(tablemodel);
 			
-			table.setModel(tablemodel);
+			TableColumn tableColumn = getTable().getColumn("库存");
+			tableColumn.setCellEditor(cellEditor);
+			
+			TableColumn tableColumnd = getTable().getColumn("单价");
+			tableColumnd.setCellEditor(cellEditor_db);
+			
+			table.getModel().addTableModelListener(new TableModelListener() {
+			    @Override
+			    public void tableChanged(TableModelEvent e) {
+			        // 第一个 和 最后一个 被改变的行（只改变了一行，则两者相同）
+			        int firstRow = e.getFirstRow();
+			        int lastRow = e.getLastRow();
+
+			        // 被改变的列
+			        int column = e.getColumn();
+
+			        // 事件的类型，可能的值有:
+			        //     TableModelEvent.INSERT   新行或新列的添加
+			        //     TableModelEvent.UPDATE   现有数据的更改
+			        //     TableModelEvent.DELETE   有行或列被移除
+			        int type = e.getType();
+			        if (type == TableModelEvent.UPDATE) {
+			        	modify();
+			        }
+			    }
+			});
 			get_turnover();
 	}
 	 
@@ -631,6 +437,14 @@ public class Shop_AdminFrame {
 
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
+	}
+
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
 	}
 
 	public static class MyCellEditor_int extends DefaultCellEditor {
@@ -689,12 +503,5 @@ public class Shop_AdminFrame {
 	            return super.stopCellEditing();
 	        }
 	    }
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
+	
 }
