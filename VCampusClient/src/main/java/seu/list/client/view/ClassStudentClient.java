@@ -32,6 +32,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -205,11 +206,12 @@ public class ClassStudentClient extends JFrame {
 		phone.setColumns(10);
 		phone.setText(thisStu.getStudentphone());
 		
+		DecimalFormat df = new DecimalFormat("0.00");
 		credit = new JTextField();
 		credit.setEditable(false);
 		credit.setFont(new Font("宋体", Font.PLAIN, 15));
 		credit.setColumns(10);
-		credit.setText("" + thisStu.getStudentcredit());
+		credit.setText("" + df.format(thisStu.getStudentcredit()));
 		Money = thisStu.getStudentcredit();
 		
 		origion = new JTextField();
