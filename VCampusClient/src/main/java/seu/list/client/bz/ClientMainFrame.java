@@ -1,19 +1,15 @@
 package seu.list.client.bz;
 
-
-
 import seu.list.client.view.ClientLoginFrame;
-import seu.list.client.view.ClientStuCourseFrame;
-import seu.list.client.view.ClientTeacherFrame;
-import seu.list.client.view.MainMenu;
 import seu.list.common.*;
 
 
 import java.net.Socket;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.io.IOException;
 import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 public class ClientMainFrame {
 	public static Socket socket;
@@ -22,17 +18,20 @@ public class ClientMainFrame {
 		// TODO Auto-generated method stub
 		try {
 			socket =  new Socket(IConstant.SERVER_ADDRESS, IConstant.SERVER_PORT);		
+
+			// 启动登录窗口
+			ClientLoginFrame c = new ClientLoginFrame(socket);
+			c.setVisible(true);
+			
+			// 卡死主程序，防止资源释放
+			while(true);
+			
+		}catch(ConnectException ce) {
+			JOptionPane.showMessageDialog(null, "网络连接错误，请重新启动客户端或联系服务器管理员", "错误", JOptionPane.ERROR_MESSAGE);
+        	System.exit(0);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-
-		// 启动登录窗口
-		ClientLoginFrame c = new ClientLoginFrame(socket);
-		c.setVisible(true);
-		
-		// 卡死主程序，防止资源释放
-		while(true);
-		
 	}
 	
 	public static void close() {

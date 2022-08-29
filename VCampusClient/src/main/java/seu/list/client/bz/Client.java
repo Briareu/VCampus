@@ -10,8 +10,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.net.SocketException;
 
-
+import javax.swing.JOptionPane;
 
 public class Client {
 	private Socket socket;
@@ -41,9 +42,11 @@ public class Client {
 	            }
 			}
 
-			//System.out.println(mesRet.getUserType());
-
 			return mesRet; // 把收到的数据返回给客户端
+			
+        }catch (SocketException se) {
+        	JOptionPane.showMessageDialog(null, "网络连接错误，请重新启动客户端或联系服务器管理员", "错误", JOptionPane.ERROR_MESSAGE);
+        	System.exit(0);
         }catch (UnknownHostException e) {
             // TODO: handle exception
             e.printStackTrace();

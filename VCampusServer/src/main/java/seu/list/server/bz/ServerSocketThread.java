@@ -25,13 +25,11 @@ import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 import seu.list.server.dao.*;
 
-import java.io.BufferedInputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.*;
+import java.net.SocketException;
 
 public class ServerSocketThread extends Thread {
 	private Socket clientSocket = null;	
@@ -113,23 +111,18 @@ public class ServerSocketThread extends Thread {
 					
 				this.sendMesToClient(serverResponse); // 这里统一发回数据给客户端
 			} // end while
-			
-			
-			// run方法即将执行完毕，线程即将终止，关闭socket
-			if(!this.clientSocket.isClosed()) {
-				this.clientSocket.close();
-			}
-			
-			if(ServerClientThreadMgr.get(this.id) != null) {
-				ServerClientThreadMgr.remove(this.id);
-			}
-			
-			System.out.println("客户端线程: " + this.id + "已关闭");
-			
+						
+		}catch(SocketException se) {
+			System.out.println("Socket closed");
 		}catch(IOException e) {
 			e.printStackTrace();
 		}catch(ClassNotFoundException e) {
 			e.printStackTrace();
+		}finally {
+			if(ServerClientThreadMgr.get(this.id) != null) {
+				ServerClientThreadMgr.remove(this.id);
+			}
+			System.out.println("客户端线程: " + this.id + "已关闭");
 		}
 	}
 	
@@ -147,8 +140,13 @@ public class ServerSocketThread extends Thread {
 	}
 	
 	public void close() {
-		System.out.println("关闭客户端线程：" + this.id);
 		this.isClosed = true;
+		try {
+			this.clientSocket.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("关闭客户端线程：" + this.id);
 	}
 	
 	public String getCliThdID() {
