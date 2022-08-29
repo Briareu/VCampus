@@ -235,6 +235,8 @@ public class ClassAdminForModify extends JFrame {
 							if(!okay) {
 								JOptionPane.showMessageDialog(null, "已存在该学号的学生！", "提示", JOptionPane.WARNING_MESSAGE);
 								CommitFlag = false;
+								//update table
+								UpdateStudent(StuAll);
 								break;
 							}
 						}
@@ -255,6 +257,8 @@ public class ClassAdminForModify extends JFrame {
 							if(!newclass) {
 								CommitFlag = false;
 								JOptionPane.showMessageDialog(null, "不存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
+								//update table
+								UpdateStudent(StuAll);
 								break;
 							}else {
 								Message mes = new Message();
@@ -318,15 +322,15 @@ public class ClassAdminForModify extends JFrame {
 							List<Object> sendData = new ArrayList<Object>();
 							sendData.add(10);// type -- update classid + studentid + studentname + studentphone
 							sendData.add(newclssid);// new data classid
-							System.out.println(newclssid);
+							//System.out.println(newclssid);
 							sendData.add(newid);// new data 
-							System.out.println(newid);
+							//System.out.println(newid);
 							sendData.add(newname);
-							System.out.println(newname);
+							//System.out.println(newname);
 							sendData.add(newphone);
-							System.out.println(newphone);
+							//System.out.println(newphone);
 							sendData.add(oldid);//anchor
-							System.out.println(oldid);
+							//System.out.println(oldid);
 							mes.setData(sendData);
 
 							Client client = new Client(ClientMainFrame.socket);
@@ -405,6 +409,8 @@ public class ClassAdminForModify extends JFrame {
 						i_row++;
 					}//end of while
 					if(Modified) {
+						//update
+						UpdateStudent(StuAll);
 						JOptionPane.showMessageDialog(null, "成功保存修改！", "提示", JOptionPane.WARNING_MESSAGE);
 					}
 				} else if(now == MODEL.ClASSMODIFY){
@@ -450,6 +456,8 @@ public class ClassAdminForModify extends JFrame {
 								if(!okay) {
 									JOptionPane.showMessageDialog(null, "已存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
 									CommitFlag = false;
+									//update table
+									UpdateClass(ClssAll);
 									break;
 								}
 							}
@@ -553,6 +561,8 @@ public class ClassAdminForModify extends JFrame {
 						i_row++;
 					}//end of while
 					if(Modified) {
+						//update table
+						UpdateClass(ClssAll);
 						JOptionPane.showMessageDialog(null, "成功保存修改！", "提示", JOptionPane.WARNING_MESSAGE);
 					}
 					
@@ -605,6 +615,7 @@ public class ClassAdminForModify extends JFrame {
 							}
 							if(!okay) {
 								JOptionPane.showMessageDialog(null, "已存在该学号的学生！", "提示", JOptionPane.WARNING_MESSAGE);
+								UpdateStudent(StudentTemp);
 								CommitFlag = false;
 								break;
 							}
@@ -625,6 +636,7 @@ public class ClassAdminForModify extends JFrame {
 							}
 							if(!newclass) {
 								CommitFlag = false;
+								UpdateStudent(StudentTemp);
 								JOptionPane.showMessageDialog(null, "不存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
 								break;
 							}else {
@@ -780,6 +792,7 @@ public class ClassAdminForModify extends JFrame {
 						i_row++;
 					}//end of while
 					if(Modified) {
+						UpdateStudent(StudentTemp);
 						JOptionPane.showMessageDialog(null, "成功保存修改！", "提示", JOptionPane.WARNING_MESSAGE);
 					}
 				}else {
@@ -824,6 +837,7 @@ public class ClassAdminForModify extends JFrame {
 								}
 								if(!okay) {
 									JOptionPane.showMessageDialog(null, "已存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
+									UpdateClass(ClassTemp);
 									CommitFlag = false;
 									break;
 								}
@@ -931,6 +945,7 @@ public class ClassAdminForModify extends JFrame {
 						i_row++;
 					}//end of while
 					if(Modified) {
+						UpdateClass(ClassTemp);
 						JOptionPane.showMessageDialog(null, "成功保存修改！", "提示", JOptionPane.WARNING_MESSAGE);
 					}
 					
