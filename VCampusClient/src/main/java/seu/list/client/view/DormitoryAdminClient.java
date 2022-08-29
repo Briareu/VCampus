@@ -76,7 +76,7 @@ public class DormitoryAdminClient extends JFrame {
 		setFont(new Font("微软雅黑", Font.BOLD, 12));
 		setTitle("宿舍-管理员");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 614, 480);
+		setBounds(100, 100, 766, 567);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -156,49 +156,48 @@ public class DormitoryAdminClient extends JFrame {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(245, Short.MAX_VALUE)
-					.addComponent(searchField, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(385, Short.MAX_VALUE)
+					.addComponent(searchField, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(searchButton)
-					.addGap(42))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(18, Short.MAX_VALUE)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-					.addGap(18))
+					.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+					.addGap(106))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(38)
-					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-					.addGap(39)
-					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-					.addGap(42)
-					.addComponent(modifyNewButton, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
-					.addGap(33)
-					.addComponent(exitNewButton_1, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(44, Short.MAX_VALUE))
+					.addGap(76)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+							.addGap(63)
+							.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+							.addGap(67)
+							.addComponent(modifyNewButton, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(exitNewButton_1, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(83, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(232)
+					.addContainerGap(311, Short.MAX_VALUE)
 					.addComponent(dormLabel, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(247, Short.MAX_VALUE))
+					.addGap(325))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(13)
+					.addGap(21)
 					.addComponent(dormLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(searchField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(searchButton))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)
+						.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
+					.addGap(29)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(addButton)
 						.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 						.addComponent(modifyNewButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 						.addComponent(exitNewButton_1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-					.addGap(9))
+					.addGap(51))
 		);
 		
 		
@@ -428,18 +427,24 @@ public class DormitoryAdminClient extends JFrame {
 		boolean flag=false;
 		String userID = para.get(0);
 		String usertype = para.get(1);
-		int temp = Integer.parseInt(para.get(2));
+		String temp =para.get(2);
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				flag=true;
 				if ("卫生评分".equals(usertype)) {
-					Dorm.get(i).setDormitoryScore(temp);
+					Dorm.get(i).setDormitoryScore(Integer.parseInt(temp));
 				}
 				if ("水费".equals(usertype)) {
-					Dorm.get(i).setWater(temp);
+					Dorm.get(i).setWater(Integer.parseInt(temp));
 				}
 				if ("电费".equals(usertype)) {
-					Dorm.get(i).setElectricity(temp);
+					Dorm.get(i).setElectricity(Integer.parseInt(temp));
+				}
+				if ("宿舍维修".equals(usertype)) {
+					Dorm.get(i).setDormitoryMaintain(temp);
+				}
+				if ("宿舍调换".equals(usertype)) {
+					Dorm.get(i).setStudentExchange(temp);
 				}
 			}
 		if(!flag) {
@@ -469,3 +474,5 @@ public class DormitoryAdminClient extends JFrame {
 		}
 	}
 }
+
+
