@@ -1,3 +1,7 @@
+/**
+ * @author 周楚翘
+ * @version jdk1.8.0
+ */
 package seu.list.client.view;
 
 import seu.list.common.Dormitory;
@@ -22,8 +26,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -40,14 +47,14 @@ public class DormitoryAdminClient extends JFrame {
 	private JTextField searchField;
 	private JTable table;
 	//static Socket socket;
-	private Socket socket;
+	private static Socket socket;
 	public int k=0;
 	public ArrayList<Dormitory> Dorm=new ArrayList<Dormitory>();
 
 	/**
 	 * Launch the application.
 	 */
-	/*
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -60,7 +67,7 @@ public class DormitoryAdminClient extends JFrame {
 			}
 		});
 	}
-*/
+
 	/**
 	 * Create the frame.
 	 */
@@ -73,7 +80,10 @@ public class DormitoryAdminClient extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+		//添加图标
+		Image image=new ImageIcon("src/main/resources/image/xiaobiao.jpg").getImage();
+		setIconImage(image);
+	
 		JLabel dormLabel = new JLabel("宿舍管理");
 		dormLabel.setFont(new Font("微软雅黑", Font.PLAIN, 25));
 		
@@ -261,25 +271,37 @@ public class DormitoryAdminClient extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
-
+/**
+ * 显示修改界面
+ * @param e
+ */
 	protected void ModifyAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Dormmodify Modify = new Dormmodify(this,socket);
 		Modify.setVisible(true);
 	}
-
+/**
+ * 显示添加界面
+ * @param e
+ */
 	protected void AddAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Dormadd add = new Dormadd(this,socket);
 		add.setVisible(true);
 	}
-
+/**
+ * 显示删除界面
+ * @param e
+ */
 	protected void DeleteAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Dormdelete delete = new Dormdelete(this,socket);
 		delete.setVisible(true);
 	}
-
+/**
+ * 查找宿舍
+ * @param e
+ */
 	protected void SearchAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object[][] dorminformation = {};
@@ -326,7 +348,10 @@ public class DormitoryAdminClient extends JFrame {
 			table.setModel(model);
 		}
 	}
-
+/**
+ * 更新添加宿舍后列表
+ * @param temp
+ */
 	public void updateFrame(Dormitory temp) {
 		// TODO Auto-generated method stub
 		Object[][] dorminformation = {};
@@ -356,7 +381,10 @@ public class DormitoryAdminClient extends JFrame {
 			table.setModel(model);
 		}
 	}
-
+/**
+ * 更新删除宿舍后列表
+ * @param userID
+ */
 	public void updateFrameD(String userID) {
 		// TODO Auto-generated method stub
 		boolean flag=false;
@@ -391,7 +419,10 @@ public class DormitoryAdminClient extends JFrame {
 			table.setModel(model);
 		}
 	}
-
+/**
+ * 更新修改宿舍后列表
+ * @param para
+ */
 	public void updateFrameM(ArrayList<String> para) {
 		// TODO Auto-generated method stub
 		boolean flag=false;
@@ -438,5 +469,3 @@ public class DormitoryAdminClient extends JFrame {
 		}
 	}
 }
-
-
