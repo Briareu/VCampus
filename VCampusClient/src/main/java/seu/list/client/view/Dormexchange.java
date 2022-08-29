@@ -1,3 +1,7 @@
+/**
+ * @author 周楚翘
+ * @version jdk1.8.0
+ */
 package seu.list.client.view;
 
 import java.awt.BorderLayout;
@@ -16,12 +20,14 @@ import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -65,6 +71,10 @@ public class Dormexchange extends JDialog {
 		setVisible(true);
 		setTitle("宿舍调换");
 		setBounds(100, 100, 450, 300);
+		//添加图标
+		Image image=new ImageIcon("src/main/resources/image/xiaobiao.jpg").getImage();
+		setIconImage(image);
+		
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		JLabel ExchangeLabel = new JLabel("宿舍调换申请");
 		ExchangeLabel.setFont(new Font("微软雅黑", Font.BOLD, 25));
@@ -200,7 +210,10 @@ public class Dormexchange extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
-
+/**
+ * 宿舍调换申请
+ * @param e
+ */
 	protected void ExchangeAct(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Message mes = new Message();
