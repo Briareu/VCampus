@@ -99,6 +99,11 @@ public class ServerClientThreadMgr {
 	 * @version 1.0
 	 */
 	public synchronized static void printAllClient() {
+		if(clientThreadPool.isEmpty()) {
+			System.out.println("目前没有客户端连接到服务器！");
+			return;
+		}
+		
 		Iterator<Map.Entry<String, ServerSocketThread>> entries = clientThreadPool.entrySet().iterator();
 		System.out.println("目前连接到服务器上的客户端: ");
 		while(entries.hasNext()) {

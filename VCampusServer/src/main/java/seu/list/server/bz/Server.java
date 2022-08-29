@@ -18,6 +18,7 @@ import java.net.Socket;
  * 
  * @author 吴慕陶
  * @version 1.0
+ * @see java.lang.Thread
  */
 public class Server extends Thread{
 	private Integer thdNum = 10000;
@@ -45,9 +46,9 @@ public class Server extends Thread{
 	 * 接入后为客户端分配id和线程，并加入服务器线程池 <br>
 	 * {@code while}退出即代表服务器即将关闭，会关闭{@code ServerSocket}并清空线程池
 	 * 
-	 * @see java.net.ServerSocket#accept()
 	 * @author 吴慕陶
 	 * @version 1.0
+	 * @see java.net.ServerSocket#accept()
 	 */
     @Override
     public void run() {

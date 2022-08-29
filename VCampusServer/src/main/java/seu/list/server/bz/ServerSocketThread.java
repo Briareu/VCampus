@@ -1,23 +1,3 @@
-/**
- * to do with thread
- * @author LIU
- * @version 1.0 8/14
- * 
- * you need to import the package of server and dao
- * you need to add your server implementation like: Server server = new Server();
- * you need to add the operations you want the thread to do with your module, like ClassAdd\Delete or something
- * you need to do the things through input-stream and out-stream, there are examples under
- * remember to update the 'MessageType.java' file
- * this is a demo, you can update the socket frame and the way of message-passing any time and tell us
- * 
- * 
- * @author WU
- * @version 2.0 8/18
- * 
- * 
- * 
- */
-
 package seu.list.server.bz;
 
 import seu.list.common.Message;
@@ -31,6 +11,19 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * 类{@code ServerSocketThread}为服务器客户端线程类，用于处理与客户端的通信 <br>
+ * 每个连接到服务器的客户端独占一个服务器客户端线程 <br>
+ * 主体为{@code while}循环，等待客户端发送数据，用标志{@code isClosed}和{@code Socket}的关闭来控制循环 <br>
+ * <br>
+ * 私有数据成员: <br>
+ * 1. {@code clientSocket}, 类型: {@code Socket}, 客户端的{@code Socket} <br>
+ * 2. {@code id}, 类型: {@code String}, 客户端线程ID <br>
+ * 3. {@code isClosed}, 类型: {@code boolean}, 标志，用于退出{@code while}循环
+ * @author 吴慕陶 柳多荣
+ * @version 1.1
+ * @see java.lang.Thread
+ */
 public class ServerSocketThread extends Thread {
 	private Socket clientSocket = null;	
 	private String id = null;
@@ -41,8 +34,8 @@ public class ServerSocketThread extends Thread {
 		this.id = id;
 	}
 
-	//@Override
-	public synchronized void run() {
+	@Override
+	public void run() {
 		try {
 			//start try
 			System.out.println("已与客户端建立连接，当前客户端ip为："+clientSocket.getInetAddress().getHostAddress());
