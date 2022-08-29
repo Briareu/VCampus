@@ -1,15 +1,34 @@
-//package VCampusServer.src.main.java.seu.list.server.bz;
 package seu.list.server.bz;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * 
+ * 类{@code Server}为服务器主线程类，继承类{@code Thread} <br>
+ * 在服务端程序启动会立即启动 <br>
+ * 用于为每个连接到的客户端在服务器分配客户端线程 <br>
+ * <br>
+ * 私有数据成员: <br>
+ * 1. 客户端线程id: {@code thdNum}, 类型: {@code Integer} <br>
+ * 2. 服务器Socket: {@code serverSocket}, 类型: {@code Server} <br>
+ * 3. 线程关闭标志: {@code isClosed}, 类型: {@code boolean} 
+ * 
+ * @author 吴慕陶
+ * @version 1.0
+ */
 public class Server extends Thread{
 	private Integer thdNum = 10000;
 	private ServerSocket serverSocket;
 	private boolean isClosed = false;
 	
+	/**
+	 * 类{@code Server}构造器, 用传入的端口建立{@code ServerSocket}
+	 * @author 吴慕陶
+	 * @version 1.0
+	 * @param port 服务器端口
+	 */
 	public Server (int port) {
 		try {
 			this.serverSocket = new ServerSocket(port);
@@ -18,6 +37,15 @@ public class Server extends Thread{
 		}
 	}
 	
+	/**
+	 * 服务器主线程的{@code run}方法，继承自类{@code Thread} <br>
+	 * 主体为{@code while}循环，通过标志{@code isClosed}控制 <br>
+	 * 等待客户端接入，接入后为客户端分配id和线程，并加入服务器线程池 <br>
+	 * {@code while}退出即代表服务器即将关闭，会陆续关闭{@code ServerSocket}并清空线程池
+	 * 
+	 * @author 吴慕陶
+	 * @version 1.0
+	 */
     @Override
     public void run() {
         // TODO Auto-generated method stub
@@ -46,6 +74,12 @@ public class Server extends Thread{
         }
     }
     
+    /**
+     * 服务器主线程的{@code close}方法，可被服务端主程序调用 <br>
+     * 调用后将标志{@code isClosed}置为{@code true}, 使{@code run}方法中的{@code while}循环退出 <br>
+     * @author 吴慕陶
+     * @version 1.0 
+     */
     public void close() {
     	System.out.println("服务器关闭！");
     	this.isClosed = true;
