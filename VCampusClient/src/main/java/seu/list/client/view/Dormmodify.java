@@ -141,7 +141,7 @@ public class Dormmodify extends JDialog {
 		userIDField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		userIDField.setColumns(10);
 		
-		modifyt.setModel(new DefaultComboBoxModel(new String[] {"卫生评分", "水费", "电费"}));
+		modifyt.setModel(new DefaultComboBoxModel(new String[] {"卫生评分", "水费", "电费", "宿舍维修", "宿舍调换"}));
 		
 		JLabel lblNewLabel_2 = new JLabel("修改项目：");
 		lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
@@ -236,6 +236,8 @@ public class Dormmodify extends JDialog {
 		if ("卫生评分".equals(usertype)) para.add("卫生评分");
 		if ("水费".equals(usertype)) para.add("水费");
 		if ("电费".equals(usertype)) para.add("电费");
+		if ("宿舍调换".equals(usertype)) para.add("宿舍调换");
+		if ("宿舍维修".equals(usertype)) para.add("宿舍维修");
 		para.add(modifyField_1.getText());
 		
 		mes.setData(para);
@@ -250,3 +252,4 @@ public class Dormmodify extends JDialog {
 	}
 
 }
+
