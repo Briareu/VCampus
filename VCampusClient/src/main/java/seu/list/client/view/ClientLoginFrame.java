@@ -353,7 +353,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
             mes.setMessageType(MessageType.REQ_LOGIN);
             Message res=ccs.sendRequestToServer(mes);
             int sign=res.getUserType();
-
+            u = (User)res.getData();
 
             //检验权限
             //System.out.println(ccs.sign);
@@ -365,7 +365,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
             {
                 if(sign==0||sign==1) {
                     this.setVisible(false);
-                    MainMenu csf = new MainMenu(sign, u.getId(), u.getPwd(), this.socket);
+                    MainMenu csf = new MainMenu(sign, u.getId(), u.getPwd(), u.getName(), u.getMoney(), this.socket);
                     csf.setVisible(true);
                 }
                 else if(sign==2) {

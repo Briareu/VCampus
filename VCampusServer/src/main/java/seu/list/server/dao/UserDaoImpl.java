@@ -55,6 +55,7 @@ public class UserDaoImpl implements UserDao {
 					}else{
 						System.out.println("User " + u.getId() + " 验证成功 ");
 						mesToClient.setUserType(Integer.valueOf(user.getRole()));
+						mesToClient.setData(user);
 					}
 					break;
 				}
