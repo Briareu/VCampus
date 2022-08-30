@@ -49,7 +49,8 @@ public class Dormmodify extends JDialog {
 	private JTextField modifyField_1;
 	//static Socket socket;
 	JComboBox modifyt = new JComboBox();
-	DormitoryAdminClient C;
+	static DormitoryAdminClient C;
+	static Socket socket;
 	public ArrayList<Dormitory> allDormitoryContents;
 
 	/**
@@ -58,7 +59,7 @@ public class Dormmodify extends JDialog {
 	/*
 	public static void main(String[] args) {
 		try {
-			Dormmodify dialog = new Dormmodify(socket);
+			Dormmodify dialog = new Dormmodify(C,socket);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -74,7 +75,7 @@ public class Dormmodify extends JDialog {
 		//this.socket=socket;
 		setTitle("修改信息");
 		setVisible(true);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 471, 325);
 		//添加图标
 		Image image=new ImageIcon("src/main/resources/image/xiaobiao.jpg").getImage();
 		setIconImage(image);
@@ -117,19 +118,24 @@ public class Dormmodify extends JDialog {
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(47)
-					.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(62, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(61)
+							.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
 					.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(21))
+					.addGap(46))
 		);
 		{
 			lblNewLabel = new JLabel("修改信息");
@@ -141,7 +147,7 @@ public class Dormmodify extends JDialog {
 		userIDField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		userIDField.setColumns(10);
 		
-		modifyt.setModel(new DefaultComboBoxModel(new String[] {"卫生评分", "水费", "电费", "宿舍维修", "宿舍调换"}));
+		modifyt.setModel(new DefaultComboBoxModel(new String[] {"宿舍", "卫生评分", "水费", "电费", "宿舍维修", "宿舍调换"}));
 		
 		JLabel lblNewLabel_2 = new JLabel("修改项目：");
 		lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
@@ -195,17 +201,16 @@ public class Dormmodify extends JDialog {
 				.addGroup(gl_buttonPane.createSequentialGroup()
 					.addGap(23)
 					.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-					.addGap(114)
-					.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-					.addGap(5))
+					.addPreferredGap(ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+					.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_buttonPane.setVerticalGroup(
 			gl_buttonPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_buttonPane.createSequentialGroup()
 					.addGap(5)
 					.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
 		);
 		buttonPane.setLayout(gl_buttonPane);
 		getContentPane().setLayout(groupLayout);
@@ -235,6 +240,7 @@ public class Dormmodify extends JDialog {
 		ArrayList<String> para = new ArrayList<String>();
 		para.add(userIDField.getText());
 		String usertype = (String) modifyt.getSelectedItem();
+		if ("宿舍".equals(usertype)) para.add("宿舍");
 		if ("卫生评分".equals(usertype)) para.add("卫生评分");
 		if ("水费".equals(usertype)) para.add("水费");
 		if ("电费".equals(usertype)) para.add("电费");
@@ -254,4 +260,5 @@ public class Dormmodify extends JDialog {
 	}
 
 }
+
 
