@@ -56,6 +56,7 @@ public class DormitoryAdminClient extends JFrame {
 	 * Launch the application.
 	 */
 	
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -68,6 +69,7 @@ public class DormitoryAdminClient extends JFrame {
 			}
 		});
 	}
+	*/
 
 	/**
 	 * Create the frame.
