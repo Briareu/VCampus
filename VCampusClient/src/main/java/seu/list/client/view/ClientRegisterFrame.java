@@ -117,7 +117,6 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 		getContentPane().add(JLabel1);
 
 		JLabel JLabel0 = new JLabel("\u9762\u677F");
-		JLabel0.setToolTipText("");
 		JLabel0.setFont(new Font("华文楷体", Font.PLAIN, 21));
 		JLabel0.setForeground(SystemColor.activeCaption);
 		JLabel0.setLabelFor(this);
@@ -154,9 +153,6 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 		getContentPane().add(jtf_grade);
 
 		jtf_money = new JTextField();
-		jtf_money.setEditable(false);
-		jtf_money.setFont(new Font("宋体", Font.PLAIN, 15));
-		jtf_money.setText("0");
 		jtf_money.setColumns(10);
 		jtf_money.setBounds(427, 332, 139, 27);
 		getContentPane().add(jtf_money);
