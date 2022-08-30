@@ -2,7 +2,7 @@ package seu.list.server.bz;
 
 import seu.list.common.IConstant;
 import seu.list.server.bz.Server;
-
+import seu.list.server.view.ServerFrame;
 
 import java.util.*;
 
@@ -28,6 +28,9 @@ public class ServerMainFrame
 	public static final String ServerCmdReboot = "reboot";
 	public static final String ServerCmdPrintAll = "print all";
 	public static final String ServerCmdExit = "exit";
+	public static Server srvThd = null;
+	public static boolean isRunning = false;
+	public static boolean isClosed = false;
 	
 	/**
 	 * {@code main}方法，整个服务端程序的入口 <br>
@@ -38,13 +41,13 @@ public class ServerMainFrame
 	 */
 	public static void main(String[] args)
 	{
-		Server srvThd = null;
-		boolean isRunning = false;
+		ServerFrame serverframe = new ServerFrame();
+		serverframe.setVisible(true);
 		
-		System.out.println("欢迎使用虚拟校园系统-服务端程序！");
+/*		System.out.println("欢迎使用虚拟校园系统-服务端程序！");
 		System.out.println("输入" + ServerCmdHelp + "以获取服务端使用帮助");
 		Scanner scan = new Scanner(System.in);
-		boolean isClosed = false;
+		
 		
 		while(!isClosed && scan.hasNext()) {
 			//String input = scan.next();
@@ -100,7 +103,9 @@ public class ServerMainFrame
 							srvThd = null;
 							isRunning = false;
 						}
+						serverframe.close();
 						isClosed = true;
+						
 					}else {
 						System.out.println("输入" + ServerCmdHelp + "以获取服务端使用帮助");
 					}
@@ -114,7 +119,92 @@ public class ServerMainFrame
 			}
 		} // end while
 		scan.close();
+*/
+		while(!isClosed) {};
 		System.exit(0);
+	}
+	
+	/**
+	 * 
+	 * 重启服务器方法
+	 * @author 柳多荣
+	 * @version 1.0
+	 * @return 如果成功重启返回1，若服务器没有运行导致无法重启返回0
+	 */
+	public static int reboot() {
+		if(isRunning) {
+			srvThd.close();
+			srvThd = new Server(IConstant.SERVER_PORT);
+			srvThd.start();
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
+	/**
+	 * 
+	 * 开始运行服务器的方法
+	 * @author 柳多荣
+	 * @version 1.0
+	 * @return 如果成功重启返回1，若服务器已经运行导致无法重启返回0
+	 */
+	public static int launch() {
+		if(!isRunning) {
+			srvThd = new Server(IConstant.SERVER_PORT);
+			srvThd.start();
+			isRunning = true;
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
+	/**
+	 * 
+	 * 获取与服务器连接的客户端信息
+	 * @author 柳多荣
+	 * @version 1.0
+	 * @return 如果成功重启返回1，若服务器没有运行导致无法重启返回0
+	 */
+	public static Vector<String> getall(){
+		Vector<String> res = new Vector<String>();
+		res = ServerClientThreadMgr.getAll();
+		return res;
+	}
+	
+	/**
+	 * 
+	 * 退出服务端程序的方法
+	 * @author 柳多荣
+	 * @version 1.0
+	 */
+	public static void exitbtn() {
+		if(isRunning) {
+			srvThd.close();
+			srvThd = null;
+			isRunning = false;
+		}
+		isClosed = true;
+		System.exit(0);
+	}
+	
+	/**
+	 * 
+	 * 关闭服务器方法
+	 * @author 柳多荣
+	 * @version 1.0
+	 * @return 如果成功重启返回1，若服务器导致没有执行关闭服务器的操作则返回0
+	 */
+	public static int closebtn() {
+		if(isRunning) {
+			srvThd.close();
+			srvThd = null;
+			isRunning = false;
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 	
 	/**
@@ -122,6 +212,7 @@ public class ServerMainFrame
 	 * @author 吴慕陶
 	 * @version 1.0
 	 */
+	
 	public static void printHelp() {
 		System.out.println("----------------------欢迎使用虚拟校园系统-服务器端----------------------");
 		System.out.println("服务端使用帮助");

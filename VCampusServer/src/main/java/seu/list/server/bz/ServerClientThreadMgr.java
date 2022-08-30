@@ -112,4 +112,29 @@ public class ServerClientThreadMgr {
 			System.out.println("客户端线程ID: " + thd.getCliThdID() + ", ip地址: " + thd.getIP());
 		}
 	}
+	
+	/**
+	 * 返回目前连接到服务器上的所有客户端的信息
+	 * @author 柳多荣
+	 * @version 1.0
+	 * @return 目前连接到服务器上客户端的ID+ip地址，不存在则返回{@code null}
+	 */
+	public synchronized static Vector<String> getAll(){
+		Vector<String> res = new Vector<String>();
+		if(clientThreadPool.isEmpty()) {
+			System.out.println("目前没有客户端连接到服务器！");
+			return res;
+		}
+		
+		Iterator<Map.Entry<String, ServerSocketThread>> entries = clientThreadPool.entrySet().iterator();
+		System.out.println("目前连接到服务器上的客户端: ");
+		while(entries.hasNext()) {
+			Map.Entry<String, ServerSocketThread> entry = entries.next();
+			ServerSocketThread thd = entry.getValue();
+//			System.out.println("客户端线程ID: " + thd.getCliThdID() + ", ip地址: " + thd.getIP());
+			res.add(thd.getCliThdID().toString());
+			res.add(thd.getIP().toString());
+		}
+		return res;
+	}
 }
