@@ -198,6 +198,15 @@ public class DormitorServer extends Dormitory_DbAccess{
 		s = con.createStatement();
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
+				if ("宿舍".equals(usertype)) {
+					Dorm.get(i).setStudentExchange(temp);
+					try {
+						int result=s.executeUpdate("update tb_Dormitory set DormitoryID='"+temp+"'where userID='"+userID+"'");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				if ("卫生评分".equals(usertype)) {
 					Dorm.get(i).setDormitoryScore(Integer.parseInt(temp));
 					try {
@@ -255,15 +264,6 @@ public class DormitorServer extends Dormitory_DbAccess{
 	private ArrayList<Dormitory> Add(Dormitory data) throws SQLException {
 		ArrayList<Dormitory> dorm=AllDormitory();
 		dorm.add(data);
-/*		try {
-			int result=s.executeUpdate("insert into tb_Dormitory(userID, DormitoryID, StudentBunkID, Water, Electricity, DormitoryScore, DormitoryMaintain, StudentExchange) values('"+data.getuserID()+"','"+data.getDormitoryID()+"','"+data.getStudentBunkID()+
-					"','"+data.getWater()+"','"+data.getElectricity()+"','"+data.getDormitoryScore()
-					+"','"+data.getDormitoryMaintain()+"','"+data.getStudentExchange()+"','"+0+"')");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return dorm;*/
 		con = this.getConnection();
 		PreparedStatement ps = con.prepareStatement("insert into tb_Dormitory(userID, DormitoryID, StudentBunkID, Water, Electricity, DormitoryScore, DormitoryMaintain, StudentExchange) values('"+ data.getuserID() +"','"+ data.getDormitoryID() +"','"+ data.getStudentBunkID() +"','"+ data.getWater() +"','"+ data.getElectricity() +"','"+ data.getDormitoryScore() +"','"+ data.getDormitoryMaintain() +"','"+ data.getStudentExchange() +"')");
 		int result = ps.executeUpdate();
