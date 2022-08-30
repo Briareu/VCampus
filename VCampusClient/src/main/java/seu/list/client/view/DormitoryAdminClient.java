@@ -433,6 +433,9 @@ public class DormitoryAdminClient extends JFrame {
 		for (int i = 0; i < Dorm.size(); i++)
 			if (Dorm.get(i).getuserID().equals(userID)) {
 				flag=true;
+				if ("宿舍".equals(usertype)) {
+					Dorm.get(i).setDormitoryID(temp);
+				}
 				if ("卫生评分".equals(usertype)) {
 					Dorm.get(i).setDormitoryScore(Integer.parseInt(temp));
 				}
@@ -476,5 +479,3 @@ public class DormitoryAdminClient extends JFrame {
 		}
 	}
 }
-
-
