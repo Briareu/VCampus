@@ -124,7 +124,7 @@ public class Shop_StudentFrame {
 		btnNewButton_1 = new JButton("");
 		btnNewButton_1.setBounds(10, 210, 60, 25);
 		btnNewButton_1.setBackground(Color.WHITE);
-		btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
+	    btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//退出
@@ -139,10 +139,10 @@ public class Shop_StudentFrame {
 		scrollPane.setViewportBorder(null);
 		scrollPane.setEnabled(false);
 		scrollPane.setBounds(80, 55, 452, 351);
-		scrollPane.setBackground(new Color(0,0,0,0));
+		scrollPane.setBackground(Color.WHITE);
 		
 		table = new JTable();
-		table.setBackground(new Color(0,0,0,0));
+		table.setBackground(Color.WHITE);
 		scrollPane.setViewportView(table);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setRowHeight(25);
@@ -154,8 +154,8 @@ public class Shop_StudentFrame {
 		tableColumn.setCellEditor(cellEditor);//确保输入合法
 
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
-		
-		final TableModel tableModel = table.getModel();
+		table.getTableHeader().setReorderingAllowed(false);
+		TableModel tableModel = table.getModel();
 		tableModel.addTableModelListener(new TableModelListener() {
 		    @Override
 		    public void tableChanged(TableModelEvent e) {
@@ -226,7 +226,7 @@ public class Shop_StudentFrame {
 		frame.setLocationRelativeTo(null);
 	}
 	
-	private void show() {
+	public void show() {
 		// TODO 自动生成的方法存根
 		Message mes =new Message();
 		mes.setMessageType(MessageType.Goodsgetall);
@@ -258,7 +258,48 @@ public class Shop_StudentFrame {
 			tempgoods[4]="0";
 			tablemodel.addRow(tempgoods);
 		}
+
+		MyCellEditor cellEditor = new MyCellEditor(new JTextField());
+		
 		table.setModel(tablemodel);
+		TableModel tableModel = table.getModel();
+		tableModel.addTableModelListener(new TableModelListener() {
+		    @Override
+		    public void tableChanged(TableModelEvent e) {
+		        // 第一个 和 最后一个 被改变的行（只改变了一行，则两者相同）
+		        int firstRow = e.getFirstRow();
+		        int lastRow = e.getLastRow();
+
+		        // 被改变的列
+		        int column = e.getColumn();
+
+		        // 事件的类型，可能的值有:
+		        //     TableModelEvent.INSERT   新行或新列的添加
+		        //     TableModelEvent.UPDATE   现有数据的更改
+		        //     TableModelEvent.DELETE   有行或列被移除
+		        int type = e.getType();
+		        if (type == TableModelEvent.UPDATE) {
+//		        	double t=0.0;
+		        	sum = 0.0;
+		        	if(column==4) {
+		        		 for (int row =0; row <table.getRowCount(); row++) {
+		        			 Object tempnumber=tableModel.getValueAt(row, 4);
+		        			 Object tempprice=tableModel.getValueAt(row, 2);
+		        			 double tem=Double.parseDouble((String)tempprice);
+		        			int tem1=Integer.parseInt((String)tempnumber);
+//		        			t+=tem*tem1;
+		        			sum += tem*tem1;
+		        		
+		        		 }
+//		        		 textField.setText(t+"");
+		        		 textField.setText(sum + "");
+		        	}
+		        	else return;
+		        }
+		    }
+		});
+		TableColumn tableColumn = table.getColumn("数量");
+		tableColumn.setCellEditor(cellEditor);//确保输入合法
 	}
 	
 	private void SearchGood(ActionEvent e) {
@@ -266,23 +307,27 @@ public class Shop_StudentFrame {
 		Message mes =new Message();
 		mes.setData(SearchText.getText());
 		mes.setModuleType(ModuleType.Shop);
-		if(SearchText.getText()==null)return;
+		if(((String)SearchText.getText()).equals("")) {
+			show();
+			return;
+			}
 		if(SearchText.getText().matches("[0-9]*")) {//商品ID查找
 		mes.setMessageType(MessageType.GoodsSearch_ID);
+		
 		Client client=new Client(ClientMainFrame.socket);
 		Message serverResponse = client.sendRequestToServer(mes); 
-		Goods res=(Goods)serverResponse.getData();
+		ArrayList<Goods> res=(ArrayList<Goods>)serverResponse.getData();
 		
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
-				"商品编号", "商品名称", "单价", "库存","数量"}) {
+				"商品编号", "商品名称", "单价", "库存"}) {
 
 				
 				/*
 				 * overload the method to change the table's factor
 				 */
 						boolean[] columnEditables = new boolean[] {
-								false, false,false, false,true
+								false, false,true, true
 							};
 				@Override
 				public boolean isCellEditable(int row, int column) {
@@ -290,13 +335,15 @@ public class Shop_StudentFrame {
 					return columnEditables[column];
 				}
 		};
-		String temp[]=new String[5];
-		temp[0]=res.getGoodsid()+"";
-		temp[1]=res.getGoodsname();
-		temp[2]=res.getGoodsprice()+"";
-		temp[3]=res.getGoodsnumber()+"";
-		temp[4]="0";
-		tablemodel.addRow(temp);
+		
+		for(int i=0;i<res.size();i++) {
+			String tempgoods[]=new String[4];
+			tempgoods[0]=res.get(i).getGoodsid()+"";
+			tempgoods[1]=res.get(i).getGoodsname();
+			tempgoods[2]=res.get(i).getGoodsprice()+"";
+			tempgoods[3]=res.get(i).getGoodsnumber()+"";
+			tablemodel.addRow(tempgoods);
+		}
 		table.setModel(tablemodel);
 		//System.out.println("1");
 		
@@ -310,14 +357,14 @@ public class Shop_StudentFrame {
 			
 			DefaultTableModel tablemodel;
 			tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
-					"商品编号", "商品名称", "单价", "库存","数量"}) {
+					"商品编号", "商品名称", "单价", "库存"}) {
 
 					
 					/*
 					 * overload the method to change the table's factor
 					 */
 							boolean[] columnEditables = new boolean[] {
-									false, false,false, true,false
+									false, false,true, true
 								};
 					@Override
 					public boolean isCellEditable(int row, int column) {
@@ -326,20 +373,24 @@ public class Shop_StudentFrame {
 					}
 			};
 			for(int i=0;i<res.size();i++) {
-				String tempgoods[]=new String[5];
+				String tempgoods[]=new String[4];
 				tempgoods[0]=res.get(i).getGoodsid()+"";
 				tempgoods[1]=res.get(i).getGoodsname();
 				tempgoods[2]=res.get(i).getGoodsprice()+"";
 				tempgoods[3]=res.get(i).getGoodsnumber()+"";
-				tempgoods[4]="0";
 				tablemodel.addRow(tempgoods);
 			}
-			table.setModel(tablemodel);
+			getTable().setModel(tablemodel);
 			//System.out.println("2");
 		}
 	}
 	
-	 protected void buy() {
+	 private JTable getTable() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	protected void buy() {
 		// TODO 自动生成的方法存根
 		Message mes =new Message();
 		mes.setModuleType(ModuleType.Shop);
@@ -361,6 +412,7 @@ public class Shop_StudentFrame {
 		
 		Message serverResponse= client.sendRequestToServer(mes); 
 		//int res=(int)serverResponse.getData();
+		textField.setText("0.0");
 	}
 	 
 	public static class MyCellEditor extends DefaultCellEditor {
