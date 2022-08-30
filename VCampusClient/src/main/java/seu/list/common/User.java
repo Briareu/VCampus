@@ -2,7 +2,10 @@ package seu.list.common;
 //package seu.list.common;
 
 import java.util.Vector;
-
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
 public class User implements java.io.Serializable {
 	private static final long serialVersionUID = 2342342342342342342L;//Ϊ����ServerThread�ܹ�д����
 	private String id;//0
@@ -31,9 +34,7 @@ public class User implements java.io.Serializable {
 		role = content.get(7);
 		money = content.get(8);
 	};
-//	public enum GRADE {
-//		"大一","大二","大三","大四"
-//	}
+
 	public String getId() {
 		return id;
 	}

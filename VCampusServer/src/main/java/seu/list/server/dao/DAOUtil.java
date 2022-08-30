@@ -7,8 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
 public class DAOUtil {
+	/**
+	 * @return 课程信息列表
+	 * @param  rs 从数据库获取的课程结果
+	 */
 	public static List<Course> CourseResultSet2List(ResultSet rs) throws SQLException {
 		List<Course> courses = new ArrayList<Course>();
 		while(rs.next())
@@ -29,6 +36,10 @@ public class DAOUtil {
 		}	
 		return courses;
 	}
+	/**
+	 * @return 已选课程名称列表
+	 * @param  rs 从数据库获取的课程结果
+	 */
 	public static List<String> relationResulList(ResultSet rs) throws SQLException{
 		List<String> objs = new  ArrayList<String>();
 		while(rs.next())
@@ -38,7 +49,10 @@ public class DAOUtil {
 		}
 		return objs;
 	}
-
+	/**
+	 * @return 用户信息列表
+	 * @param  rs 从数据库获取的用户信息结果
+	 */
 	public static List<User> UserResultSet2List(ResultSet rs) throws SQLException {
 		List<User> users = new ArrayList<User>();
 		while(rs.next())

@@ -20,7 +20,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
-
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
 public class CourseInfor extends JDialog implements ActionListener {
 	private final int WIDTH=400;
 	private final int HEIGHT=450;
@@ -37,6 +40,8 @@ public class CourseInfor extends JDialog implements ActionListener {
 
 	/**
 	 * Create the dialog.
+	 * @param ID 用户id
+	 * @param socket 与服务器通信的socket
 	 */
 	public  CourseInfor(String ID,Socket socket) {
 		userID=ID;
@@ -51,7 +56,7 @@ public class CourseInfor extends JDialog implements ActionListener {
 		getContentPane().add(contentPanel);
 
 		JPanel buttonPane = new JPanel();
-		//buttonPane.setBounds(0, 181, 327, 37);
+
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
 
@@ -72,93 +77,69 @@ public class CourseInfor extends JDialog implements ActionListener {
 		Box boxH= Box.createVerticalBox();
 
 		CourseID = new JTextField();
-		//CourseID.setBounds(152, 33, 86, 24);
-		//getContentPane().add(CourseID);
 		CourseID.setColumns(10);
 
 		JLabel lblcourseID = new JLabel("课程ID");
-		//lblcourseID.setBounds(55, 36, 72, 18);
-		//getContentPane().add(lblcourseID);
 		lblcourseID.setFont(new Font("微软雅黑",Font.BOLD,20));
 		box1.add(CourseID);
 		box1.add(lblcourseID);
 
 
 		CourseName = new JTextField();
-		//CourseName.setBounds(152, 70, 86, 24);
-		//getContentPane().add(CourseName);
 		CourseName.setColumns(10);
 		JLabel lblcourseName = new JLabel("课程名称");
 		lblcourseName.setFont(new Font("微软雅黑",Font.BOLD,20));
-//		lblcourseName.setBounds(55, 73, 72, 18);
-//		getContentPane().add(lblcourseName);
 		box2.add(CourseName);
 		box2.add(lblcourseName);
 
 		CourseMajor = new JTextField();
-		//CourseMajor.setBounds(152, 107, 86, 24);
-		//getContentPane().add(CourseMajor);
 		CourseMajor.setColumns(10);
 
 		JLabel lblcourseMajor = new JLabel("课程专业");
 		lblcourseMajor.setFont(new Font("微软雅黑",Font.BOLD,20));
-//		lblcourseMajor.setBounds(55, 110, 72, 18);
-//		getContentPane().add(lblcourseMajor);
 		box3.add(CourseMajor);
 		box3.add(lblcourseMajor);
 
 
 		teacherID = new JTextField();
-		//teacherID.setBounds(152, 144, 86, 24);
-		//getContentPane().add(teacherID);
 		teacherID.setColumns(10);
 
 		JLabel lblteacherID = new JLabel("授课教师");
 		lblteacherID.setFont(new Font("微软雅黑",Font.BOLD,20));
-//		lblteacherID.setBounds(55, 147, 72, 18);
-//		getContentPane().add(lblteacherID);
+
 		box4.add(teacherID);
 		box4.add(lblteacherID);
 
 
 		Semester = new JTextField();
-		//Semester.setBounds(152, 170, 86, 24);
-		//getContentPane().add(Semester);
 		Semester.setColumns(10);
 
 		JLabel lblsemster = new JLabel("学年学期");
 		lblsemster.setFont(new Font("微软雅黑",Font.BOLD,20));
-//		lblsemster.setBounds(55, 173, 72, 18);
-//		getContentPane().add(lblsemster);
+
 		box5.add(Semester);
 		box5.add(lblsemster);
 
 
 
 		CourseState = new JTextField();
-		//CourseState.setBounds(152, 200, 86, 24);
-		//getContentPane().add(CourseState);
 		CourseState.setColumns(10);
 
 		JLabel lblcourseState = new JLabel("课程状态");
 		lblcourseState.setFont(new Font("微软雅黑",Font.BOLD,20));
-//		lblcourseState.setBounds(55, 203, 72, 18);
-//		getContentPane().add(lblcourseState);
 		box6.add(CourseState);
 		box6.add(lblcourseState);
 
 
 
 		CourseType = new JTextField();
-		//CourseType.setBounds(152, 240, 86, 24);
-		//getContentPane().add(CourseType);
+
 		CourseType.setColumns(10);
 
 
 		JLabel lblcourseType = new JLabel("课程类型");
 		lblcourseType.setFont(new Font("微软雅黑",Font.BOLD,20));
-//		lblcourseType.setBounds(55, 243, 72, 18);
-//		getContentPane().add(lblcourseType);
+
 		box7.add(CourseType);
 		box7.add(lblcourseType);
 
@@ -185,7 +166,10 @@ public class CourseInfor extends JDialog implements ActionListener {
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 	}
-
+	/**
+	 * 事件响应
+	 * @param e 事件
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand()=="confirm") {
 			Client client = new Client(this.socket);

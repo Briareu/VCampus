@@ -2,10 +2,14 @@ package seu.list.common;
 
 
 import java.util.Vector;
-
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
 public class Course implements java.io.Serializable{
-	private static final long serialVersionUID = 1L;
-	
+
+
+	private static final long serialVersionUID = 6424750174292826127L;
 	private  String Semester;
 	private String CourseID;
 	private String CourseMajor;
@@ -97,13 +101,7 @@ public class Course implements java.io.Serializable{
 				", CourseType='" + CourseType + '\'' +
 				'}';
 	}
-	//	private  String Semester;
-//	private String CourseID;
-//	private String CourseMajor;
-//	private String CourseName;
-//	private String teacherID;
-//	private String CourseState;
-//	private String CourseType;
+
 	public Vector<String> getContent() {
 		Vector<String> courseContents = new Vector<String>();
 		courseContents.add(Semester);

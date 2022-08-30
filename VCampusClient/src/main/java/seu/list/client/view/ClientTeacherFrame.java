@@ -8,7 +8,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
-
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
 public class ClientTeacherFrame extends JFrame implements ActionListener {
 	JPanel jp1,jp2;
 	JButton courseManage,Quit;
@@ -66,7 +69,9 @@ public class ClientTeacherFrame extends JFrame implements ActionListener {
 		//重写关闭事件
 		this.setDefaultCloseOperation(2);
 	}
-
+	/**
+	 * 设置背景
+	 */
 	private void setBak() {
 		// TODO Auto-generated method stub
 		((JPanel)this.getContentPane()).setOpaque(false);
@@ -75,7 +80,10 @@ public class ClientTeacherFrame extends JFrame implements ActionListener {
 		this.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
 		background.setBounds(-110, -80, img.getIconWidth(), img.getIconHeight());
 	}
-
+	/**
+	 * 事件响应
+	 * @param arg0 事件
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub

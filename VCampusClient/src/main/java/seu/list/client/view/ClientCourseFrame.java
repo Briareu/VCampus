@@ -1,11 +1,7 @@
-//package VCampusClient.src.main.java.seu.list.client.view;
+
 package seu.list.client.view;
 
-/*
-import VCampusClient.src.main.java.seu.list.common.ModuleType;
-import main.java.seu.list.common.Course;
-import main.java.seu.list.common.Message;
-*/
+
 
 import seu.list.client.bz.Client;
 import seu.list.common.Course;
@@ -27,7 +23,10 @@ import java.net.Socket;
 import java.sql.SQLException;
 import java.util.Vector;
 
-
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
 public class ClientCourseFrame extends JFrame implements ActionListener{
 
 
@@ -46,7 +45,11 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 	private String userID;
 	
 	int index = 0;
-	
+	/**
+	 * creat the frame
+	 * @param ID 用户的id
+	 * @param socket 与服务器通信所用socket
+	 */
 	public ClientCourseFrame(String ID, Socket socket) throws ClassNotFoundException, SQLException,IOException, ClassNotFoundException {
 		Tools.setWindowspos(WIDTH,HEIGHT,jFrame);
 		userID=ID;
@@ -76,8 +79,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		box3=Box.createHorizontalBox();
 		boxH=Box.createVerticalBox();
 
-//		jp1 = new JPanel();
-//		jp2 = new JPanel();
+
 
 		String [] seOp = {"全部","课程号"};
 		jlb = new JLabel("课程名称:");
@@ -128,16 +130,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
 
-		/*
-		lm = new LibModel();
-		lm.init(vec);
-		jt = new JTable(lm);
-		jsp = new JScrollPane(jt);*/
 
-		//添加组件
-//		jp1.add(jcb);
-//		jp1.add(jtf);
-//		jp1.add(jco_Search);
 		box1.add(Box.createHorizontalStrut(1000));
 		box1.add(jcb);
 		box1.add(Box.createHorizontalStrut(10));
@@ -155,10 +148,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		box3.add(jtf1);
 		box3.add(Box.createHorizontalStrut(10));
 		box3.add(jco_Delete);
-//		jp2.add(jco_Add);
-//		jp2.add(jlb);
-//		jp2.add(jtf1);
-//		jp2.add(jco_Delete);
+
 
 
 		boxH.add(box1);
@@ -170,15 +160,12 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		jbackground.add(jp2);
 		jFrame.setVisible(true);
 		jFrame.validate();
-		//this.setLocationRelativeTo(null);
-//		this.add(jp1,BorderLayout.NORTH);
-//		this.add(jp3,BorderLayout.CENTER);
-//		this.add(jp2,BorderLayout.SOUTH);
 
-		//this.setSize(WIDTH, HEIGHT);
-		//this.setLocationRelativeTo(null);
-		//this.setVisible(true);
 	}
+	/**
+	 * 添加事件响应
+	 * @param e 事件
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Client client=new Client(this.socket);
@@ -324,18 +311,6 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 				scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
 				scrollPane.setViewportView(jtb1);
 			}
-
-//			this.setVisible(false);
-//			try {
-//				ClientCourseFrame ccf = new ClientCourseFrame(userID,this.socket);
-//			} catch (ClassNotFoundException ex) {
-//				throw new RuntimeException(ex);
-//			} catch (SQLException ex) {
-//				throw new RuntimeException(ex);
-//			} catch (IOException ex) {
-//				throw new RuntimeException(ex);
-//			}
-
 		}
 	}
 }

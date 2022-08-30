@@ -19,8 +19,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
-public class ClientRegisterFrame extends JDialog implements ActionListener{
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
+public class ClientRegisterFrame extends JFrame implements ActionListener{
 	private Socket socket;
 	private JTextField jtf_id;
 	private JTextField jtf_name;
@@ -32,7 +35,10 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 	private JTextField jtf_major;
 	JComboBox comboBox = new JComboBox();
 	String role;
-
+	/**
+	 * create the frame
+	 * @param socket 保证与服务端的通信
+	 */
 
 	public ClientRegisterFrame(Socket socket){
 		this.socket=socket;
@@ -132,6 +138,7 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 		getContentPane().add(jtf_pwd);
 
 		jtf_sex = new JTextField();
+
 		jtf_sex.setBounds(123, 270, 101, 27);
 		getContentPane().add(jtf_sex);
 		jtf_sex.setColumns(10);
@@ -165,7 +172,7 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 		//JComboBox comboBox = new JComboBox();
 		comboBox.setForeground(Color.BLACK);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"学生", "管理员"}));
-		comboBox.setFont(new Font("华文楷体", Font.PLAIN, 20));
+		comboBox.setFont(new Font("华文楷体", Font.PLAIN, 15));
 		comboBox.setBounds(433, 242, 133, 33);
 		getContentPane().add(comboBox);
 
@@ -184,8 +191,10 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 		this.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
 		background.setBounds(0, 10, img.getIconWidth(), img.getIconHeight());
 	}
-
-
+	/**
+	 * 事件响应
+	 * @param e 事件
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
@@ -341,6 +350,7 @@ public class ClientRegisterFrame extends JDialog implements ActionListener{
 									int res = (int) serverResponse.getData();
 								}
 								this.dispose();
+								ClientLoginFrame ctf=new ClientLoginFrame(this.socket);
 							}
 							else
 							{

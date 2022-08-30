@@ -18,7 +18,10 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
 public class ClientStuCourseFrame extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 
@@ -37,10 +40,15 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 	Socket socket;//传送数据
 	//CouTableModel cm;
 	private String userID;
-
+	/**
+	 */
 
 	Font f1=new Font("华文行楷",Font.PLAIN,18);
-
+	/**
+	 * create the frame
+	 * @param number 用户id
+	 * @param socket 与服务端保持通信
+	 */
 	public ClientStuCourseFrame(String number, Socket socket) throws ClassNotFoundException, SQLException,IOException, ClassNotFoundException
 	{
 		//this.setVisible(true);
@@ -204,6 +212,10 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 
 
 	}
+	/**
+	 * 事件响应
+	 * @param e 事件响应
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Client client =new Client(this.socket);

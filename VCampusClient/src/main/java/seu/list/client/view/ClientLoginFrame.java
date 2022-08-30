@@ -11,16 +11,17 @@ import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.net.Socket;
 
-
+/**
+ * @author 郭念宗
+ * @version jdk1.8.0
+ */
 public class ClientLoginFrame extends JFrame implements ActionListener,MouseListener {
 
     final int WIDTH=1200;
     final int HEIGHT =700;
-    JFrame jframe=new JFrame();
+
     JLabel tim;
-    private JPanel jp1,jp2,jp3,jp4;
-    private JPanel jbackground;
-    private JLayeredPane  layeredPane;
+
     private JLabel jlb_user,jlb_password,jlb_verify;
     private JButton jb_login,jb_register;
     private JTextField jtf_user,jtf_verify;
@@ -35,7 +36,10 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
     protected int originX;
     protected int originY;
     private Socket socket;
-
+    /**
+     * create the frame
+     * @param socket 与服务端进行通信
+     */
     public ClientLoginFrame(Socket socket){
 
         this.socket=socket;
@@ -48,7 +52,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         backgroundCon.setBounds(0, 0, background.getIconWidth(),background.getIconHeight());
         getLayeredPane().add(backgroundCon, new Integer(Integer.MIN_VALUE));//放入LayeredPanel
         JPanel jp = (JPanel)getContentPane();
-        //jp.setOpaque(false);  //设置contentPanel透明
+
 
 
         Container c = getContentPane(); //获取JFrame面板
@@ -59,18 +63,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         Box box4=Box.createHorizontalBox();
         Box boxH=Box.createVerticalBox();
 
-//		jp1 = new JPanel();
-//		jp1.setBounds(418, 180, 500, 37);
-//		jp1.setOpaque(false);
-//		jp2 = new JPanel();
-//		jp2.setBounds(418, 222, 500, 37);
-//		jp2.setOpaque(false);
-//		jp3 = new JPanel();
-//		jp3.setBounds(418, 264, 500, 37);
-//		jp3.setOpaque(false);
-//		jp4 = new JPanel();
-//		jp4.setBounds(418, 319, 500, 75);
-//		jp4.setOpaque(false);
+
 
         jlb_user = new JLabel("用户名：");
         jlb_user.setFont(new Font("华文新魏", Font.PLAIN, 35));
@@ -96,25 +89,20 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         box1.add(jlb_user);
         box1.add(Box.createHorizontalStrut(10));
         box1.add(jtf_user);
-//		jp1.add(jlb_user);
-//		jp1.add(jtf_user);
+
         box2.add(jlb_password);
         box2.add(Box.createHorizontalStrut(10));
         box2.add(jpf_password);
-//		jp2.add(jlb_password);
-//		jp2.add(jpf_password);
+
         box3.add(Box.createHorizontalStrut(5));
         box3.add(jlb_verify);
         box3.add(Box.createHorizontalStrut(30));
         box3.add(jtf_verify);
         box3.add(Box.createHorizontalStrut(30));
-//		jp3.setLayout(null);
-//		jp3.add(jlb_verify);
-//		jp3.add(jtf_verify);
+
         vcode.setBounds(232, 5, 94, 30);
         box3.add(vcode);
-        //jp3.add(vcode);
-        //jp4.setLayout(null);
+
         jb_login = new JButton("");
         jb_login.setLocation(148, 18);
         buttonGroup.add(jb_login);
@@ -132,7 +120,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         jb_register.setBorder(null);
 
 
-        //jp4.add(jb_login);
+
         jb_login.addActionListener(this);
         jb_login.setActionCommand("jb_login");
 
@@ -141,11 +129,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
 
         JLabel lblNewLabel = new JLabel("VCampus登录");
         lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 30));
-        //lblNewLabel.setBounds(738, 132, 142, 31);
-        //getContentPane().add(lblNewLabel);
-        //jp4.add(jb_register);
-        //jp1.setLayout(new FlowLayout());
-        //jp2.setLayout(new FlowLayout());
+
         box4.add(jb_login);
         box4.add(Box.createHorizontalStrut(80));
         box4.add(jb_register);
@@ -244,16 +228,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         Jlb_photo.setBounds(150, 100, 550, 400);
         getContentPane().add(Jlb_photo);
         Jlb_photo.setIcon(new ImageIcon("src/main/resources/image/WindowsIcon/images/20.jpg"));
-//		c.add(jp1);
-//		c.add(jp2);
-//		c.add(jp3);
-//		c.add(jp4);
-//		c.add(tim);
-//
-//		JLabel lblNewLabel = new JLabel("VCampus\u8EAB\u4EFD\u8BA4\u8BC1");
-//		lblNewLabel.setFont(new Font("黑体", Font.BOLD, 16));
-//		lblNewLabel.setBounds(738, 132, 142, 31);
-//		getContentPane().add(lblNewLabel);
+
 
         JLabel backicon1 = new JLabel("");
         backicon1.setIcon(new ImageIcon("src/main/resources/image/white.png"));
@@ -267,7 +242,6 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         back.setBounds(0, 0, 1200, 700);
         getContentPane().add(back);
 
-        //setBounds(0,0,1920,1080);
         setSize(1200,700);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -278,31 +252,20 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
 
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(1.0f));
-        g2.setColor(new Color(84,130,53));
-        Line2D lin = new Line2D.Float(540, 161, 588, 161);
-        g2.draw(lin);
-    }
+//    public void paint(Graphics g) {
+//        super.paint(g);
+//        Graphics2D g2 = (Graphics2D) g;
+//        g2.setStroke(new BasicStroke(1.0f));
+//        g2.setColor(new Color(84,130,53));
+//        Line2D lin = new Line2D.Float(540, 161, 588, 161);
+//        g2.draw(lin);
+//    }
 
-/*public void run()
-	{
-		Date date;
-		while(true) {
-			date = new Date();
-			//tim.setText(date.toString()+"            Designed By XXX");
-			tim.setText("               "+date.toString());
-			tim.setForeground(Color.BLUE);
-			tim.setFont(new Font("宋体",Font.BOLD,14));
-		    try {
-		    	Thread.sleep(1000);
-		    } catch (InterruptedException e) { }
-		}
-	}
-*/
 
+    /**
+     * 事件响应
+     * @param arg0 事件
+     */
     @Override
     public void actionPerformed(ActionEvent arg0) {
         // TODO Auto-generated method stub
@@ -338,6 +301,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         //注册界面
         if(arg0.getActionCommand().equals("jb_register")){
             ClientRegisterFrame crf = new ClientRegisterFrame(this.socket);
+            this.dispose();
         }
         else if(arg0.getActionCommand().equals("jb_login"))
         {

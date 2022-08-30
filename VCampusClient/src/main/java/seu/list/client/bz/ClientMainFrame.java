@@ -21,7 +21,7 @@ public class ClientMainFrame {
 
 			// 启动登录窗口
 			ClientLoginFrame c = new ClientLoginFrame(socket);
-			c.setVisible(true);
+			//c.setVisible(true);
 			
 			// 卡死主程序，防止资源释放
 			while(true);
