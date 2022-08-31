@@ -69,11 +69,11 @@ public class Server extends Thread{
             
         }catch(SocketException se) {
         	System.out.println("ServerSocket closed");
+        	System.out.println("服务器线程关闭");
         }catch(IOException e){
             e.printStackTrace();
         }finally {
         	ServerClientThreadMgr.clear();
-        	System.out.println("服务器线程关闭");
         }
     }
     

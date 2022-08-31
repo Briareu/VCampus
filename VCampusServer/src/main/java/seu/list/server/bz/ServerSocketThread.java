@@ -85,6 +85,7 @@ public class ServerSocketThread extends Thread {
 						
 		}catch(SocketException se) {
 			System.out.println("Socket closed");
+			System.out.println("客户端线程: " + this.id + "已关闭");
 		}catch(IOException e) {
 			e.printStackTrace();
 		}catch(ClassNotFoundException e) {
@@ -93,7 +94,6 @@ public class ServerSocketThread extends Thread {
 			if(ServerClientThreadMgr.get(this.id) != null) {
 				ServerClientThreadMgr.remove(this.id);
 			}
-			System.out.println("客户端线程: " + this.id + "已关闭");
 		}
 	}
 	

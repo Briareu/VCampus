@@ -27,6 +27,11 @@ import seu.list.common.Student;
 
 import javax.swing.JTextField;
 
+/**
+ * 类{@code MainMenu}为主菜单{@code UI}界面，连接五个功能模块，实现界面跳转
+ * @author 吴慕陶
+ * @version 1.0
+ */
 public class MainMenu extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
@@ -50,7 +55,16 @@ public class MainMenu extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-
+	
+	/**
+	 * 类{@code MainMenu}的构造器，接收各个用户信息作为参数，调用各个功能模块的窗口并传入信息，同时实现界面跳转
+	 * @param sign 用户权限
+	 * @param uID 用户名
+	 * @param pwd 密码
+	 * @param name 姓名
+	 * @param money 账户余额
+	 * @param socket 客户端{@code Socket}
+	 */
 	public MainMenu(int sign, String uID, String pwd, String name, String money, Socket socket) {
 		Toolkit kit = Toolkit.getDefaultToolkit();//获取当前屏幕大小
 		Dimension screensize = kit.getScreenSize();
@@ -205,6 +219,11 @@ public class MainMenu extends JFrame implements ActionListener {
 		timeField.addActionListener(new TimeActionListener());
 	}
 	
+	/**
+	 * 监听器，用于在主菜单显示系统时间，每秒刷新
+	 * @author 吴慕陶
+	 * @version 1.0
+	 */
 	class TimeActionListener implements ActionListener{
 		private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		
@@ -219,6 +238,11 @@ public class MainMenu extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * 根据用户操作指令，实现界面跳转，转入对应的功能模块
+	 * @author 吴慕陶
+	 * @version 1.0
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {

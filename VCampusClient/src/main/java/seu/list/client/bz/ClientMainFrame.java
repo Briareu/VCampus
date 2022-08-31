@@ -11,9 +11,22 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+/**
+ * 客户端程序入口，启动后立即建立{@code Socket}, 需要客户端全程联网 <br>
+ * 与服务器连接成功后，显示用户登录界面
+ * @author 吴慕陶
+ * @version 1.0
+ */
 public class ClientMainFrame {
 	public static Socket socket;
 
+	/**
+	 * 程序入口
+	 * @param args 系统命令行参数
+	 * @throws SQLException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		try {
@@ -33,6 +46,7 @@ public class ClientMainFrame {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public static void close() {
 		// 要关闭客户端时，给服务器发送下线通知
