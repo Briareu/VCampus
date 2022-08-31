@@ -55,7 +55,12 @@ import javax.swing.JTextPane;
 import javax.swing.JPanel;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-
+/**
+ * 类{@code Shop_StudentFrame}为商店的管理员界面
+ * 如果用户为管理员则进入商店时跳转到此界面
+ * @author 欧阳瑜
+ * @version 1.0
+ */
 public class Shop_AdminFrame {
     ArrayList<Goods>GoodsList;
 	private JFrame frame;
@@ -75,6 +80,7 @@ public class Shop_AdminFrame {
 	private JButton btnNewButton_5;
 	private JLabel lblNewLabel_6;
 	private JButton btnNewButton_6;
+	private JLabel lblNewLabel_7;
 	
 
 	/**
@@ -94,7 +100,8 @@ public class Shop_AdminFrame {
 	}*/
 
 	/**
-	 * Create the application.
+	 * 类{@code Shop_AdminFrame}的构造器
+	 * 
 	 */
 	public Shop_AdminFrame() {
 		initialize();
@@ -104,6 +111,7 @@ public class Shop_AdminFrame {
 	}
 
 	/**
+	 * 构造ui
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -113,8 +121,9 @@ public class Shop_AdminFrame {
 		getFrame().setFont(new Font("微软雅黑", Font.BOLD, 17));
 		getFrame().setTitle("管理员视图商店");
 		getFrame().getContentPane().setBackground(Color.WHITE);
+		getFrame().getContentPane().setBounds(0,0,800,532);
 		getFrame().setBackground(Color.WHITE);
-		getFrame().setBounds(100, 100, 577, 449);
+		getFrame().setBounds(100, 100, 800, 522);
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		double total=0.0;
@@ -122,18 +131,23 @@ public class Shop_AdminFrame {
 		MyCellEditor_double cellEditor_db = new MyCellEditor_double(new JTextField());
 		MyCellEditor_int cellEditor = new MyCellEditor_int(new JTextField());
 		JLabel lblNewLabel = new JLabel("营业额：");
-		lblNewLabel.setBounds(185, 19, 80, 30);
+		lblNewLabel.setBounds(294, 19, 80, 30);
 		lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		lblNewLabel.setEnabled(false);
 		textField = new JTextField();
-		textField.setBounds(269, 17, 129, 32);
+		textField.setBounds(416, 20, 129, 32);
 		textField.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		textField.setEnabled(false);
 		textField.setColumns(10);
 		textField.setText(total+"");
 		
+		lblNewLabel_7 = new JLabel("New label");
+		lblNewLabel_7.setIcon(new ImageIcon("C:\\Users\\admin\\Desktop\\money.png"));
+		lblNewLabel_7.setBounds(366, 13, 37, 37);
+		frame.getContentPane().add(lblNewLabel_7);
+		
 		btnNewButton = new JButton("");
-		btnNewButton.setBounds(10, 123, 60, 25);
+		btnNewButton.setBounds(10, 102, 60, 25);
 		btnNewButton.setIcon(new ImageIcon("src/main/resources/image/Goods_delete.jpg"));
 		btnNewButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() {
@@ -143,9 +157,18 @@ public class Shop_AdminFrame {
 			}
 		});
 		
+		btnNewButton_6 = new JButton("");
+		btnNewButton_6.setIcon(new ImageIcon("src/main/resources/image/Goods_refresh.png"));
+		btnNewButton_6.setBounds(664, 2, 50, 50);
+		frame.getContentPane().add(btnNewButton_6);
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				show();
+			}
+		});
 		
 		btnNewButton_1 = new JButton("");
-		btnNewButton_1.setBounds(10, 274, 60, 25);
+		btnNewButton_1.setBounds(10, 331, 60, 25);
 		btnNewButton_1.setBackground(Color.WHITE);
 		btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -165,7 +188,7 @@ public class Shop_AdminFrame {
 		
 		btnNewButton_2.setIcon(new ImageIcon("src/main/resources/image/Goods_addgoods.jpg"));
 		btnNewButton_2.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		btnNewButton_2.setBounds(10, 199, 60, 25);
+		btnNewButton_2.setBounds(10, 212, 60, 25);
 		
 		btnNewButton_3 = new JButton("");
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -175,7 +198,7 @@ public class Shop_AdminFrame {
 		});
 		btnNewButton_3.setIcon(new ImageIcon("src/main/resources/image/search_Goods.jpg"));
 		btnNewButton_3.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		btnNewButton_3.setBounds(20, 19, 37, 30);
+		btnNewButton_3.setBounds(75, 20, 37, 30);
 		
 		getFrame().getContentPane().add(btnNewButton_3);
 		
@@ -185,8 +208,8 @@ public class Shop_AdminFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(null);
 		scrollPane.setEnabled(false);
-		scrollPane.setBounds(80, 55, 452, 351);
-		scrollPane.setBackground(new Color(0,0,0,0));
+		scrollPane.setBounds(80, 55, 653, 406);
+		scrollPane.getViewport().setBackground(new Color(0,0,0,0));
 		
 		setTable(new JTable());
 		getTable().setBackground(Color.WHITE);
@@ -196,34 +219,6 @@ public class Shop_AdminFrame {
 		getTable().getTableHeader().setReorderingAllowed(false);
 		show();
 		getTable().getColumnModel().getColumn(3).setPreferredWidth(79);
-		TableColumn tableColumn = getTable().getColumn("库存");
-		tableColumn.setCellEditor(cellEditor);
-		
-		
-		TableColumn tableColumnd = getTable().getColumn("单价");
-		tableColumnd.setCellEditor(cellEditor_db);
-		
-		TableModel tableModel = getTable().getModel();
-		tableModel.addTableModelListener(new TableModelListener() {
-		    @Override
-		    public void tableChanged(TableModelEvent e) {
-		        // 第一个 和 最后一个 被改变的行（只改变了一行，则两者相同）
-		        int firstRow = e.getFirstRow();
-		        int lastRow = e.getLastRow();
-
-		        // 被改变的列
-		        int column = e.getColumn();
-
-		        // 事件的类型，可能的值有:
-		        //     TableModelEvent.INSERT   新行或新列的添加
-		        //     TableModelEvent.UPDATE   现有数据的更改
-		        //     TableModelEvent.DELETE   有行或列被移除
-		        int type = e.getType();
-		        if (type == TableModelEvent.UPDATE) {
-		        	modify();
-		        }
-		    }
-		});
 		getFrame().getContentPane().setLayout(null);
 		getFrame().getContentPane().add(lblNewLabel);
 		getFrame().getContentPane().add(textField);
@@ -232,44 +227,45 @@ public class Shop_AdminFrame {
 		getFrame().getContentPane().add(scrollPane);
 		
 		Searchtext = new JTextField();
-		Searchtext.setBounds(65, 19, 105, 30);
+		Searchtext.setBounds(122, 20, 105, 30);
 		getFrame().getContentPane().add(Searchtext);
 		Searchtext.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/shop_manager_bg.jpg"));
-		lblNewLabel_1.setBounds(0, 0, 561, 406);
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\admin\\Desktop\\shop_back.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 800, 532);
 		getFrame().getContentPane().add(lblNewLabel_1);
 		
-		btnNewButton_6 = new JButton("");
-		btnNewButton_6.setIcon(new ImageIcon("src/main/resources/image/Goods_refresh.png"));
-		btnNewButton_6.setBounds(459, 0, 50, 50);
-		frame.getContentPane().add(btnNewButton_6);
-		btnNewButton_6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				show();
-			}
-		});
+		
 		// 居中显示
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(2);
 	}
-	
+	/**  
+	 * 方法{@code  void modify()}点击表格修改后触发此函数，完成修改相关的功能， 
+	 */
 	protected void modify() {
 		// TODO 自动生成的方法存根
 		Goods_modifyprice a=new Goods_modifyprice(this);
 	}
 
+	/**  
+	 * 方法{@code  void DelGoods(ActionEvent e)}点击“删除”按钮后触发此函数，完成删除相关的功能
+	 */
 	private void DelGoods(ActionEvent e) {
 		// TODO 自动生成的方法存根
         Shop_DeleteGoods a=new Shop_DeleteGoods(this);		
 	}
-	
+	/**  
+	 * 方法{@code  void AddGoods(ActionEvent e)}点击“增加”按钮后触发此函数，完成增加相关的功能
+	 */
 	private void AddGoods(ActionEvent e) {
 		// TODO 自动生成的方法存根
 		Goods_Addframe a=new Goods_Addframe(this);
 	}
-	
+	/**  
+	 * 方法{@code  void SearchGood(ActionEvent e)}在搜素框输入内容并点击搜索按钮后触发，完成搜素相关功能
+	 */
 	private void SearchGood(ActionEvent e) {
 		// TODO 自动生成的方法存根
 		Message mes =new Message();
@@ -285,6 +281,9 @@ public class Shop_AdminFrame {
 		Client client=new Client(ClientMainFrame.socket);
 		Message serverResponse = client.sendRequestToServer(mes); 
 		ArrayList<Goods> res=(ArrayList<Goods>)serverResponse.getData();
+		
+		MyCellEditor_double cellEditor_db = new MyCellEditor_double(new JTextField());
+		MyCellEditor_int cellEditor = new MyCellEditor_int(new JTextField());
 		
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
@@ -314,7 +313,33 @@ public class Shop_AdminFrame {
 		}
 		getTable().setModel(tablemodel);
 		//System.out.println("1");
+		TableColumn tableColumn = getTable().getColumn("库存");
+		tableColumn.setCellEditor(cellEditor);
 		
+		TableColumn tableColumnd = getTable().getColumn("单价");
+		tableColumnd.setCellEditor(cellEditor_db);
+		
+		
+		table.getModel().addTableModelListener(new TableModelListener() {
+		    @Override
+		    public void tableChanged(TableModelEvent e) {
+		        // 第一个 和 最后一个 被改变的行（只改变了一行，则两者相同）
+		        int firstRow = e.getFirstRow();
+		        int lastRow = e.getLastRow();
+
+		        // 被改变的列
+		        int column = e.getColumn();
+
+		        // 事件的类型，可能的值有:
+		        //     TableModelEvent.INSERT   新行或新列的添加
+		        //     TableModelEvent.UPDATE   现有数据的更改
+		        //     TableModelEvent.DELETE   有行或列被移除
+		        int type = e.getType();
+		        if (type == TableModelEvent.UPDATE) {
+		        	modify();
+		        }
+		    }
+		});
 		}
 		else{
 			mes.setMessageType(MessageType.GoodsSearch_Name);
@@ -322,6 +347,9 @@ public class Shop_AdminFrame {
 			Client client=new Client(ClientMainFrame.socket);
 			Message serverResponse= client.sendRequestToServer(mes); 
 			ArrayList<Goods> res=(ArrayList<Goods>)serverResponse.getData();
+			
+			MyCellEditor_double cellEditor_db = new MyCellEditor_double(new JTextField());
+			MyCellEditor_int cellEditor = new MyCellEditor_int(new JTextField());
 			
 			DefaultTableModel tablemodel;
 			tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
@@ -349,10 +377,38 @@ public class Shop_AdminFrame {
 				tablemodel.addRow(tempgoods);
 			}
 			getTable().setModel(tablemodel);
-			//System.out.println("2");
+			TableColumn tableColumn = getTable().getColumn("库存");
+			tableColumn.setCellEditor(cellEditor);
+			
+			TableColumn tableColumnd = getTable().getColumn("单价");
+			tableColumnd.setCellEditor(cellEditor_db);
+			
+			
+			table.getModel().addTableModelListener(new TableModelListener() {
+			    @Override
+			    public void tableChanged(TableModelEvent e) {
+			        // 第一个 和 最后一个 被改变的行（只改变了一行，则两者相同）
+			        int firstRow = e.getFirstRow();
+			        int lastRow = e.getLastRow();
+
+			        // 被改变的列
+			        int column = e.getColumn();
+
+			        // 事件的类型，可能的值有:
+			        //     TableModelEvent.INSERT   新行或新列的添加
+			        //     TableModelEvent.UPDATE   现有数据的更改
+			        //     TableModelEvent.DELETE   有行或列被移除
+			        int type = e.getType();
+			        if (type == TableModelEvent.UPDATE) {
+			        	modify();
+			        }
+			    }
+			});
 		}
 	}
-	
+	/**  
+	 * 方法{@code  void get_turnover()}获得营业额并显示在前端
+	 */
 	private void get_turnover() {
 		Message mes =new Message();
 		mes.setMessageType(MessageType.Goodsgetturnover);
@@ -362,7 +418,9 @@ public class Shop_AdminFrame {
 		Double total = (Double)serverResponse.getData();
 		textField.setText(total+"");
 	}
-	
+	/**  
+	 * 方法{@code  void show()}在表格呈现所有商品相关的信息
+	 */
 	public void show() {	
 		MyCellEditor_double cellEditor_db = new MyCellEditor_double(new JTextField());
 		MyCellEditor_int cellEditor = new MyCellEditor_int(new JTextField());
