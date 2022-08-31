@@ -92,6 +92,8 @@ public class Goods_modifyprice {
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(2);
 	}
 	protected void Modify(ActionEvent e) {
 		// TODO 自动生成的方法存根
