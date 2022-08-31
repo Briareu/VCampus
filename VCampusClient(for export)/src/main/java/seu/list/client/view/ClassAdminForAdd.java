@@ -372,8 +372,8 @@ public class ClassAdminForAdd extends JFrame {
 					}else {
 						ClassManage clss = new ClassManage();
 						clss.setClassID(table.getValueAt(0, 0).toString());
-						clss.setMajor(table.getValueAt(0, 1).toString());
-						clss.setTeacherID(table.getValueAt(0, 2).toString());
+						clss.setMajor(table.getValueAt(0, 2).toString());
+						clss.setTeacherID(table.getValueAt(0, 1).toString());
 						clss.setClassSize(0);
 						String newclssid = clss.getClassID();
 						newclssid.replaceAll("\\p{C}", "");
