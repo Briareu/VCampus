@@ -10,12 +10,13 @@ import seu.list.common.Goods;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.server.db.Shop_DbAccess;
-
+/**  
+ * 类{@code ShopSever}是商店和数据库进行连接的数据访问对象（data access object，DAO）
+ */
 
 public class ShopSever extends Shop_DbAccess{
 	static Connection con = getConnection();
 	static Statement s = null;
-	
 	
 
 	static ResultSet rs=null;
@@ -33,6 +34,9 @@ public class ShopSever extends Shop_DbAccess{
 		}
 	}
 
+	/**  
+	 * 方法{void excute()}实现网络通信
+	 */
 	public void excute() {
 		switch(this.mesFromClient.getMessageType()){
 		    case MessageType.Goodsgetall:{
@@ -96,7 +100,10 @@ public class ShopSever extends Shop_DbAccess{
 	public static void setGoodsList(ArrayList<Goods> goodsList) {
 		GoodsList = goodsList;
 	}
-
+	/**  
+	 * 方法{@code ArrayList<Goods> getList()}从数据库导出商品列表
+	 * @return 所有商品的列表
+	 */
 	public static ArrayList<Goods> getList(){//从数据库导出
 		try {
 			
@@ -124,6 +131,11 @@ public class ShopSever extends Shop_DbAccess{
 		return GoodsList;
 	}
 	
+	/**  
+	 * 方法{@code  SearchGoods_Name(String temp)}对商品进行使用商品名的搜索
+	 * @param temp 输入的值
+	 * @return 符合搜索条件的商品的列表
+	 */
 	public static ArrayList<Goods> SearchGoods_Name(String temp){//按商品名称查找（所有符合）
 		ArrayList<Goods> result=new ArrayList<Goods>();	
 		for(int i=0;i<GoodsList.size();i++) {
@@ -135,6 +147,11 @@ public class ShopSever extends Shop_DbAccess{
 		return result;
 	}
 	
+	/**  
+	 * 方法{@code  SearchGoods_Name(String temp)}对商品进行使用商品ID的搜索
+	 * @return 符合搜索条件的商品的列表
+	 * @param temp 输入的值
+	 */
 	public static ArrayList<Goods> SearchGoods_ID(int temp){//按商品ID查找（唯一）	
 		ArrayList<Goods> result=new ArrayList<Goods>();	
 		for(int i=0;i<GoodsList.size();i++) {
@@ -148,6 +165,10 @@ public class ShopSever extends Shop_DbAccess{
 		return result;
 	}
 	
+	/**  
+	 * 方法{@code  buy(ArrayList<String> args)}//购买(学生)
+	 * @param ArrayList<String> args arg[i]存id，arg[i+1]存购买的数量
+	 */
 	public static void buy(ArrayList<String> args) {//购买(学生)arg[i]存id，arg[i+1]存购买的数量
 		try{
 			int result=0;
@@ -163,13 +184,21 @@ public class ShopSever extends Shop_DbAccess{
 		catch (Exception e) {
 			e.printStackTrace();}
 	}
-	
+	/**  
+	 * 方法{@code void Addgoods(Goods temp)} 增加商品(管理员)
+	 * @param temp 要增加的商品
+	 */
 	public static void Addgoods(Goods temp) {//增加商品(管理员)
 		try{
 			int result=0;
 			GoodsList.add(temp);
 			result=s.executeUpdate("insert into tb_Goods(GoodsID,GoodsName,GoodsPrice,GoodsNumber,TurnOver) values('"+temp.getGoodsid()+"','"+temp.getGoodsname()+"','"+temp.getGoodsprice()+
 					"','"+temp.getGoodsnumber()+"','"+0+"')");
+			/*result=s.executeUpdate("insert into tb_Goods(GoodsID,GoodsName,GoodsPrice,GoodsNumber,TurnOver) values('"+temp.getGoodsid()+"','"+temp.getGoodsname()+"','"+2.2321+
+					"','"+1+"','"+0+"')");*/
+			System.out.println(temp.getGoodsid());
+			System.out.println(temp.getGoodsprice());
+			System.out.println(temp.getGoodsnumber());
 			//System.out.println(result);
 			 
 		}
@@ -177,6 +206,10 @@ public class ShopSever extends Shop_DbAccess{
 			e.printStackTrace();}
 	}
 	
+	/**  
+	 * 方法{@code void Deletegoods(int ID))} 删除商品(管理员)
+	 * @param ID 要删除的商品的ID
+	 */
 	public static void Deletegoods(int ID) {//下架商品(管理员)
 		try{
 			int result=0;
@@ -191,6 +224,10 @@ public class ShopSever extends Shop_DbAccess{
 			e.printStackTrace();}
 	}
 	
+	/**  
+	 * 方法{@code void ModifyGoods(ArrayList<String> args)} 修改商品(管理员)修改商品单价或者库存
+	 * @param ModifyGoods(ArrayList<String> args)修改后的商品信息
+	 */
 	public static void ModifyGoods(ArrayList<String> args) {
 		// 修改商品信息
 		try{
@@ -208,6 +245,10 @@ public class ShopSever extends Shop_DbAccess{
 		catch (Exception e) {
 			e.printStackTrace();}
 	}
+	
+	/**  
+	 * 方法{@code double GetTurnOver())} 获得营业额
+	 */
 	public static double GetTurnOver() {
 		try{
 			
