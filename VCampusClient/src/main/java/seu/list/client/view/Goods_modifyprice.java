@@ -21,7 +21,12 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-
+/**
+ * 类{@code  Goods_modifyprice}为修改商品界面
+ * 在表格中对商品信息进行修改时将会触发，弹出此窗口询问是否确认修改
+ * @author 欧阳瑜
+ * @version 1.0
+ */
 public class Goods_modifyprice {
 
 	private JFrame frame;
@@ -95,6 +100,9 @@ public class Goods_modifyprice {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(2);
 	}
+	/**  
+	 * 方法{@code void Modify(ActionEvent e)} 修改商品价格或数量
+	 */
 	protected void Modify(ActionEvent e) {
 		// TODO 自动生成的方法存根
 		Message mes =new Message();
