@@ -180,6 +180,9 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 		JPanel jp=(JPanel) getContentPane();
 		jp.setOpaque(false);
 
+		
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(2);
 	}
 
 	private void setBak() {
