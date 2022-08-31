@@ -160,9 +160,11 @@ public class Goods_Addframe {
 		frame.getContentPane().setLayout(groupLayout);
 		
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(2);
 	}
 	/**  
-	 * 方法{@code void Addgoods())}点击确认后执行，利用当前输入的参数增加商品。
+	 * 方法{@code void Addgoods()}点击确认后执行，利用当前输入的参数增加商品。
 	 */
 	protected void Addgoods() {
 		// TODO 自动生成的方法存根
