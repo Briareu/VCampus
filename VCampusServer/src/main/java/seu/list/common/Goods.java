@@ -1,19 +1,13 @@
- /*
-   * ClassName: Goods
-   *
-   * Version 1.0
-   *
-   * Date: 2022.08.12
-   * 
-   * GoodsID, GoodsName, GoodsPrice, GoodsNumber
-   * 
-   * Set to manage student
-   * 
-   * Last modified by Ouyang
-   */
- package seu.list.common;
+ 
+package seu.list.common;
 
 import java.io.Serializable;
+/**
+ * 类{@code Goods}为商品类
+ * @author 欧阳瑜
+ * @version 1.0
+ * 
+ */
 public class Goods implements Serializable{
 		private static final long serialVersionUID = 1L;
 	
@@ -25,7 +19,13 @@ public class Goods implements Serializable{
 		public Goods() {
 			super();
 		}
-
+		/**
+		 * 构造函数
+		 * @param goodsid 商品编号
+		 * @param goodsname 商品名
+		 * @param goodsprice 商品价格
+		 * @param goodsnumber 库存
+		 */
 		public Goods(int goodsid,String goodsname,double goodsprice,int goodsnumber){
 			GoodsID=goodsid;
 			GoodsName=goodsname;
