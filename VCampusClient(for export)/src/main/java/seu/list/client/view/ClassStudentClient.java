@@ -511,7 +511,7 @@ public class ClassStudentClient extends JFrame {
 			}
 		});*/
 		userimage.setVerticalAlignment(SwingConstants.TOP);
-		userimage.setIcon(new ImageIcon("src/main/resources/image/WindowsIcon/images/Stuinfo.png"));//\resources\image\WindowsIcon\images
+		userimage.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/WindowsIcon/images/Stuinfo.png")));//\resources\image\WindowsIcon\images
 		userimage.setBounds(0, 0, 150, 150);
 		this.getContentPane().add(userimage);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
