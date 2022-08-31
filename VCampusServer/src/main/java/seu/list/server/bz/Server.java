@@ -58,13 +58,13 @@ public class Server extends Thread{
             
             while(!isClosed && !this.serverSocket.isClosed())
             {
-                Socket socket = this.serverSocket.accept(); // 在此阻塞
+                Socket socket = this.serverSocket.accept(); // 在此阻塞，等待客户端接入
                 System.out.println("Thread: "+this.thdNum.toString()+", 已经建立");
 
                 ServerSocketThread thd = new ServerSocketThread(socket, this.thdNum.toString());
-                thd.start();
-                ServerClientThreadMgr.add(this.thdNum.toString(), thd);
-                ++this.thdNum;
+                thd.start(); // 启动客户端子线程
+                ServerClientThreadMgr.add(this.thdNum.toString(), thd); // 加入线程池
+                ++this.thdNum; 
             } // end while
             
         }catch(SocketException se) {

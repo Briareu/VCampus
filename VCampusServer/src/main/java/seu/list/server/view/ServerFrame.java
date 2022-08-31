@@ -58,7 +58,7 @@ public class ServerFrame extends JFrame {
 	 * @see java.util.Vector
 	 */
 	public ServerFrame() {
-		this.setTitle("服务端");
+		this.setTitle("虚拟校园系统-服务端");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1013, 588);
 		contentPane = new JPanel();
@@ -111,7 +111,7 @@ public class ServerFrame extends JFrame {
 		btnNewButton_2.setFont(new Font("宋体", Font.PLAIN, 18));
 		
 		JButton btnNewButton_3 = new JButton("Reboot");
-		btnNewButton_3.setBounds(383, 68, 97, 31);
+		btnNewButton_3.setBounds(384, 68, 97, 31);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int res = ServerMainFrame.reboot();
@@ -123,7 +123,7 @@ public class ServerFrame extends JFrame {
 		btnNewButton_3.setFont(new Font("宋体", Font.PLAIN, 18));
 		
 		JButton btnNewButton_4 = new JButton("Exit");
-		btnNewButton_4.setBounds(614, 68, 97, 31);
+		btnNewButton_4.setBounds(629, 68, 97, 31);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int res = JOptionPane.showConfirmDialog(null, "是否要退出服务器端程序?", "提示", JOptionPane.YES_NO_OPTION);

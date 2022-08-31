@@ -225,7 +225,7 @@ public class MainMenu extends JFrame implements ActionListener {
 	 * @version 1.0
 	 */
 	class TimeActionListener implements ActionListener{
-		private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		public TimeActionListener() {
 			Timer timerThd = new Timer(1000, this);

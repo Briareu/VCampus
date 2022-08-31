@@ -81,6 +81,7 @@ public class ServerSocketThread extends Thread {
 				this.sendMesToClient(serverResponse); // 这里统一发回数据给客户端
 				
 				System.out.println("-------------已将数据发回客户端-------------");
+				System.out.println("");
 			} // end while
 						
 		}catch(SocketException se) {
