@@ -66,12 +66,14 @@ public class ClassStudentClient extends JFrame {
 	private JTextField credit;
 	private JTextField origion;
 	private Double Money;
+	private String Name;
 	private String PWD;
 	private String ID;
 	private Student thisStu = null;
 	private String statusmy = null;
 	private JLabel lblNewLabel_1;
 	private JLabel userimage = null;
+	private MainMenu Mainmenu = null;
 
 	/**
 	 * Launch the application.
@@ -93,8 +95,8 @@ public class ClassStudentClient extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
-	public ClassStudentClient(String id, String pwd) {
-		
+	public ClassStudentClient(String id, String pwd, MainMenu mainmenu) {
+		this.Mainmenu = mainmenu;
 		this.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		this.setBounds(100, 100, 719, 570);
 		
@@ -180,6 +182,7 @@ public class ClassStudentClient extends JFrame {
 		name.setFont(new Font("宋体", Font.PLAIN, 18));
 		name.setColumns(10);
 		name.setText(thisStu.getStudentName());
+		Name = thisStu.getStudentName();
 		
 		studentid = new JTextField();
 		studentid.setEditable(false);
@@ -511,6 +514,7 @@ public class ClassStudentClient extends JFrame {
 			}
 		});*/
 		userimage.setVerticalAlignment(SwingConstants.TOP);
+//		userimage.setIcon(new ImageIcon("src/main/resources/image/WindowsIcon/images/Stuinfo.png"));//\resources\image\WindowsIcon\images
 		userimage.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/WindowsIcon/images/Stuinfo.png")));//\resources\image\WindowsIcon\images
 		userimage.setBounds(0, 0, 150, 150);
 		this.getContentPane().add(userimage);
@@ -667,6 +671,8 @@ public class ClassStudentClient extends JFrame {
 		Message serverResponse = new Message();
 		serverResponse = client.sendRequestToServer(mes);
 		int res = (int) serverResponse.getData();
+		
+		this.Name = temp.getStudentName();
 	}
 	public void setinvestframe() {
 		this.setEnabled(false);
@@ -675,7 +681,9 @@ public class ClassStudentClient extends JFrame {
 		frame.setVisible(true);
 	}
 	public void update(Double temp) {
-		credit.setText("" + temp);
+		DecimalFormat df = new DecimalFormat("0.00");
+		credit.setText("" + df.format(temp));
+		Money = temp;
 	}
 	
 	
@@ -773,6 +781,7 @@ public class ClassStudentClient extends JFrame {
 	
 	void close() {
 		this.dispose();
+		Mainmenu.set(Name, Money);
 		//MainTest frame = new MainTest();
 		//frame.setVisible(true);
 	}
