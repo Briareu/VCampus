@@ -260,7 +260,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				}
 			}else if(e.getActionCommand().equals(this.cmdShop)) { //商店
 				if(userType == 0) {
-					Shop_StudentFrame shopStu = new Shop_StudentFrame(this.uID, this.pwd);
+					Shop_StudentFrame shopStu = new Shop_StudentFrame(this.uID, this.pwd, tempmenu);
 					//shopStu.setVisible(true);
 				}else {
 					Shop_AdminFrame shopAdmin = new Shop_AdminFrame();
@@ -286,6 +286,12 @@ public class MainMenu extends JFrame implements ActionListener {
 		this.money = "" + df.format(newMoney);
 		this.name = newName;
 		nameLabel.setText(newName);
+		moneyLabel.setText(money);
+	}
+	
+	public void set(Double newMoney) {
+		DecimalFormat df = new DecimalFormat("0.00");
+		this.money = "" + df.format(Double.parseDouble(money) - newMoney);
 		moneyLabel.setText(money);
 	}
 }
