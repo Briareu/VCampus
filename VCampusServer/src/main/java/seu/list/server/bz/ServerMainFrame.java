@@ -136,6 +136,7 @@ public class ServerMainFrame
 			srvThd.close();
 			srvThd = new Server(IConstant.SERVER_PORT);
 			srvThd.start();
+			System.out.println("服务器重启成功！");
 			return 1;
 		}else {
 			return 0;

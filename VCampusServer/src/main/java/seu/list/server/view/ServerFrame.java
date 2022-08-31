@@ -5,7 +5,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultCaret;
 
 import seu.list.server.bz.ServerMainFrame;
 
@@ -15,18 +17,24 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JScrollBar;
 
 /**
  * 类{@codeServerFrame}用于生成服务器端的界面 <br>
  * 静态数据成员: {@code contentOane}, 类型: {@code JPanel}, 服务器端界面 <br>
- * 支持对服务器的操作
- * @author 柳多荣
+ * 支持对服务器的操作 <br>
+ * 重定向控制台输出到GUI界面显示 <br>
+ * @author 柳多荣 吴慕陶
  * @version 1.0
  * @see java.swing.*
  * @see java.awt.*
@@ -36,10 +44,14 @@ import javax.swing.JOptionPane;
 public class ServerFrame extends JFrame {
 
 	private JPanel contentPane;
+	private JScrollPane scrollPane;
+	
+	public static JTextArea consoleText;
 
 	/**
-	 * 服务端界面的初始化
-	 * @author 柳多荣
+	 * 服务端界面的初始化 <br>
+	 * 重定向控制台输出到GUI界面显示
+	 * @author 柳多荣 吴慕陶
 	 * @version 1.0
 	 * @see java.swing.*
 	 * @see java.awt.*;
@@ -48,7 +60,7 @@ public class ServerFrame extends JFrame {
 	public ServerFrame() {
 		this.setTitle("服务端");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 455);
+		setBounds(100, 100, 1013, 588);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,6 +78,7 @@ public class ServerFrame extends JFrame {
 		});
 		
 		JButton btnNewButton = new JButton("Help");
+		btnNewButton.setBounds(20, 68, 97, 31);
 		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 18));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -74,6 +87,7 @@ public class ServerFrame extends JFrame {
 		});
 		
 		JButton btnNewButton_1 = new JButton("Launch");
+		btnNewButton_1.setBounds(139, 68, 97, 31);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int res = ServerMainFrame.launch();
@@ -85,6 +99,7 @@ public class ServerFrame extends JFrame {
 		btnNewButton_1.setFont(new Font("宋体", Font.PLAIN, 18));
 		
 		JButton btnNewButton_2 = new JButton("Close");
+		btnNewButton_2.setBounds(264, 68, 97, 31);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int res = ServerMainFrame.closebtn();
@@ -96,6 +111,7 @@ public class ServerFrame extends JFrame {
 		btnNewButton_2.setFont(new Font("宋体", Font.PLAIN, 18));
 		
 		JButton btnNewButton_3 = new JButton("Reboot");
+		btnNewButton_3.setBounds(383, 68, 97, 31);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int res = ServerMainFrame.reboot();
@@ -107,6 +123,7 @@ public class ServerFrame extends JFrame {
 		btnNewButton_3.setFont(new Font("宋体", Font.PLAIN, 18));
 		
 		JButton btnNewButton_4 = new JButton("Exit");
+		btnNewButton_4.setBounds(614, 68, 97, 31);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int res = JOptionPane.showConfirmDialog(null, "是否要退出服务器端程序?", "提示", JOptionPane.YES_NO_OPTION);
@@ -121,9 +138,11 @@ public class ServerFrame extends JFrame {
 		btnNewButton_4.setFont(new Font("宋体", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel = new JLabel("欢迎使用虚拟校园系统-服务端程序！");
+		lblNewLabel.setBounds(310, 21, 370, 26);
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 22));
 		
 		JButton btnNewButton_5 = new JButton("GetAll");
+		btnNewButton_5.setBounds(507, 68, 97, 31);
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Vector<String> res = new Vector<String>();
@@ -144,53 +163,54 @@ public class ServerFrame extends JFrame {
 			}
 		});
 		btnNewButton_5.setFont(new Font("宋体", Font.PLAIN, 18));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(36)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-									.addComponent(lblNewLabel)
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-										.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE))
-									.addPreferredGap(ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnNewButton_5, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-										.addComponent(btnNewButton_4, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-										.addComponent(btnNewButton_3, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE))
-									.addGap(33)))
-							.addGap(59))))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(36)
-					.addComponent(lblNewLabel)
-					.addGap(55)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton)
-						.addComponent(btnNewButton_3))
-					.addGap(53)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton_1)
-						.addComponent(btnNewButton_5))
-					.addGap(61)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton_2)
-						.addComponent(btnNewButton_4))
-					.addContainerGap(95, Short.MAX_VALUE))
-		);
-		contentPane.setLayout(gl_contentPane);
+		contentPane.setLayout(null);
 		this.setLocationRelativeTo(null);
+
+		contentPane.add(btnNewButton_2);
+		contentPane.add(lblNewLabel);
+		contentPane.add(btnNewButton);
+		contentPane.add(btnNewButton_1);
+		contentPane.add(btnNewButton_5);
+		contentPane.add(btnNewButton_4);
+		contentPane.add(btnNewButton_3);
+		
+		
+		consoleText = new JTextArea();
+		consoleText.setEditable(false);
+		consoleText.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		consoleText.setBounds(42, 129, 695, 312);
+		consoleText.setCaretPosition(consoleText.getText().length());
+		
+		scrollPane = new JScrollPane(consoleText);
+		scrollPane.setBounds(20, 125, 969, 405);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		contentPane.add(scrollPane);
+		
+		
+		OutputStream textAreaStream = new OutputStream() {
+			public void write(int b) throws IOException {
+				consoleText.append(String.valueOf((char)b));
+				consoleText.setCaretPosition(consoleText.getText().length());
+			}
+			
+			public void write(byte b[]) throws IOException {
+				consoleText.append(new String(b));
+				consoleText.setCaretPosition(consoleText.getText().length());
+			}
+			
+			public void write(byte b[], int off, int len) throws IOException {
+				consoleText.append(new String(b, off, len));
+				consoleText.setCaretPosition(consoleText.getText().length());
+			}
+		};
+		PrintStream myOut = new PrintStream(textAreaStream);
+		System.setOut(myOut);
+		System.setErr(myOut);
+		
+		System.out.println("欢迎使用虚拟校园系统-服务端");
+		System.out.println("点击Help获取服务端使用帮助");
+		consoleText.setCaretPosition(consoleText.getText().length());
 	}
 	/**
 	 * 关闭本界面
