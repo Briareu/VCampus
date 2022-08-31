@@ -168,7 +168,7 @@ public class ShopSever extends Shop_DbAccess{
 		try{
 			int result=0;
 			GoodsList.add(temp);
-			result=s.executeUpdate("insert into tb_Goods values('"+temp.getGoodsid()+"','"+temp.getGoodsname()+"','"+temp.getGoodsprice()+
+			result=s.executeUpdate("insert into tb_Goods(GoodsID,GoodsName,GoodsPrice,GoodsNumber,TurnOver) values('"+temp.getGoodsid()+"','"+temp.getGoodsname()+"','"+temp.getGoodsprice()+
 					"','"+temp.getGoodsnumber()+"','"+0+"')");
 			//System.out.println(result);
 			 
