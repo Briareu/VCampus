@@ -640,8 +640,8 @@ public class ClassStudentClient extends JFrame {
 		lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/学生信息管理.png"));
-		lblNewLabel_1.setBounds(0, 0, 700, 523);
+		lblNewLabel_1.setIcon(new ImageIcon("src/main/resources/image/student3.png"));
+		lblNewLabel_1.setBounds(0, 0, 700, 623);
 		this.getContentPane().add(lblNewLabel_1);
 		
 		this.setLocationRelativeTo(null);
