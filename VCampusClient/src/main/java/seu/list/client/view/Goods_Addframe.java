@@ -152,6 +152,8 @@ public class Goods_Addframe {
 		frame.getContentPane().setLayout(groupLayout);
 		
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(2);
 	}
 
 	protected void Addgoods() {
