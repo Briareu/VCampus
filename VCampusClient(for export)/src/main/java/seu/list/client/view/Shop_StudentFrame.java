@@ -49,7 +49,12 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Toolkit;
 import java.awt.Dialog.ModalExclusionType;
-
+/**
+ * 类{@code Shop_StudentFrame}为商店的学生界面
+ * 如果用户为学生则进入商店时跳转到此界面
+ * @author 欧阳瑜
+ * @version 1.0
+ */
 public class Shop_StudentFrame {
 
 	private JFrame frame;
@@ -65,7 +70,7 @@ public class Shop_StudentFrame {
 	private double sum = 0.0;
 	private String id = null;
 	private String PWD = null;
-	
+	private JLabel lblNewLabel_2;
 	private MainMenu Mainmenu = null;
 
 	/**
@@ -77,6 +82,7 @@ public class Shop_StudentFrame {
 	 */
 	public Shop_StudentFrame(String id, String PWD, MainMenu mainmenu) {
 		this.Mainmenu = mainmenu;
+		
 		this.id = id;
 		this.PWD = PWD;
 		initialize();
@@ -84,6 +90,7 @@ public class Shop_StudentFrame {
 	}
 
 	/**
+	 * 学生界面ui的设计
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -94,57 +101,58 @@ public class Shop_StudentFrame {
 		frame.setTitle("学生视图商店");
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 577, 449);
+		frame.setBounds(100, 100, 800, 532);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-//		double total=0.0;
+		frame.setResizable(false);
+		//主frame
 		
 		JLabel lblNewLabel = new JLabel("总计：");
-		lblNewLabel.setBounds(205, 19, 60, 28);
+		lblNewLabel.setBounds(443, 19, 60, 28);
 		lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		lblNewLabel.setEnabled(false);
 		textField = new JTextField();
-		textField.setBounds(269, 17, 129, 32);
+		textField.setBounds(552, 15, 129, 32);
 		textField.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		textField.setEnabled(false);
 		textField.setColumns(10);
-//		textField.setText(total+"");
 		textField.setText(sum + "");
+		//显示购买东西的总价
+		
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/money.png")));
+		lblNewLabel_2.setBounds(502, 10, 37, 37);
+		frame.getContentPane().add(lblNewLabel_2);
 		
 		btnNewButton = new JButton("");
 		btnNewButton.setBounds(10, 123, 60, 25);
-//		btnNewButton.setIcon(new ImageIcon("src/main/resources/image/结账.jpg"));
 		btnNewButton.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/结账.jpg")));
 		btnNewButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				buy();
 				setPayFrame();
 			}
 		});
-		
-		// JScrollPane scrollPane = new JScrollPane(table);
+		//购买界面确认需输入密码
 		
 		btnNewButton_1 = new JButton("");
-		btnNewButton_1.setBounds(10, 210, 60, 25);
+		btnNewButton_1.setBounds(10, 308, 60, 25);
 		btnNewButton_1.setBackground(Color.WHITE);
-//	    btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
 	    btnNewButton_1.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/退出.jpg")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//退出
-				
-				//增加了退出事件
 				frame.dispose();
 			}
 		});
 		btnNewButton_1.setFont(new Font("微软雅黑", Font.BOLD, 20));
+		//退出
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(null);
+		scrollPane.getViewport().setBackground(Color.WHITE);
 		scrollPane.setEnabled(false);
-		scrollPane.setBounds(80, 55, 452, 351);
+		scrollPane.setBounds(80, 55, 694, 428);
 		scrollPane.setBackground(Color.WHITE);
+		//表格放入带滑动条的容器中
 		
 		table = new JTable();
 		table.setBackground(Color.WHITE);
@@ -155,29 +163,22 @@ public class Shop_StudentFrame {
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
 		
 		MyCellEditor cellEditor = new MyCellEditor(new JTextField());
-		TableColumn tableColumn = table.getColumn("数量");
+		TableColumn tableColumn = table.getColumn("购买数量");
 		tableColumn.setCellEditor(cellEditor);//确保输入合法
 
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
 		table.getTableHeader().setReorderingAllowed(false);
 		final TableModel tableModel = table.getModel();
+		//表格显示商品信息
+		
 		tableModel.addTableModelListener(new TableModelListener() {
 		    @Override
 		    public void tableChanged(TableModelEvent e) {
-		        // 第一个 和 最后一个 被改变的行（只改变了一行，则两者相同）
 		        int firstRow = e.getFirstRow();
 		        int lastRow = e.getLastRow();
-
-		        // 被改变的列
 		        int column = e.getColumn();
-
-		        // 事件的类型，可能的值有:
-		        //     TableModelEvent.INSERT   新行或新列的添加
-		        //     TableModelEvent.UPDATE   现有数据的更改
-		        //     TableModelEvent.DELETE   有行或列被移除
 		        int type = e.getType();
 		        if (type == TableModelEvent.UPDATE) {
-//		        	double t=0.0;
 		        	sum = 0.0;
 		        	if(column==4) {
 		        		 for (int row =0; row <table.getRowCount(); row++) {
@@ -185,17 +186,17 @@ public class Shop_StudentFrame {
 		        			 Object tempprice=tableModel.getValueAt(row, 2);
 		        			 double tem=Double.parseDouble((String)tempprice);
 		        			int tem1=Integer.parseInt((String)tempnumber);
-//		        			t+=tem*tem1;
 		        			sum += tem*tem1;
 		        		
 		        		 }
-//		        		 textField.setText(t+"");
 		        		 textField.setText(sum + "");
 		        	}
 		        	else return;
 		        }
 		    }
-		});
+		}//表格增加监听，修改信息时需确认
+		);
+		
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(lblNewLabel);
 		frame.getContentPane().add(textField);
@@ -205,7 +206,7 @@ public class Shop_StudentFrame {
 		
 		SearchText = new JTextField();
 		SearchText.setColumns(10);
-		SearchText.setBounds(72, 19, 105, 30);
+		SearchText.setBounds(251, 17, 105, 30);
 			
 		btnNewButton_2 = new JButton("");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -213,18 +214,17 @@ public class Shop_StudentFrame {
 				SearchGood(e);
 			}
 		});
-//		btnNewButton_2.setIcon(new ImageIcon("src/main/resources/image/search_Goods.jpg"));
 		btnNewButton_2.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/search_Goods.jpg")));
 		btnNewButton_2.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		btnNewButton_2.setBounds(27, 19, 37, 30);
+		btnNewButton_2.setBounds(194, 17, 37, 30);
 		frame.getContentPane().add(btnNewButton_2);
 		
 		frame.getContentPane().add(SearchText);
-		lblNewLabel_1 = new JLabel("New label");
-//		lblNewLabel_1.setIcon(new ImageIcon("src\\main\\resources\\image\\shop_buyer_bg.jpg"));
-		lblNewLabel_1.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/shop_buyer_bg.jpg")));
-		lblNewLabel_1.setBounds(0, 0, 561, 406);
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/shop_back.jpg")));
+		lblNewLabel_1.setBounds(0, 0, 800, 532);
 		frame.getContentPane().add(lblNewLabel_1);
+		
 		
 		
 
@@ -232,9 +232,12 @@ public class Shop_StudentFrame {
 		frame.setDefaultCloseOperation(2);
 		frame.setLocationRelativeTo(null);
 	}
-	
+	/**
+	 *将商品信息显示到表格中
+	 * 
+	 */
+
 	public void show() {
-		// TODO 自动生成的方法存根
 		Message mes =new Message();
 		mes.setMessageType(MessageType.Goodsgetall);
 		mes.setModuleType(ModuleType.Shop);
@@ -244,7 +247,7 @@ public class Shop_StudentFrame {
 		DefaultTableModel tablemodel;
 		
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
-				"商品编号", "商品名称", "单价", "库存","数量"}) {
+				"商品编号", "商品名称", "单价", "库存","购买数量"}) {
 
 				 
 						boolean[] columnEditables = new boolean[] {
@@ -279,11 +282,6 @@ public class Shop_StudentFrame {
 
 		        // 被改变的列
 		        int column = e.getColumn();
-
-		        // 事件的类型，可能的值有:
-		        //     TableModelEvent.INSERT   新行或新列的添加
-		        //     TableModelEvent.UPDATE   现有数据的更改
-		        //     TableModelEvent.DELETE   有行或列被移除
 		        int type = e.getType();
 		        if (type == TableModelEvent.UPDATE) {
 //		        	double t=0.0;
@@ -305,10 +303,13 @@ public class Shop_StudentFrame {
 		        }
 		    }
 		});
-		TableColumn tableColumn = table.getColumn("数量");
+		TableColumn tableColumn = table.getColumn("购买数量");
 		tableColumn.setCellEditor(cellEditor);//确保输入合法
 	}
-	
+	/**
+	 *查询操作
+	 * @param e 事件
+	 */
 	private void SearchGood(ActionEvent e) {
 		// TODO 自动生成的方法存根
 		Message mes =new Message();
@@ -327,14 +328,14 @@ public class Shop_StudentFrame {
 		
 		DefaultTableModel tablemodel;
 		tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
-				"商品编号", "商品名称", "单价", "库存"}) {
+				"商品编号", "商品名称", "单价", "库存","购买数量"}) {
 
 				
 				/*
 				 * overload the method to change the table's factor
 				 */
 						boolean[] columnEditables = new boolean[] {
-								false, false,true, true
+								false,false,false,false,true
 							};
 				@Override
 				public boolean isCellEditable(int row, int column) {
@@ -344,15 +345,51 @@ public class Shop_StudentFrame {
 		};
 		
 		for(int i=0;i<res.size();i++) {
-			String tempgoods[]=new String[4];
+			String tempgoods[]=new String[5];
 			tempgoods[0]=res.get(i).getGoodsid()+"";
 			tempgoods[1]=res.get(i).getGoodsname();
 			tempgoods[2]=res.get(i).getGoodsprice()+"";
 			tempgoods[3]=res.get(i).getGoodsnumber()+"";
+			tempgoods[4]="0";
 			tablemodel.addRow(tempgoods);
 		}
+		MyCellEditor cellEditor = new MyCellEditor(new JTextField());
+		
 		table.setModel(tablemodel);
-		//System.out.println("1");
+		
+		final TableModel tableModel = table.getModel();
+		tableModel.addTableModelListener(new TableModelListener() {
+		    @Override
+		    public void tableChanged(TableModelEvent e) {
+		        // 第一个 和 最后一个 被改变的行（只改变了一行，则两者相同）
+		        int firstRow = e.getFirstRow();
+		        int lastRow = e.getLastRow();
+
+		        // 被改变的列
+		        int column = e.getColumn();
+		        int type = e.getType();
+		        if (type == TableModelEvent.UPDATE) {
+//		        	double t=0.0;
+		        	sum = 0.0;
+		        	if(column==4) {
+		        		 for (int row =0; row <table.getRowCount(); row++) {
+		        			 Object tempnumber=tableModel.getValueAt(row, 4);
+		        			 Object tempprice=tableModel.getValueAt(row, 2);
+		        			 double tem=Double.parseDouble((String)tempprice);
+		        			int tem1=Integer.parseInt((String)tempnumber);
+//		        			t+=tem*tem1;
+		        			sum += tem*tem1;
+		        		
+		        		 }
+//		        		 textField.setText(t+"");
+		        		 textField.setText(sum + "");
+		        	}
+		        	else return;
+		        }
+		    }
+		});
+		TableColumn tableColumn = table.getColumn("购买数量");
+		tableColumn.setCellEditor(cellEditor);//确保输入合法
 		
 		}
 		else{
@@ -364,14 +401,14 @@ public class Shop_StudentFrame {
 			
 			DefaultTableModel tablemodel;
 			tablemodel=new DefaultTableModel(new Object[][] {},new String[] {
-					"商品编号", "商品名称", "单价", "库存"}) {
+					"商品编号", "商品名称", "单价", "库存","购买数量"}) {
 
 					
 					/*
 					 * overload the method to change the table's factor
 					 */
 							boolean[] columnEditables = new boolean[] {
-									false, false,true, true
+									false,false,false,false,true
 								};
 					@Override
 					public boolean isCellEditable(int row, int column) {
@@ -380,25 +417,63 @@ public class Shop_StudentFrame {
 					}
 			};
 			for(int i=0;i<res.size();i++) {
-				String tempgoods[]=new String[4];
+				String tempgoods[]=new String[5];
 				tempgoods[0]=res.get(i).getGoodsid()+"";
 				tempgoods[1]=res.get(i).getGoodsname();
 				tempgoods[2]=res.get(i).getGoodsprice()+"";
 				tempgoods[3]=res.get(i).getGoodsnumber()+"";
+				tempgoods[4]="0";
 				tablemodel.addRow(tempgoods);
 			}
-			getTable().setModel(tablemodel);
-			//System.out.println("2");
+			MyCellEditor cellEditor = new MyCellEditor(new JTextField());
+			
+			table.setModel(tablemodel);
+			
+			final TableModel tableModel = table.getModel();
+			tableModel.addTableModelListener(new TableModelListener() {
+			    @Override
+			    public void tableChanged(TableModelEvent e) {
+			        // 第一个 和 最后一个 被改变的行（只改变了一行，则两者相同）
+			        int firstRow = e.getFirstRow();
+			        int lastRow = e.getLastRow();
+
+			        // 被改变的列
+			        int column = e.getColumn();
+			        int type = e.getType();
+			        if (type == TableModelEvent.UPDATE) {
+//			        	double t=0.0;
+			        	sum = 0.0;
+			        	if(column==4) {
+			        		 for (int row =0; row <table.getRowCount(); row++) {
+			        			 Object tempnumber=tableModel.getValueAt(row, 4);
+			        			 Object tempprice=tableModel.getValueAt(row, 2);
+			        			 double tem=Double.parseDouble((String)tempprice);
+			        			int tem1=Integer.parseInt((String)tempnumber);
+//			        			t+=tem*tem1;
+			        			sum += tem*tem1;
+			        		
+			        		 }
+//			        		 textField.setText(t+"");
+			        		 textField.setText(sum + "");
+			        	}
+			        	else return;
+			        }
+			    }
+			});
+			TableColumn tableColumn = table.getColumn("购买数量");
+			tableColumn.setCellEditor(cellEditor);//确保输入合法
 		}
 	}
 	
 	 private JTable getTable() {
-		// TODO 自动生成的方法存根
 		return null;
 	}
 
+	/**
+         *购买操作
+	 * 
+	 */
 	protected void buy() {
-		// TODO 自动生成的方法存根
 		Mainmenu.set(sum);
 		Message mes =new Message();
 		mes.setModuleType(ModuleType.Shop);
@@ -407,7 +482,6 @@ public class Shop_StudentFrame {
 		for(int i=0;i<table.getRowCount();i++) {
 			String id=(String)table.getValueAt(i,0);
 			String number=(String)table.getValueAt(i,4);
-			//int tempid=Integer.parseInt(id);
 			int temp=Integer.parseInt(number);
 			if(temp!=0) {
 				bgoods.add(id);
@@ -422,7 +496,10 @@ public class Shop_StudentFrame {
 		//int res=(int)serverResponse.getData();
 		textField.setText("0.0");
 	}
-	 
+	/**
+	 *保证表格改动时数据合法
+	 * 
+	 */
 	public static class MyCellEditor extends DefaultCellEditor {
 
 	        public MyCellEditor(JTextField textField) {
@@ -450,7 +527,10 @@ public class Shop_StudentFrame {
 	            return super.stopCellEditing();
 	        }
 	    }
-	
+	/**
+	 *购买按钮的响应
+	 * 
+	 */
 	void setPayFrame() {
 		frame.setEnabled(false);
 		frame.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
