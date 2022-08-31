@@ -167,7 +167,7 @@ public class Shop_StudentFrame {
 
 		table.getColumnModel().getColumn(3).setPreferredWidth(79);
 		table.getTableHeader().setReorderingAllowed(false);
-		TableModel tableModel = table.getModel();
+		final TableModel tableModel = table.getModel();
 		//表格显示商品信息
 		
 		tableModel.addTableModelListener(new TableModelListener() {
@@ -271,7 +271,7 @@ public class Shop_StudentFrame {
 		MyCellEditor cellEditor = new MyCellEditor(new JTextField());
 		
 		table.setModel(tablemodel);
-		TableModel tableModel = table.getModel();
+		final TableModel tableModel = table.getModel();
 		tableModel.addTableModelListener(new TableModelListener() {
 		    @Override
 		    public void tableChanged(TableModelEvent e) {
@@ -356,7 +356,7 @@ public class Shop_StudentFrame {
 		
 		table.setModel(tablemodel);
 		
-		TableModel tableModel = table.getModel();
+		final TableModel tableModel = table.getModel();
 		tableModel.addTableModelListener(new TableModelListener() {
 		    @Override
 		    public void tableChanged(TableModelEvent e) {
@@ -428,7 +428,7 @@ public class Shop_StudentFrame {
 			
 			table.setModel(tablemodel);
 			
-			TableModel tableModel = table.getModel();
+			final TableModel tableModel = table.getModel();
 			tableModel.addTableModelListener(new TableModelListener() {
 			    @Override
 			    public void tableChanged(TableModelEvent e) {
