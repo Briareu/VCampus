@@ -311,7 +311,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         //注册界面
         if(arg0.getActionCommand().equals("jb_register")){
             ClientRegisterFrame crf = new ClientRegisterFrame(this.socket);
-            this.dispose();
+//            this.dispose();
         }
         else if(arg0.getActionCommand().equals("jb_login"))
         {
