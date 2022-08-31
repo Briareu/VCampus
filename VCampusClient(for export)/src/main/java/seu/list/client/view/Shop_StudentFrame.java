@@ -110,7 +110,8 @@ public class Shop_StudentFrame {
 		
 		btnNewButton = new JButton("");
 		btnNewButton.setBounds(10, 123, 60, 25);
-		btnNewButton.setIcon(new ImageIcon("src/main/resources/image/结账.jpg"));
+//		btnNewButton.setIcon(new ImageIcon("src/main/resources/image/结账.jpg"));
+		btnNewButton.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/结账.jpg")));
 		btnNewButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -124,7 +125,8 @@ public class Shop_StudentFrame {
 		btnNewButton_1 = new JButton("");
 		btnNewButton_1.setBounds(10, 210, 60, 25);
 		btnNewButton_1.setBackground(Color.WHITE);
-	    btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
+//	    btnNewButton_1.setIcon(new ImageIcon("src/main/resources/image/退出.jpg"));
+	    btnNewButton_1.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/退出.jpg")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//退出
@@ -208,14 +210,16 @@ public class Shop_StudentFrame {
 				SearchGood(e);
 			}
 		});
-		btnNewButton_2.setIcon(new ImageIcon("src/main/resources/image/search_Goods.jpg"));
+//		btnNewButton_2.setIcon(new ImageIcon("src/main/resources/image/search_Goods.jpg"));
+		btnNewButton_2.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/search_Goods.jpg")));
 		btnNewButton_2.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		btnNewButton_2.setBounds(27, 19, 37, 30);
 		frame.getContentPane().add(btnNewButton_2);
 		
 		frame.getContentPane().add(SearchText);
 		lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("src\\main\\resources\\image\\shop_buyer_bg.jpg"));
+//		lblNewLabel_1.setIcon(new ImageIcon("src\\main\\resources\\image\\shop_buyer_bg.jpg"));
+		lblNewLabel_1.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/shop_buyer_bg.jpg")));
 		lblNewLabel_1.setBounds(0, 0, 561, 406);
 		frame.getContentPane().add(lblNewLabel_1);
 		
