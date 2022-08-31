@@ -20,7 +20,12 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * 类{@code Goods_Addframe}为删除商品界面界面
+ * 点击“删除”按钮后会进入到当前界面
+ * @author 欧阳瑜
+ * @version 1.0
+ */
 public class Shop_DeleteGoods {
     private Shop_AdminFrame shop;
 	private JFrame frame;
@@ -32,6 +37,11 @@ public class Shop_DeleteGoods {
 
 	/**
 	 * Create the application.
+	 */
+	
+	/**
+	 * Initialize the contents of the frame.
+	 * @param textField 输入商品id
 	 */
 	public Shop_DeleteGoods(Shop_AdminFrame a) {
 		shop=a;
@@ -97,7 +107,9 @@ public class Shop_DeleteGoods {
 	}
 		
 
-
+        /**  
+	 * 方法{@code void Delgoods(ActionEvent e)}点击确认后执行，利用当前输入的参数增加商品。
+	 */
 	protected void Delgoods(ActionEvent e) {
 		// TODO 自动生成的方法存根
 		if(!textField.getText().matches("[0-9]*")) {
