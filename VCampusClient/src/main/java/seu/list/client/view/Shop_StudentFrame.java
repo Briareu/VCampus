@@ -72,6 +72,7 @@ public class Shop_StudentFrame {
 	private String PWD = null;
 	private JLabel lblNewLabel_2;
 
+	private MainMenu Mainmenu = null;
 	
 	/**
 	 * 类{@code Shop_StudentFrame}的构造器，接收各个用户账户信息
@@ -79,8 +80,8 @@ public class Shop_StudentFrame {
 	 * @param id 用户ID
 	 * 
 	 */
-	public Shop_StudentFrame(String id, String PWD) {
-		
+	public Shop_StudentFrame(String id, String PWD, MainMenu mainmenu) {
+		this.Mainmenu = mainmenu;
 		this.id = id;
 		this.PWD = PWD;
 		initialize();
@@ -472,6 +473,7 @@ public class Shop_StudentFrame {
 	 * 
 	 */
 	protected void buy() {
+		Mainmenu.set(sum);
 		Message mes =new Message();
 		mes.setModuleType(ModuleType.Shop);
 		mes.setMessageType(MessageType.Buy);
