@@ -46,6 +46,9 @@ public class MainMenu extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField timeField;
+	
+	private JLabel nameLabel;
+	private JLabel moneyLabel;
 
 	/**
 	 * Create the frame.
@@ -173,7 +176,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		exitButton.addActionListener(this);
 		exitButton.setActionCommand(this.cmdClose);
 		
-		JLabel nameLabel = new JLabel("姓名：" + this.name); // 姓名
+		nameLabel = new JLabel("姓名：" + this.name); // 姓名
 		nameLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		nameLabel.setBounds(10, 158, 164, 39);
 		contentPane.add(nameLabel);
@@ -190,7 +193,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		contentPane.add(typeLabel);
 		
 		
-		JLabel moneyLabel = new JLabel("余额：" + this.money);
+		moneyLabel = new JLabel("余额：" + this.money);
 		moneyLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		moneyLabel.setBounds(10, 253, 164, 39);
 		contentPane.add(moneyLabel);
@@ -221,6 +224,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		MainMenu tempmenu = this;
 		try {
 			if(e.getActionCommand().equals(this.cmdCourse)){ // 选课
 				if(userType==0){
@@ -232,7 +236,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				}
 			}else if(e.getActionCommand().equals(this.cmdClass)) { // 学籍
 				if(userType == 0) {
-					ClassStudentClient classStu = new ClassStudentClient(this.uID, this.pwd);
+					ClassStudentClient classStu = new ClassStudentClient(this.uID, this.pwd, tempmenu);
 					classStu.setVisible(true);
 				}else {
 					ClassAdminClient classAdmin = new ClassAdminClient();
@@ -256,7 +260,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				}
 			}else if(e.getActionCommand().equals(this.cmdShop)) { //商店
 				if(userType == 0) {
-					Shop_StudentFrame shopStu = new Shop_StudentFrame(this.uID, this.pwd);
+					Shop_StudentFrame shopStu = new Shop_StudentFrame(this.uID, this.pwd, tempmenu);
 					//shopStu.setVisible(true);
 				}else {
 					Shop_AdminFrame shopAdmin = new Shop_AdminFrame();
@@ -275,5 +279,19 @@ public class MainMenu extends JFrame implements ActionListener {
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
+	}
+	
+	public void set(String newName, Double newMoney) {
+		DecimalFormat df = new DecimalFormat("0.00");
+		this.money = "" + df.format(newMoney);
+		this.name = newName;
+		nameLabel.setText(newName);
+		moneyLabel.setText(money);
+	}
+	
+	public void set(Double newMoney) {
+		DecimalFormat df = new DecimalFormat("0.00");
+		this.money = "" + df.format(Double.parseDouble(money) - newMoney);
+		moneyLabel.setText(money);
 	}
 }
