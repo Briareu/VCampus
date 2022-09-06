@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="231b6e6d-6799-41e7-b0e8-0bba378a7a7d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_healthmarketscience_jackcess_jackcess_3_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_13_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_ucanaccess_ucanaccess_5_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hsqldb_hsqldb_2_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_5_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/VCampus.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/VCampus.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/bz/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/bz/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/bz/ClientMainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/bz/ClientMainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/ClientCourseFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/ClientCourseFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/ClientLoginFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/ClientLoginFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/ClientStuCourseFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/ClientStuCourseFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/ClientTeacherFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/ClientTeacherFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/CourseInfor.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/CourseInfor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/EasyCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/EasyCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/LibraryManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/LibraryManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/LibraryStu.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/LibraryStu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/LoginFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/LoginFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/mainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/stylefont.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/client/view/stylefont.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/IConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/IConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/MessageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/ModuleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/ModuleType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/Tools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/VerifyCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusClient/src/main/java/seu/list/common/VerifyCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Dormitory.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Dormitory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/IConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/IConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/MessageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/ModuleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/ModuleType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/common/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/bz/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/bz/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/bz/ServerClientThreadMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/bz/ServerClientThreadMgr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/bz/ServerMainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/bz/ServerMainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/bz/ServerSocketThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/bz/ServerSocketThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/CourseDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/CourseDaoImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/CourseDaoImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/DAOUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/DAOUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/LibraryUserServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/LibraryUserServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/ShopSever.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/ShopSever.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/UserDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/dao/UserDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/ClassAccessHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/ClassAccessHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/Dormitory_DbAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/Dormitory_DbAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/Shop_DbAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/Shop_DbAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/SqlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/SqlHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/SqlHelperImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/SqlHelperImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/StudentAccessHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/VCampusServer/src/main/java/seu/list/server/db/StudentAccessHelper.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "D:/rep/VCampus/VCampusServer"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>
